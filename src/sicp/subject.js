@@ -1,72 +1,80 @@
-// A prototypical subject object cunningly written
-// to enable easy mixins.
+// A SICP-style constructor function for creating a subject object.
+// The goal here is to hide the listeners so no one can mutate it directly.
 //
-var LIB_subject = {
+var LIB_makeSubject = function() {
     
-    // "event" is an event name string.
-    // "listener" is a callback function.
-    //
-    // One listener can be added multiple times.
-    //
-    addEventListener: function(event, listener) {
-        this.listeners = this.listeners || {};
-        if (this.listeners[event]) {
-            this.listeners[event].push(listener);
-        }
-        else {
-            this.listeners[event] = [listener];
-        }
-    },
+    var listeners = {};
     
-    // addEventListener allows one listener to 
-    // be added multiple times. We removed all references
-    // to "listener".
-    //
-    // No complaints if the "listener" is not found in the list.    
-    //
-    removeEventListener: function(event, listener) {
-        if (this.listeners && this.listeners[event]) {
-            // Loop backwards through the array so adjacent references 
-            // to "listener" are all removed.
-            for (var i = this.listeners[event].length; i--; ) {
-                if (this.listeners[event][i] === listener) {
-                    this.listeners[event].splice(i, 1);
+    return {
+        
+        // "event" is an event name string.
+        // "listener" is a callback function.
+        //
+        // One listener can be added multiple times.
+        //
+        addEventListener: function(event, listener) {
+            listeners[event] = listeners[event] || [];
+            listeners[event].push(listener);
+        },
+        
+        // addEventListener allows one listener to 
+        // be added multiple times. We removed all references
+        // to "listener".
+        //
+        // No complaints if the "listener" is not found in the list.    
+        //
+        removeEventListener: function(event, listener) {
+            if (listeners[event]) {
+                // Loop backwards through the array so adjacent references 
+                // to "listener" are all removed.
+                for (var i = listeners[event].length; i--; ) {
+                    if (listeners[event][i] === listener) {
+                        listeners[event].splice(i, 1);
+                    }
+                }
+            }
+        },
+        
+        // The "data" will be pushed to each listener.
+        // The "data.type" value is required and must be a string name
+        // of an event type.
+        //
+        dispatchEvent: function(data) {
+            if (listeners[data.type]) {
+                // Copy the list of listeners in case one of the 
+                // listeners modifies the list while we are 
+                // iterating over the list.
+                var ls = listeners[data.type].splice(0);
+                for (var i=0, ilen=ls.length; i<ilen; i++) {
+                    ls[i](data);
                 }
             }
         }
-    },
     
-    // The "data" will be pushed to each listener.
-    // The "data.type" value is required and must be a string name
-    // of an event type.
-    //
-    dispatchEvent: function(data) {
-        if (this.listeners && this.listeners[data.type]) {
-            // Copy the list of listeners in case one of the 
-            // listeners modifies the list while we are 
-            // iterating over the list.
-            var listeners = this.listeners[data.type].slice(0);
-            for (var i = 0, ilen = listeners.length; i < ilen; i++) {
-                listeners[i](data);
-            }
-        }
-    }
-
+    };
+    
 };
 
 var LIB_mixinSubject = function(obj) {
-    for (var p in LIB_subject) {
-        if (Object.prototype.hasOwnProperty.call(LIB_subject, p)) {
-            obj[p] = LIB_subject[p];
+    var subject = LIB_makeSubject();
+    for (var p in subject) {
+        if (Object.prototype.hasOwnProperty.call(subject, p)) {
+            obj[p] = subject[p];
         }
     }
 };
 
-// function APP_Newspaper(name) {
-//     this.name = name;
+
+// var APP_makeNewspaper(name) {
+//     var self = {
+//         getName: function() {
+//             return name;
+//         }
+//     };
+//     LIB_mixinSubject(self);
+//     return self;
 // };
-// LIB_mixinSubject(APP_Newspaper.prototype);
 // 
-// var times = new APP_Newspaper('The Times');
+// var times = APP_makeNewspaper('The Times');
 // times.addEventListener('publish', function() {});
 // times.dispatchEvent({type:'publish'});
