@@ -9,12 +9,12 @@ var LIB_subject = {
     // One listener can be added multiple times.
     //
     addEventListener: function(event, listener) {
-        this.listeners = this.listeners || {};
-        if (this.listeners[event]) {
-            this.listeners[event].push(listener);
+        this._listeners = this._listeners || {};
+        if (this._listeners[event]) {
+            this._listeners[event].push(listener);
         }
         else {
-            this.listeners[event] = [listener];
+            this._listeners[event] = [listener];
         }
     },
     
@@ -25,12 +25,12 @@ var LIB_subject = {
     // No complaints if the "listener" is not found in the list.    
     //
     removeEventListener: function(event, listener) {
-        if (this.listeners && this.listeners[event]) {
+        if (this._listeners && this._listeners[event]) {
             // Loop backwards through the array so adjacent references 
             // to "listener" are all removed.
-            for (var i = this.listeners[event].length; i--; ) {
-                if (this.listeners[event][i] === listener) {
-                    this.listeners[event].splice(i, 1);
+            for (var i = this._listeners[event].length; i--; ) {
+                if (this._listeners[event][i] === listener) {
+                    this._listeners[event].splice(i, 1);
                 }
             }
         }
@@ -41,11 +41,11 @@ var LIB_subject = {
     // of an event type.
     //
     dispatchEvent: function(data) {
-        if (this.listeners && this.listeners[data.type]) {
+        if (this._listeners && this._listeners[data.type]) {
             // Copy the list of listeners in case one of the 
             // listeners modifies the list while we are 
             // iterating over the list.
-            var listeners = this.listeners[data.type].slice(0);
+            var listeners = this._listeners[data.type].slice(0);
             for (var i = 0, ilen = listeners.length; i < ilen; i++) {
                 listeners[i](data);
             }
