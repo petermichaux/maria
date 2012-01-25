@@ -65,7 +65,7 @@ var LIB_mixinSubject = function(obj) {
 };
 
 
-// var APP_makeNewspaper(name) {
+// var APP_makeNewspaper = function(name) {
 //     var self = {
 //         getName: function() {
 //             return name;
