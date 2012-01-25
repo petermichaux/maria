@@ -62,6 +62,12 @@ var LIB_mixinSubject = function(obj) {
     }
 };
 
+var LIB_makeSubject = function() {
+    var subject = {};
+    LIB_mixinSubject(subject);
+    return subject;
+};
+
 // function APP_Newspaper(name) {
 //     this.name = name;
 // };
