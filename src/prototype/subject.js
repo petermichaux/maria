@@ -51,7 +51,7 @@ var LIB_subject = {
 
 
 var LIB_Subject = function() {
-    // The constructor property is unreliable in general 
+    // The constructor property is unreliable in general
     // but in case someone is depending on it we repair it.
     this.constructor = LIB_Subject;
 };

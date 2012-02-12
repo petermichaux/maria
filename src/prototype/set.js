@@ -45,7 +45,7 @@ var LIB_Set = function() {
     for (var i = 0, ilen = arguments.length; i < ilen; i++) {
         this.add(arguments[i]);
     }
-    // The constructor property is unreliable in general 
+    // The constructor property is unreliable in general
     // but in case someone is depending on it we repair it.
     this.constructor = LIB_Set;
 };
