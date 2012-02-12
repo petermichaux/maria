@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prototype Tests</title>
+
+    <!-- include the testing framework -->
+    <script src="../jsunity.js"></script>
+
+    <!-- configure the testing framework -->
+    <script>
+        jsUnity.log = function (s) {
+            document.write("<div>" + s + "</div>");
+        };
+        jsUnity.attachAssertions(jsUnity);
+
+    </script>
+
+    <!-- load the source code to be tested -->
+    <script src="../../src/prototype/subject.js"></script>
+
+    <!-- load the test suites to be run -->
+    <script src="subjectSuite.js"    ></script>
+
+</head>
+<body>
+
+    <!-- run the test suites -->
+    <script>
+
+        jsUnity.run(
+            subjectSuite);
+
+    </script>
+
+</body>
+</html>

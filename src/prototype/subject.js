@@ -53,9 +53,11 @@ var LIB_subject = {
 var LIB_Subject = function() {
     // Don't want to use LIB_subject._listeners object.
     this._listeners = {};
+    // The constructor property is unreliable in general 
+    // but in case someone is depending on it we repair it.
+    this.constructor = LIB_Subject;
 };
 LIB_Subject.prototype = LIB_subject;
-LIB_Subject.prototype.constructor = LIB_Subject;
 
 
 var LIB_mixinSubject = function(obj) {
