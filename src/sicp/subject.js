@@ -13,7 +13,7 @@ var LIB_makeSubject = function() {
         // One listener can be added multiple times.
         //
         addEventListener: function(event, listener) {
-            listeners[event] || (listeners[event] = []);
+            Object.prototype.hasOwnProperty.call(listeners, event) || (listeners[event] = []);
             listeners[event].push(listener);
         },
 
@@ -24,7 +24,7 @@ var LIB_makeSubject = function() {
         // No complaints if the "listener" is not found in the list.
         //
         removeEventListener: function(event, listener) {
-            if (listeners[event]) {
+            if (Object.prototype.hasOwnProperty.call(listeners, event)) {
                 // Loop backwards through the array so adjacent references
                 // to "listener" are all removed.
                 for (var i = listeners[event].length; i--; ) {
@@ -40,7 +40,7 @@ var LIB_makeSubject = function() {
         // of an event type.
         //
         dispatchEvent: function(data) {
-            if (listeners[data.type]) {
+            if (Object.prototype.hasOwnProperty.call(listeners, data.type)) {
                 // Copy the list of listeners in case one of the
                 // listeners modifies the list while we are
                 // iterating over the list.
