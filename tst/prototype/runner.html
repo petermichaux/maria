@@ -13,6 +13,32 @@
         };
         jsUnity.attachAssertions(jsUnity);
 
+        (function() {
+
+            function fmt(str) {
+                var a = Array.prototype.slice.call(arguments, 1);
+                return str.replace(/\?/g, function () { return a.shift(); });
+            }
+
+            jsUnity.assertArrayIdentical = function(expected, actual, message) {
+                if (expected.length !== actual.length) {
+                    throw fmt("?: (?) is not identical to (?)",
+                        message || "assertArrayIdentical", actual, expected);
+                }
+
+                for (var i=0, ilen=expected.length; i<ilen; i++) {
+                    if (((i in expected) && !(i in actual)) ||
+                        ((i in actual) && !(i in expected)) ||
+                        (expected[i] !== actual[i])) {
+                        throw fmt("?: (?) is not identical to (?)",
+                            message || "assertArrayIdentical", actual, expected);
+                    }
+                }
+
+            };
+
+        }());
+
     </script>
 
     <!-- load the source code to be tested -->
