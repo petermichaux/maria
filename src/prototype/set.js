@@ -29,7 +29,7 @@ var LIB_set = {
     //
     "delete": function(element) {
         if (this._elements) {
-            for (var i=0, ilen=this._elements.length; i<ilen; i++) {
+            for (var i = 0, ilen = this._elements.length; i < ilen; i++) {
                 if (element === this._elements[i]) {
                     this._elements.splice(i, 1);
                     return;
@@ -42,7 +42,7 @@ var LIB_set = {
 
 
 var LIB_Set = function() {
-    for (var i=0, ilen=arguments.length; i<ilen; i++) {
+    for (var i = 0, ilen = arguments.length; i < ilen; i++) {
         this.add(arguments[i]);
     }
 };
