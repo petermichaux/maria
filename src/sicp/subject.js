@@ -45,7 +45,7 @@ var LIB_makeSubject = function() {
                 // listeners modifies the list while we are
                 // iterating over the list.
                 var ls = listeners[data.type].slice(0);
-                for (var i=0, ilen=ls.length; i<ilen; i++) {
+                for (var i = 0, ilen = ls.length; i < ilen; i++) {
                     ls[i](data);
                 }
             }
