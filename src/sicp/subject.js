@@ -55,6 +55,7 @@ var LIB_makeSubject = function() {
 
 };
 
+var LIB_subject = LIB_makeSubject();
 
 var LIB_mixinSubject = function(obj) {
     var subject = LIB_makeSubject();
