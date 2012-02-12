@@ -112,6 +112,9 @@ var LIB_mixinSubject = function(obj) {
 // tweetsRUs.addEventListener('foo', function(data) {
 //     console.log(data.tweet);
 // });
+// tweetsRUs.addEventListener('bar', function(data) {
+//     console.log(data.tweet);
+// });
 // tweetsRUs.dispatchEvent({
 //     type: 'foo',
 //     tweet: 'Homework sucks!'
