@@ -44,7 +44,7 @@ var LIB_makeSubject = function() {
                 // Copy the list of listeners in case one of the
                 // listeners modifies the list while we are
                 // iterating over the list.
-                var ls = listeners[data.type].splice(0);
+                var ls = listeners[data.type].slice(0);
                 for (var i=0, ilen=ls.length; i<ilen; i++) {
                     ls[i](data);
                 }
