@@ -76,6 +76,14 @@ var LIB_observableArray;
 
 }());
 
+
+var LIB_ObservableArray = function() {
+    this._elements = Array.prototype.slice.call(arguments, 0);
+};
+LIB_ObservableArray.prototype = LIB_observableArray;
+LIB_ObservableArray.prototype.constructor = LIB_ObservableArray;
+
+
 var LIB_mixinObservableArray = function(obj) {
     for (var p in LIB_observableArray) {
         if (Object.prototype.hasOwnProperty.call(LIB_observableArray, p)) {
@@ -84,10 +92,6 @@ var LIB_mixinObservableArray = function(obj) {
     }
 };
 
-var LIB_ObservableArray = function() {
-    this._elements = Array.prototype.slice.call(arguments, 0);
-};
-LIB_mixinObservableArray(LIB_ObservableArray.prototype);
 
 // var oa = new LIB_ObservableArray('a', 'b');
 // oa.addEventListener('mutate', function() {alert('mutated')});
