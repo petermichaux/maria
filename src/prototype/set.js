@@ -2,6 +2,10 @@
 //
 var LIB_set = {
 
+    // The set starts empty.
+    //
+    length: 0,
+
     // This set implementation does not add a "LIB_id" property with
     // a unique value to each element and so the "has" method is O(n).
     //
@@ -20,6 +24,7 @@ var LIB_set = {
         if (!this.has(element)) {
             Object.prototype.hasOwnProperty.call(this, '_elements') || (this._elements = []);
             this._elements.push(element);
+            this.length++;
         }
     },
 
@@ -32,6 +37,7 @@ var LIB_set = {
             for (var i = 0, ilen = this._elements.length; i < ilen; i++) {
                 if (element === this._elements[i]) {
                     this._elements.splice(i, 1);
+                    this.length--;
                     return;
                 }
             }
@@ -42,6 +48,8 @@ var LIB_set = {
 
 
 var LIB_Set = function() {
+    // this needs its own length property.
+    this.length = 0;
     for (var i = 0, ilen = arguments.length; i < ilen; i++) {
         this.add(arguments[i]);
     }
@@ -60,6 +68,8 @@ var LIB_mixinSet = function(obj) {
             obj[p] = LIB_set[p];
         }
     }
+    // obj needs its own length property.
+    obj.length = 0;
 };
 
 

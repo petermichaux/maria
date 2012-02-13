@@ -43,9 +43,11 @@
 
     <!-- load the source code to be tested -->
     <script src="../../src/prototype/subject.js"></script>
+    <script src="../../src/prototype/set.js"></script>
 
     <!-- load the test suites to be run -->
     <script src="subjectSuite.js"    ></script>
+    <script src="setSuite.js"        ></script>
 
 </head>
 <body>
@@ -54,7 +56,8 @@
     <script>
 
         jsUnity.run(
-            subjectSuite);
+            subjectSuite,
+            setSuite);
 
     </script>
 
