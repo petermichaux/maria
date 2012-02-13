@@ -53,7 +53,31 @@ var setSuite;
             // Clean up LIB_set and check that the clean up worked.
             LIB_set['delete']('alpha');
             jsUnity.assertIdentical(0, LIB_set.length);
+        },
 
+        "test elements are independent on multiple objects": function() {
+            var s0 = new LIB_Set();
+            var s1 = {};
+            LIB_mixinSet(s1);
+            
+            LIB_set.add('alpha');
+            jsUnity.assertIdentical(true, LIB_set.has('alpha'));
+            jsUnity.assertIdentical(false, s0.has('alpha'));
+            jsUnity.assertIdentical(false, s1.has('alpha'));
+
+            s0.add('beta');
+            jsUnity.assertIdentical(false, LIB_set.has('beta'));
+            jsUnity.assertIdentical(true, s0.has('beta'));
+            jsUnity.assertIdentical(false, s1.has('beta'));
+
+            s1.add('gamma');
+            jsUnity.assertIdentical(false, LIB_set.has('gamma'));
+            jsUnity.assertIdentical(false, s0.has('gamma'));
+            jsUnity.assertIdentical(true, s1.has('gamma'));
+
+            // Clean up LIB_set and check that the clean up worked.
+            LIB_set['delete']('alpha');
+            jsUnity.assertIdentical(0, LIB_set.length);
         }
 
     };
