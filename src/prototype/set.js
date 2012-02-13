@@ -50,6 +50,49 @@ var LIB_set = {
 
 };
 
+(function() {
+
+    // utility to help wrapping Array.prototype methods
+    //
+    function forEach(arr, fn) {
+        for (var i = 0, ilen = arr.length; i < ilen; i++) {
+            fn(arr[i]);
+        }
+    }
+
+    forEach(['forEach', 'every', 'some', 'reduce'],
+        function(method) {
+            // Match browser methods. If the browser has the methods
+            // or the browser has been polyfilled then include
+            // the newer methods on observable arrays.
+            if (typeof Array.prototype[method] === 'function') {
+                LIB_set[method] = function() {
+                    return Array.prototype[method].apply(Object.prototype.hasOwnProperty.call(this, '_elements') ? this._elements : [], arguments);
+                };
+            }
+        });
+
+    // map and filter return set objects
+    //
+    forEach(['map', 'filter'],
+        function(method) {
+            // Match browser methods. If the browser has the methods
+            // or the browser has been polyfilled then include
+            // the newer methods on observable arrays.
+            if (typeof Array.prototype[method] === 'function') {
+                LIB_set[method] = function() {
+                    var arr = Array.prototype[method].apply(Object.prototype.hasOwnProperty.call(this, '_elements') ? this._elements : [], arguments);
+                    var result = new LIB_Set();
+                    for (var i=0, ilen=arr.length; i<ilen; i++) {
+                        result.add(arr[i]);
+                    }
+                    return result;
+                };
+            }
+        });
+
+}());
+
 
 var LIB_Set = function() {
     // this needs its own length property.

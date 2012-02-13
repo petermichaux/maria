@@ -79,13 +79,63 @@ var setSuite;
             LIB_set['delete']('alpha');
             jsUnity.assertIdentical(0, LIB_set.length);
         },
-        
+
         "test toArray": function() {
             var s = new LIB_Set();
             jsUnity.assertArrayIdentical([], s.toArray());
             s.add('alpha');
             s.add('beta');
             jsUnity.assertArrayIdentical(['alpha', 'beta'], s.toArray());
+        },
+
+        "test forEach": function() {
+            var s = new LIB_Set('beta', 'alpha');
+            var t = [];
+            s.forEach(function(el) {
+                t.push(el);
+            });
+            jsUnity.assertArrayIdentical(['alpha', 'beta'], t.sort());
+        },
+
+        "test map": function() {
+            var s = new LIB_Set('alpha', 'beta', 'gamma');
+            var t = s.map(function(el) {
+                return el.length;
+            });
+            jsUnity.assertIdentical(2, t.length, 'multiple elements collapse to single element');
+            jsUnity.assertIdentical(true, t.has(4));
+            jsUnity.assertIdentical(true, t.has(5));
+            jsUnity.assertIdentical(false, t.has(6));
+        },
+
+        "test filter": function() {
+            var s = new LIB_Set('alpha', 'beta', 'gamma');
+            var t = s.filter(function(el) {
+                return el.length === 5;
+            });
+            jsUnity.assertIdentical(2, t.length);
+            jsUnity.assertIdentical(true, t.has('alpha'));
+            jsUnity.assertIdentical(false, t.has('beta'));
+            jsUnity.assertIdentical(true, t.has('gamma'));
+        },
+
+        "test some": function() {
+            var s = new LIB_Set('alpha', 'beta', 'gamma');
+            jsUnity.assertIdentical(true, s.some(function(el) {return el.length === 5;}));
+            jsUnity.assertIdentical(false, s.some(function(el) {return el.length === 6;}));
+        },
+
+        "test every": function() {
+            var s = new LIB_Set('alpha', 'beta', 'gamma');
+            jsUnity.assertIdentical(false, s.every(function(el) {return el.length === 5;}));
+            jsUnity.assertIdentical(true, s.some(function(el) {return typeof el === 'string';}));
+        },
+
+        "test reduce": function() {
+            var s = new LIB_Set(0,1,2,3,4);
+            jsUnity.assertIdentical(10, s.reduce(function(previousValue, currentValue) {
+                return previousValue + currentValue;
+            }));
         }
 
     };
