@@ -42,6 +42,10 @@ var LIB_set = {
                 }
             }
         }
+    },
+    
+    toArray: function() {
+        return Object.prototype.hasOwnProperty.call(this, '_elements') ? this._elements.slice(0) : [];
     }
 
 };

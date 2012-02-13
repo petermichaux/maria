@@ -78,6 +78,14 @@ var setSuite;
             // Clean up LIB_set and check that the clean up worked.
             LIB_set['delete']('alpha');
             jsUnity.assertIdentical(0, LIB_set.length);
+        },
+        
+        "test toArray": function() {
+            var s = new LIB_Set();
+            jsUnity.assertArrayIdentical([], s.toArray());
+            s.add('alpha');
+            s.add('beta');
+            jsUnity.assertArrayIdentical(['alpha', 'beta'], s.toArray());
         }
 
     };
