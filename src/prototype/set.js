@@ -64,7 +64,7 @@ var LIB_set = {
         function(method) {
             // Match browser methods. If the browser has the methods
             // or the browser has been polyfilled then include
-            // the newer methods on observable arrays.
+            // the newer methods on sets.
             if (typeof Array.prototype[method] === 'function') {
                 LIB_set[method] = function() {
                     return Array.prototype[method].apply(Object.prototype.hasOwnProperty.call(this, '_elements') ? this._elements : [], arguments);
@@ -78,7 +78,7 @@ var LIB_set = {
         function(method) {
             // Match browser methods. If the browser has the methods
             // or the browser has been polyfilled then include
-            // the newer methods on observable arrays.
+            // the newer methods on sets.
             if (typeof Array.prototype[method] === 'function') {
                 LIB_set[method] = function() {
                     var arr = Array.prototype[method].apply(Object.prototype.hasOwnProperty.call(this, '_elements') ? this._elements : [], arguments);
