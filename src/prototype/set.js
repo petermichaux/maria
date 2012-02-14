@@ -35,7 +35,7 @@ LIB_Set.prototype.add = function(element) {
 // did not allow bare reserved words in property name
 // position so quote "delete".
 //
-LIB_Set.prototype["delete"] = function(element) {
+LIB_Set.prototype['delete'] = function(element) {
     for (var i = 0, ilen = this._elements.length; i < ilen; i++) {
         if (element === this._elements[i]) {
             this._elements.splice(i, 1);
@@ -82,7 +82,7 @@ LIB_Set.prototype.toArray = function() {
             if (typeof Array.prototype[method] === 'function') {
                 LIB_Set.prototype[method] = function() {
                     var arr = Array.prototype[method].apply(this._elements, arguments);
-                    var result = new LIB_Set();
+                    var result = new this.constructor();
                     for (var i=0, ilen=arr.length; i<ilen; i++) {
                         result.add(arr[i]);
                     }
