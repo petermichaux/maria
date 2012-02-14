@@ -186,6 +186,11 @@ var subjectSuite;
             jsUnity.assertIdentical('obj0_name', obj0.result);
             jsUnity.assertIdentical(undefined, obj1.result);
 
+        },
+
+        "test implements": function() {
+            jsUnity.assertIdentical(false, LIB_implementsSubject({}), 'basic objects should not implement the subject interface.');
+            jsUnity.assertIdentical(true, LIB_implementsSubject(new LIB_Subject()), 'subject objects should implement the subject interface.');
         }
 
     };

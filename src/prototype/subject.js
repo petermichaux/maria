@@ -76,3 +76,9 @@ var LIB_mixinSubject = function(obj) {
         }
     }
 };
+
+var LIB_implementsSubject = function(obj) {
+    return !!(obj.addEventListener &&
+              obj.removeEventListener &&
+              obj.dispatchEvent);
+};
