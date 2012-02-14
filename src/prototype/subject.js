@@ -1,53 +1,89 @@
 // A prototypical subject object.
 //
-var LIB_subject = {
+var LIB_subject;
 
-    // "event" is an event name string.
-    // "listener" is a callback function.
-    //
-    // One listener can be added multiple times.
-    //
-    addEventListener: function(event, listener) {
-        Object.prototype.hasOwnProperty.call(this, '_listeners') || (this._listeners = {});
-        Object.prototype.hasOwnProperty.call(this._listeners, event) || (this._listeners[event] = []);
-        this._listeners[event].push(listener);
-    },
+(function() {
 
-    // addEventListener allows one listener to be added multiple times.
-    // We remove all references to "listener".
-    //
-    // No complaints if the "listener" is not found in the list.
-    //
-    removeEventListener: function(event, listener) {
-        if (Object.prototype.hasOwnProperty.call(this, '_listeners') &&
-            Object.prototype.hasOwnProperty.call(this._listeners, event)) {
-            // Loop backwards through the array so adjacent references
-            // to "listener" are all removed.
-            for (var i = this._listeners[event].length; i--; ) {
-                if (this._listeners[event][i] === listener) {
-                    this._listeners[event].splice(i, 1);
-                }
-            }
-        }
-    },
+    var has = function(o, p) {
+        return Object.prototype.hasOwnProperty.call(o, p);
+    };
 
-    // The "data" will be pushed to each listener.
-    // The "data.type" value is required and must be a string name of an event type.
-    //
-    dispatchEvent: function(data) {
-        if (Object.prototype.hasOwnProperty.call(this, '_listeners') &&
-            Object.prototype.hasOwnProperty.call(this._listeners, data.type)) {
-            // Copy the list of listeners in case one of the
-            // listeners modifies the list while we are
-            // iterating over the list.
-            var listeners = this._listeners[data.type].slice(0);
-            for (var i = 0, ilen = listeners.length; i < ilen; i++) {
-                listeners[i](data);
+    function removeListener(listeners, listener) {
+        // Loop backwards through the array so adjacent references
+        // to "listener" are all removed.
+        for (var i = listeners.length; i--; ) {
+            if (listeners[i] === listener) {
+                listeners.splice(i, 1);
             }
         }
     }
 
-};
+    function callListeners(listeners, data) {
+        // Copy the list of listeners in case one of the
+        // listeners modifies the list while we are
+        // iterating over the list.
+        listeners = listeners.slice(0);
+        for (var i = 0, ilen = listeners.length; i < ilen; i++) {
+            listeners[i](data);
+        }
+    }
+
+    LIB_subject = {
+
+        // "event" is an event name string.
+        // "listener" is a callback function.
+        //
+        // One listener can be added multiple times.
+        //
+        addEventListener: function(event, listener) {
+            if (listener) {
+                has(this, '_listeners') || (this._listeners = {});
+                has(this._listeners, event) || (this._listeners[event] = []);
+                this._listeners[event].push(listener);
+            }
+            else {
+                // the listener function for all events is in the event variable
+                has(this, '_allListeners') || (this._allListeners = []);
+                this._allListeners.push(event);
+            }
+        },
+
+        // addEventListener allows one listener to be added multiple times.
+        // We remove all references to "listener".
+        //
+        // No complaints if the "listener" is not found in the list.
+        //
+        removeEventListener: function(event, listener) {
+            if (listener) {
+                if (has(this, '_listeners') &&
+                    has(this._listeners, event)) {
+                    removeListener(this._listeners[event], listener);
+                }
+            }
+            else {
+                // the listener function for all events is in the event variable
+                if (has(this, '_allListeners')) {
+                    removeListener(this._allListeners, event);
+                }
+            }
+        },
+
+        // The "data" will be pushed to each listener.
+        // The "data.type" value is required and must be a string name of an event type.
+        //
+        dispatchEvent: function(data) {
+            if (has(this, '_listeners') &&
+                has(this._listeners, data.type)) {
+                callListeners(this._listeners[data.type], data);
+            }
+            if (has(this, '_allListeners')) {
+                callListeners(this._allListeners, data);
+            }
+        }
+
+    };
+
+}());
 
 
 var LIB_Subject = function() {

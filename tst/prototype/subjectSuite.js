@@ -16,6 +16,7 @@ var subjectSuite;
     var feed2;
     var feed3;
     var feed4;
+    var feedAll;
 
     var listener1 = function(data) {
         feed1.push(data.tweet);
@@ -35,6 +36,10 @@ var subjectSuite;
 
     var listener4 = function(data) {
         feed4.push(data.tweet);
+    };
+    
+    var listenerAll = function(data) {
+        feedAll.push(data.tweet);
     };
 
     var twitter = new LIB_Subject();
@@ -59,10 +64,12 @@ var subjectSuite;
             feed2 = [];
             feed3 = [];
             feed4 = [];
+            feedAll = [];
 
             // add some listeners
             LIB_subject.addEventListener('foo', listener1);
             LIB_subject.addEventListener('bar', listener1b);
+            LIB_subject.addEventListener(listenerAll);
             twitter.addEventListener('foo', listener2);
             tweetsRUs.addEventListener('foo', listener3);
             APP_Twitter.prototype.addEventListener('foo', listener4);
@@ -104,6 +111,7 @@ var subjectSuite;
             // remove the listeners
             LIB_subject.removeEventListener('foo', listener1);
             LIB_subject.removeEventListener('bar', listener1b);
+            LIB_subject.removeEventListener(listenerAll);
             twitter.removeEventListener('foo', listener2);
             tweetsRUs.removeEventListener('foo', listener3);
             APP_Twitter.prototype.removeEventListener('foo', listener4);
@@ -137,6 +145,10 @@ var subjectSuite;
             jsUnity.assertArrayIdentical([tweet2], feed2);
             jsUnity.assertArrayIdentical([tweet3], feed3);
             jsUnity.assertArrayIdentical([tweet4, tweet5], feed4);
+        },
+        
+        "test all listeners": function() {
+            jsUnity.assertArrayIdentical([tweet1, tweet1b], feedAll);
         }
 
     };
