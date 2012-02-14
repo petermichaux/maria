@@ -15,7 +15,7 @@ var setSuite;
 
         "test LIB_set length property": function() {
             var s = new LIB_Set();
-            
+
             jsUnity.assertIdentical(0, s.length, "s.length should start life at zero.");
             s.add('alpha');
             jsUnity.assertIdentical(1, s.length, "The length should increment to one after adding first element.");
@@ -36,10 +36,10 @@ var setSuite;
         "test length properties are independent on multiple objects": function() {
             var s0 = new LIB_Set();
             var s1 = new LIB_Set();
-            
+
             jsUnity.assertIdentical(0, s0.length);
             jsUnity.assertIdentical(0, s1.length);
-            
+
             s0.add('alpha');
             jsUnity.assertIdentical(1, s0.length);
             jsUnity.assertIdentical(0, s1.length);
@@ -53,7 +53,7 @@ var setSuite;
         "test elements are independent on multiple objects": function() {
             var s0 = new LIB_Set();
             var s1 = new LIB_Set();
-            
+
             s0.add('alpha');
             jsUnity.assertIdentical(true, s0.has('alpha'));
             jsUnity.assertIdentical(false, s1.has('alpha'));
