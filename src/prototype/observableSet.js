@@ -11,26 +11,49 @@ LIB_mixinSubject(LIB_ObservableSet.prototype);
 
 // Wrap the set mutator methods to dispatch events.
 
-LIB_ObservableSet.prototype.add = function(element) {
-    var modified = LIB_Set.prototype.add.call(this, element);
-    if (modified) {
-        if (LIB_implementsSubject(element)) {
-            element.addEventListener('LIB_all', this.elementListener, this);
+LIB_ObservableSet.prototype.add = function() {
+    var added = [];
+    for (var i=0, ilen=arguments.length; i<ilen; i++) {
+        var argument = arguments[i];
+        if (LIB_Set.prototype.add.call(this, argument)) {
+            added.push(argument);
+            if (LIB_implementsSubject(argument)) {
+                argument.addEventListener('LIB_all', this.elementListener, this);
+            }
         }
-        this.dispatchEvent({type: 'LIB_add', relatedTarget: element});
+    }
+    var modified = added.length > 0;
+    if (modified) {
+        this.dispatchEvent({type: 'LIB_add', relatedTargets: added});
     }
     return modified;
 };
 
-LIB_ObservableSet.prototype['delete'] = function(element) {
-    var modified = LIB_Set.prototype['delete'].call(this, element);
-    if (modified) {
-        if (LIB_implementsSubject(element)) {
-            element.removeEventListener('LIB_all', this.elementListener, this);
+LIB_ObservableSet.prototype['delete'] = function() {
+    var deleted = [];
+    for (var i=0, ilen=arguments.length; i<ilen; i++) {
+        var argument = arguments[i];
+        if (LIB_Set.prototype['delete'].call(this, argument)) {
+            deleted.push(argument);
+            if (LIB_implementsSubject(argument)) {
+                argument.removeEventListener('LIB_all', this.elementListener, this);
+            }
         }
-        this.dispatchEvent({type: 'LIB_delete', relatedTarget: element});
+    }
+    var modified = deleted.length > 0;
+    if (modified) {
+        this.dispatchEvent({type: 'LIB_delete', relatedTargets: deleted});
     }
     return modified;
+};
+
+LIB_ObservableSet.prototype.empty = function() {
+    var deleted = this.toArray();
+    var result = LIB_Set.prototype.empty.call(this);
+    if (result) {
+        this.dispatchEvent({type: 'LIB_delete', relatedTargets: deleted});
+    }
+    return result;
 };
 
 LIB_ObservableSet.prototype.elementListener = function(ev) {

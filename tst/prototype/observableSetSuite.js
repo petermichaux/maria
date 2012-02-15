@@ -18,6 +18,16 @@ var observableSetSuite;
 
         },
 
+        "test add no items": function() {
+            var s = new LIB_ObservableSet();
+            jsUnity.assertIdentical(false, s.add(), "adding nothing should work and return false");
+        },
+
+        "test delete no items": function() {
+            var s = new LIB_ObservableSet('alpha', 'beta');
+            jsUnity.assertIdentical(false, s['delete'](), "deleting nothing should work and return false");
+        },
+
         "test add and delete events dispatched": function() {
 
             var s = new LIB_ObservableSet();
@@ -41,6 +51,42 @@ var observableSetSuite;
             s.delete('alpha');
             jsUnity.assertIdentical(1, additions, 'still 1 addition after failed delete.')
             jsUnity.assertIdentical(1, deletions, 'when deleting an item now in the list, listeners not called.');
+
+        },
+
+        "test add delete multiple elements in one call": function() {
+            
+            var s = new LIB_ObservableSet();
+            
+            var addEvents = 0;
+            var deleteEvents = 0;
+
+            s.addEventListener('LIB_add', function() {
+                addEvents++;
+            });
+            
+            s.addEventListener('LIB_delete', function() {
+                deleteEvents++;
+            });
+
+            jsUnity.assertIdentical(false, s.has('alpha'), 'alpha not in set to start.');
+            jsUnity.assertIdentical(false, s.has('beta'), 'beta not in set to start.');
+            jsUnity.assertIdentical(true, s.add('alpha', 'beta'), 'adding alpha and beta to set should work');
+            jsUnity.assertIdentical(true, s.has('alpha'), 'alpha now in set.');
+            jsUnity.assertIdentical(true, s.has('beta'), 'beta now in set.');
+            jsUnity.assertIdentical(1, addEvents, 'two items added to set but only one event fired.');
+
+            jsUnity.assertIdentical(false, s.add('alpha'), 'adding alpha again does not do anything');
+            jsUnity.assertIdentical(1, addEvents, 'add event not fired.');
+
+            jsUnity.assertIdentical(true, s['delete']('alpha', 'beta'), 'deleting alpha and beta to set should work');
+            jsUnity.assertIdentical(1, deleteEvents, 'two items deleted to set but only one event fired.');
+
+            jsUnity.assertIdentical(false, s.has('alpha'), 'alpha not in set to end.');
+            jsUnity.assertIdentical(false, s.has('beta'), 'beta not in set to end.');
+
+            jsUnity.assertIdentical(false, s['delete']('alpha'), 'deleting alpha again should not do anything');
+            jsUnity.assertIdentical(1, deleteEvents, 'delete event not fired.');
 
         },
 
@@ -114,6 +160,16 @@ var observableSetSuite;
             element.dispatchEvent({type: 'LIB_destroy'});
             jsUnity.assertIdentical(0, set.length, "the set should not contain the element and so should have length 0");
             jsUnity.assertIdentical(false, set.has(element), "the set should not contain the element");
+        },
+        
+        "test empty dispatches events": function() {
+            var s = new LIB_ObservableSet('alpha', 'beta');
+            var deleteEvents = 0;
+            s.addEventListener('LIB_delete', function() {
+                deleteEvents++;
+            });
+            s.empty();
+            jsUnity.assertIdentical(1, deleteEvents, "the delete listener should have been called only once");
         }
 
     };

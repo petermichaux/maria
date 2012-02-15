@@ -1,54 +1,4 @@
-var LIB_Set = function() {
-    this._elements = [];
-    this.length = 0;
-    for (var i = 0, ilen = arguments.length; i < ilen; i++) {
-        this.add(arguments[i]);
-    }
-};
-
-// This set implementation does not add a "LIB_id" property with
-// a unique value to each element and so the "has" method is O(n).
-//
-LIB_Set.prototype.has = function(element) {
-    for (var i = 0, ilen = this._elements.length; i < ilen; i++) {
-        if (element === this._elements[i]) {
-            return true;
-        }
-    }
-    return false;
-};
-
-// If the element is in the set already then it is not added again.
-//
-LIB_Set.prototype.add = function(element) {
-    if (this.has(element)) {
-        return false;
-    }
-    else {
-        this._elements.push(element);
-        this.length++;
-        return true;
-    }
-};
-
-// "delete" is a reserved word and older implementations
-// did not allow bare reserved words in property name
-// position so quote "delete".
-//
-LIB_Set.prototype['delete'] = function(element) {
-    for (var i = 0, ilen = this._elements.length; i < ilen; i++) {
-        if (element === this._elements[i]) {
-            this._elements.splice(i, 1);
-            this.length--;
-            return true;
-        }
-    }
-    return false;
-};
-
-LIB_Set.prototype.toArray = function() {
-    return this._elements.slice(0);
-};
+var LIB_Set;
 
 (function() {
 
@@ -59,6 +9,72 @@ LIB_Set.prototype.toArray = function() {
             fn(arr[i]);
         }
     }
+
+    function initSet(set) {
+        set._elements = [];
+        set.length = 0;
+    }
+
+    LIB_Set = function() {
+        initSet(this);
+        for (var i = 0, ilen = arguments.length; i < ilen; i++) {
+            this.add(arguments[i]);
+        }
+    };
+
+    // This set implementation does not add a "LIB_id" property with
+    // a unique value to each element and so the "has" method is O(n).
+    //
+    LIB_Set.prototype.has = function(element) {
+        for (var i = 0, ilen = this._elements.length; i < ilen; i++) {
+            if (element === this._elements[i]) {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    // If the element is in the set already then it is not added again.
+    //
+    LIB_Set.prototype.add = function(element) {
+        if (this.has(element)) {
+            return false;
+        }
+        else {
+            this._elements.push(element);
+            this.length++;
+            return true;
+        }
+    };
+
+    // "delete" is a reserved word and older implementations
+    // did not allow bare reserved words in property name
+    // position so quote "delete".
+    //
+    LIB_Set.prototype['delete'] = function(element) {
+        for (var i = 0, ilen = this._elements.length; i < ilen; i++) {
+            if (element === this._elements[i]) {
+                this._elements.splice(i, 1);
+                this.length--;
+                return true;
+            }
+        }
+        return false;
+    };
+
+    LIB_Set.prototype.empty = function() {
+        if (this._elements.length > 0) {
+            initSet(this);
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
+
+    LIB_Set.prototype.toArray = function() {
+        return this._elements.slice(0);
+    };
 
     forEach(['forEach', 'every', 'some', 'reduce'],
         function(method) {

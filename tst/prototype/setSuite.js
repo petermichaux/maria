@@ -5,12 +5,31 @@ var setSuite;
     setSuite = {
         suiteName: 'setSuite',
 
+        "test set starts with no elements": function() {
+            var s = new LIB_Set();
+            jsUnity.assertIdentical(0, s.length, "set should start empty");
+            jsUnity.assertIdentical(false, s.has('alpha'), "an empty list should not have an 'alpha' element");
+        },
+
         "test add and delete return value": function() {
             var s = new LIB_Set();
             jsUnity.assertIdentical(true, s.add('alpha'), 'adding an item not in the list should return true.');
             jsUnity.assertIdentical(false, s.add('alpha'), 'adding an item in the list should return false.');
             jsUnity.assertIdentical(true, s['delete']('alpha'), 'deleting an item in the list should return true.');
             jsUnity.assertIdentical(false, s['delete']('alpha'), 'deleting an item not in the list should return false');
+        },
+
+        "test empty": function() {
+            var s = new LIB_Set();
+            s.add('alpha');
+            s.add('beta');
+            jsUnity.assertIdentical(true, s.has('alpha'));
+            jsUnity.assertIdentical(true, s.has('beta'));
+            jsUnity.assertIdentical(true, s.empty(), "emptying a non-empty set should return true");
+            jsUnity.assertIdentical(0, s.length);
+            jsUnity.assertIdentical(false, s.has('alpha'));
+            jsUnity.assertIdentical(false, s.has('beta'));
+            jsUnity.assertIdentical(false, s.empty(), "emptying an empty set should return false");
         },
 
         "test LIB_set length property": function() {
