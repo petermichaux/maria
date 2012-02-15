@@ -191,6 +191,67 @@ var subjectSuite;
         "test implements": function() {
             jsUnity.assertIdentical(false, LIB_implementsSubject({}), 'basic objects should not implement the subject interface.');
             jsUnity.assertIdentical(true, LIB_implementsSubject(new LIB_Subject()), 'subject objects should implement the subject interface.');
+        },
+
+        "test that target doesn't change and that currentTarget does change when bubbling": function() {
+
+            var child0 = new LIB_Subject();
+            var child1 = new LIB_Subject();
+
+            var result0;
+            var result1;
+
+            child0.addEventListener('foo', function(ev) {
+                result0 = ev;
+                // bubble the event
+                child1.dispatchEvent(ev);
+            });
+
+            child1.addEventListener('foo', function(ev) {
+                result1 = ev;
+            });
+
+            child0.dispatchEvent({type:'foo'});
+
+            jsUnity.assertIdentical(result0.target, child0, 'assertion 1: The target should be child0.');
+            jsUnity.assertIdentical(result0.currentTarget, child0, 'assertion 2: The currentTarget should be child0.');
+            jsUnity.assertIdentical(result1.target, child0, 'assertion 3: The target should be child0.');
+            jsUnity.assertIdentical(result1.currentTarget, child1, 'assertion 4: The currentTarget should be child1.');
+
+        },
+
+        "test that bubbling while handling an event does not alter the original event": function() {
+
+            var child0 = new LIB_Subject();
+            var child1 = new LIB_Subject();
+            var child2 = new LIB_Subject();
+
+            var result0;
+            var result1;
+            var result2;
+
+            child0.addEventListener('foo', function(ev) {
+                result0 = ev;
+            });
+
+            child0.addEventListener('foo', function(ev) {
+                child1.dispatchEvent(ev);
+                result1 = ev;
+            });
+
+            child1.addEventListener('foo', function(ev) {
+                result2 = ev;
+            });
+
+            child0.dispatchEvent({type:'foo'});
+
+            jsUnity.assertIdentical(result0.target, child0, 'assertion 1: The target should be child0.');
+            jsUnity.assertIdentical(result0.currentTarget, child0, 'assertion 2: The currentTarget should be child0.');
+            jsUnity.assertIdentical(result1.target, child0, 'assertion 3: The target should be child0.');
+            jsUnity.assertIdentical(result1.currentTarget, child0, 'assertion 4: The currentTarget should be child0.');
+            jsUnity.assertIdentical(result2.target, child0, 'assertion 5: The target should be child0.');
+            jsUnity.assertIdentical(result2.currentTarget, child1, 'assertion 6: The currentTarget should be child1.');
+
         }
 
     };

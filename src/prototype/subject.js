@@ -6,6 +6,14 @@ var LIB_Subject = function() {};
         return Object.prototype.hasOwnProperty.call(o, p);
     }
 
+    var clone = (function() {
+        function F() {}
+        return function(o) {
+            F.prototype = o;
+            return new F();
+        };
+    }());
+
     function removeListener(listeners, listener, thisObj) {
         // Loop backwards through the array so adjacent references
         // to "listener" are all removed.
@@ -54,6 +62,12 @@ var LIB_Subject = function() {};
     // The "data.type" value is required and must be a string name of an event type.
     //
     LIB_Subject.prototype.dispatchEvent = function(data) {
+        // Want to ensure we don't alter the data object passed in as it 
+        // may be a bubbling event. So clone it and then setting currentTarget
+        // won't break some event that is already being dispatched.
+        data = clone(data);
+        ('target' in data) || (data.target = this); // don't change target on bubbling event
+        data.currentTarget = this; // change currentTarget on a bubbling event
         if (has(this, '_LIB_listeners')) {
             if (has(this._LIB_listeners, data.type)) {
                 callListeners(this._LIB_listeners[data.type], data);
