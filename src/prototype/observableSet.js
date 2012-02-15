@@ -36,7 +36,7 @@ LIB_ObservableSet.prototype['delete'] = function(element) {
 LIB_ObservableSet.prototype.elementListener = function(ev) {
     // bubble the event
     this.dispatchEvent(ev);
-    
+
     // If it is a destroy event being dispatched on the
     // destroyed element then we want to remove it from
     // this set.
