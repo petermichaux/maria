@@ -223,6 +223,23 @@ var observableSetSuite;
             });
             s.empty();
             jsUnity.assertIdentical(1, deleteEvents, "the delete listener should have been called only once");
+        },
+
+        "test empty removes listeners from subject elements": function() {
+            var element = new LIB_Subject();
+            var set = new LIB_ObservableSet();
+            set.add(element);
+            
+            var calls = 0;
+            set.addEventListener('foo', function(ev) {
+                calls++;
+            });
+            element.dispatchEvent({type: 'foo'});
+            jsUnity.assertIdentical(1, calls, "the element listener from the set should have been called when the element is in the set");
+            set.empty();
+            element.dispatchEvent({type: 'foo'});
+            jsUnity.assertIdentical(1, calls, "the element listener from the set should not have been called after emptying the set");
+            
         }
 
     };

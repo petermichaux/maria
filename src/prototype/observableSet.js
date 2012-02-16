@@ -53,6 +53,12 @@ LIB_ObservableSet.prototype.empty = function() {
     var deleted = this.toArray();
     var result = LIB_Set.prototype.empty.call(this);
     if (result) {
+        for (var i=0, ilen=deleted.length; i<ilen; i++) {
+            var element = deleted[i];
+            if (LIB_implementsSubject(element)) {
+                element.removeEventListener('LIB_all', this.elementListener, this);
+            }
+        }
         this.dispatchEvent({type: 'LIB_delete', relatedTargets: deleted, cancelBubble: true});
         this.dispatchEvent({type: 'LIB_afterDelete', relatedTargets: deleted});
     }
