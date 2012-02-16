@@ -55,16 +55,16 @@ var observableSetSuite;
         },
 
         "test add delete multiple elements in one call": function() {
-            
+
             var s = new LIB_ObservableSet();
-            
+
             var addEvents = 0;
             var deleteEvents = 0;
 
             s.addEventListener('LIB_add', function() {
                 addEvents++;
             });
-            
+
             s.addEventListener('LIB_delete', function() {
                 deleteEvents++;
             });
@@ -150,7 +150,60 @@ var observableSetSuite;
             jsUnity.assertIdentical(resultRoot.currentTarget, root);
 
         },
-        
+
+        "test LIB_add does not bubble and LIB_afterAdd does bubble": function() {
+            var childSet = new LIB_ObservableSet();
+            var parentSet = new LIB_ObservableSet();
+            var addBubbled = false;
+            var afterAddBubbled = true;
+            parentSet.add(childSet);
+            parentSet.addEventListener('LIB_add', function(ev) {
+                addBubbled = true;
+            });
+            parentSet.addEventListener('LIB_afterAdd', function(ev) {
+                afterAddBubbled = true;
+            });
+            childSet.add('alpha');
+            jsUnity.assertIdentical(false, addBubbled, 'the parent set should not know an element is added to the child set');
+            jsUnity.assertIdentical(true, afterAddBubbled, 'the parent set should know *after* an element is added to the child set');
+        },
+
+        "test LIB_delete does not bubble and LIB_afterDelete does bubble": function() {
+            var childSet = new LIB_ObservableSet();
+            var parentSet = new LIB_ObservableSet();
+            var deleteBubbled = false;
+            var afterDeleteBubbled = true;
+            parentSet.add(childSet);
+            parentSet.addEventListener('LIB_delete', function(ev) {
+                deleteBubbled = true;
+            });
+            parentSet.addEventListener('LIB_afterDelete', function(ev) {
+                afterDeleteBubbled = true;
+            });
+            childSet.add('alpha');
+            childSet['delete']('alpha');
+            jsUnity.assertIdentical(false, deleteBubbled, 'the parent set should not know an element is deleted from the child set');
+            jsUnity.assertIdentical(true, afterDeleteBubbled, 'the parent set should know *after* an element is deleted from the child set');
+        },
+
+        "test LIB_delete does not bubble and LIB_afterDelete does bubble when emptying": function() {
+            var childSet = new LIB_ObservableSet();
+            var parentSet = new LIB_ObservableSet();
+            var deleteBubbled = false;
+            var afterDeleteBubbled = true;
+            parentSet.add(childSet);
+            parentSet.addEventListener('LIB_delete', function(ev) {
+                deleteBubbled = true;
+            });
+            parentSet.addEventListener('LIB_afterDelete', function(ev) {
+                afterDeleteBubbled = true;
+            });
+            childSet.add('alpha');
+            childSet.empty();
+            jsUnity.assertIdentical(false, deleteBubbled, 'the parent set should not know an element is deleted from the child set when emptying the child set');
+            jsUnity.assertIdentical(true, afterDeleteBubbled, 'the parent set should know *after* an element is deleted from the child set when emptying the child set');
+        },
+
         "test destroy event on element removes it from the set": function() {
             var element = new LIB_Subject();
             var set = new LIB_ObservableSet();
@@ -161,7 +214,7 @@ var observableSetSuite;
             jsUnity.assertIdentical(0, set.length, "the set should not contain the element and so should have length 0");
             jsUnity.assertIdentical(false, set.has(element), "the set should not contain the element");
         },
-        
+
         "test empty dispatches events": function() {
             var s = new LIB_ObservableSet('alpha', 'beta');
             var deleteEvents = 0;

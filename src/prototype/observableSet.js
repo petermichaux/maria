@@ -24,7 +24,8 @@ LIB_ObservableSet.prototype.add = function() {
     }
     var modified = added.length > 0;
     if (modified) {
-        this.dispatchEvent({type: 'LIB_add', relatedTargets: added});
+        this.dispatchEvent({type: 'LIB_add', relatedTargets: added, cancelBubble: true});
+        this.dispatchEvent({type: 'LIB_afterAdd', relatedTargets: added});
     }
     return modified;
 };
@@ -42,7 +43,8 @@ LIB_ObservableSet.prototype['delete'] = function() {
     }
     var modified = deleted.length > 0;
     if (modified) {
-        this.dispatchEvent({type: 'LIB_delete', relatedTargets: deleted});
+        this.dispatchEvent({type: 'LIB_delete', relatedTargets: deleted, cancelBubble: true});
+        this.dispatchEvent({type: 'LIB_afterDelete', relatedTargets: deleted});
     }
     return modified;
 };
@@ -51,14 +53,17 @@ LIB_ObservableSet.prototype.empty = function() {
     var deleted = this.toArray();
     var result = LIB_Set.prototype.empty.call(this);
     if (result) {
-        this.dispatchEvent({type: 'LIB_delete', relatedTargets: deleted});
+        this.dispatchEvent({type: 'LIB_delete', relatedTargets: deleted, cancelBubble: true});
+        this.dispatchEvent({type: 'LIB_afterDelete', relatedTargets: deleted});
     }
     return result;
 };
 
 LIB_ObservableSet.prototype.elementListener = function(ev) {
     // bubble the event
-    this.dispatchEvent(ev);
+    if (!ev.cancelBubble) {
+        this.dispatchEvent(ev);
+    }
 
     // If it is a destroy event being dispatched on the
     // destroyed element then we want to remove it from
