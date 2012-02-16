@@ -60,10 +60,6 @@ LIB_ObservableSet.prototype.empty = function() {
 };
 
 LIB_ObservableSet.prototype.elementListener = function(ev) {
-    // bubble the event
-    if (!ev.cancelBubble) {
-        this.dispatchEvent(ev);
-    }
 
     // If it is a destroy event being dispatched on the
     // destroyed element then we want to remove it from
@@ -72,4 +68,10 @@ LIB_ObservableSet.prototype.elementListener = function(ev) {
         (ev.currentTarget === ev.target)) {
         this['delete'](ev.target);
     }
+
+    // bubble the event
+    if (!ev.cancelBubble) {
+        this.dispatchEvent(ev);
+    }
+
 };
