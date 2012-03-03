@@ -1,4 +1,4 @@
-var subjectSuite;
+var eventTargetSuite;
 
 (function() {
 
@@ -54,8 +54,8 @@ var subjectSuite;
     // END some interesting objects to play with.
 
 
-    subjectSuite = {
-        suiteName: 'subjectSuite',
+    eventTargetSuite = {
+        suiteName: 'eventTargetSuite',
 
         setUp: function() {
             // clear the feeds
