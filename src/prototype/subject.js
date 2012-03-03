@@ -1,4 +1,4 @@
-var LIB_Subject = function() {};
+var LIB_EventTarget = function() {};
 
 (function() {
 
@@ -47,7 +47,7 @@ var LIB_Subject = function() {};
     //
     // One listener can be added multiple times.
     //
-    LIB_Subject.prototype.addEventListener = function(event, listener, /*optional*/ methodName) {
+    LIB_EventTarget.prototype.addEventListener = function(event, listener, /*optional*/ methodName) {
         has(this, '_LIB_listeners') || (this._LIB_listeners = {});
         has(this._LIB_listeners, event) || (this._LIB_listeners[event] = []);
         this._LIB_listeners[event].push({listener:listener, methodName:(methodName||'handleEvent')});
@@ -58,7 +58,7 @@ var LIB_Subject = function() {};
     //
     // No complaints if the "listener" is not found in the list.
     //
-    LIB_Subject.prototype.removeEventListener = function(event, listener, /*optional*/ methodName) {
+    LIB_EventTarget.prototype.removeEventListener = function(event, listener, /*optional*/ methodName) {
         if (has(this, '_LIB_listeners') &&
             has(this._LIB_listeners, event)) {
             removeListener(this._LIB_listeners[event], listener, (methodName || 'handleEvent'));
@@ -68,7 +68,7 @@ var LIB_Subject = function() {};
     // The "data" will be pushed to each listener.
     // The "data.type" value is required and must be a string name of an event type.
     //
-    LIB_Subject.prototype.dispatchEvent = function(data) {
+    LIB_EventTarget.prototype.dispatchEvent = function(data) {
         // Want to ensure we don't alter the data object passed in as it 
         // may be a bubbling event. So clone it and then setting currentTarget
         // won't break some event that is already being dispatched.
@@ -87,18 +87,18 @@ var LIB_Subject = function() {};
 
 }());
 
-var LIB_mixinSubject = function(obj) {
-    for (var p in LIB_Subject.prototype) {
-        if (Object.prototype.hasOwnProperty.call(LIB_Subject.prototype, p) &&
-            // Don't want to copy LIB_Subject.prototype._LIB_listeners object. Want the obj object
-            // to have its own listeners and not share listeners with LIB_Subject.prototype.
-            (typeof LIB_Subject.prototype[p] === 'function')) {
-            obj[p] = LIB_Subject.prototype[p];
+var LIB_mixinEventTarget = function(obj) {
+    for (var p in LIB_EventTarget.prototype) {
+        if (Object.prototype.hasOwnProperty.call(LIB_EventTarget.prototype, p) &&
+            // Don't want to copy LIB_EventTarget.prototype._LIB_listeners object. Want the obj object
+            // to have its own listeners and not share listeners with LIB_EventTarget.prototype.
+            (typeof LIB_EventTarget.prototype[p] === 'function')) {
+            obj[p] = LIB_EventTarget.prototype[p];
         }
     }
 };
 
-var LIB_implementsSubject = function(obj) {
+var LIB_implementsEventTarget = function(obj) {
     return !!(obj.addEventListener &&
               obj.removeEventListener &&
               obj.dispatchEvent);

@@ -7,7 +7,7 @@ var LIB_ObservableSet = function() {
 LIB_ObservableSet.prototype = new LIB_Set();
 LIB_ObservableSet.prototype.constructor = LIB_ObservableSet;
 
-LIB_mixinSubject(LIB_ObservableSet.prototype);
+LIB_mixinEventTarget(LIB_ObservableSet.prototype);
 
 // Wrap the set mutator methods to dispatch events.
 
@@ -17,7 +17,7 @@ LIB_ObservableSet.prototype.add = function() {
         var argument = arguments[i];
         if (LIB_Set.prototype.add.call(this, argument)) {
             added.push(argument);
-            if (LIB_implementsSubject(argument)) {
+            if (LIB_implementsEventTarget(argument)) {
                 argument.addEventListener('LIB_all', this, 'elementListener');
             }
         }
@@ -36,7 +36,7 @@ LIB_ObservableSet.prototype['delete'] = function() {
         var argument = arguments[i];
         if (LIB_Set.prototype['delete'].call(this, argument)) {
             deleted.push(argument);
-            if (LIB_implementsSubject(argument)) {
+            if (LIB_implementsEventTarget(argument)) {
                 argument.removeEventListener('LIB_all', this, 'elementListener');
             }
         }
@@ -55,7 +55,7 @@ LIB_ObservableSet.prototype.empty = function() {
     if (result) {
         for (var i=0, ilen=deleted.length; i<ilen; i++) {
             var element = deleted[i];
-            if (LIB_implementsSubject(element)) {
+            if (LIB_implementsEventTarget(element)) {
                 element.removeEventListener('LIB_all', this, 'elementListener');
             }
         }

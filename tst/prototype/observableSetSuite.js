@@ -102,7 +102,7 @@ var observableSetSuite;
 
         "test automatic bubbling": function() {
 
-            var child = new LIB_Subject();
+            var child = new LIB_EventTarget();
             var parent = new LIB_ObservableSet();
             var root = new LIB_ObservableSet();
 
@@ -205,7 +205,7 @@ var observableSetSuite;
         },
 
         "test destroy event on element removes it from the set": function() {
-            var element = new LIB_Subject();
+            var element = new LIB_EventTarget();
             var set = new LIB_ObservableSet();
             set.add(element);
             jsUnity.assertIdentical(1, set.length, "the set should contain the element and so have length 1");
@@ -226,7 +226,7 @@ var observableSetSuite;
         },
 
         "test empty removes listeners from subject elements": function() {
-            var element = new LIB_Subject();
+            var element = new LIB_EventTarget();
             var set = new LIB_ObservableSet();
             set.add(element);
             

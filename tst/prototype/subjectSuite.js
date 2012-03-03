@@ -42,12 +42,12 @@ var subjectSuite;
         feedAll.push(data.tweet);
     };
 
-    var twitter = new LIB_Subject();
+    var twitter = new LIB_EventTarget();
 
     function APP_Twitter(name) {
         this.name = name;
     };
-    LIB_mixinSubject(APP_Twitter.prototype);
+    LIB_mixinEventTarget(APP_Twitter.prototype);
 
     var tweetsRUs = new APP_Twitter('Tweets R Us');
 
@@ -67,20 +67,20 @@ var subjectSuite;
             feedAll = [];
 
             // add some listeners
-            LIB_Subject.prototype.addEventListener('foo', listener1);
-            LIB_Subject.prototype.addEventListener('bar', listener1b);
-            LIB_Subject.prototype.addEventListener('LIB_all', listenerAll);
+            LIB_EventTarget.prototype.addEventListener('foo', listener1);
+            LIB_EventTarget.prototype.addEventListener('bar', listener1b);
+            LIB_EventTarget.prototype.addEventListener('LIB_all', listenerAll);
             twitter.addEventListener('foo', listener2);
             tweetsRUs.addEventListener('foo', listener3);
             APP_Twitter.prototype.addEventListener('foo', listener4);
 
             // send some tweets
-            LIB_Subject.prototype.dispatchEvent({
+            LIB_EventTarget.prototype.dispatchEvent({
                 type: 'foo',
                 tweet: tweet1
             });
 
-            LIB_Subject.prototype.dispatchEvent({
+            LIB_EventTarget.prototype.dispatchEvent({
                 type: 'bar',
                 tweet: tweet1b
             });
@@ -109,29 +109,29 @@ var subjectSuite;
 
         tearDown: function() {
             // remove the listeners
-            LIB_Subject.prototype.removeEventListener('foo', listener1);
-            LIB_Subject.prototype.removeEventListener('bar', listener1b);
-            LIB_Subject.prototype.removeEventListener('LIB_all', listenerAll);
+            LIB_EventTarget.prototype.removeEventListener('foo', listener1);
+            LIB_EventTarget.prototype.removeEventListener('bar', listener1b);
+            LIB_EventTarget.prototype.removeEventListener('LIB_all', listenerAll);
             twitter.removeEventListener('foo', listener2);
             tweetsRUs.removeEventListener('foo', listener3);
             APP_Twitter.prototype.removeEventListener('foo', listener4);
         },
 
-        "test LIB_Subject.prototype constructor": function() {
-            jsUnity.assertIdentical(LIB_Subject, LIB_Subject.prototype.constructor, "LIB_Subject.prototype's constructor should be Object.");
+        "test LIB_EventTarget.prototype constructor": function() {
+            jsUnity.assertIdentical(LIB_EventTarget, LIB_EventTarget.prototype.constructor, "LIB_EventTarget.prototype's constructor should be Object.");
         },
 
-        "test LIB_Subject instance's constructor": function() {
-            jsUnity.assertIdentical(LIB_Subject, LIB_Subject.prototype.constructor, "LIB_Subject.prototype should have Object as its constructor.");
-            jsUnity.assertIdentical(LIB_Subject, (new LIB_Subject()).constructor, "an instance of LIB_Subject should have LIB_Subject as its constructor.");
+        "test LIB_EventTarget instance's constructor": function() {
+            jsUnity.assertIdentical(LIB_EventTarget, LIB_EventTarget.prototype.constructor, "LIB_EventTarget.prototype should have Object as its constructor.");
+            jsUnity.assertIdentical(LIB_EventTarget, (new LIB_EventTarget()).constructor, "an instance of LIB_EventTarget should have LIB_EventTarget as its constructor.");
         },
 
-        "test LIB_mixinSubject does not change constructor": function() {
+        "test LIB_mixinEventTarget does not change constructor": function() {
             function F() {}
             var obj = new F();
             var constructorBefore = obj.constructor;
             jsUnity.assertIdentical(F, constructorBefore, "sanity check");
-            LIB_mixinSubject(obj);
+            LIB_mixinEventTarget(obj);
             jsUnity.assertIdentical(constructorBefore, obj.constructor, "the constructor should not have changed");
         },
 
@@ -152,7 +152,7 @@ var subjectSuite;
         },
 
         "test methodName argument": function() {
-            var s = new LIB_Subject();
+            var s = new LIB_EventTarget();
             var obj0 = {
                 name: 'obj0_name',
                 handler: function(ev) {
@@ -179,14 +179,14 @@ var subjectSuite;
         },
 
         "test implements": function() {
-            jsUnity.assertIdentical(false, LIB_implementsSubject({}), 'basic objects should not implement the subject interface.');
-            jsUnity.assertIdentical(true, LIB_implementsSubject(new LIB_Subject()), 'subject objects should implement the subject interface.');
+            jsUnity.assertIdentical(false, LIB_implementsEventTarget({}), 'basic objects should not implement the subject interface.');
+            jsUnity.assertIdentical(true, LIB_implementsEventTarget(new LIB_EventTarget()), 'subject objects should implement the subject interface.');
         },
 
         "test that target doesn't change and that currentTarget does change when bubbling": function() {
 
-            var child0 = new LIB_Subject();
-            var child1 = new LIB_Subject();
+            var child0 = new LIB_EventTarget();
+            var child1 = new LIB_EventTarget();
 
             var result0;
             var result1;
@@ -212,9 +212,9 @@ var subjectSuite;
 
         "test that bubbling while handling an event does not alter the original event": function() {
 
-            var child0 = new LIB_Subject();
-            var child1 = new LIB_Subject();
-            var child2 = new LIB_Subject();
+            var child0 = new LIB_EventTarget();
+            var child1 = new LIB_EventTarget();
+            var child2 = new LIB_EventTarget();
 
             var result0;
             var result1;
