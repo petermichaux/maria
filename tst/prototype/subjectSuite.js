@@ -151,7 +151,7 @@ var subjectSuite;
             jsUnity.assertArrayIdentical([tweet1, tweet1b], feedAll);
         },
 
-        "test thisObj argument": function() {
+        "test methodName argument": function() {
             var s = new LIB_Subject();
             var obj0 = {
                 name: 'obj0_name',
@@ -159,33 +159,23 @@ var subjectSuite;
                     this.result = this.name;
                 }
             };
-            var obj1 = {
-                name: 'obj1_name'
-            };
-            s.addEventListener('foo', obj0.handler, obj0);
-            // borrow obj0's handler and use for obj1
-            s.addEventListener('foo', obj0.handler, obj1);
+            s.addEventListener('foo', obj0, 'handler');
 
             jsUnity.assertIdentical(undefined, obj0.result);
-            jsUnity.assertIdentical(undefined, obj1.result);
 
             s.dispatchEvent({type: 'foo'});
 
             jsUnity.assertIdentical('obj0_name', obj0.result);
-            jsUnity.assertIdentical('obj1_name', obj1.result);
             
             delete obj0.result;
-            delete obj1.result;
 
             jsUnity.assertIdentical(undefined, obj0.result);
-            jsUnity.assertIdentical(undefined, obj1.result);
 
-            s.removeEventListener('foo', obj0.handler, obj1);
+            s.removeEventListener('foo', obj0, 'handler');
+
             s.dispatchEvent({type: 'foo'});
 
-            jsUnity.assertIdentical('obj0_name', obj0.result);
-            jsUnity.assertIdentical(undefined, obj1.result);
-
+            jsUnity.assertIdentical(undefined, obj0.result);
         },
 
         "test implements": function() {

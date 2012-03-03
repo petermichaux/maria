@@ -14,12 +14,12 @@ var LIB_Subject = function() {};
         };
     }());
 
-    function removeListener(listeners, listener, thisObj) {
+    function removeListener(listeners, listener, methodName) {
         // Loop backwards through the array so adjacent references
         // to "listener" are all removed.
         for (var i = listeners.length; i--; ) {
             if ((listeners[i].listener === listener) &&
-                ((!thisObj) || (listeners[i].thisObj === thisObj))) {
+                (listeners[i].methodName === methodName)) {
                 listeners.splice(i, 1);
             }
         }
@@ -31,7 +31,14 @@ var LIB_Subject = function() {};
         // iterating over the list.
         listeners = listeners.slice(0);
         for (var i = 0, ilen = listeners.length; i < ilen; i++) {
-            listeners[i].listener.call(listeners[i].thisObj, data);
+            var listener = listeners[i].listener;
+            var methodName = listeners[i].methodName;
+            if (typeof listener === 'function') {
+                listener(data);
+            }
+            else {
+                listener[methodName](data);
+            }
         }
     }
 
@@ -40,10 +47,10 @@ var LIB_Subject = function() {};
     //
     // One listener can be added multiple times.
     //
-    LIB_Subject.prototype.addEventListener = function(event, listener, thisObj) {
+    LIB_Subject.prototype.addEventListener = function(event, listener, /*optional*/ methodName) {
         has(this, '_LIB_listeners') || (this._LIB_listeners = {});
         has(this._LIB_listeners, event) || (this._LIB_listeners[event] = []);
-        this._LIB_listeners[event].push({listener:listener, thisObj:thisObj});
+        this._LIB_listeners[event].push({listener:listener, methodName:(methodName||'handleEvent')});
     };
 
     // addEventListener allows one listener to be added multiple times.
@@ -51,10 +58,10 @@ var LIB_Subject = function() {};
     //
     // No complaints if the "listener" is not found in the list.
     //
-    LIB_Subject.prototype.removeEventListener = function(event, listener, thisObj) {
+    LIB_Subject.prototype.removeEventListener = function(event, listener, /*optional*/ methodName) {
         if (has(this, '_LIB_listeners') &&
             has(this._LIB_listeners, event)) {
-            removeListener(this._LIB_listeners[event], listener, thisObj);
+            removeListener(this._LIB_listeners[event], listener, (methodName || 'handleEvent'));
         }
     };
 
