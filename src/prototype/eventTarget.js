@@ -2,11 +2,11 @@ var LIB_EventTarget = function() {};
 
 (function() {
 
-    function has(o, p) {
+    function hasOwnProperty(o, p) {
         return Object.prototype.hasOwnProperty.call(o, p);
     }
 
-    var clone = (function() {
+    var create = (function() {
         function F() {}
         return function(o) {
             F.prototype = o;
@@ -48,8 +48,8 @@ var LIB_EventTarget = function() {};
     // One listener can be added multiple times.
     //
     LIB_EventTarget.prototype.addEventListener = function(event, listener, /*optional*/ methodName) {
-        has(this, '_LIB_listeners') || (this._LIB_listeners = {});
-        has(this._LIB_listeners, event) || (this._LIB_listeners[event] = []);
+        hasOwnProperty(this, '_LIB_listeners') || (this._LIB_listeners = {});
+        hasOwnProperty(this._LIB_listeners, event) || (this._LIB_listeners[event] = []);
         this._LIB_listeners[event].push({listener:listener, methodName:(methodName||'handleEvent')});
     };
 
@@ -59,8 +59,8 @@ var LIB_EventTarget = function() {};
     // No complaints if the "listener" is not found in the list.
     //
     LIB_EventTarget.prototype.removeEventListener = function(event, listener, /*optional*/ methodName) {
-        if (has(this, '_LIB_listeners') &&
-            has(this._LIB_listeners, event)) {
+        if (hasOwnProperty(this, '_LIB_listeners') &&
+            hasOwnProperty(this._LIB_listeners, event)) {
             removeListener(this._LIB_listeners[event], listener, (methodName || 'handleEvent'));
         }
     };
@@ -72,14 +72,14 @@ var LIB_EventTarget = function() {};
         // Want to ensure we don't alter the data object passed in as it 
         // may be a bubbling event. So clone it and then setting currentTarget
         // won't break some event that is already being dispatched.
-        data = clone(data);
+        data = create(data);
         ('target' in data) || (data.target = this); // don't change target on bubbling event
         data.currentTarget = this; // change currentTarget on a bubbling event
-        if (has(this, '_LIB_listeners')) {
-            if (has(this._LIB_listeners, data.type)) {
+        if (hasOwnProperty(this, '_LIB_listeners')) {
+            if (hasOwnProperty(this._LIB_listeners, data.type)) {
                 callListeners(this._LIB_listeners[data.type], data);
             }
-            if (has(this._LIB_listeners, 'LIB_all')) {
+            if (hasOwnProperty(this._LIB_listeners, 'LIB_all')) {
                 callListeners(this._LIB_listeners.LIB_all, data);
             }
         }
