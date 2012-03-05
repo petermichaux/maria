@@ -163,6 +163,10 @@ var eventTargetSuite;
             s.addEventListener('foo', listener);
             s.dispatchEvent({type:'foo'});
             jsUnity.assertIdentical(true, called);
+            called = false;
+            s.removeEventListener('foo', listener);
+            s.dispatchEvent({type:'foo'});
+            jsUnity.assertIdentical(false, called);
         },
 
         "test methodName argument": function() {
@@ -203,6 +207,10 @@ var eventTargetSuite;
             jsUnity.assertNotIdentical(global, thisObj);
             s.dispatchEvent({type:'foo'});
             jsUnity.assertIdentical(global, thisObj);
+            thisObj = null;
+            s.removeEventListener('foo', f);
+            s.dispatchEvent({type:'foo'});
+            jsUnity.assertIdentical(null, thisObj);
         },
 
         "test thisObj argument differentiates two listeners": function() {
