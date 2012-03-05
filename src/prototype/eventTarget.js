@@ -14,12 +14,12 @@ var LIB_EventTarget = function() {};
         };
     }());
 
-    function removeListener(listeners, listener, methodName) {
+    function removeListener(listeners, listener, auxArg) {
         // Loop backwards through the array so adjacent references
         // to "listener" are all removed.
         for (var i = listeners.length; i--; ) {
             if ((listeners[i].listener === listener) &&
-                (listeners[i].methodName === methodName)) {
+                (listeners[i].auxArg === auxArg)) {
                 listeners.splice(i, 1);
             }
         }
@@ -29,28 +29,40 @@ var LIB_EventTarget = function() {};
         // Copy the list of listeners in case one of the
         // listeners modifies the list while we are
         // iterating over the list.
+        //
+        // Without making a copy, one listener removing
+        // an already-called listener would result in skipping
+        // a not-yet-called listener. One listener removing 
+        // a not-yet-called listener would result in skipping that
+        // not-yet-called listner. The worst case scenario 
+        // is a listener adding itself again which would
+        // create an infinite loop.
+        // 
         listeners = listeners.slice(0);
         for (var i = 0, ilen = listeners.length; i < ilen; i++) {
             var listener = listeners[i].listener;
-            var methodName = listeners[i].methodName;
+            var auxArg = listeners[i].auxArg;
             if (typeof listener === 'function') {
-                listener(data);
+                listener.call(auxArg, data);
             }
             else {
-                listener[methodName](data);
+                listener[auxArg || 'handleEvent'](data);
             }
         }
     }
 
     // "event" is an event name string.
-    // "listener" is a callback function.
+    // "listener" is an object or callback function.
+    // "auxArg" If listener is an object then auxArg is the name of the method to call
+    // on listener. Default "handleEvent". If "listener" is a function then auxArg
+    // is the object to use as the value of "this" when listener is called.
     //
     // One listener can be added multiple times.
     //
-    LIB_EventTarget.prototype.addEventListener = function(event, listener, /*optional*/ methodName) {
+    LIB_EventTarget.prototype.addEventListener = function(event, listener, /*optional*/ auxArg) {
         hasOwnProperty(this, '_LIB_listeners') || (this._LIB_listeners = {});
         hasOwnProperty(this._LIB_listeners, event) || (this._LIB_listeners[event] = []);
-        this._LIB_listeners[event].push({listener:listener, methodName:(methodName||'handleEvent')});
+        this._LIB_listeners[event].push({listener:listener, auxArg:auxArg});
     };
 
     // addEventListener allows one listener to be added multiple times.
@@ -58,14 +70,14 @@ var LIB_EventTarget = function() {};
     //
     // No complaints if the "listener" is not found in the list.
     //
-    LIB_EventTarget.prototype.removeEventListener = function(event, listener, /*optional*/ methodName) {
+    LIB_EventTarget.prototype.removeEventListener = function(event, listener, /*optional*/ auxArg) {
         if (hasOwnProperty(this, '_LIB_listeners') &&
             hasOwnProperty(this._LIB_listeners, event)) {
-            removeListener(this._LIB_listeners[event], listener, (methodName || 'handleEvent'));
+            removeListener(this._LIB_listeners[event], listener, auxArg);
         }
     };
 
-    // The "data" will be pushed to each listener.
+    // The "data" will be pushed to each listener as the event object.
     // The "data.type" value is required and must be a string name of an event type.
     //
     LIB_EventTarget.prototype.dispatchEvent = function(data) {

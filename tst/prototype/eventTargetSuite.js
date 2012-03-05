@@ -1,6 +1,7 @@
 var eventTargetSuite;
 
 (function() {
+    var global = this;
 
     // BEGIN some interesting objects to play with.
 
@@ -151,6 +152,19 @@ var eventTargetSuite;
             jsUnity.assertArrayIdentical([tweet1, tweet1b], feedAll);
         },
 
+        "test methodName defaults to \"handleEvent\"": function() {
+            var s = new LIB_EventTarget();
+            var called = false;
+            var listener = {
+                handleEvent: function() {
+                    called = true;
+                }
+            };
+            s.addEventListener('foo', listener);
+            s.dispatchEvent({type:'foo'});
+            jsUnity.assertIdentical(true, called);
+        },
+
         "test methodName argument": function() {
             var s = new LIB_EventTarget();
             var obj0 = {
@@ -176,6 +190,55 @@ var eventTargetSuite;
             s.dispatchEvent({type: 'foo'});
 
             jsUnity.assertIdentical(undefined, obj0.result);
+        },
+
+        "test thisObj not supplied is global object": function() {
+            var s = new LIB_EventTarget();
+            var thisObj = null;
+            var f = function() {
+                thisObj = this;
+            };
+            s.addEventListener('foo', f);
+            // global is specified at the top of this file
+            jsUnity.assertNotIdentical(global, thisObj);
+            s.dispatchEvent({type:'foo'});
+            jsUnity.assertIdentical(global, thisObj);
+        },
+
+        "test thisObj argument differentiates two listeners": function() {
+            var s = new LIB_EventTarget();
+            var obj0 = {
+                name: 'obj0_name',
+                handler: function(ev) {
+                    this.result = this.name;
+                }
+            };
+            var obj1 = {
+                name: 'obj1_name'
+            };
+            s.addEventListener('foo', obj0.handler, obj0);
+            // borrow obj0's handler and use for obj1
+            s.addEventListener('foo', obj0.handler, obj1);
+
+            jsUnity.assertIdentical(undefined, obj0.result);
+            jsUnity.assertIdentical(undefined, obj1.result);
+
+            s.dispatchEvent({type: 'foo'});
+
+            jsUnity.assertIdentical('obj0_name', obj0.result);
+            jsUnity.assertIdentical('obj1_name', obj1.result);
+            
+            delete obj0.result;
+            delete obj1.result;
+
+            jsUnity.assertIdentical(undefined, obj0.result);
+            jsUnity.assertIdentical(undefined, obj1.result);
+
+            s.removeEventListener('foo', obj0.handler, obj1);
+            s.dispatchEvent({type: 'foo'});
+
+            jsUnity.assertIdentical('obj0_name', obj0.result);
+            jsUnity.assertIdentical(undefined, obj1.result);
         },
 
         "test implements": function() {
