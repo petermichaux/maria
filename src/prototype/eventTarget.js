@@ -1,3 +1,15 @@
+/**
+
+@property LIB_EventTarget
+
+@description
+A constructor function for creating event target objects.
+
+var et = new LIB_EventTarget();
+
+The methods of an event target object are inspired by the DOM2 standard.
+
+*/
 var LIB_EventTarget = function() {};
 
 (function() {
@@ -25,7 +37,7 @@ var LIB_EventTarget = function() {};
         }
     }
 
-    function callListeners(listeners, data) {
+    function callListeners(listeners, evt) {
         // Copy the list of listeners in case one of the
         // listeners modifies the list while we are
         // iterating over the list.
@@ -37,68 +49,139 @@ var LIB_EventTarget = function() {};
         // not-yet-called listner. The worst case scenario 
         // is a listener adding itself again which would
         // create an infinite loop.
-        // 
+        //
         listeners = listeners.slice(0);
         for (var i = 0, ilen = listeners.length; i < ilen; i++) {
             var listener = listeners[i].listener;
             var auxArg = listeners[i].auxArg;
             if (typeof listener === 'function') {
-                listener.call(auxArg, data);
+                listener.call(auxArg, evt);
             }
             else {
-                listener[auxArg || 'handleEvent'](data);
+                listener[auxArg || 'handleEvent'](evt);
             }
         }
     }
 
-    // "event" is an event name string.
-    // "listener" is an object or callback function.
-    // "auxArg" If listener is an object then auxArg is the name of the method to call
-    // on listener. Default "handleEvent". If "listener" is a function then auxArg
-    // is the object to use as the value of "this" when listener is called.
-    //
-    // One listener can be added multiple times.
-    //
-    LIB_EventTarget.prototype.addEventListener = function(event, listener, /*optional*/ auxArg) {
+/**
+
+@property LIB_EventTarget.prototype.addEventListener
+
+@parameter type {string} The name of the event.
+
+@parameter listener {object|function} The listener object or callback function.
+
+@parameter auxArg {string|object} Optional. See description.
+
+@description
+
+If the listener is an object then when a matching event type is dispatched on
+the event target, the listener object's handleEvent method will be called. 
+Using the auxArg you can specify the name of the method to be called.
+
+If the listener is a function then when a matching event type is dispatched on
+the event target, the listener function is called with global object set as
+the "this" object. Using the auxArg you can specifiy a different object to be
+the "this" object.
+
+One listener (or listener/auxArg pair to be more precise) can be added
+multiple times.
+
+et.addEventListener('change', {handleEvent:function(){}});
+et.addEventListener('change', {handleChange:function(){}}, 'handleChange');
+et.addEventListener('change', function(){});
+et.addEventListener('change', this.handleChange, this);
+
+*/
+    LIB_EventTarget.prototype.addEventListener = function(type, listener, /*optional*/ auxArg) {
         hasOwnProperty(this, '_LIB_listeners') || (this._LIB_listeners = {});
-        hasOwnProperty(this._LIB_listeners, event) || (this._LIB_listeners[event] = []);
-        this._LIB_listeners[event].push({listener:listener, auxArg:auxArg});
+        hasOwnProperty(this._LIB_listeners, type) || (this._LIB_listeners[type] = []);
+        this._LIB_listeners[type].push({listener:listener, auxArg:auxArg});
     };
 
-    // addEventListener allows one listener to be added multiple times.
-    // We remove all references to "listener".
-    //
-    // No complaints if the "listener" is not found in the list.
-    //
-    LIB_EventTarget.prototype.removeEventListener = function(event, listener, /*optional*/ auxArg) {
+/**
+
+@property LIB_EventTarget.prototype.removeEventListener
+
+@parameter type {string} The name of the event.
+
+@parameter listener {object|function} The listener object or callback function.
+
+@parameter auxArg {string|object} Optional.
+
+@description
+
+Removes all added listeners matching the type/listener/auxArg combination exactly.
+If this combination is not found there are no errors. If this combination is found
+more than once all are removed.
+
+et.removeEventListener('change', controller);
+et.removeEventListener('change', controller, 'handleChange');
+et.removeEventListener('change', fn);
+et.removeEventListener('change', this.handleChange, this);
+
+*/
+    LIB_EventTarget.prototype.removeEventListener = function(type, listener, /*optional*/ auxArg) {
         if (hasOwnProperty(this, '_LIB_listeners') &&
-            hasOwnProperty(this._LIB_listeners, event)) {
-            removeListener(this._LIB_listeners[event], listener, auxArg);
+            hasOwnProperty(this._LIB_listeners, type)) {
+            removeListener(this._LIB_listeners[type], listener, auxArg);
         }
     };
 
-    // The "data" will be pushed to each listener as the event object.
-    // The "data.type" value is required and must be a string name of an event type.
-    //
-    LIB_EventTarget.prototype.dispatchEvent = function(data) {
-        // Want to ensure we don't alter the data object passed in as it 
+/**
+
+@property LIB_EventTarget.prototype.dispatchEvent
+
+@parameter evt {object} The event object to dispatch to all listeners.
+
+@description
+
+The evt.type property is required. All listeners registered for this
+event type are called with evt passed as an argument to the listeners.
+
+If not set, the evt.target property will be set to be the event target.
+
+The evt.currentTarget will be set to be the event target.
+
+et.dispatchEvent({type:'change'});
+et.dispatchEvent({type:'change', extraData:'abc'});
+
+*/
+    LIB_EventTarget.prototype.dispatchEvent = function(evt) {
+        // Want to ensure we don't alter the evt object passed in as it 
         // may be a bubbling event. So clone it and then setting currentTarget
         // won't break some event that is already being dispatched.
-        data = create(data);
-        ('target' in data) || (data.target = this); // don't change target on bubbling event
-        data.currentTarget = this; // change currentTarget on a bubbling event
+        evt = create(evt);
+        ('target' in evt) || (evt.target = this); // don't change target on bubbling event
+        evt.currentTarget = this; // change currentTarget on a bubbling event
         if (hasOwnProperty(this, '_LIB_listeners')) {
-            if (hasOwnProperty(this._LIB_listeners, data.type)) {
-                callListeners(this._LIB_listeners[data.type], data);
+            if (hasOwnProperty(this._LIB_listeners, evt.type)) {
+                callListeners(this._LIB_listeners[evt.type], evt);
             }
             if (hasOwnProperty(this._LIB_listeners, 'LIB_all')) {
-                callListeners(this._LIB_listeners.LIB_all, data);
+                callListeners(this._LIB_listeners.LIB_all, evt);
             }
         }
     };
 
 }());
 
+/**
+
+@property LIB_mixinEventTarget
+
+@parameter obj {object} The object to be made into an event target.
+
+@description
+
+Mixes in the event target methods into any object.
+
+var o = {}
+LIB_mixinEventTarget(o);
+o.addEventListener('change', function(){alert('change');});
+o.dispatchEvent({type:'change'});
+
+*/
 var LIB_mixinEventTarget = function(obj) {
     for (var p in LIB_EventTarget.prototype) {
         if (Object.prototype.hasOwnProperty.call(LIB_EventTarget.prototype, p) &&
@@ -110,6 +193,18 @@ var LIB_mixinEventTarget = function(obj) {
     }
 };
 
+
+/**
+
+@property LIB_implementsEventTarget
+
+@parameter obj {object} The object to verify as an event target.
+
+@description
+
+Check that the obj parameter is an event target.
+
+*/
 var LIB_implementsEventTarget = function(obj) {
     return !!(obj.addEventListener &&
               obj.removeEventListener &&
