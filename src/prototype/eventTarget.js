@@ -115,8 +115,9 @@ Removes all added listeners matching the type/listener/auxArg combination exactl
 If this combination is not found there are no errors. If this combination is found
 more than once all are removed.
 
-et.removeEventListener('change', controller);
-et.removeEventListener('change', controller, 'handleChange');
+var o = {handleEvent:function(){}, handleChange:function(){}};
+et.removeEventListener('change', o);
+et.removeEventListener('change', o, 'handleChange');
 et.removeEventListener('change', fn);
 et.removeEventListener('change', this.handleChange, this);
 
