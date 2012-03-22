@@ -26,7 +26,7 @@ var LIB_EventTarget = function() {};
         };
     }());
 
-    function removeListener(listeners, listener, auxArg) {
+    function removeEventListener(listeners, listener, auxArg) {
         // Loop backwards through the array so adjacent references
         // to "listener" are all removed.
         for (var i = listeners.length; i--; ) {
@@ -37,7 +37,7 @@ var LIB_EventTarget = function() {};
         }
     }
 
-    function callListeners(listeners, evt) {
+    function dispatchEvent(listeners, evt) {
         // Copy the list of listeners in case one of the
         // listeners modifies the list while we are
         // iterating over the list.
@@ -125,7 +125,7 @@ et.removeEventListener('change', this.handleChange, this);
     LIB_EventTarget.prototype.removeEventListener = function(type, listener, /*optional*/ auxArg) {
         if (hasOwnProperty(this, '_LIB_listeners') &&
             hasOwnProperty(this._LIB_listeners, type)) {
-            removeListener(this._LIB_listeners[type], listener, auxArg);
+            removeEventListener(this._LIB_listeners[type], listener, auxArg);
         }
     };
 
@@ -157,10 +157,10 @@ et.dispatchEvent({type:'change', extraData:'abc'});
         evt.currentTarget = this; // change currentTarget on a bubbling event
         if (hasOwnProperty(this, '_LIB_listeners')) {
             if (hasOwnProperty(this._LIB_listeners, evt.type)) {
-                callListeners(this._LIB_listeners[evt.type], evt);
+                dispatchEvent(this._LIB_listeners[evt.type], evt);
             }
             if (hasOwnProperty(this._LIB_listeners, 'LIB_all')) {
-                callListeners(this._LIB_listeners.LIB_all, evt);
+                dispatchEvent(this._LIB_listeners.LIB_all, evt);
             }
         }
     };
