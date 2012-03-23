@@ -313,6 +313,19 @@ var eventTargetSuite;
             jsUnity.assertIdentical(result2.target, child0, 'assertion 5: The target should be child0.');
             jsUnity.assertIdentical(result2.currentTarget, child1, 'assertion 6: The currentTarget should be child1.');
 
+        },
+        
+        "test that LIB_all is a reserved event type and cannot dispatch an event with this type": function() {
+            var s = new LIB_EventTarget();
+            // var count = 0;
+            // s.addEventListener('LIB_all', function() {
+            //     count++
+            // });
+            // s.dispatchEvent({type: 'LIB_all'});
+            // jsUnity.assertIdentical(2, count);
+            jsUnity.assertException(function() {
+                s.dispatchEvent({type: 'LIB_all'});
+            }, 'trying to dispatch a "LIB_all" event should throw an error.');
         }
 
     };

@@ -149,6 +149,14 @@ et.dispatchEvent({type:'change', extraData:'abc'});
 
 */
     LIB_EventTarget.prototype.dispatchEvent = function(evt) {
+        // If it was possible to dispatch an event with type LIB_all then
+        // depending on the implementation farther down in this function,
+        // the LIB_all listeners could be called twice: once for the LIB_all
+        // event itself and then once more because LIB_all listeners are called
+        // for any event type.
+        if (evt.type === 'LIB_all') {
+            throw new Error('LIB_EventTarget.prototype.dispatchEvent: "LIB_all" is a reserved event name.')
+        }
         // Want to ensure we don't alter the evt object passed in as it 
         // may be a bubbling event. So clone it and then setting currentTarget
         // won't break some event that is already being dispatched.
