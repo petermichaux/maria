@@ -317,12 +317,6 @@ var eventTargetSuite;
         
         "test that LIB_all is a reserved event type and cannot dispatch an event with this type": function() {
             var s = new LIB_EventTarget();
-            // var count = 0;
-            // s.addEventListener('LIB_all', function() {
-            //     count++
-            // });
-            // s.dispatchEvent({type: 'LIB_all'});
-            // jsUnity.assertIdentical(2, count);
             jsUnity.assertException(function() {
                 s.dispatchEvent({type: 'LIB_all'});
             }, 'trying to dispatch a "LIB_all" event should throw an error.');
