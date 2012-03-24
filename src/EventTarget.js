@@ -80,7 +80,7 @@ var LIB_EventTarget = function() {};
 @description
 
 If the listener is an object then when a matching event type is dispatched on
-the event target, the listener object's handleEvent method will be called. 
+the event target, the listener object's handleEvent method will be called.
 Using the auxArg you can specify the name of the method to be called.
 
 If the listener is a function then when a matching event type is dispatched on
@@ -114,7 +114,7 @@ et.addEventListener('change', this.handleChange, this);
 @description
 
 If the listener is an object then when any event type is dispatched on
-the event target, the listener object's handleEvent method will be called. 
+the event target, the listener object's handleEvent method will be called.
 Using the auxArg you can specify the name of the method to be called.
 
 If the listener is a function then when any event type is dispatched on
@@ -256,7 +256,6 @@ var LIB_mixinEventTarget = function(obj) {
         }
     }
 };
-
 
 /**
 
