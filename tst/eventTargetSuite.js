@@ -70,7 +70,7 @@ var eventTargetSuite;
             // add some listeners
             LIB_EventTarget.prototype.addEventListener('foo', listener1);
             LIB_EventTarget.prototype.addEventListener('bar', listener1b);
-            LIB_EventTarget.prototype.addEventListener('LIB_all', listenerAll);
+            LIB_EventTarget.prototype.addAllEventListener(listenerAll);
             twitter.addEventListener('foo', listener2);
             tweetsRUs.addEventListener('foo', listener3);
             APP_Twitter.prototype.addEventListener('foo', listener4);
@@ -112,7 +112,7 @@ var eventTargetSuite;
             // remove the listeners
             LIB_EventTarget.prototype.removeEventListener('foo', listener1);
             LIB_EventTarget.prototype.removeEventListener('bar', listener1b);
-            LIB_EventTarget.prototype.removeEventListener('LIB_all', listenerAll);
+            LIB_EventTarget.prototype.removeAllEventListener(listenerAll);
             twitter.removeEventListener('foo', listener2);
             tweetsRUs.removeEventListener('foo', listener3);
             APP_Twitter.prototype.removeEventListener('foo', listener4);
@@ -313,13 +313,6 @@ var eventTargetSuite;
             jsUnity.assertIdentical(result2.target, child0, 'assertion 5: The target should be child0.');
             jsUnity.assertIdentical(result2.currentTarget, child1, 'assertion 6: The currentTarget should be child1.');
 
-        },
-        
-        "test that LIB_all is a reserved event type and cannot dispatch an event with this type": function() {
-            var s = new LIB_EventTarget();
-            jsUnity.assertException(function() {
-                s.dispatchEvent({type: 'LIB_all'});
-            }, 'trying to dispatch a "LIB_all" event should throw an error.');
         }
 
     };
