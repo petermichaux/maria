@@ -208,9 +208,8 @@ et.addAllEventListener(this.handleChange, this);
 
 @description
 
-Removes all added listeners matching the type/listener/auxArg combination exactly.
-If this combination is not found there are no errors. If this combination is found
-more than once all are removed.
+Removes added listener matching the type/listener/auxArg combination exactly.
+If this combination is not found there are no errors.
 
 var o = {handleEvent:function(){}, handleChange:function(){}};
 et.removeEventListener('change', o);
@@ -240,9 +239,8 @@ et.removeEventListener('change', this.handleChange, this);
 
 @description
 
-Removes all listeners added with addAllEventListener matching the listener/auxArg combination exactly.
-If this combination is not found there are no errors. If this combination is found
-more than once all are removed.
+Removes listener added with addAllEventListener matching the listener/auxArg combination exactly.
+If this combination is not found there are no errors.
 
 var o = {handleEvent:function(){}, handleChange:function(){}};
 et.removeAllEventListener(o);
