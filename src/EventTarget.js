@@ -29,6 +29,7 @@
 @property LIB_EventTarget
 
 @description
+
 A constructor function for creating event target objects.
 
 var et = new LIB_EventTarget();
