@@ -53,16 +53,26 @@ var LIB_EventTarget = function() {};
         };
     }());
 
-    function addEventListener(listeners, listener, auxArg) {
-        listeners.push({listener:listener, auxArg:auxArg}); 
+    function addEventListener(eventTarget, listeners, o) {
+        if (typeof o.listener === 'function') {
+            o.thisObj = hasOwnProperty(o, 'auxArg') ? o.auxArg : eventTarget;
+        }
+        else {
+            o.methodName = hasOwnProperty(o, 'auxArg') ? o.auxArg : 'handleEvent';
+        }
+        listeners.push(o);
     }
 
-    function removeEventListener(listeners, listener, auxArg) {
+    function removeEventListener(listeners, o) {
         // Loop backwards through the array so adjacent references
         // to "listener" are all removed.
         for (var i = listeners.length; i--; ) {
-            if ((listeners[i].listener === listener) &&
-                (listeners[i].auxArg === auxArg)) {
+            if ((listeners[i].listener === o.listener) &&
+                ((!hasOwnProperty(listeners[i], 'auxArg') &&
+                  !hasOwnProperty(o, 'auxArg')) ||
+                 (hasOwnProperty(listeners[i], 'auxArg') &&
+                  hasOwnProperty(o, 'auxArg') &&
+                  (listeners[i].auxArg === o.auxArg)))) {
                 listeners.splice(i, 1);
             }
         }
@@ -83,13 +93,12 @@ var LIB_EventTarget = function() {};
         //
         listeners = listeners.slice(0);
         for (var i = 0, ilen = listeners.length; i < ilen; i++) {
-            var listener = listeners[i].listener;
-            var auxArg = listeners[i].auxArg;
-            if (typeof listener === 'function') {
-                listener.call(auxArg, evt);
+            var o = listeners[i];
+            if (typeof o.listener === 'function') {
+                o.listener.call(o.thisObj, evt);
             }
             else {
-                listener[auxArg || 'handleEvent'](evt);
+                o.listener[o.methodName](evt);
             }
         }
     }
@@ -111,7 +120,7 @@ the event target, the listener object's handleEvent method will be called.
 Using the auxArg you can specify the name of the method to be called.
 
 If the listener is a function then when a matching event type is dispatched on
-the event target, the listener function is called with global object set as
+the event target, the listener function is called with event target object set as
 the "this" object. Using the auxArg you can specifiy a different object to be
 the "this" object.
 
@@ -127,7 +136,11 @@ et.addEventListener('change', this.handleChange, this);
     LIB_EventTarget.prototype.addEventListener = function(type, listener, /*optional*/ auxArg) {
         hasOwnProperty(this, '_LIB_listeners') || (this._LIB_listeners = {});
         hasOwnProperty(this._LIB_listeners, type) || (this._LIB_listeners[type] = []);
-        addEventListener(this._LIB_listeners[type], listener, auxArg);
+        var o = {listener: listener};
+        if (arguments.length > 2) {
+            o.auxArg = auxArg;
+        }
+        addEventListener(this, this._LIB_listeners[type], o);
     };
 
 /**
@@ -145,7 +158,7 @@ the event target, the listener object's handleEvent method will be called.
 Using the auxArg you can specify the name of the method to be called.
 
 If the listener is a function then when any event type is dispatched on
-the event target, the listener function is called with global object set as
+the event target, the listener function is called with event target object set as
 the "this" object. Using the auxArg you can specifiy a different object to be
 the "this" object.
 
@@ -160,7 +173,11 @@ et.addAllEventListener(this.handleChange, this);
 */
     LIB_EventTarget.prototype.addAllEventListener = function(listener, /*optional*/ auxArg) {
         hasOwnProperty(this, '_LIB_allListeners') || (this._LIB_allListeners = []);
-        addEventListener(this._LIB_allListeners, listener, auxArg);
+        var o = {listener: listener};
+        if (arguments.length > 1) {
+            o.auxArg = auxArg;
+        }
+        addEventListener(this, this._LIB_allListeners, o);
     };
 
 /**
@@ -189,7 +206,11 @@ et.removeEventListener('change', this.handleChange, this);
     LIB_EventTarget.prototype.removeEventListener = function(type, listener, /*optional*/ auxArg) {
         if (hasOwnProperty(this, '_LIB_listeners') &&
             hasOwnProperty(this._LIB_listeners, type)) {
-            removeEventListener(this._LIB_listeners[type], listener, auxArg);
+            var o = {listener: listener};
+            if (arguments.length > 2) {
+                o.auxArg = auxArg;
+            }
+            removeEventListener(this._LIB_listeners[type], o);
         }
     };
 
@@ -216,7 +237,11 @@ et.removeAllEventListener(this.handleChange, this);
 */
     LIB_EventTarget.prototype.removeAllEventListener = function(listener, /*optional*/ auxArg) {
         if (hasOwnProperty(this, '_LIB_allListeners')) {
-            removeEventListener(this._LIB_allListeners, listener, auxArg);
+            var o = {listener: listener};
+            if (arguments.length > 1) {
+                o.auxArg = auxArg;
+            }
+            removeEventListener(this._LIB_allListeners, o);
         }
     };
 

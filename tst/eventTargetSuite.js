@@ -196,21 +196,124 @@ var eventTargetSuite;
             jsUnity.assertIdentical(undefined, obj0.result);
         },
 
-        "test thisObj not supplied is global object": function() {
+        "test thisObj not supplied is event target object": function() {
             var s = new LIB_EventTarget();
             var thisObj = null;
             var f = function() {
                 thisObj = this;
             };
             s.addEventListener('foo', f);
-            // global is specified at the top of this file
-            jsUnity.assertNotIdentical(global, thisObj);
+            jsUnity.assertNotIdentical(s, thisObj);
             s.dispatchEvent({type:'foo'});
-            jsUnity.assertIdentical(global, thisObj);
+            jsUnity.assertIdentical(s, thisObj);
             thisObj = null;
             s.removeEventListener('foo', f);
             s.dispatchEvent({type:'foo'});
             jsUnity.assertIdentical(null, thisObj);
+        },
+
+        "test thisObj is not event target if auxArg is explicitly false": function() {
+            var s = new LIB_EventTarget();
+            var f = function() {
+                f.thisObj = this;
+            };
+            s.addEventListener('foo', f, false);
+            s.dispatchEvent({type:'foo'});
+            jsUnity.assertNotIdentical(s, f.thisObj);
+            jsUnity.assertIdentical('object', typeof f.thisObj);
+            jsUnity.assertIdentical(false, f.thisObj.valueOf());
+        },
+
+        "test thisObj is not event target if auxArg is explicitly null": function() {
+            var s = new LIB_EventTarget();
+            var g = function() {
+                g.thisObj = this;
+            };
+            s.addEventListener('foo', g, null);
+            s.dispatchEvent({type:'foo'});
+            jsUnity.assertNotIdentical(s, g.thisObj);
+            jsUnity.assertIdentical('object', typeof g.thisObj);
+            jsUnity.assertIdentical(global, g.thisObj);
+        },
+
+        "test thisObj is not event target if auxArg is explicitly undefined": function() {
+            var s = new LIB_EventTarget();
+            var h = function() {
+                h.thisObj = this;
+            };
+            h.thisObj = true; // some value other than undefined
+            s.addEventListener('foo', h, undefined);
+            s.dispatchEvent({type:'foo'});
+            jsUnity.assertNotIdentical(s, h.thisObj);
+            jsUnity.assertIdentical('object', typeof h.thisObj);
+            jsUnity.assertIdentical(global, h.thisObj);
+        },
+
+        "test thisObj is not event target if auxArg is explicitly empty string": function() {
+            var s = new LIB_EventTarget();
+            var i = function() {
+                i.thisObj = this;
+            };
+            s.addEventListener('foo', i, '');
+            s.dispatchEvent({type:'foo'});
+            jsUnity.assertNotIdentical(s, i.thisObj);
+            jsUnity.assertIdentical('object', typeof i.thisObj);
+            jsUnity.assertIdentical('', i.thisObj.valueOf());
+        },
+
+        "test thisObj is not event target if auxArg is explicitly zero": function() {
+            var s = new LIB_EventTarget();
+            var j = function() {
+                j.thisObj = this;
+            };
+            s.addEventListener('foo', j, 0);
+            s.dispatchEvent({type:'foo'});
+            jsUnity.assertNotIdentical(s, j.thisObj);
+            jsUnity.assertIdentical('object', typeof j.thisObj);
+            jsUnity.assertIdentical(0, j.thisObj.valueOf());
+        },
+
+        "test thisObj is not event target if auxArg is explicitly NaN": function() {
+            var s = new LIB_EventTarget();
+            var k = function() {
+                k.thisObj = this;
+            };
+            s.addEventListener('foo', k, NaN);
+            s.dispatchEvent({type:'foo'});
+            jsUnity.assertNotIdentical(s, isNaN(k.thisObj));
+            jsUnity.assertIdentical('object', typeof k.thisObj);
+            jsUnity.assertIdentical(true, isNaN(k.thisObj.valueOf()));
+        },
+
+        "test if auxArg explicitly undefined for adding then must be explicitly undefined for removing": function() {
+            var s = new LIB_EventTarget();
+            var f = function() {
+                f.called = true;
+            };
+            var g = function() {
+                g.called = true;
+            };
+            var reset = function() {
+                f.called = false;
+                g.called = false;
+            };
+            reset();
+            s.addEventListener('foo', f);
+            s.addEventListener('foo', g, undefined);
+            s.dispatchEvent({type:'foo'});
+            jsUnity.assertIdentical(true, f.called, 'one');
+            jsUnity.assertIdentical(true, g.called, 'two');
+            reset();
+            s.removeEventListener('foo', f);
+            s.removeEventListener('foo', g);
+            s.dispatchEvent({type:'foo'});
+            jsUnity.assertIdentical(false, f.called, 'three');
+            jsUnity.assertIdentical(true, g.called, 'four');
+            reset();
+            s.removeEventListener('foo', g, undefined);
+            s.dispatchEvent({type:'foo'});
+            jsUnity.assertIdentical(false, f.called, 'five');
+            jsUnity.assertIdentical(false, g.called, 'six');
         },
 
         "test thisObj argument differentiates two listeners": function() {
