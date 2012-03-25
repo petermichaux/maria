@@ -53,7 +53,28 @@ var LIB_EventTarget = function() {};
         };
     }());
 
+    function listenersAreEqual(n, o) {
+        return (n.listener === o.listener) &&
+               ((!hasOwnProperty(n, 'auxArg') &&
+                 !hasOwnProperty(o, 'auxArg')) ||
+                (hasOwnProperty(n, 'auxArg') &&
+                 hasOwnProperty(o, 'auxArg') &&
+                 (n.auxArg === o.auxArg)));
+    }
+
+    function hasEventListener(listeners, o) {
+        for (var i=0, ilen=listeners.length; i<ilen; i++) {
+            if (listenersAreEqual(listeners[i], o)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     function addEventListener(eventTarget, listeners, o) {
+        if (hasEventListener(listeners, o)) {
+            return;
+        }
         if (typeof o.listener === 'function') {
             o.thisObj = hasOwnProperty(o, 'auxArg') ? o.auxArg : eventTarget;
         }
@@ -67,12 +88,7 @@ var LIB_EventTarget = function() {};
         // Loop backwards through the array so adjacent references
         // to "listener" are all removed.
         for (var i = listeners.length; i--; ) {
-            if ((listeners[i].listener === o.listener) &&
-                ((!hasOwnProperty(listeners[i], 'auxArg') &&
-                  !hasOwnProperty(o, 'auxArg')) ||
-                 (hasOwnProperty(listeners[i], 'auxArg') &&
-                  hasOwnProperty(o, 'auxArg') &&
-                  (listeners[i].auxArg === o.auxArg)))) {
+            if (listenersAreEqual(listeners[i], o)) {
                 listeners.splice(i, 1);
             }
         }
@@ -124,8 +140,8 @@ the event target, the listener function is called with event target object set a
 the "this" object. Using the auxArg you can specifiy a different object to be
 the "this" object.
 
-One listener (or listener/auxArg pair to be more precise) can be added
-multiple times.
+One listener (or type/listener/auxArg pair to be more precise) can be added
+only once.
 
 et.addEventListener('change', {handleEvent:function(){}});
 et.addEventListener('change', {handleChange:function(){}}, 'handleChange');
@@ -163,7 +179,7 @@ the "this" object. Using the auxArg you can specifiy a different object to be
 the "this" object.
 
 One listener (or listener/auxArg pair to be more precise) can be added
-multiple times.
+only once.
 
 et.addAllEventListener({handleEvent:function(){}});
 et.addAllEventListener({handleChange:function(){}}, 'handleChange');

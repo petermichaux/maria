@@ -316,6 +316,55 @@ var eventTargetSuite;
             jsUnity.assertIdentical(false, g.called, 'six');
         },
 
+        "test adding same listener function twice with same parameters only adds it once": function() {
+            var s = new LIB_EventTarget();
+            var f = function() {
+                f.count++;
+            };
+            var reset = function() {
+                f.count = 0;
+            };
+            reset();
+            jsUnity.assertIdentical(0, f.count, 'start with zero');
+            s.addEventListener('foo', f, {});
+            s.addEventListener('foo', f, {});
+            s.dispatchEvent({type: 'foo'});
+            jsUnity.assertIdentical(2, f.count, 'f should only have been called twice');
+        },
+
+        "test adding same listener function with different type parameters adds it twice": function() {
+            var s = new LIB_EventTarget();
+            var f = function() {
+                f.count++;
+            };
+            var reset = function() {
+                f.count = 0;
+            };
+            reset();
+            jsUnity.assertIdentical(0, f.count, 'start with zero');
+            s.addEventListener('foo', f);
+            s.addEventListener('bar', f);
+            s.dispatchEvent({type: 'foo'});
+            s.dispatchEvent({type: 'bar'});
+            jsUnity.assertIdentical(2, f.count, 'f should only have been called twice');
+        },
+
+        "test adding same listener function with different auxArg parameters adds it twice": function() {
+            var s = new LIB_EventTarget();
+            var f = function() {
+                f.count++;
+            };
+            var reset = function() {
+                f.count = 0;
+            };
+            reset();
+            jsUnity.assertIdentical(0, f.count, 'start with zero');
+            s.addEventListener('foo', f);
+            s.addEventListener('foo', f);
+            s.dispatchEvent({type: 'foo'});
+            jsUnity.assertIdentical(1, f.count, 'f should only have been called once');
+        },
+
         "test thisObj argument differentiates two listeners": function() {
             var s = new LIB_EventTarget();
             var obj0 = {
