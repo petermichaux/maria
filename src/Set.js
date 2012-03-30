@@ -25,6 +25,15 @@ var LIB_Set;
         return x !== x && y !== y;
     }
 
+    function indexOfIdentical(elements, element) {
+        for (var i = 0, ilen = elements.length; i < ilen; i++) {
+            if (is(elements[i], element)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     function initSet(set) {
         set._elements = [];
         set.length = 0;
@@ -41,12 +50,7 @@ var LIB_Set;
     // a unique value to each element and so the "has" method is O(n).
     //
     LIB_Set.prototype.has = function(element) {
-        for (var i = 0, ilen = this._elements.length; i < ilen; i++) {
-            if (is(element, this._elements[i])) {
-                return true;
-            }
-        }
-        return false;
+        return indexOfIdentical(this._elements, element) >= 0;
     };
 
     // If the element is in the set already then it is not added again.
@@ -67,14 +71,15 @@ var LIB_Set;
     // position so quote "delete".
     //
     LIB_Set.prototype['delete'] = function(element) {
-        for (var i = 0, ilen = this._elements.length; i < ilen; i++) {
-            if (is(element, this._elements[i])) {
-                this._elements.splice(i, 1);
-                this.length--;
-                return true;
-            }
+        var i = indexOfIdentical(this._elements, element);
+        if (i < 0) {
+            return false;
         }
-        return false;
+        else {
+            this._elements.splice(i, 1);
+            this.length--;
+            return true;
+        }
     };
 
     LIB_Set.prototype.empty = function() {
