@@ -10,6 +10,21 @@ var LIB_Set;
         }
     }
 
+    // http://wiki.ecmascript.org/doku.php?id=harmony:egal
+    function is(x, y) {
+        if (x === y) {
+            // 0 === -0, but they are not identical
+            return x !== 0 || 1 / x === 1 / y;
+        }
+
+        // NaN !== NaN, but they are identical.
+        // NaNs are the only non-reflexive value, i.e., if x !== x,
+        // then x is a NaN.
+        // isNaN is broken: it converts its argument to number, so
+        // isNaN("foo") => true
+        return x !== x && y !== y;
+    }
+
     function initSet(set) {
         set._elements = [];
         set.length = 0;
@@ -27,7 +42,7 @@ var LIB_Set;
     //
     LIB_Set.prototype.has = function(element) {
         for (var i = 0, ilen = this._elements.length; i < ilen; i++) {
-            if (element === this._elements[i]) {
+            if (is(element, this._elements[i])) {
                 return true;
             }
         }
@@ -53,7 +68,7 @@ var LIB_Set;
     //
     LIB_Set.prototype['delete'] = function(element) {
         for (var i = 0, ilen = this._elements.length; i < ilen; i++) {
-            if (element === this._elements[i]) {
+            if (is(element, this._elements[i])) {
                 this._elements.splice(i, 1);
                 this.length--;
                 return true;

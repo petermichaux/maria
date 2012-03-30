@@ -16,6 +16,30 @@
             assert.same(false, s['delete']('alpha'), 'deleting an item not in the list should return false');
         },
 
+        "test has": function() {
+            var s = new LIB_Set();
+            s.add('alpha');
+            assert.same(true, s.has('alpha'));
+        },
+
+        "test set starts without NaN element": function() {
+            var s = new LIB_Set();
+            assert.same(false, s.has(NaN));
+        },
+
+        "test has NaN can find NaN in the set": function() {
+            var s = new LIB_Set();
+            s.add(NaN);
+            assert.same(true, s.has(NaN));
+        },
+
+        "test delete NaN": function() {
+            var s = new LIB_Set();
+            s.add(NaN);
+            s['delete'](NaN);
+            assert.same(false, s.has(NaN));
+        },
+
         "test empty": function() {
             var s = new LIB_Set();
             s.add('alpha');
