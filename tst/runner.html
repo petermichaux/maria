@@ -1,68 +1,24 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-    <title>Prototype Tests</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
-    <!-- include the testing framework -->
-    <script src="jsunity.js"></script>
-
-    <!-- configure the testing framework -->
-    <script>
-        jsUnity.log = function (s) {
-            document.write("<div>" + s + "</div>");
-        };
-        jsUnity.attachAssertions(jsUnity);
-
-        (function() {
-
-            function fmt(str) {
-                var a = Array.prototype.slice.call(arguments, 1);
-                return str.replace(/\?/g, function () { return a.shift(); });
-            }
-
-            jsUnity.assertArrayIdentical = function(expected, actual, message) {
-                if (expected.length !== actual.length) {
-                    throw fmt("?: (?) is not identical to (?)",
-                        message || "assertArrayIdentical", actual, expected);
-                }
-
-                for (var i=0, ilen=expected.length; i<ilen; i++) {
-                    if (((i in expected) && !(i in actual)) ||
-                        ((i in actual) && !(i in expected)) ||
-                        (expected[i] !== actual[i])) {
-                        throw fmt("?: (?) is not identical to (?)",
-                            message || "assertArrayIdentical", actual, expected);
-                    }
-                }
-
-            };
-
-        }());
-
-    </script>
-
-    <!-- load the source code to be tested -->
-    <script src="../src/EventTarget.js"></script>
-    <script src="../src/Set.js"></script>
-    <script src="../src/ObservableSet.js"></script>
-
-    <!-- load the test suites to be run -->
-    <script src="eventTargetSuite.js"></script>
-    <script src="setSuite.js"></script>
-    <script src="observableSetSuite.js"></script>
+    <title>Instigator Tests</title>
 
 </head>
 <body>
 
-    <!-- run the test suites -->
-    <script>
+    <script src="buster/buster-test.js" type="text/javascript"></script>
+    <script src="buster-custom-assertions.js" type="text/javascript"></script>
 
-        jsUnity.run(
-            eventTargetSuite,
-            setSuite,
-            observableSetSuite);
+    <script src="../src/EventTarget.js" type="text/javascript"></script>
+    <script src="../src/Set.js" type="text/javascript"></script>
+    <script src="../src/ObservableSet.js" type="text/javascript"></script>
 
-    </script>
+    <script src="eventTargetSuite.js" type="text/javascript"></script>
+    <script src="setSuite.js" type="text/javascript"></script>
+    <script src="observableSetSuite.js" type="text/javascript"></script>
 
 </body>
 </html>
