@@ -2,14 +2,6 @@ var LIB_Set;
 
 (function() {
 
-    // utility to help wrapping Array.prototype methods
-    //
-    function forEach(arr, fn) {
-        for (var i = 0, ilen = arr.length; i < ilen; i++) {
-            fn(arr[i]);
-        }
-    }
-
     // http://wiki.ecmascript.org/doku.php?id=harmony:egal
     function is(x, y) {
         if (x === y) {
@@ -25,6 +17,7 @@ var LIB_Set;
         return x !== x && y !== y;
     }
 
+    // http://wiki.ecmascript.org/doku.php?id=harmony:simple_maps_and_sets
     function indexOfIdentical(elements, element) {
         for (var i = 0, ilen = elements.length; i < ilen; i++) {
             if (is(elements[i], element)) {
@@ -39,6 +32,26 @@ var LIB_Set;
         set.length = 0;
     }
 
+/**
+
+@property LIB_Set
+
+@description
+
+A constructor function for creating set objects.
+
+var set = new LIB_Set();                         // an empty set
+var set = new LIB_Set('alpha', 'beta', 'alpha'); // a set with two elements
+
+Sets have a length property that is the number of elements in the set.
+
+var set = new LIB_Set('alpha', 'beta');
+set.length; // 2
+
+The methods of an event target object are inspired by the incomplete
+Harmony Set proposal and the Array.prototype iterators.
+
+*/
     LIB_Set = function() {
         initSet(this);
         for (var i = 0, ilen = arguments.length; i < ilen; i++) {
@@ -46,15 +59,41 @@ var LIB_Set;
         }
     };
 
-    // This set implementation does not add a "LIB_id" property with
-    // a unique value to each element and so the "has" method is O(n).
-    //
+/**
+
+@property LIB_Set.prototype.has
+
+@parameter element
+
+@description
+
+Returns true if element is in the set. Otherwise returns false.
+
+var set = new LIB_Set(1);
+set.has(1); // true
+set.has(2); // false
+
+*/
     LIB_Set.prototype.has = function(element) {
         return indexOfIdentical(this._elements, element) >= 0;
     };
 
-    // If the element is in the set already then it is not added again.
-    //
+/**
+
+@property LIB_Set.prototype.add
+
+@parameter element
+
+@description
+
+If element is not already in the set then adds element to the set
+and returns true. Otherwise returns false.
+
+var set = new LIB_Set();
+set.add(1); // true
+set.has(1); // false
+
+*/
     LIB_Set.prototype.add = function(element) {
         if (this.has(element)) {
             return false;
@@ -66,10 +105,26 @@ var LIB_Set;
         }
     };
 
-    // "delete" is a reserved word and older implementations
-    // did not allow bare reserved words in property name
-    // position so quote "delete".
-    //
+/**
+
+@property LIB_Set.prototype.delete
+
+@parameter element
+
+@description
+
+If element is in the set then removes element from the set
+and returns true. Otherwise returns false.
+
+"delete" is a reserved word and older implementations
+did not allow bare reserved words in property name
+position so quote "delete".
+
+var set = new LIB_Set(1);
+set['delete'](1); // true
+set['delete'](1); // false
+
+*/
     LIB_Set.prototype['delete'] = function(element) {
         var i = indexOfIdentical(this._elements, element);
         if (i < 0) {
@@ -82,6 +137,20 @@ var LIB_Set;
         }
     };
 
+/**
+
+@property LIB_Set.prototype.empty
+
+@description
+
+If the set has elements then removes all the elements and
+returns true. Otherwise returns false.
+
+var set = new LIB_Set(1);
+set.empty(); // true
+set.empty(); // false
+
+*/
     LIB_Set.prototype.empty = function() {
         if (this._elements.length > 0) {
             initSet(this);
@@ -92,39 +161,218 @@ var LIB_Set;
         }
     };
 
+/**
+
+@property LIB_Set.prototype.toArray
+
+@description
+
+Returns the elements of the set in a new array.
+
+*/
     LIB_Set.prototype.toArray = function() {
         return this._elements.slice(0);
     };
 
-    forEach(['forEach', 'every', 'some', 'reduce'],
-        function(method) {
-            // Match browser methods. If the browser has the methods
-            // or the browser has been polyfilled then include
-            // the newer methods on sets.
-            if (typeof Array.prototype[method] === 'function') {
-                LIB_Set.prototype[method] = function() {
-                    return Array.prototype[method].apply(this._elements, arguments);
-                };
-            }
-        });
+/**
 
-    // map and filter return set objects
-    //
-    forEach(['map', 'filter'],
-        function(method) {
-            // Match browser methods. If the browser has the methods
-            // or the browser has been polyfilled then include
-            // the newer methods on sets.
-            if (typeof Array.prototype[method] === 'function') {
-                LIB_Set.prototype[method] = function() {
-                    var arr = Array.prototype[method].apply(this._elements, arguments);
-                    var result = new this.constructor();
-                    for (var i=0, ilen=arr.length; i<ilen; i++) {
-                        result.add(arr[i]);
-                    }
-                    return result;
-                };
+@property LIB_Set.prototype.forEach
+
+@parameter callbackfn {function} The function to call for each element in the set.
+
+@parameter thisArg {object} The optional object to use as the this object in calls to callbackfn.
+
+@description
+
+Calls callbackfn for each element of the set.
+
+var set = new LIB_Set('alpha', 'beta', 'gamma');
+set.forEach(function(element, set) {
+    console.log(element);
+});
+
+*/
+    LIB_Set.prototype.forEach = function(callbackfn /*, thisArg */) {
+        var thisArg = arguments[1];
+        var elements = this._elements;
+        for (var i = 0, ilen = elements.length; i < ilen; i++) {
+            callbackfn.call(thisArg, elements[i], this);
+        }
+    };
+
+/**
+
+@property LIB_Set.prototype.every
+
+@parameter callbackfn {function} The function to call for each element in the set.
+
+@parameter thisArg {object} The optional object to use as the this object in calls to callbackfn.
+
+@description
+
+Calls callbackfn for each element of the set. If callbackfn returns a truthy value
+for all elements then every returns true. Otherwise returns false.
+
+var set = new LIB_Set(1, 2, 3);
+set.every(function(element, set) {
+    return element < 2;
+}); // false
+
+*/
+    LIB_Set.prototype.every = function(callbackfn /*, thisArg */) {
+        var thisArg = arguments[1];
+        var elements = this._elements;
+        for (var i = 0, ilen = elements.length; i < ilen; i++) {
+            if (!callbackfn.call(thisArg, elements[i], this)) {
+                return false;
             }
-        });
+        }
+        return true;
+    };
+
+/**
+
+@property LIB_Set.prototype.some
+
+@parameter callbackfn {function} The function to call for each element in the set.
+
+@parameter thisArg {object} The optional object to use as the this object in calls to callbackfn.
+
+@description
+
+Calls callbackfn for each element of the set. If callbackfn returns a truthy value
+for at least one element then some returns true. Otherwise returns false.
+
+var set = new LIB_Set(1, 2, 3);
+set.some(function(element, set) {
+    return element < 2;
+}); // true
+
+*/
+    LIB_Set.prototype.some = function(callbackfn /*, thisArg */) {
+        var thisArg = arguments[1];
+        var elements = this._elements;
+        for (var i = 0, ilen = elements.length; i < ilen; i++) {
+            if (callbackfn.call(thisArg, elements[i], this)) {
+                return true;
+            }
+        }
+        return false;
+    };
+
+/**
+
+@property LIB_Set.prototype.reduce
+
+@parameter callbackfn {function} The function to call for each element in the set.
+
+@parameter initialValue {object} The optional starting value for accumulation.
+
+@description
+
+Calls callbackfn for each element of the set.
+
+For the first call to callbackfn, if initialValue is supplied then initalValue is
+the first argument passed to callbackfn and the second argument is the first
+element in the set to be iterated. Otherwise the first argument is
+the first element to be iterated in the set and the second argument is
+the next element to be iterated in the set.
+
+For subsequent calls to callbackfn, the first argument is the value returned
+by the last call to callbackfn. The second argument is the next value to be
+iterated in the set.
+
+var set = new LIB_Set(1, 2, 3);
+set.reduce(function(accumulator, element) {
+    return accumulator + element;
+}); // 6
+set.reduce(function(accumulator, element) {
+    return accumulator + element;
+}, 4); // 10
+
+*/
+    LIB_Set.prototype.reduce = function(callbackfn /*, initialValue */) {
+        var elements = this._elements;
+        var i = 0;
+        var ilen = elements.length;
+        var accumulator;
+        if (arguments.length > 1) {
+            accumulator = arguments[1];
+        }
+        else if (ilen < 1) {
+            throw new TypeError('reduce of empty set with no initial value');
+        }
+        else {
+            i = 1;
+            accumulator = elements[0];
+        }
+        while (i < ilen) {
+            accumulator = callbackfn.call(undefined, accumulator, elements[i], this);
+            i++;
+        }
+        return accumulator;
+    };
+
+/**
+
+@property LIB_Set.prototype.map
+
+@parameter callbackfn {function} The function to call for each element in the set.
+
+@parameter thisArg {object} The optional object to use as the this object in calls to callbackfn.
+
+@description
+
+Calls callbackfn for each element of the set. The values returned by callbackfn
+are added to a new set. This new set is the value returned by map.
+
+var set = new LIB_Set('alpha', 'beta', 'gamma');
+set.map(function(element) {
+    return element.length;
+}); // a set with elements 4 and 5
+
+*/
+    LIB_Set.prototype.map = function(callbackfn /*, thisArg */) {
+        var thisArg = arguments[1];
+        var result = new this.constructor();
+        var elements = this._elements;
+        for (var i = 0, ilen = elements.length; i < ilen; i++) {
+            result.add(callbackfn.call(thisArg, elements[i], this));
+        }
+        return result;
+    };
+
+/**
+
+@property LIB_Set.prototype.filter
+
+@parameter callbackfn {function} The function to call for each element in the set.
+
+@parameter thisArg {object} The optional object to use as the this object in calls to callbackfn.
+
+@description
+
+Calls callbackfn for each element of the set. If callbackfn returns true
+for an element then that element is added to a new result set. This new result set
+is the value returned by filter.
+
+var set = new LIB_Set('alpha', 'beta', 'gamma');
+set.map(function(element) {
+    return element.length > 4;
+}); // a set with elements 'alpha' and 'gamma'
+
+*/
+    LIB_Set.prototype.filter = function(callbackfn /*, thisArg */) {
+        var thisArg = arguments[1];
+        var result = new this.constructor();
+        var elements = this._elements;
+        for (var i = 0, ilen = elements.length; i < ilen; i++) {
+            var element = elements[i];
+            if (callbackfn.call(thisArg, element, this)) {
+                result.add(element);
+            }
+        }
+        return result;
+    };
 
 }());
