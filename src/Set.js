@@ -41,11 +41,10 @@ var LIB_Set;
 A constructor function for creating set objects.
 
 var set = new LIB_Set();                         // an empty set
-var set = new LIB_Set('alpha', 'beta', 'alpha'); // a set with two elements
 
 Sets have a length property that is the number of elements in the set.
 
-var set = new LIB_Set('alpha', 'beta');
+var set = new LIB_Set('alpha', 'beta', 'alpha');
 set.length; // 2
 
 The methods of an event target object are inspired by the incomplete
