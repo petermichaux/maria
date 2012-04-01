@@ -4,7 +4,7 @@ var LIB_ObservableSet = function() {
     LIB_Set.apply(this, arguments);
 };
 
-LIB_ObservableSet.prototype = new LIB_Set();
+LIB_ObservableSet.prototype = LIB_create(LIB_Set.prototype);
 LIB_ObservableSet.prototype.constructor = LIB_ObservableSet;
 
 LIB_mixinEventTarget(LIB_ObservableSet.prototype);
