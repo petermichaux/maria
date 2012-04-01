@@ -159,6 +159,22 @@
             assert.same(10, s.reduce(function(previousValue, currentValue) {
                 return previousValue + currentValue;
             }));
+        },
+
+        "test reduce with initial value": function() {
+            var s = new LIB_Set(0,1,2,3,4);
+            var initialValue = 5;
+            assert.same(15, s.reduce(function(previousValue, currentValue) {
+                return previousValue + currentValue;
+            }, initialValue));
+        },
+
+        "test reduce empty set": function() {
+            var s = new LIB_Set();
+            var initialValue = 5625;
+            assert.same(initialValue, s.reduce(function(previousValue, currentValue) {
+                return previousValue + currentValue;
+            }, initialValue));
         }
 
     });
