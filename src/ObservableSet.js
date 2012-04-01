@@ -13,7 +13,7 @@ LIB_mixinEventTarget(LIB_ObservableSet.prototype);
 
 LIB_ObservableSet.prototype.add = function() {
     var added = [];
-    for (var i=0, ilen=arguments.length; i<ilen; i++) {
+    for (var i = 0, ilen = arguments.length; i < ilen; i++) {
         var argument = arguments[i];
         if (LIB_Set.prototype.add.call(this, argument)) {
             added.push(argument);
@@ -32,7 +32,7 @@ LIB_ObservableSet.prototype.add = function() {
 
 LIB_ObservableSet.prototype['delete'] = function() {
     var deleted = [];
-    for (var i=0, ilen=arguments.length; i<ilen; i++) {
+    for (var i = 0, ilen = arguments.length; i < ilen; i++) {
         var argument = arguments[i];
         if (LIB_Set.prototype['delete'].call(this, argument)) {
             deleted.push(argument);
@@ -53,7 +53,7 @@ LIB_ObservableSet.prototype.empty = function() {
     var deleted = this.toArray();
     var result = LIB_Set.prototype.empty.call(this);
     if (result) {
-        for (var i=0, ilen=deleted.length; i<ilen; i++) {
+        for (var i = 0, ilen = deleted.length; i < ilen; i++) {
             var element = deleted[i];
             if (LIB_implementsEventTarget(element)) {
                 element.removeAllEventListener(this, 'elementListener');
