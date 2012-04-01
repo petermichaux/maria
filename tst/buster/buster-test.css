@@ -50,8 +50,13 @@ body.buster-test {
 
 .buster-test .timeout h3,
 .buster-test .failure h3,
-.buster-test .error-message {
+.buster-test .error-message,
+.buster-test .stats.failure {
     color: #c33;
+}
+
+.buster-test .stats.success {
+    color: #3c3;
 }
 
 .buster-test .error h3,
@@ -129,6 +134,7 @@ body.buster-test {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff5f5f5f, endColorstr=#ff222222);
     /* For Internet Explorer 8 */
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff5f5f5f, endColorstr=#ff222222)";
+    zoom: 1;
 
     border-bottom: 4px solid #c0c6cc;
     box-shadow: 0 0 10px #ddd;

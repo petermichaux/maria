@@ -1106,8 +1106,7 @@ buster.format.ascii = (function () {
             return ascii.element(object);
         }
 
-        if (typeof object.toString == "function" &&
-            object.toString !== Object.prototype.toString) {
+        if (object.toString !== Object.prototype.toString) {
             return object.toString();
         }
 
@@ -1500,7 +1499,7 @@ if (typeof module != "undefined") {
         },
         assertMessage: "${2}${0} expected to be the same object as ${1}",
         refuteMessage: "${2}${0} expected not to be the same object as ${1}",
-        expectation: "toBe",
+        expectation: "toBeSameAs",
         values: actualAndExpectedMessageValues
     });
 
@@ -1983,18 +1982,9 @@ if (typeof module == "object" && typeof require == "function") {
         ba.expect.expectation[expectation] = function () {
             var args = [this.actual].concat(Array.prototype.slice.call(arguments));
             var type = this.assertMode ? "assert" : "refute"
-            var callFunc;
-
-            if (assertion === "assert") {
-                callFunc = this.assertMode ? ba.assert : ba.refute;
-            } else if (assertion === "refute") {
-                callFunc = this.assertMode ? ba.refute : ba.assert;
-            } else {
-                callFunc = ba[type][assertion];
-            }
 
             try {
-                return callFunc.apply(ba.expect, args);
+                return ba[type][assertion].apply(ba.expect, args);
             } catch (e) {
                 e.message = (e.message || "").replace(
                     "[" + type + "." + assertion + "]",
@@ -2012,9 +2002,6 @@ if (typeof module == "object" && typeof require == "function") {
             ba.expect.wrapAssertion(prop, expectationName);
         }
     }
-
-    ba.expect.wrapAssertion("assert", "toBeTruthy");
-    ba.expect.wrapAssertion("refute", "toBeFalsy");
 
     if (typeof module == "object") {
         module.exports = ba.expect;
@@ -2871,6 +2858,7 @@ var buster = buster || {};
         },
 
         callSetUps: function (test, setUps, thisp) {
+            if (test.deferred) { return when(); }
             emit(this, "test:setUp", test, null, thisp);
             var timeout = thisp.timeout || this.timeout;
             var emitAsync = partial(emitIfAsync, this, test);
@@ -2878,6 +2866,7 @@ var buster = buster || {};
         },
 
         callTearDowns: function (test, tearDowns, thisp) {
+            if (test.deferred) { return when(); }
             emit(this, "test:tearDown", test, null, thisp);
             var timeout = thisp.timeout || this.timeout;
             var emitAsync = partial(emitIfAsync, this, test);
@@ -2976,7 +2965,14 @@ if (typeof module === "object" && typeof require === "function") {
     if (isNodeJS) {
         buster = require("buster-core");
         buster.stackFilter = require("../stack-filter");
-        var jsdom = require("jsdom").jsdom;
+        var util = require("util");
+
+        try {
+            var jsdom = require("jsdom").jsdom;
+        } catch (e) {
+            // Is handled when someone actually tries using the HTML reporter
+            // on node without jsdom
+        }
     }
 
     var htmlReporter = {
@@ -3189,6 +3185,10 @@ if (typeof module === "object" && typeof require === "function") {
     }
 
     function createDocument() {
+        if (!jsdom) {
+            util.puts("Unable to load jsdom, html reporter will not work " +
+                      "for node runs. Spectacular fail coming up.");
+        }
         var dom = jsdom("<!DOCTYPE html><html><head></head><body></body></html>");
         return dom.createWindow().document;
     }
@@ -3330,9 +3330,7 @@ if (typeof module === "object" && typeof require === "function") {
     function initializeReporter(runner, opt) {
         var reporter;
 
-        if (typeof window !== "undefined" &&
-            typeof document !== "undefined" &&
-            document.getElementById) {
+        if (typeof document !== "undefined" && document.getElementById) {
             reporter = "html";
             opt.root = document.getElementById("buster") || document.body;
         } else {
@@ -3506,6 +3504,10 @@ var sinon = (function (buster) {
         return div && obj && obj.nodeType === 1 && isDOMNode(obj);
     }
 
+    function isFunction(obj) {
+        return !!(obj && obj.constructor && obj.call && obj.apply);
+    }
+
     function mirrorProperties(target, source) {
         for (var prop in source) {
             if (!hasOwn.call(target, prop)) {
@@ -3525,10 +3527,9 @@ var sinon = (function (buster) {
             }
 
             var wrappedMethod = object[property];
-            var type = typeof wrappedMethod;
 
-            if (type != "function") {
-                throw new TypeError("Attempted to wrap " + type + " property " +
+            if (!isFunction(wrappedMethod)) {
+                throw new TypeError("Attempted to wrap " + (typeof wrappedMethod) + " property " +
                                     property + " as function");
             }
 
@@ -3771,7 +3772,7 @@ var sinon = (function (buster) {
             };
         } catch (e) {
             /* Node, but no util module - would be very old, but better safe than
-               sorry */
+             sorry */
         }
     }
 
@@ -5216,7 +5217,7 @@ if (typeof module == "object" && typeof require == "function") {
 
     sinon.sandbox.useFakeXMLHttpRequest = sinon.sandbox.useFakeServer;
 
-    if (typeof module != "undefined") {
+    if (typeof module == "object" && typeof require == "function") {
         module.exports = sinon.sandbox;
     }
 }());
@@ -6432,7 +6433,7 @@ if (typeof sinon == "undefined") {
 
         return clock;
     };
-}(typeof global != "undefined" ? global : this));
+}(typeof global != "undefined" && typeof global !== "function" ? global : this));
 
 sinon.timers = {
     setTimeout: setTimeout,
@@ -6815,7 +6816,7 @@ if (typeof module == "object" && typeof require == "function") {
         },
         assertMessage: "Expected ${0} to be called at least once but was never called",
         refuteMessage: "Expected ${0} to not be called but was called ${1}${2}",
-        expectation: "toHaveBeenCalled",
+        expectation: "toBeCalled",
         values: spyValues
     });
 
@@ -6846,7 +6847,7 @@ if (typeof module == "object" && typeof require == "function") {
             },
             assertMessage: "Expected ${0} to be called " + c + " but was called ${1}${2}",
             refuteMessage: "Expected ${0} to not be called exactly " + c + "${2}",
-            expectation: "toHaveBeenCalled" + count,
+            expectation: "toBeCalled" + count,
             values: spyValues
         });
     }
@@ -6866,7 +6867,7 @@ if (typeof module == "object" && typeof require == "function") {
         },
         assertMessage: "Expected ${0} to be called with ${1} as this but was called on ${2}",
         refuteMessage: "Expected ${0} not to be called with ${1} as this",
-        expectation: "toHaveBeenCalledOn",
+        expectation: "toBeCalledOn",
         values: valuesWithThis
     });
 
@@ -6877,7 +6878,7 @@ if (typeof module == "object" && typeof require == "function") {
         },
         assertMessage: "Expected ${0} to always be called with ${1} as this but was called on ${2}",
         refuteMessage: "Expected ${0} not to always be called with ${1} as this",
-        expectation: "toHaveAlwaysBeenCalledOn",
+        expectation: "toAlwaysBeCalledOn",
         values: valuesWithThis
     });
 
@@ -6900,7 +6901,7 @@ if (typeof module == "object" && typeof require == "function") {
         },
         assertMessage: "Expected ${0} to be called with arguments ${1}${2}",
         refuteMessage: "Expected ${0} not to be called with arguments ${1}${2}",
-        expectation: "toHaveBeenCalledWith",
+        expectation: "toBeCalledWith",
         values: spyAndCalls
     });
 
@@ -6911,7 +6912,7 @@ if (typeof module == "object" && typeof require == "function") {
         },
         assertMessage: "Expected ${0} to always be called with arguments ${1}${2}",
         refuteMessage: "Expected ${0} not to always be called with arguments${1}${2}",
-        expectation: "toHaveAlwaysBeenCalledWith",
+        expectation: "toAlwaysBeCalledWith",
         values: spyAndCalls
     });
 
@@ -6922,7 +6923,7 @@ if (typeof module == "object" && typeof require == "function") {
         },
         assertMessage: "Expected ${0} to be called once with arguments ${1}${2}",
         refuteMessage: "Expected ${0} not to be called once with arguments ${1}${2}",
-        expectation: "toHaveBeenCalledWith",
+        expectation: "toBeCalledWith",
         values: spyAndCalls
     });
 
@@ -6933,7 +6934,7 @@ if (typeof module == "object" && typeof require == "function") {
         },
         assertMessage: "Expected ${0} to be called with exact arguments ${1}${2}",
         refuteMessage: "Expected ${0} not to be called with exact arguments${1}${2}",
-        expectation: "toHaveBeenCalledWithExactly",
+        expectation: "toBeCalledWithExactly",
         values: spyAndCalls
     });
 
@@ -6944,7 +6945,7 @@ if (typeof module == "object" && typeof require == "function") {
         },
         assertMessage: "Expected ${0} to always be called with exact arguments ${1}${2}",
         refuteMessage: "Expected ${0} not to always be called with exact arguments${1}${2}",
-        expectation: "toHaveAlwaysBeenCalledWithExactly",
+        expectation: "toAlwaysBeCalledWithExactly",
         values: spyAndCalls
     });
 
@@ -7006,6 +7007,10 @@ if (typeof module == "object" && typeof require == "function") {
 
         buster.captureConsole = function () {
             glbl.console = buster.console;
+
+            if (glbl.console !== buster.console) {
+                glbl.console.log = buster.bind(buster.console, "log");
+            }
         };
     }
 
@@ -7059,6 +7064,7 @@ if (typeof module == "object" && typeof require == "function") {
 }(typeof global != "undefined" ? global : this, typeof buster == "object" ? buster : null));
 if (typeof module === "object" && typeof require === "function") {
     var buster = module.exports = require("./buster/buster-wiring");
+    module.exports.cli = require("buster-test-cli").cli;
 }
 
 (function (glbl) {
