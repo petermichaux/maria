@@ -11,6 +11,8 @@ LIB_mixinEventTarget(LIB_ObservableSet.prototype);
 
 // Wrap the set mutator methods to dispatch events.
 
+// takes multiple arguments so that only one event will be fired
+//
 LIB_ObservableSet.prototype.add = function() {
     var added = [];
     for (var i = 0, ilen = arguments.length; i < ilen; i++) {
@@ -30,6 +32,8 @@ LIB_ObservableSet.prototype.add = function() {
     return modified;
 };
 
+// takes multiple arguments so that only one event will be fired
+//
 LIB_ObservableSet.prototype['delete'] = function() {
     var deleted = [];
     for (var i = 0, ilen = arguments.length; i < ilen; i++) {
