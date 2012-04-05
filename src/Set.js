@@ -2,22 +2,17 @@ var LIB_Set;
 
 (function() {
 
-    // http://wiki.ecmascript.org/doku.php?id=harmony:egal
+    // JavaScript's === operator has two problems: it cannot distinguish
+    // between the two zeros and NaN is not equal to itself.
+    //     -0  === +0          // true
+    //     NaN === NaN         // false
+    //
     function is(x, y) {
-        if (x === y) {
-            // 0 === -0, but they are not identical
-            return x !== 0 || 1 / x === 1 / y;
-        }
-
-        // NaN !== NaN, but they are identical.
-        // NaNs are the only non-reflexive value, i.e., if x !== x,
-        // then x is a NaN.
-        // isNaN is broken: it converts its argument to number, so
-        // isNaN("foo") => true
-        return x !== x && y !== y;
+        return (x === y) ?
+                   ((x !== 0) || ((1 / x) === (1 / y))) :
+                   ((x !== x) && (y !== y));
     }
 
-    // http://wiki.ecmascript.org/doku.php?id=harmony:simple_maps_and_sets
     function indexOfIdentical(elements, element) {
         for (var i = 0, ilen = elements.length; i < ilen; i++) {
             if (is(elements[i], element)) {
