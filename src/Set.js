@@ -29,7 +29,7 @@ var LIB_Set;
 (function() {
 
     // JavaScript's === operator has two problems: 
-    //     1) it cannot distinguish between the two zeros 
+    //     1) It cannot distinguish between the two zeros.
     //            -0  === +0    // true
     //     2) NaN is not equal to itself.
     //            NaN === NaN   // false
