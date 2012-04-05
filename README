@@ -1,5 +1,10 @@
 People ask me about building a "framework for MVC". I reply that a framework is not necessary or even desirable but that some libraries are useful.
 
+The following source files are considered production ready.
+    * EventTarget.js
+    * Set.js
+
+
 ---------
 
 All event names prefixed with "LIB_" are reserved. For example, the following are in use: "LIB_add", "LIB_delete", "LIB_destroy".
