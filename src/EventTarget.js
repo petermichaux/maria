@@ -63,7 +63,7 @@ var LIB_EventTarget = function() {};
     }
 
     function hasEventListener(listeners, o) {
-        for (var i=0, ilen=listeners.length; i<ilen; i++) {
+        for (var i = 0, ilen = listeners.length; i < ilen; i++) {
             if (listenersAreEqual(listeners[i], o)) {
                 return true;
             }
