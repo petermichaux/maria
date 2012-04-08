@@ -194,16 +194,16 @@
             assert.same(undefined, obj0.result);
         },
         
-        "test thisObj not supplied is event target object": function() {
+        "test thisObj not supplied is the global object": function() {
             var s = new LIB_EventTarget();
             var thisObj = null;
             var f = function() {
                 thisObj = this;
             };
             s.addEventListener('foo', f);
-            refute.same(s, thisObj);
+            refute.same(global, thisObj);
             s.dispatchEvent({type:'foo'});
-            assert.same(s, thisObj);
+            assert.same(global, thisObj);
             thisObj = null;
             s.removeEventListener('foo', f);
             s.dispatchEvent({type:'foo'});
