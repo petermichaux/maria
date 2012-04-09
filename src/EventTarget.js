@@ -76,7 +76,7 @@ var LIB_EventTarget = function() {};
             return;
         }
         if (typeof o.listener === 'function') {
-            o.thisObj = hasOwnProperty(o, 'auxArg') ? o.auxArg : undefined;
+            o.thisObj = hasOwnProperty(o, 'auxArg') ? o.auxArg : eventTarget;
         }
         else {
             o.methodName = hasOwnProperty(o, 'auxArg') ? o.auxArg : 'handleEvent';
@@ -136,7 +136,7 @@ the event target, the listener object's handleEvent method will be called.
 Using the auxArg you can specify the name of the method to be called.
 
 If the listener is a function then when a matching event type is dispatched on
-the event target, the listener function is called with the global object set as
+the event target, the listener function is called with event target object set as
 the "this" object. Using the auxArg you can specifiy a different object to be
 the "this" object.
 
