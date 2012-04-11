@@ -54,12 +54,7 @@ var LIB_EventTarget = function() {};
     }());
 
     function listenersAreEqual(n, o) {
-        return (n.listener === o.listener) &&
-               ((!hasOwnProperty(n, 'auxArg') &&
-                 !hasOwnProperty(o, 'auxArg')) ||
-                (hasOwnProperty(n, 'auxArg') &&
-                 hasOwnProperty(o, 'auxArg') &&
-                 (n.auxArg === o.auxArg)));
+        return n.listener === o.listener;
     }
 
     function hasEventListener(listeners, o) {
@@ -76,10 +71,10 @@ var LIB_EventTarget = function() {};
             return;
         }
         if (typeof o.listener === 'function') {
-            o.thisObj = hasOwnProperty(o, 'auxArg') ? o.auxArg : eventTarget;
+            o.thisObj = eventTarget;
         }
         else {
-            o.methodName = hasOwnProperty(o, 'auxArg') ? o.auxArg : 'handleEvent';
+            o.methodName = 'handleEvent';
         }
         listeners.push(o);
     }
@@ -127,36 +122,25 @@ var LIB_EventTarget = function() {};
 
 @parameter listener {object|function} The listener object or callback function.
 
-@parameter auxArg {string|object} Optional. See description.
-
 @description
 
 If the listener is an object then when a matching event type is dispatched on
 the event target, the listener object's handleEvent method will be called.
-Using the auxArg you can specify the name of the method to be called.
 
 If the listener is a function then when a matching event type is dispatched on
 the event target, the listener function is called with event target object set as
-the "this" object. Using the auxArg you can specifiy a different object to be
 the "this" object.
 
-One listener (or type/listener/auxArg pair to be more precise) can be added
-only once.
+One listener (or type/listener pair to be more precise) can be added only once.
 
 et.addEventListener('change', {handleEvent:function(){}});
-et.addEventListener('change', {handleChange:function(){}}, 'handleChange');
 et.addEventListener('change', function(){});
-et.addEventListener('change', this.handleChange, this);
 
 */
-    LIB_EventTarget.prototype.addEventListener = function(type, listener, /*optional*/ auxArg) {
+    LIB_EventTarget.prototype.addEventListener = function(type, listener) {
         hasOwnProperty(this, '_LIB_listeners') || (this._LIB_listeners = {});
         hasOwnProperty(this._LIB_listeners, type) || (this._LIB_listeners[type] = []);
-        var o = {listener: listener};
-        if (arguments.length > 2) {
-            o.auxArg = auxArg;
-        }
-        addEventListener(this, this._LIB_listeners[type], o);
+        addEventListener(this, this._LIB_listeners[type], {listener: listener});
     };
 
 /**
@@ -165,35 +149,24 @@ et.addEventListener('change', this.handleChange, this);
 
 @parameter listener {object|function} The listener object or callback function.
 
-@parameter auxArg {string|object} Optional. See description.
-
 @description
 
 If the listener is an object then when any event type is dispatched on
 the event target, the listener object's handleEvent method will be called.
-Using the auxArg you can specify the name of the method to be called.
 
 If the listener is a function then when any event type is dispatched on
 the event target, the listener function is called with event target object set as
-the "this" object. Using the auxArg you can specifiy a different object to be
 the "this" object.
 
-One listener (or listener/auxArg pair to be more precise) can be added
-only once.
+One listener can be added only once.
 
 et.addAllEventListener({handleEvent:function(){}});
-et.addAllEventListener({handleChange:function(){}}, 'handleChange');
 et.addAllEventListener(function(){});
-et.addAllEventListener(this.handleChange, this);
 
 */
-    LIB_EventTarget.prototype.addAllEventListener = function(listener, /*optional*/ auxArg) {
+    LIB_EventTarget.prototype.addAllEventListener = function(listener) {
         hasOwnProperty(this, '_LIB_allListeners') || (this._LIB_allListeners = []);
-        var o = {listener: listener};
-        if (arguments.length > 1) {
-            o.auxArg = auxArg;
-        }
-        addEventListener(this, this._LIB_allListeners, o);
+        addEventListener(this, this._LIB_allListeners, {listener: listener});
     };
 
 /**
@@ -204,28 +177,20 @@ et.addAllEventListener(this.handleChange, this);
 
 @parameter listener {object|function} The listener object or callback function.
 
-@parameter auxArg {string|object} Optional.
-
 @description
 
-Removes added listener matching the type/listener/auxArg combination exactly.
+Removes added listener matching the type/listener combination exactly.
 If this combination is not found there are no errors.
 
-var o = {handleEvent:function(){}, handleChange:function(){}};
+var o = {handleEvent:function(){}};
 et.removeEventListener('change', o);
-et.removeEventListener('change', o, 'handleChange');
 et.removeEventListener('change', fn);
-et.removeEventListener('change', this.handleChange, this);
 
 */
-    LIB_EventTarget.prototype.removeEventListener = function(type, listener, /*optional*/ auxArg) {
+    LIB_EventTarget.prototype.removeEventListener = function(type, listener) {
         if (hasOwnProperty(this, '_LIB_listeners') &&
             hasOwnProperty(this._LIB_listeners, type)) {
-            var o = {listener: listener};
-            if (arguments.length > 2) {
-                o.auxArg = auxArg;
-            }
-            removeEventListener(this._LIB_listeners[type], o);
+            removeEventListener(this._LIB_listeners[type], {listener: listener});
         }
     };
 
@@ -235,27 +200,19 @@ et.removeEventListener('change', this.handleChange, this);
 
 @parameter listener {object|function} The listener object or callback function.
 
-@parameter auxArg {string|object} Optional.
-
 @description
 
-Removes listener added with addAllEventListener matching the listener/auxArg combination exactly.
-If this combination is not found there are no errors.
+Removes listener added with addAllEventListener. If the listener is
+not found there are no errors.
 
-var o = {handleEvent:function(){}, handleChange:function(){}};
+var o = {handleEvent:function(){}};
 et.removeAllEventListener(o);
-et.removeAllEventListener(o, 'handleChange');
 et.removeAllEventListener(fn);
-et.removeAllEventListener(this.handleChange, this);
 
 */
-    LIB_EventTarget.prototype.removeAllEventListener = function(listener, /*optional*/ auxArg) {
+    LIB_EventTarget.prototype.removeAllEventListener = function(listener) {
         if (hasOwnProperty(this, '_LIB_allListeners')) {
-            var o = {listener: listener};
-            if (arguments.length > 1) {
-                o.auxArg = auxArg;
-            }
-            removeEventListener(this._LIB_allListeners, o);
+            removeEventListener(this._LIB_allListeners, {listener: listener});
         }
     };
 

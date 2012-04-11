@@ -166,34 +166,7 @@
             s.dispatchEvent({type:'foo'});
             assert.same(false, called);
         },
-        
-        "test methodName argument": function() {
-            var s = new LIB_EventTarget();
-            var obj0 = {
-                name: 'obj0_name',
-                handler: function(ev) {
-                    this.result = this.name;
-                }
-            };
-            s.addEventListener('foo', obj0, 'handler');
-        
-            assert.same(undefined, obj0.result);
-        
-            s.dispatchEvent({type: 'foo'});
-        
-            assert.same('obj0_name', obj0.result);
-            
-            delete obj0.result;
-        
-            assert.same(undefined, obj0.result);
-        
-            s.removeEventListener('foo', obj0, 'handler');
-        
-            s.dispatchEvent({type: 'foo'});
-        
-            assert.same(undefined, obj0.result);
-        },
-        
+                
         "test thisObj not supplied is event target object": function() {
             var s = new LIB_EventTarget();
             var thisObj = null;
@@ -210,111 +183,7 @@
             assert.same(null, thisObj);
         },
         
-        "test thisObj is not event target if auxArg is explicitly false": function() {
-            var s = new LIB_EventTarget();
-            var f = function() {
-                f.thisObj = this;
-            };
-            s.addEventListener('foo', f, false);
-            s.dispatchEvent({type:'foo'});
-            refute.same(s, f.thisObj);
-            assert.same('object', typeof f.thisObj);
-            assert.same(false, f.thisObj.valueOf());
-        },
-        
-        "test thisObj is not event target if auxArg is explicitly null": function() {
-            var s = new LIB_EventTarget();
-            var g = function() {
-                g.thisObj = this;
-            };
-            s.addEventListener('foo', g, null);
-            s.dispatchEvent({type:'foo'});
-            refute.same(s, g.thisObj);
-            assert.same('object', typeof g.thisObj);
-            assert.same(global, g.thisObj);
-        },
-        
-        "test thisObj is not event target if auxArg is explicitly undefined": function() {
-            var s = new LIB_EventTarget();
-            var h = function() {
-                h.thisObj = this;
-            };
-            h.thisObj = true; // some value other than undefined
-            s.addEventListener('foo', h, undefined);
-            s.dispatchEvent({type:'foo'});
-            refute.same(s, h.thisObj);
-            assert.same('object', typeof h.thisObj);
-            assert.same(global, h.thisObj);
-        },
-        
-        "test thisObj is not event target if auxArg is explicitly empty string": function() {
-            var s = new LIB_EventTarget();
-            var i = function() {
-                i.thisObj = this;
-            };
-            s.addEventListener('foo', i, '');
-            s.dispatchEvent({type:'foo'});
-            refute.same(s, i.thisObj);
-            assert.same('object', typeof i.thisObj);
-            assert.same('', i.thisObj.valueOf());
-        },
-        
-        "test thisObj is not event target if auxArg is explicitly zero": function() {
-            var s = new LIB_EventTarget();
-            var j = function() {
-                j.thisObj = this;
-            };
-            s.addEventListener('foo', j, 0);
-            s.dispatchEvent({type:'foo'});
-            refute.same(s, j.thisObj);
-            assert.same('object', typeof j.thisObj);
-            assert.same(0, j.thisObj.valueOf());
-        },
-        
-        "test thisObj is not event target if auxArg is explicitly NaN": function() {
-            var s = new LIB_EventTarget();
-            var k = function() {
-                k.thisObj = this;
-            };
-            s.addEventListener('foo', k, NaN);
-            s.dispatchEvent({type:'foo'});
-            refute.same(s, isNaN(k.thisObj));
-            assert.same('object', typeof k.thisObj);
-            assert.same(true, isNaN(k.thisObj.valueOf()));
-        },
-        
-        "test if auxArg explicitly undefined for adding then must be explicitly undefined for removing": function() {
-            var s = new LIB_EventTarget();
-            var f = function() {
-                f.called = true;
-            };
-            var g = function() {
-                g.called = true;
-            };
-            var reset = function() {
-                f.called = false;
-                g.called = false;
-            };
-            reset();
-            s.addEventListener('foo', f);
-            s.addEventListener('foo', g, undefined);
-            s.dispatchEvent({type:'foo'});
-            assert.same(true, f.called, 'one');
-            assert.same(true, g.called, 'two');
-            reset();
-            s.removeEventListener('foo', f);
-            s.removeEventListener('foo', g);
-            s.dispatchEvent({type:'foo'});
-            assert.same(false, f.called, 'three');
-            assert.same(true, g.called, 'four');
-            reset();
-            s.removeEventListener('foo', g, undefined);
-            s.dispatchEvent({type:'foo'});
-            assert.same(false, f.called, 'five');
-            assert.same(false, g.called, 'six');
-        },
-        
-        "test adding same listener function twice with same parameters only adds it once": function() {
+        "test trying to add same listener function twice only adds it once": function() {
             var s = new LIB_EventTarget();
             var f = function() {
                 f.count++;
@@ -324,10 +193,10 @@
             };
             reset();
             assert.same(0, f.count, 'start with zero');
-            s.addEventListener('foo', f, {});
-            s.addEventListener('foo', f, {});
+            s.addEventListener('foo', f);
+            s.addEventListener('foo', f);
             s.dispatchEvent({type: 'foo'});
-            assert.same(2, f.count, 'f should only have been called twice');
+            assert.same(1, f.count, 'f should only have been called once');
         },
         
         "test adding same listener function with different type parameters adds it twice": function() {
@@ -345,58 +214,6 @@
             s.dispatchEvent({type: 'foo'});
             s.dispatchEvent({type: 'bar'});
             assert.same(2, f.count, 'f should only have been called twice');
-        },
-        
-        "test adding same listener function with different auxArg parameters adds it twice": function() {
-            var s = new LIB_EventTarget();
-            var f = function() {
-                f.count++;
-            };
-            var reset = function() {
-                f.count = 0;
-            };
-            reset();
-            assert.same(0, f.count, 'start with zero');
-            s.addEventListener('foo', f);
-            s.addEventListener('foo', f);
-            s.dispatchEvent({type: 'foo'});
-            assert.same(1, f.count, 'f should only have been called once');
-        },
-        
-        "test thisObj argument differentiates two listeners": function() {
-            var s = new LIB_EventTarget();
-            var obj0 = {
-                name: 'obj0_name',
-                handler: function(ev) {
-                    this.result = this.name;
-                }
-            };
-            var obj1 = {
-                name: 'obj1_name'
-            };
-            s.addEventListener('foo', obj0.handler, obj0);
-            // borrow obj0's handler and use for obj1
-            s.addEventListener('foo', obj0.handler, obj1);
-        
-            assert.same(undefined, obj0.result);
-            assert.same(undefined, obj1.result);
-        
-            s.dispatchEvent({type: 'foo'});
-        
-            assert.same('obj0_name', obj0.result);
-            assert.same('obj1_name', obj1.result);
-            
-            delete obj0.result;
-            delete obj1.result;
-        
-            assert.same(undefined, obj0.result);
-            assert.same(undefined, obj1.result);
-        
-            s.removeEventListener('foo', obj0.handler, obj1);
-            s.dispatchEvent({type: 'foo'});
-        
-            assert.same('obj0_name', obj0.result);
-            assert.same(undefined, obj1.result);
         },
         
         "test implements": function() {

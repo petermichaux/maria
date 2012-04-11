@@ -20,7 +20,7 @@ LIB_ObservableSet.prototype.add = function() {
         if (LIB_Set.prototype.add.call(this, argument)) {
             added.push(argument);
             if (LIB_implementsEventTarget(argument)) {
-                argument.addAllEventListener(this, 'elementListener');
+                argument.addAllEventListener(this);
             }
         }
     }
@@ -41,7 +41,7 @@ LIB_ObservableSet.prototype['delete'] = function() {
         if (LIB_Set.prototype['delete'].call(this, argument)) {
             deleted.push(argument);
             if (LIB_implementsEventTarget(argument)) {
-                argument.removeAllEventListener(this, 'elementListener');
+                argument.removeAllEventListener(this);
             }
         }
     }
@@ -60,7 +60,7 @@ LIB_ObservableSet.prototype.empty = function() {
         for (var i = 0, ilen = deleted.length; i < ilen; i++) {
             var element = deleted[i];
             if (LIB_implementsEventTarget(element)) {
-                element.removeAllEventListener(this, 'elementListener');
+                element.removeAllEventListener(this);
             }
         }
         this.dispatchEvent({type: 'LIB_delete', relatedTargets: deleted, cancelBubble: true});
@@ -69,7 +69,7 @@ LIB_ObservableSet.prototype.empty = function() {
     return result;
 };
 
-LIB_ObservableSet.prototype.elementListener = function(ev) {
+LIB_ObservableSet.prototype.handleEvent = function(ev) {
 
     // If it is a destroy event being dispatched on the
     // destroyed element then we want to remove it from
