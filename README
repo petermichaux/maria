@@ -1,7 +1,6 @@
 People ask me about building a "framework for MVC". I reply that a framework is not necessary or even desirable but that some libraries are useful.
 
 The following source files are considered production ready.
-    * EventTarget.js
     * Set.js
 
 
