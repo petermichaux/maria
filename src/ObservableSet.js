@@ -19,14 +19,20 @@ LIB_ObservableSet.prototype.add = function() {
         var argument = arguments[i];
         if (LIB_Set.prototype.add.call(this, argument)) {
             added.push(argument);
-            if (evento.implementsEventTarget(argument)) {
-                argument.addAllEventListener(this);
+            if ((typeof argument.addEventListener === 'function') &&
+                (typeof argument.removeEventListener === 'function')) {
+                argument.addEventListener('LIB_destroy', this);    
+            }
+            if ((typeof argument.addParentEventTarget === 'function') &&
+                // want to know can remove later
+                (typeof argument.removeParentEventTarget === 'function')) {
+                argument.addParentEventTarget(this);
             }
         }
     }
     var modified = added.length > 0;
     if (modified) {
-        this.dispatchEvent({type: 'LIB_add', relatedTargets: added, cancelBubble: true});
+        this.dispatchEvent({type: 'LIB_add', relatedTargets: added, bubbles: false});
         this.dispatchEvent({type: 'LIB_afterAdd', relatedTargets: added});
     }
     return modified;
@@ -40,14 +46,17 @@ LIB_ObservableSet.prototype['delete'] = function() {
         var argument = arguments[i];
         if (LIB_Set.prototype['delete'].call(this, argument)) {
             deleted.push(argument);
-            if (evento.implementsEventTarget(argument)) {
-                argument.removeAllEventListener(this);
+            if (typeof argument.removeEventListener === 'function') {
+                argument.removeEventListener('LIB_destroy', this);
+            }
+            if (typeof argument.removeParentEventTarget === 'function') {
+                argument.removeParentEventTarget(this);
             }
         }
     }
     var modified = deleted.length > 0;
     if (modified) {
-        this.dispatchEvent({type: 'LIB_delete', relatedTargets: deleted, cancelBubble: true});
+        this.dispatchEvent({type: 'LIB_delete', relatedTargets: deleted, bubbles: false});
         this.dispatchEvent({type: 'LIB_afterDelete', relatedTargets: deleted});
     }
     return modified;
@@ -59,11 +68,14 @@ LIB_ObservableSet.prototype.empty = function() {
     if (result) {
         for (var i = 0, ilen = deleted.length; i < ilen; i++) {
             var element = deleted[i];
-            if (evento.implementsEventTarget(element)) {
-                element.removeAllEventListener(this);
+            if (typeof element.removeEventListener === 'function') {
+                element.removeEventListener('LIB_destroy', this);
+            }
+            if (typeof element.removeParentEventTarget === 'function') {
+                element.removeParentEventTarget(this);
             }
         }
-        this.dispatchEvent({type: 'LIB_delete', relatedTargets: deleted, cancelBubble: true});
+        this.dispatchEvent({type: 'LIB_delete', relatedTargets: deleted, bubbles: false});
         this.dispatchEvent({type: 'LIB_afterDelete', relatedTargets: deleted});
     }
     return result;
@@ -77,11 +89,6 @@ LIB_ObservableSet.prototype.handleEvent = function(ev) {
     if ((ev.type === 'LIB_destroy') &&
         (ev.currentTarget === ev.target)) {
         this['delete'](ev.target);
-    }
-
-    // bubble the event
-    if (!ev.cancelBubble) {
-        this.dispatchEvent(ev);
     }
 
 };
