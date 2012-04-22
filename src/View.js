@@ -15,8 +15,13 @@ LIB_View.prototype.renderAndUpdate = function() {
     this.update();
 };
 
+LIB_View.prototype.tagName = 'div';
+LIB_View.prototype.className = '';
+
 LIB_View.prototype.createRootEl = function() {
-    return this._doc.createElement('div');
+    var rootEl = this._doc.createElement(this.tagName);
+    rootEl.className = this.className;
+    return rootEl;
 };
 
 LIB_View.prototype.getRootEl = function() {
