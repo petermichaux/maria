@@ -1,11 +1,1 @@
-People ask me about building a "framework for MVC". I reply that a framework is not necessary or even desirable but that some libraries are useful.
-
-The following source files are considered production ready.
-    * Set.js
-
-
----------
-
-All event names prefixed with "LIB_" are reserved. For example, the following are in use: "LIB_add", "LIB_delete", "LIB_destroy".
-
-Events bubble through collections. It is the programmer's responsibility not to create circular collections. For example, collection A contains collection B and vice versa.
+People ask me about building a "framework for MVC". This code will be my reply.
