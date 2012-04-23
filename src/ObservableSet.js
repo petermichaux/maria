@@ -2,6 +2,7 @@
 //
 var LIB_ObservableSet = function() {
     LIB_Set.apply(this, arguments);
+    evento.EventTarget.call(this);
 };
 
 LIB_ObservableSet.prototype = LIB_create(LIB_Set.prototype);
