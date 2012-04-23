@@ -9,7 +9,7 @@ var LIB_CompositeView = function() {
 LIB_CompositeView.prototype = LIB_create(LIB_View.prototype);
 LIB_CompositeView.prototype.constructor = LIB_CompositeView;
 
-hijos.mixinNode(LIB_CompositeView.prototype);
+hijos.Node.mixin(LIB_CompositeView.prototype);
 
 LIB_CompositeView.prototype.insertBefore = function(newChild, oldChild) {
     hijos.Node.prototype.insertBefore.call(this, newChild, oldChild);

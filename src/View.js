@@ -9,7 +9,7 @@ var LIB_View = function(model, controller, /*optional*/ doc) {
     this.renderAndUpdate();
 };
 
-hijos.mixinLeaf(LIB_View.prototype);
+hijos.Leaf.mixin(LIB_View.prototype);
 
 LIB_View.prototype.renderAndUpdate = function() {
     this.render();

@@ -8,7 +8,7 @@ var LIB_ObservableSet = function() {
 LIB_ObservableSet.prototype = LIB_create(LIB_Set.prototype);
 LIB_ObservableSet.prototype.constructor = LIB_ObservableSet;
 
-evento.mixinEventTarget(LIB_ObservableSet.prototype);
+evento.EventTarget.mixin(LIB_ObservableSet.prototype);
 
 // Wrap the set mutator methods to dispatch events.
 
