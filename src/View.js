@@ -2,13 +2,14 @@
 // used in the view layer of MVC applications
 //
 var LIB_View = function(model, controller, /*optional*/ doc) {
+    hijos.Leaf.call(this);
     this.setModel(model);
     this.setController(controller);
     this._doc = doc || document;
     this.renderAndUpdate();
 };
 
-LIB_mixinComponent(LIB_View.prototype);
+hijos.mixinLeaf(LIB_View.prototype);
 
 LIB_View.prototype.renderAndUpdate = function() {
     this.render();
@@ -43,7 +44,7 @@ LIB_View.prototype.update = function() {
 };
 
 LIB_View.prototype.destroy = function() {
-    LIB_Component.prototype.destroy.call(this);
+    hijos.Leaf.prototype.destroy.call(this);
     this.setModel(null);
     this.setController(null);
     evento.purgeEventListener(this);
