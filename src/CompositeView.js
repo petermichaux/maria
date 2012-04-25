@@ -23,6 +23,6 @@ LIB_CompositeView.prototype.removeChild = function(oldChild) {
 };
 
 LIB_CompositeView.prototype.destroy = function() {
-    hijos.Node.prototype.destroy.call(this);
     LIB_View.prototype.destroy.call(this);
+    hijos.Node.prototype.destroy.call(this);
 };
