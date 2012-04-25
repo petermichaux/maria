@@ -39,17 +39,18 @@ LIB_View.prototype.render = function() {
 };
 
 // update the HTML of the view to represent model state
-LIB_View.prototype.update = function() {
+LIB_View.prototype.handleChange = function() {
     // to be overridden by concrete view subclasses
 };
 
 LIB_View.prototype.destroy = function() {
-    hijos.Leaf.prototype.destroy.call(this);
-    this.setModel(null);
-    this.setController(null);
     evento.purgeEventListener(this);
-    delete this._doc;
-    delete this._rootEl;
+    this._model = null;
+    if (this._controller) {
+        this._controller.destroy();
+        this._controller = null;
+    }
+    hijos.Leaf.prototype.destroy.call(this);
 };
 
 LIB_View.prototype.getModel = function() {
@@ -57,26 +58,44 @@ LIB_View.prototype.getModel = function() {
 };
 
 LIB_View.prototype.setModel = function(model) {
-    if (this._model) {
-        evento.removeEventListener(this._model, 'change', this, 'update');
-        delete this._model;
-    }
-    if (model) {
-        evento.addEventListener(model, 'change', this, 'update');
-        this._model = model;
-        this.update();
-    }
+    this.setModelAndController(model, this.getController());
 };
 
 LIB_View.prototype.getController = function() {
+    if (!this._controller) {
+        this.setController(this.getDefaultController());
+    }
     return this._controller;
 };
 
+LIB_View.prototype.getDefaultController = function() {
+    var constructor = this.getDefaultControllerConstructor();
+    return new constructor();
+};
+
+LIB_View.prototype.getDefaultControllerConstructor = function() {
+    return LIB_Controller;
+};
+
 LIB_View.prototype.setController = function(controller) {
-    if (this._controller) {
-        delete this._controller;
+    this.setModelAndController(this.getModel(), controller);
+};
+
+LIB_View.prototype.setModelAndController = function(model, controller) {
+    if (this._model !== model) {
+        if (this._model) {
+            evento.removeEventListener(this._model, 'change', this, 'handleChange');
+        }
+        if (model) {
+            evento.addEventListener(model, 'change', this, 'handleChange');
+        }
+        this._model = model;
     }
-    if (controller) {
+    if (this._controller !== controller) {
+        if (controller) {
+            controller.setView(this);
+            controller.setModel(model);
+        }
         this._controller = controller;
     }
 };
