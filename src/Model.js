@@ -1,5 +1,5 @@
 maria.Model = function() {
-    evento.EventTarget.call(this);
+    maria.EventTarget.call(this);
 };
 
-evento.EventTarget.mixin(LIB_Model.prototype);
+maria.EventTarget.mixin(LIB_Model.prototype);

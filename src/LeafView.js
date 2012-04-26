@@ -2,14 +2,14 @@
 // used in the view layer of MVC applications
 //
 maria.LeafView = function(model, controller, /*optional*/ doc) {
-    hijos.Leaf.call(this);
+    maria.Leaf.call(this);
     // this.setModel(model);
     // this.setController(controller);
     // this._doc = doc || document;
     // this.renderAndUpdate();
 };
 
-hijos.Leaf.mixin(maria.LeafView.prototype);
+maria.Leaf.mixin(maria.LeafView.prototype);
 
 maria.LeafView.prototype.renderAndUpdate = function() {
     this.render();
@@ -44,13 +44,13 @@ maria.LeafView.prototype.handleChange = function() {
 };
 
 maria.LeafView.prototype.destroy = function() {
-    evento.purgeEventListener(this);
+    maria.purgeEventListener(this);
     this._model = null;
     if (this._controller) {
         this._controller.destroy();
         this._controller = null;
     }
-    hijos.Leaf.prototype.destroy.call(this);
+    maria.Leaf.prototype.destroy.call(this);
 };
 
 maria.LeafView.prototype.getModel = function() {
@@ -84,10 +84,10 @@ maria.LeafView.prototype.setController = function(controller) {
 maria.LeafView.prototype.setModelAndController = function(model, controller) {
     if (this._model !== model) {
         if (this._model) {
-            evento.removeEventListener(this._model, 'change', this, 'handleChange');
+            maria.removeEventListener(this._model, 'change', this, 'handleChange');
         }
         if (model) {
-            evento.addEventListener(model, 'change', this, 'handleChange');
+            maria.addEventListener(model, 'change', this, 'handleChange');
         }
         this._model = model;
     }

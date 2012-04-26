@@ -2,13 +2,13 @@
 //
 var LIB_ObservableSet = function() {
     LIB_Set.apply(this, arguments);
-    evento.EventTarget.call(this);
+    maria.EventTarget.call(this);
 };
 
 LIB_ObservableSet.prototype = new LIB_Set();
 LIB_ObservableSet.prototype.constructor = LIB_ObservableSet;
 
-evento.EventTarget.mixin(LIB_ObservableSet.prototype);
+maria.EventTarget.mixin(LIB_ObservableSet.prototype);
 
 // Wrap the set mutator methods to dispatch events.
 
