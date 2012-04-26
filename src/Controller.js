@@ -17,7 +17,7 @@ LIB_Controller.prototype.setModel = function(model) {
 };
 
 LIB_Controller.prototype.getView = function() {
-    this._view;
+    return this._view;
 };
 
 LIB_Controller.prototype.setView = function(view) {
