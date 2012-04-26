@@ -6,7 +6,7 @@ var LIB_CompositeView = function() {
     LIB_View.apply(this, arguments);
 };
 
-LIB_CompositeView.prototype = LIB_create(LIB_View.prototype);
+LIB_CompositeView.prototype = new LIB_View();
 LIB_CompositeView.prototype.constructor = LIB_CompositeView;
 
 hijos.Node.mixin(LIB_CompositeView.prototype);

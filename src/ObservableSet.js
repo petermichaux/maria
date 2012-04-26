@@ -5,7 +5,7 @@ var LIB_ObservableSet = function() {
     evento.EventTarget.call(this);
 };
 
-LIB_ObservableSet.prototype = LIB_create(LIB_Set.prototype);
+LIB_ObservableSet.prototype = new LIB_Set();
 LIB_ObservableSet.prototype.constructor = LIB_ObservableSet;
 
 evento.EventTarget.mixin(LIB_ObservableSet.prototype);

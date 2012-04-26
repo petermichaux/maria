@@ -3,10 +3,10 @@
 //
 var LIB_View = function(model, controller, /*optional*/ doc) {
     hijos.Leaf.call(this);
-    this.setModel(model);
-    this.setController(controller);
-    this._doc = doc || document;
-    this.renderAndUpdate();
+    // this.setModel(model);
+    // this.setController(controller);
+    // this._doc = doc || document;
+    // this.renderAndUpdate();
 };
 
 hijos.Leaf.mixin(LIB_View.prototype);
