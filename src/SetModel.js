@@ -1,24 +1,24 @@
-// LIB_ObservableSet inherits from LIB_Set.
+// maria.SetModel inherits from maria.Set.
 //
-var LIB_ObservableSet = function() {
-    LIB_Set.apply(this, arguments);
+maria.SetModel = function() {
+    maria.Set.apply(this, arguments);
     maria.EventTarget.call(this);
 };
 
-LIB_ObservableSet.prototype = new LIB_Set();
-LIB_ObservableSet.prototype.constructor = LIB_ObservableSet;
+maria.SetModel.prototype = new maria.Set();
+maria.SetModel.prototype.constructor = maria.SetModel;
 
-maria.EventTarget.mixin(LIB_ObservableSet.prototype);
+maria.EventTarget.mixin(maria.SetModel.prototype);
 
 // Wrap the set mutator methods to dispatch events.
 
 // takes multiple arguments so that only one event will be fired
 //
-LIB_ObservableSet.prototype.add = function() {
+maria.SetModel.prototype.add = function() {
     var added = [];
     for (var i = 0, ilen = arguments.length; i < ilen; i++) {
         var argument = arguments[i];
-        if (LIB_Set.prototype.add.call(this, argument)) {
+        if (maria.Set.prototype.add.call(this, argument)) {
             added.push(argument);
             if ((typeof argument.addEventListener === 'function') &&
                 (typeof argument.removeEventListener === 'function')) {
@@ -41,11 +41,11 @@ LIB_ObservableSet.prototype.add = function() {
 
 // takes multiple arguments so that only one event will be fired
 //
-LIB_ObservableSet.prototype['delete'] = function() {
+maria.SetModel.prototype['delete'] = function() {
     var deleted = [];
     for (var i = 0, ilen = arguments.length; i < ilen; i++) {
         var argument = arguments[i];
-        if (LIB_Set.prototype['delete'].call(this, argument)) {
+        if (maria.Set.prototype['delete'].call(this, argument)) {
             deleted.push(argument);
             if (typeof argument.removeEventListener === 'function') {
                 argument.removeEventListener('LIB_destroy', this);
@@ -63,9 +63,9 @@ LIB_ObservableSet.prototype['delete'] = function() {
     return modified;
 };
 
-LIB_ObservableSet.prototype.empty = function() {
+maria.SetModel.prototype.empty = function() {
     var deleted = this.toArray();
-    var result = LIB_Set.prototype.empty.call(this);
+    var result = maria.Set.prototype.empty.call(this);
     if (result) {
         for (var i = 0, ilen = deleted.length; i < ilen; i++) {
             var element = deleted[i];
@@ -82,7 +82,7 @@ LIB_ObservableSet.prototype.empty = function() {
     return result;
 };
 
-LIB_ObservableSet.prototype.handleEvent = function(ev) {
+maria.SetModel.prototype.handleEvent = function(ev) {
 
     // If it is a destroy event being dispatched on the
     // destroyed element then we want to remove it from
@@ -95,4 +95,4 @@ LIB_ObservableSet.prototype.handleEvent = function(ev) {
 };
 
 // insure prototype object is initialized properly
-LIB_ObservableSet.call(LIB_ObservableSet.prototype);
+maria.SetModel.call(maria.SetModel.prototype);

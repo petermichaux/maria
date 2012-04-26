@@ -24,8 +24,6 @@
  * THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-var LIB_Set;
-
 (function() {
 
     var nextId = 0;
@@ -41,7 +39,7 @@ var LIB_Set;
 
 /**
 
-@property LIB_Set
+@property maria.Set
 
 @description
 
@@ -54,20 +52,20 @@ layer of your application.
 When using the set iterators (e.g. forEach, map) do not depend
 on the order of iteration of the set's elements. Sets are unordered.
 
-var set = new LIB_Set();                         // an empty set
+var set = new maria.Set();                         // an empty set
 
 Sets have a length property that is the number of elements in the set.
 
 var alpha = {};
 var beta = {};
-var set = new LIB_Set(alpha, beta, alpha);
+var set = new maria.Set(alpha, beta, alpha);
 set.length; // 2
 
 The methods of an event target object are inspired by the incomplete
 Harmony Set proposal and the Array.prototype iterators.
 
 */
-    LIB_Set = function() {
+    maria.Set = function() {
         initSet(this);
         for (var i = 0, ilen = arguments.length; i < ilen; i++) {
             this.add(arguments[i]);
@@ -76,7 +74,7 @@ Harmony Set proposal and the Array.prototype iterators.
 
 /**
 
-@property LIB_Set.prototype.has
+@property maria.Set.prototype.has
 
 @parameter element
 
@@ -86,19 +84,19 @@ Returns true if element is in the set. Otherwise returns false.
 
 var alpha = {};
 var beta = {};
-var set = new LIB_Set(alpha);
+var set = new maria.Set(alpha);
 set.has(alpha); // true
 set.has(beta); // false
 
 */
-    LIB_Set.prototype.has = function(element) {
-        return Object.prototype.hasOwnProperty.call(element, '_LIB_Set_id') &&
-               Object.prototype.hasOwnProperty.call(this._elements, element._LIB_Set_id);
+    maria.Set.prototype.has = function(element) {
+        return Object.prototype.hasOwnProperty.call(element, '_maria_Set_id') &&
+               Object.prototype.hasOwnProperty.call(this._elements, element._maria_Set_id);
     };
 
 /**
 
-@property LIB_Set.prototype.add
+@property maria.Set.prototype.add
 
 @parameter element
 
@@ -108,21 +106,21 @@ If element is not already in the set then adds element to the set
 and returns true. Otherwise returns false.
 
 var alpha = {};
-var set = new LIB_Set();
+var set = new maria.Set();
 set.add(alpha); // true
 set.has(alpha); // false
 
 */
-    LIB_Set.prototype.add = function(element) {
+    maria.Set.prototype.add = function(element) {
         if (this.has(element)) {
             return false;
         }
         else {
             var id;
-            if (!Object.prototype.hasOwnProperty.call(element, '_LIB_Set_id')) {
-                element._LIB_Set_id = getId();
+            if (!Object.prototype.hasOwnProperty.call(element, '_maria_Set_id')) {
+                element._maria_Set_id = getId();
             }
-            this._elements[element._LIB_Set_id] = element;
+            this._elements[element._maria_Set_id] = element;
             this.length++;
             return true;
         }
@@ -130,7 +128,7 @@ set.has(alpha); // false
 
 /**
 
-@property LIB_Set.prototype.delete
+@property maria.Set.prototype.delete
 
 @parameter element
 
@@ -144,14 +142,14 @@ did not allow bare reserved words in property name
 position so quote "delete".
 
 var alpha = {};
-var set = new LIB_Set(alpha);
+var set = new maria.Set(alpha);
 set['delete'](alpha); // true
 set['delete'](alpha); // false
 
 */
-    LIB_Set.prototype['delete'] = function(element) {
+    maria.Set.prototype['delete'] = function(element) {
         if (this.has(element)) {
-            delete this._elements[element._LIB_Set_id];
+            delete this._elements[element._maria_Set_id];
             this.length--;
             return true;
         }
@@ -162,7 +160,7 @@ set['delete'](alpha); // false
 
 /**
 
-@property LIB_Set.prototype.empty
+@property maria.Set.prototype.empty
 
 @description
 
@@ -170,12 +168,12 @@ If the set has elements then removes all the elements and
 returns true. Otherwise returns false.
 
 var alpha = {};
-var set = new LIB_Set(alpha);
+var set = new maria.Set(alpha);
 set.empty(); // true
 set.empty(); // false
 
 */
-    LIB_Set.prototype.empty = function() {
+    maria.Set.prototype.empty = function() {
         if (this.length > 0) {
             initSet(this);
             return true;
@@ -187,14 +185,14 @@ set.empty(); // false
 
 /**
 
-@property LIB_Set.prototype.toArray
+@property maria.Set.prototype.toArray
 
 @description
 
 Returns the elements of the set in a new array.
 
 */
-    LIB_Set.prototype.toArray = function() {
+    maria.Set.prototype.toArray = function() {
         var elements = [];
         for (var p in this._elements) {
             if (Object.prototype.hasOwnProperty.call(this._elements, p)) {
@@ -206,7 +204,7 @@ Returns the elements of the set in a new array.
 
 /**
 
-@property LIB_Set.prototype.forEach
+@property maria.Set.prototype.forEach
 
 @parameter callbackfn {function} The function to call for each element in the set.
 
@@ -219,13 +217,13 @@ Calls callbackfn for each element of the set.
 var alpha = {value: 0};
 var beta = {value: 1};
 var gamma = {value: 2};
-var set = new LIB_Set(alpha, beta, gamma);
+var set = new maria.Set(alpha, beta, gamma);
 set.forEach(function(element, set) {
     console.log(element.value);
 });
 
 */
-    LIB_Set.prototype.forEach = function(callbackfn /*, thisArg */) {
+    maria.Set.prototype.forEach = function(callbackfn /*, thisArg */) {
         var thisArg = arguments[1];
         for (var p in this._elements) {
             if (Object.prototype.hasOwnProperty.call(this._elements, p)) {
@@ -236,7 +234,7 @@ set.forEach(function(element, set) {
 
 /**
 
-@property LIB_Set.prototype.every
+@property maria.Set.prototype.every
 
 @parameter callbackfn {function} The function to call for each element in the set.
 
@@ -250,13 +248,13 @@ for all elements then every returns true. Otherwise returns false.
 var one = {value: 1};
 var two = {value: 2};
 var three = {value: 3};
-var set = new LIB_Set(one, two, three);
+var set = new maria.Set(one, two, three);
 set.every(function(element, set) {
     return element.value < 2;
 }); // false
 
 */
-    LIB_Set.prototype.every = function(callbackfn /*, thisArg */) {
+    maria.Set.prototype.every = function(callbackfn /*, thisArg */) {
         var thisArg = arguments[1];
         for (var p in this._elements) {
             if (Object.prototype.hasOwnProperty.call(this._elements, p) &&
@@ -269,7 +267,7 @@ set.every(function(element, set) {
 
 /**
 
-@property LIB_Set.prototype.some
+@property maria.Set.prototype.some
 
 @parameter callbackfn {function} The function to call for each element in the set.
 
@@ -283,13 +281,13 @@ for at least one element then some returns true. Otherwise returns false.
 var one = {value: 1};
 var two = {value: 2};
 var three = {value: 3};
-var set = new LIB_Set(one, two, three);
+var set = new maria.Set(one, two, three);
 set.some(function(element, set) {
     return element.value < 2;
 }); // true
 
 */
-    LIB_Set.prototype.some = function(callbackfn /*, thisArg */) {
+    maria.Set.prototype.some = function(callbackfn /*, thisArg */) {
         var thisArg = arguments[1];
         for (var p in this._elements) {
             if (Object.prototype.hasOwnProperty.call(this._elements, p) &&
@@ -302,7 +300,7 @@ set.some(function(element, set) {
 
 /**
 
-@property LIB_Set.prototype.reduce
+@property maria.Set.prototype.reduce
 
 @parameter callbackfn {function} The function to call for each element in the set.
 
@@ -325,7 +323,7 @@ iterated in the set.
 var one = {value: 1};
 var two = {value: 2};
 var three = {value: 3};
-var set = new LIB_Set(one, two, three);
+var set = new maria.Set(one, two, three);
 set.reduce(function(accumulator, element) {
     return {value: accumulator.value + element.value};
 }); // {value:6}
@@ -334,7 +332,7 @@ set.reduce(function(accumulator, element) {
 }, 4); // 10
 
 */
-    LIB_Set.prototype.reduce = function(callbackfn /*, initialValue */) {
+    maria.Set.prototype.reduce = function(callbackfn /*, initialValue */) {
         var elements = this.toArray();
         var i = 0;
         var ilen = elements.length;
@@ -358,7 +356,7 @@ set.reduce(function(accumulator, element) {
 
 /**
 
-@property LIB_Set.prototype.map
+@property maria.Set.prototype.map
 
 @parameter callbackfn {function} The function to call for each element in the set.
 
@@ -372,13 +370,13 @@ are added to a new array. This new array is the value returned by map.
 var alpha = {length: 5};
 var beta = {length: 4};
 var gamma = {length: 5};
-var set = new LIB_Set(alpha, beta, gamma);
+var set = new maria.Set(alpha, beta, gamma);
 set.map(function(element) {
     return element.length;
 }); // [5,5,4] or [5,4,5] or [4,5,5]
 
 */
-    LIB_Set.prototype.map = function(callbackfn /*, thisArg */) {
+    maria.Set.prototype.map = function(callbackfn /*, thisArg */) {
         var thisArg = arguments[1];
         var result = [];
         for (var p in this._elements) {
@@ -391,7 +389,7 @@ set.map(function(element) {
 
 /**
 
-@property LIB_Set.prototype.filter
+@property maria.Set.prototype.filter
 
 @parameter callbackfn {function} The function to call for each element in the set.
 
@@ -406,13 +404,13 @@ is the value returned by filter.
 var alpha = {length: 5};
 var beta = {length: 4};
 var gamma = {length: 5};
-var set = new LIB_Set(alpha, beta, gamma);
+var set = new maria.Set(alpha, beta, gamma);
 set.filter(function(element) {
     return element.length > 4;
 }); // [alpha, gamma] or [gamma, alpha]
 
 */
-    LIB_Set.prototype.filter = function(callbackfn /*, thisArg */) {
+    maria.Set.prototype.filter = function(callbackfn /*, thisArg */) {
         var thisArg = arguments[1];
         var result = [];
         for (var p in this._elements) {
@@ -429,4 +427,4 @@ set.filter(function(element) {
 }());
 
 // insure prototype object is initialized properly
-LIB_Set.call(LIB_Set.prototype);
+maria.Set.call(maria.Set.prototype);

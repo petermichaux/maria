@@ -3,7 +3,7 @@
     buster.testCase('setSuite', {
 
         "test set starts with no elements": function() {
-            var s = new LIB_Set();
+            var s = new maria.Set();
             var alpha = {};
             assert.same(0, s.length, "set should start empty");
             assert.same(false, s.has(alpha), "an empty list should not have an alpha element");
@@ -12,14 +12,14 @@
         "test constructor with arguments uses has": function() {
             var alpha = {};
             var beta = {};
-            var s = new LIB_Set(alpha, beta, alpha);
+            var s = new maria.Set(alpha, beta, alpha);
             assert.same(2, s.length);
             assert.same(true, s.has(alpha));
             assert.same(true, s.has(beta));
         },
 
         "test add and delete return value": function() {
-            var s = new LIB_Set();
+            var s = new maria.Set();
             var alpha = {};
             assert.same(true, s.add(alpha), 'adding an item not in the list should return true.');
             assert.same(false, s.add(alpha), 'adding an item in the list should return false.');
@@ -28,14 +28,14 @@
         },
 
         "test has": function() {
-            var s = new LIB_Set();
+            var s = new maria.Set();
             var alpha = {};
             s.add(alpha);
             assert.same(true, s.has(alpha));
         },
 
         "test empty": function() {
-            var s = new LIB_Set();
+            var s = new maria.Set();
             var alpha = {};
             var beta = {};
             s.add(alpha);
@@ -49,8 +49,8 @@
             assert.same(false, s.empty(), "emptying an empty set should return false");
         },
 
-        "test LIB_set length property": function() {
-            var s = new LIB_Set();
+        "test maria.Set length property": function() {
+            var s = new maria.Set();
             var alpha = {};
             var beta = {};
             assert.same(0, s.length, "s.length should start life at zero.");
@@ -71,8 +71,8 @@
         },
 
         "test length properties are independent on multiple objects": function() {
-            var s0 = new LIB_Set();
-            var s1 = new LIB_Set();
+            var s0 = new maria.Set();
+            var s1 = new maria.Set();
 
             var alpha = {};
             var beta = {};
@@ -92,8 +92,8 @@
         },
 
         "test elements are independent on multiple objects": function() {
-            var s0 = new LIB_Set();
-            var s1 = new LIB_Set();
+            var s0 = new maria.Set();
+            var s1 = new maria.Set();
 
             var alpha = {};
             var beta = {};
@@ -108,7 +108,7 @@
         },
 
         "test toArray": function() {
-            var s = new LIB_Set();
+            var s = new maria.Set();
             var alpha = {};
             var beta = {};
             assert.arrayEquals([], s.toArray());
@@ -120,7 +120,7 @@
         "test forEach": function() {
             var alpha = {};
             var beta = {};
-            var s = new LIB_Set(alpha, beta);
+            var s = new maria.Set(alpha, beta);
             var t = [];
             s.forEach(function(el) {
                 t.push(el);
@@ -132,7 +132,7 @@
             var alpha = {length:5};
             var beta = {length:4};
             var gamma = {length:5};
-            var s = new LIB_Set(alpha, beta, gamma);
+            var s = new maria.Set(alpha, beta, gamma);
             var t = s.map(function(el) {
                 return el.length;
             });
@@ -143,7 +143,7 @@
             var alpha = {length:5};
             var beta = {length:4};
             var gamma = {length:5};
-            var s = new LIB_Set(alpha, beta, gamma);
+            var s = new maria.Set(alpha, beta, gamma);
             var t = s.filter(function(el) {
                 return el.length === 5;
             });
@@ -154,7 +154,7 @@
             var alpha = {length:5};
             var beta = {length:4};
             var gamma = {length:5};
-            var s = new LIB_Set(alpha, beta, gamma);
+            var s = new maria.Set(alpha, beta, gamma);
             assert.same(true, s.some(function(el) {return el.length === 5;}));
             assert.same(false, s.some(function(el) {return el.length === 6;}));
         },
@@ -163,7 +163,7 @@
             var alpha = {length:5};
             var beta = {length:4};
             var gamma = {length:5};
-            var s = new LIB_Set(alpha, beta, gamma);
+            var s = new maria.Set(alpha, beta, gamma);
             assert.same(false, s.every(function(el) {return el.length === 5;}));
             assert.same(true, s.every(function(el) {return typeof el === 'object';}));
         },
@@ -174,7 +174,7 @@
             var two = {value:2};
             var three = {value:3};
             var four = {value:4};
-            var s = new LIB_Set(zero, one, two, three, four);
+            var s = new maria.Set(zero, one, two, three, four);
             var result = s.reduce(function(previous, current) {
                 return {value: previous.value + current.value};
             });
@@ -187,7 +187,7 @@
             var two = {value:2};
             var three = {value:3};
             var four = {value:4};
-            var s = new LIB_Set(zero, one, two, three, four);
+            var s = new maria.Set(zero, one, two, three, four);
             var initial = 5;
             var result = s.reduce(function(previous, current) {
                 return previous + current.value;
@@ -196,7 +196,7 @@
         },
 
         "test reduce empty set": function() {
-            var s = new LIB_Set();
+            var s = new maria.Set();
             var initial = {value:5625};
             var result = s.reduce(function(previous, current) {
                 return {value: previous.value + current.value};
