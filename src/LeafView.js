@@ -74,7 +74,7 @@ maria.LeafView.prototype.getDefaultController = function() {
 };
 
 maria.LeafView.prototype.getDefaultControllerConstructor = function() {
-    return LIB_Controller;
+    return maria.Controller;
 };
 
 maria.LeafView.prototype.setController = function(controller) {
