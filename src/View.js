@@ -1,28 +1,28 @@
 // a composite view for the composite design pattern
 // used in the view layer of MVC applications
 //
-var LIB_CompositeView = function() {
+maria.View = function() {
     hijos.Node.call(this);
-    LIB_View.apply(this, arguments);
+    maria.LeafView.apply(this, arguments);
 };
 
-LIB_CompositeView.prototype = new LIB_View();
-LIB_CompositeView.prototype.constructor = LIB_CompositeView;
+maria.View.prototype = new maria.LeafView();
+maria.View.prototype.constructor = maria.View;
 
-hijos.Node.mixin(LIB_CompositeView.prototype);
+hijos.Node.mixin(maria.View.prototype);
 
-LIB_CompositeView.prototype.insertBefore = function(newChild, oldChild) {
+maria.View.prototype.insertBefore = function(newChild, oldChild) {
     hijos.Node.prototype.insertBefore.call(this, newChild, oldChild);
     this.getRootEl().insertBefore(newChild.getRootEl(), (oldChild ? oldChild.getRootEl() : null));
 };
 
-LIB_CompositeView.prototype.removeChild = function(oldChild) {
+maria.View.prototype.removeChild = function(oldChild) {
     hijos.Node.prototype.removeChild.call(this, oldChild);
     var oldChildRootEl = oldChild.getRootEl();
     oldChildRootEl.parentNode.removeChild(oldChildRootEl);
 };
 
-LIB_CompositeView.prototype.destroy = function() {
-    LIB_View.prototype.destroy.call(this);
+maria.View.prototype.destroy = function() {
+    maria.LeafView.prototype.destroy.call(this);
     hijos.Node.prototype.destroy.call(this);
 };
