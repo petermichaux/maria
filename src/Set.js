@@ -28,29 +28,14 @@ var LIB_Set;
 
 (function() {
 
-    // JavaScript's === operator has two problems: 
-    //     1) It cannot distinguish between the two zeros.
-    //            -0  === +0    // true
-    //     2) NaN is not equal to itself.
-    //            NaN === NaN   // false
-    //
-    function is(x, y) {
-        return (x === y) ?
-                   ((x !== 0) || ((1 / x) === (1 / y))) :
-                   ((x !== x) && (y !== y));
-    }
+    var nextId = 0;
 
-    function indexOfIdentical(elements, element) {
-        for (var i = 0, ilen = elements.length; i < ilen; i++) {
-            if (is(elements[i], element)) {
-                return i;
-            }
-        }
-        return -1;
+    function getId() {
+        return nextId++;
     }
 
     function initSet(set) {
-        set._elements = [];
+        set._elements = {};
         set.length = 0;
     }
 
@@ -60,13 +45,22 @@ var LIB_Set;
 
 @description
 
-A constructor function for creating set objects.
+A constructor function for creating set objects. Sets are designed
+to hold JavaScript objects. They cache a marker on the objects.
+Do not attempt to add primitives or host objects in a Set. This
+is a compromise to make Set objects efficient for use in the model
+layer of your application.
+
+When using the set iterators (e.g. forEach, map) do not depend
+on the order of iteration of the set's elements. Sets are unordered.
 
 var set = new LIB_Set();                         // an empty set
 
 Sets have a length property that is the number of elements in the set.
 
-var set = new LIB_Set('alpha', 'beta', 'alpha');
+var alpha = {};
+var beta = {};
+var set = new LIB_Set(alpha, beta, alpha);
 set.length; // 2
 
 The methods of an event target object are inspired by the incomplete
@@ -90,13 +84,16 @@ Harmony Set proposal and the Array.prototype iterators.
 
 Returns true if element is in the set. Otherwise returns false.
 
-var set = new LIB_Set(1);
-set.has(1); // true
-set.has(2); // false
+var alpha = {};
+var beta = {};
+var set = new LIB_Set(alpha);
+set.has(alpha); // true
+set.has(beta); // false
 
 */
     LIB_Set.prototype.has = function(element) {
-        return indexOfIdentical(this._elements, element) >= 0;
+        return Object.prototype.hasOwnProperty.call(element, '_LIB_Set_id') &&
+               Object.prototype.hasOwnProperty.call(this._elements, element._LIB_Set_id);
     };
 
 /**
@@ -110,9 +107,10 @@ set.has(2); // false
 If element is not already in the set then adds element to the set
 and returns true. Otherwise returns false.
 
+var alpha = {};
 var set = new LIB_Set();
-set.add(1); // true
-set.has(1); // false
+set.add(alpha); // true
+set.has(alpha); // false
 
 */
     LIB_Set.prototype.add = function(element) {
@@ -120,7 +118,11 @@ set.has(1); // false
             return false;
         }
         else {
-            this._elements.push(element);
+            var id;
+            if (!Object.prototype.hasOwnProperty.call(element, '_LIB_Set_id')) {
+                element._LIB_Set_id = getId();
+            }
+            this._elements[element._LIB_Set_id] = element;
             this.length++;
             return true;
         }
@@ -141,20 +143,20 @@ and returns true. Otherwise returns false.
 did not allow bare reserved words in property name
 position so quote "delete".
 
-var set = new LIB_Set(1);
-set['delete'](1); // true
-set['delete'](1); // false
+var alpha = {};
+var set = new LIB_Set(alpha);
+set['delete'](alpha); // true
+set['delete'](alpha); // false
 
 */
     LIB_Set.prototype['delete'] = function(element) {
-        var i = indexOfIdentical(this._elements, element);
-        if (i < 0) {
-            return false;
-        }
-        else {
-            this._elements.splice(i, 1);
+        if (this.has(element)) {
+            delete this._elements[element._LIB_Set_id];
             this.length--;
             return true;
+        }
+        else {
+            return false;
         }
     };
 
@@ -167,13 +169,14 @@ set['delete'](1); // false
 If the set has elements then removes all the elements and
 returns true. Otherwise returns false.
 
-var set = new LIB_Set(1);
+var alpha = {};
+var set = new LIB_Set(alpha);
 set.empty(); // true
 set.empty(); // false
 
 */
     LIB_Set.prototype.empty = function() {
-        if (this._elements.length > 0) {
+        if (this.length > 0) {
             initSet(this);
             return true;
         }
@@ -192,7 +195,13 @@ Returns the elements of the set in a new array.
 
 */
     LIB_Set.prototype.toArray = function() {
-        return this._elements.slice(0);
+        var elements = [];
+        for (var p in this._elements) {
+            if (Object.prototype.hasOwnProperty.call(this._elements, p)) {
+                elements.push(this._elements[p]);
+            }
+        }
+        return elements;
     };
 
 /**
@@ -207,17 +216,21 @@ Returns the elements of the set in a new array.
 
 Calls callbackfn for each element of the set.
 
-var set = new LIB_Set('alpha', 'beta', 'gamma');
+var alpha = {value: 0};
+var beta = {value: 1};
+var gamma = {value: 2};
+var set = new LIB_Set(alpha, beta, gamma);
 set.forEach(function(element, set) {
-    console.log(element);
+    console.log(element.value);
 });
 
 */
     LIB_Set.prototype.forEach = function(callbackfn /*, thisArg */) {
         var thisArg = arguments[1];
-        var elements = this._elements;
-        for (var i = 0, ilen = elements.length; i < ilen; i++) {
-            callbackfn.call(thisArg, elements[i], this);
+        for (var p in this._elements) {
+            if (Object.prototype.hasOwnProperty.call(this._elements, p)) {
+                callbackfn.call(thisArg, this._elements[p], this);
+            }
         }
     };
 
@@ -234,17 +247,20 @@ set.forEach(function(element, set) {
 Calls callbackfn for each element of the set. If callbackfn returns a truthy value
 for all elements then every returns true. Otherwise returns false.
 
-var set = new LIB_Set(1, 2, 3);
+var one = {value: 1};
+var two = {value: 2};
+var three = {value: 3};
+var set = new LIB_Set(one, two, three);
 set.every(function(element, set) {
-    return element < 2;
+    return element.value < 2;
 }); // false
 
 */
     LIB_Set.prototype.every = function(callbackfn /*, thisArg */) {
         var thisArg = arguments[1];
-        var elements = this._elements;
-        for (var i = 0, ilen = elements.length; i < ilen; i++) {
-            if (!callbackfn.call(thisArg, elements[i], this)) {
+        for (var p in this._elements) {
+            if (Object.prototype.hasOwnProperty.call(this._elements, p) &&
+                !callbackfn.call(thisArg, this._elements[p], this)) {
                 return false;
             }
         }
@@ -264,17 +280,20 @@ set.every(function(element, set) {
 Calls callbackfn for each element of the set. If callbackfn returns a truthy value
 for at least one element then some returns true. Otherwise returns false.
 
-var set = new LIB_Set(1, 2, 3);
+var one = {value: 1};
+var two = {value: 2};
+var three = {value: 3};
+var set = new LIB_Set(one, two, three);
 set.some(function(element, set) {
-    return element < 2;
+    return element.value < 2;
 }); // true
 
 */
     LIB_Set.prototype.some = function(callbackfn /*, thisArg */) {
         var thisArg = arguments[1];
-        var elements = this._elements;
-        for (var i = 0, ilen = elements.length; i < ilen; i++) {
-            if (callbackfn.call(thisArg, elements[i], this)) {
+        for (var p in this._elements) {
+            if (Object.prototype.hasOwnProperty.call(this._elements, p) &&
+                callbackfn.call(thisArg, this._elements[p], this)) {
                 return true;
             }
         }
@@ -303,17 +322,20 @@ For subsequent calls to callbackfn, the first argument is the value returned
 by the last call to callbackfn. The second argument is the next value to be
 iterated in the set.
 
-var set = new LIB_Set(1, 2, 3);
+var one = {value: 1};
+var two = {value: 2};
+var three = {value: 3};
+var set = new LIB_Set(one, two, three);
 set.reduce(function(accumulator, element) {
-    return accumulator + element;
-}); // 6
+    return {value: accumulator.value + element.value};
+}); // {value:6}
 set.reduce(function(accumulator, element) {
-    return accumulator + element;
+    return accumulator + element.value;
 }, 4); // 10
 
 */
     LIB_Set.prototype.reduce = function(callbackfn /*, initialValue */) {
-        var elements = this._elements;
+        var elements = this.toArray();
         var i = 0;
         var ilen = elements.length;
         var accumulator;
@@ -345,20 +367,24 @@ set.reduce(function(accumulator, element) {
 @description
 
 Calls callbackfn for each element of the set. The values returned by callbackfn
-are added to a new set. This new set is the value returned by map.
+are added to a new array. This new array is the value returned by map.
 
-var set = new LIB_Set('alpha', 'beta', 'gamma');
+var alpha = {length: 5};
+var beta = {length: 4};
+var gamma = {length: 5};
+var set = new LIB_Set(alpha, beta, gamma);
 set.map(function(element) {
     return element.length;
-}); // a set with elements 4 and 5
+}); // [5,5,4] or [5,4,5] or [4,5,5]
 
 */
     LIB_Set.prototype.map = function(callbackfn /*, thisArg */) {
         var thisArg = arguments[1];
-        var result = new this.constructor();
-        var elements = this._elements;
-        for (var i = 0, ilen = elements.length; i < ilen; i++) {
-            result.add(callbackfn.call(thisArg, elements[i], this));
+        var result = [];
+        for (var p in this._elements) {
+            if (Object.prototype.hasOwnProperty.call(this._elements, p)) {
+                result.push(callbackfn.call(thisArg, this._elements[p], this));
+            }
         }
         return result;
     };
@@ -374,26 +400,33 @@ set.map(function(element) {
 @description
 
 Calls callbackfn for each element of the set. If callbackfn returns true
-for an element then that element is added to a new result set. This new result set
+for an element then that element is added to a new array. This new array
 is the value returned by filter.
 
-var set = new LIB_Set('alpha', 'beta', 'gamma');
-set.map(function(element) {
+var alpha = {length: 5};
+var beta = {length: 4};
+var gamma = {length: 5};
+var set = new LIB_Set(alpha, beta, gamma);
+set.filter(function(element) {
     return element.length > 4;
-}); // a set with elements 'alpha' and 'gamma'
+}); // [alpha, gamma] or [gamma, alpha]
 
 */
     LIB_Set.prototype.filter = function(callbackfn /*, thisArg */) {
         var thisArg = arguments[1];
-        var result = new this.constructor();
-        var elements = this._elements;
-        for (var i = 0, ilen = elements.length; i < ilen; i++) {
-            var element = elements[i];
-            if (callbackfn.call(thisArg, element, this)) {
-                result.add(element);
+        var result = [];
+        for (var p in this._elements) {
+            if (Object.prototype.hasOwnProperty.call(this._elements, p)) {
+                var element = this._elements[p];
+                if (callbackfn.call(thisArg, element, this)) {
+                    result.push(element);
+                }
             }
         }
         return result;
     };
 
 }());
+
+// insure prototype object is initialized properly
+LIB_Set.call(LIB_Set.prototype);

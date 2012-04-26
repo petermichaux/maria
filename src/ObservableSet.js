@@ -93,3 +93,6 @@ LIB_ObservableSet.prototype.handleEvent = function(ev) {
     }
 
 };
+
+// insure prototype object is initialized properly
+LIB_ObservableSet.call(LIB_ObservableSet.prototype);
