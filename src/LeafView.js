@@ -58,7 +58,7 @@ maria.LeafView.prototype.getModel = function() {
 };
 
 maria.LeafView.prototype.setModel = function(model) {
-    this.setModelAndController(model, this.getController());
+    this.setModelAndController(model, this._controller);
 };
 
 maria.LeafView.prototype.getController = function() {
@@ -78,7 +78,7 @@ maria.LeafView.prototype.getDefaultControllerConstructor = function() {
 };
 
 maria.LeafView.prototype.setController = function(controller) {
-    this.setModelAndController(this.getModel(), controller);
+    this.setModelAndController(this._model, controller);
 };
 
 maria.LeafView.prototype.setModelAndController = function(model, controller) {
