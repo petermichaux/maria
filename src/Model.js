@@ -1,4 +1,4 @@
-var LIB_Model = function() {
+maria.Model = function() {
     evento.EventTarget.call(this);
 };
 
