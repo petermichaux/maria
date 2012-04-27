@@ -7,7 +7,7 @@ An MVC framework for JavaScript browser applications. The real MVC. The Smalltal
 
 * A view observes a model. A view represents its model's current state.
 
-* A controller decides what happens when a user interacts with a view.
+* A controller decides what happens when a user interacts with its view.
 
 
 Acknowledgements
