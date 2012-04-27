@@ -1,7 +1,10 @@
 .PHONY: clean
 
-LIBS = lib/evento.js                 \
-       lib/hijos.js
+LIBS_MIN = lib/evento/evento-min.js  \
+           lib/hijos/hijos-min.js
+
+LIBS = lib/evento/evento.js          \
+       lib/hijos/hijos.js
 
 SRCS = src/header.js                 \
        src/namespace.js              \
@@ -12,8 +15,14 @@ SRCS = src/header.js                 \
        src/View.js                   \
        src/Controller.js
 
-maria.js: $(LIBS) $(SRCS)
-	cat $(LIBS) $(SRCS) > maria.js
+build: $(LIBS_MIN) $(LIBS) $(SRCS)
+	mkdir -p build
+	cat $(LIBS) $(SRCS) >build/maria.js
+	cat $(SRCS) > build/maria-tmp1.js
+	jsmin <build/maria-tmp1.js >build/maria-tmp2.js
+	rm build/maria-tmp1.js
+	cat $(LIBS_MIN) src/header.js build/maria-tmp2.js > build/maria-min.js
+	rm build/maria-tmp2.js
 
 clean:
-	rm maria.js
+	rm -rf build
