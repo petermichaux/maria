@@ -5,9 +5,11 @@ An MVC framework for JavaScript browser applications. The real MVC. The Smalltal
 
 * A model contains domain data. When a model changes, it informs its observers.
 
-* A view observes a model. A view represents its model's current state. Views can have child views.
+* A view observes a model and represents its model's current state. Views can have child views. Views have a controller.
 
-* A controller decides what happens when a user interacts with its view. This is the strategy pattern.
+* A controller decides what happens when a user interacts with its view.
+
+The observer pattern, composite pattern, and strategy pattern are embedded in Maria's Model, View, and Controller objects.
 
 
 Acknowledgements
