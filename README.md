@@ -12,6 +12,12 @@ An MVC framework for JavaScript browser applications. The real MVC. The Smalltal
 The observer pattern, composite pattern, and strategy pattern are embedded in Maria's Model, View, and Controller objects.
 
 
+Dependencies
+------------
+
+None. Maria combines several independent micro libraries which are all included.
+
+
 Acknowledgements
 ----------------
 
