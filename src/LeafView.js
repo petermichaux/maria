@@ -23,7 +23,7 @@ maria.LeafView.prototype.getRootEl = function() {
 };
 
 // update the root DOM element to represent the current model state
-maria.LeafView.prototype.handleChange = function() {
+maria.LeafView.prototype.update = function() {
     // to be overridden by concrete view subclasses
 };
 
@@ -68,10 +68,10 @@ maria.LeafView.prototype.setController = function(controller) {
 maria.LeafView.prototype.setModelAndController = function(model, controller) {
     if (this._model !== model) {
         if (this._model) {
-            maria.removeEventListener(this._model, 'change', this, 'handleChange');
+            maria.removeEventListener(this._model, 'change', this, 'update');
         }
         if (model) {
-            maria.addEventListener(model, 'change', this, 'handleChange');
+            maria.addEventListener(model, 'change', this, 'update');
         }
         this._model = model;
     }
