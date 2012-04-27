@@ -1,5 +1,5 @@
 /*
-Maria version 1 - an MVC framework for JavaScript applications
+Maria version 0 - an MVC framework for JavaScript applications
 Copyright (c) 2012, Peter Michaux
 All rights reserved.
 Licensed under the Simplified BSD License.
