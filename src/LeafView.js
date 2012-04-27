@@ -1,44 +1,28 @@
-// a component view for the composite design pattern 
-// used in the view layer of MVC applications
-//
-maria.LeafView = function(model, controller, /*optional*/ doc) {
+maria.LeafView = function() {
     maria.Leaf.call(this);
-    // this.setModel(model);
-    // this.setController(controller);
-    // this._doc = doc || document;
-    // this.renderAndUpdate();
 };
 
 maria.Leaf.mixin(maria.LeafView.prototype);
 
-maria.LeafView.prototype.renderAndUpdate = function() {
-    this.render();
-    this.update();
+// return the HTML template for this view
+maria.LeafView.prototype.getTemplate = function() {
+    return '<div/>';
 };
 
-maria.LeafView.prototype.tagName = 'div';
-maria.LeafView.prototype.className = '';
-
-maria.LeafView.prototype.createRootEl = function() {
-    var rootEl = this._doc.createElement(this.tagName);
-    rootEl.className = this.className;
-    return rootEl;
+// convert the HTML template to a DOM element
+maria.LeafView.prototype.render = function() {
+    return maria.parseHTML(this.getTemplate());
 };
 
+// render the template if it hasn't been and return the DOM element
 maria.LeafView.prototype.getRootEl = function() {
     if (!this._rootEl) {
-        this._rootEl = this.createRootEl();
+        this._rootEl = this.render();
     }
-    return this._rootEl();
+    return this._rootEl;
 };
 
-// build the HTML shell of the view that does not depend
-// on the model state
-maria.LeafView.prototype.render = function() {
-    // to be overridden in concrete view subclasses
-};
-
-// update the HTML of the view to represent model state
+// update the root DOM element to represent the current model state
 maria.LeafView.prototype.handleChange = function() {
     // to be overridden by concrete view subclasses
 };
