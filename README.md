@@ -5,11 +5,11 @@ An MVC framework for JavaScript applications. The real MVC. The Smalltalk MVC. T
 
 * A model contains domain data. When a model changes, it informs its observers.
 
-* A view observes a model and represents its model's current state. Views have a controller. Views can have child views.
+* A view observes a model and represents its model's current state. A view has a controller. A view can have child views.
 
 * A controller decides what happens when a user interacts with its view.
 
-The observer pattern, composite pattern, and strategy pattern are embedded in Maria's Model, View, and Controller objects.
+The three core design patterns of MVC (observer, composite, and strategy) are embedded in Maria's Model, View, and Controller objects. Other patterns traditionally included in MVC implementations (e.g. factory method and template) make appearances too.
 
 
 Status
