@@ -35,9 +35,9 @@
             var alpha = {};
 
             var additions = 0;
-            s.addEventListener('LIB_add', function(){additions++;});
+            s.addEventListener('add', function(){additions++;});
             var deletions = 0;
-            s.addEventListener('LIB_delete', function(){deletions++;});
+            s.addEventListener('delete', function(){deletions++;});
 
             assert.same(0, additions, 'no additions to start.');
             assert.same(0, deletions, 'no deletions to start.');
@@ -66,11 +66,11 @@
             var addEvents = 0;
             var deleteEvents = 0;
 
-            s.addEventListener('LIB_add', function() {
+            s.addEventListener('add', function() {
                 addEvents++;
             });
 
-            s.addEventListener('LIB_delete', function() {
+            s.addEventListener('delete', function() {
                 deleteEvents++;
             });
 
@@ -156,17 +156,17 @@
 
         },
 
-        "test LIB_add does not bubble and LIB_afterAdd does bubble": function() {
+        "test add does not bubble and afterAdd does bubble": function() {
             var alpha = {};
             var childSet = new maria.SetModel();
             var parentSet = new maria.SetModel();
             var addBubbled = false;
             var afterAddBubbled = true;
             parentSet.add(childSet);
-            parentSet.addEventListener('LIB_add', function(ev) {
+            parentSet.addEventListener('add', function(ev) {
                 addBubbled = true;
             });
-            parentSet.addEventListener('LIB_afterAdd', function(ev) {
+            parentSet.addEventListener('afterAdd', function(ev) {
                 afterAddBubbled = true;
             });
             childSet.add(alpha);
@@ -174,17 +174,17 @@
             assert.same(true, afterAddBubbled, 'the parent set should know *after* an element is added to the child set');
         },
 
-        "test LIB_delete does not bubble and LIB_afterDelete does bubble": function() {
+        "test delete does not bubble and afterDelete does bubble": function() {
             var alpha = {};
             var childSet = new maria.SetModel();
             var parentSet = new maria.SetModel();
             var deleteBubbled = false;
             var afterDeleteBubbled = true;
             parentSet.add(childSet);
-            parentSet.addEventListener('LIB_delete', function(ev) {
+            parentSet.addEventListener('delete', function(ev) {
                 deleteBubbled = true;
             });
-            parentSet.addEventListener('LIB_afterDelete', function(ev) {
+            parentSet.addEventListener('afterDelete', function(ev) {
                 afterDeleteBubbled = true;
             });
             childSet.add(alpha);
@@ -193,17 +193,17 @@
             assert.same(true, afterDeleteBubbled, 'the parent set should know *after* an element is deleted from the child set');
         },
 
-        "test LIB_delete does not bubble and LIB_afterDelete does bubble when emptying": function() {
+        "test delete does not bubble and afterDelete does bubble when emptying": function() {
             var alpha = {};
             var childSet = new maria.SetModel();
             var parentSet = new maria.SetModel();
             var deleteBubbled = false;
             var afterDeleteBubbled = true;
             parentSet.add(childSet);
-            parentSet.addEventListener('LIB_delete', function(ev) {
+            parentSet.addEventListener('delete', function(ev) {
                 deleteBubbled = true;
             });
-            parentSet.addEventListener('LIB_afterDelete', function(ev) {
+            parentSet.addEventListener('afterDelete', function(ev) {
                 afterDeleteBubbled = true;
             });
             childSet.add(alpha);
@@ -218,7 +218,7 @@
             set.add(element);
             assert.same(1, set.length, "the set should contain the element and so have length 1");
             assert.same(true, set.has(element), "the set should contain the element");
-            element.dispatchEvent({type: 'LIB_destroy'});
+            element.dispatchEvent({type: 'destroy'});
             assert.same(0, set.length, "the set should not contain the element and so should have length 0");
             assert.same(false, set.has(element), "the set should not contain the element");
         },
@@ -228,7 +228,7 @@
             var beta = {};
             var s = new maria.SetModel(alpha, beta);
             var deleteEvents = 0;
-            s.addEventListener('LIB_delete', function() {
+            s.addEventListener('delete', function() {
                 deleteEvents++;
             });
             s.empty();

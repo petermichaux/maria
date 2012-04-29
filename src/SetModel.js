@@ -22,7 +22,7 @@ maria.SetModel.prototype.add = function() {
             added.push(argument);
             if ((typeof argument.addEventListener === 'function') &&
                 (typeof argument.removeEventListener === 'function')) {
-                argument.addEventListener('LIB_destroy', this);    
+                argument.addEventListener('destroy', this);    
             }
             if ((typeof argument.addParentEventTarget === 'function') &&
                 // want to know can remove later
@@ -33,8 +33,8 @@ maria.SetModel.prototype.add = function() {
     }
     var modified = added.length > 0;
     if (modified) {
-        this.dispatchEvent({type: 'LIB_add', relatedTargets: added, bubbles: false});
-        this.dispatchEvent({type: 'LIB_afterAdd', relatedTargets: added});
+        this.dispatchEvent({type: 'add', relatedTargets: added, bubbles: false});
+        this.dispatchEvent({type: 'afterAdd', relatedTargets: added});
     }
     return modified;
 };
@@ -48,7 +48,7 @@ maria.SetModel.prototype['delete'] = function() {
         if (maria.Set.prototype['delete'].call(this, argument)) {
             deleted.push(argument);
             if (typeof argument.removeEventListener === 'function') {
-                argument.removeEventListener('LIB_destroy', this);
+                argument.removeEventListener('destroy', this);
             }
             if (typeof argument.removeParentEventTarget === 'function') {
                 argument.removeParentEventTarget(this);
@@ -57,8 +57,8 @@ maria.SetModel.prototype['delete'] = function() {
     }
     var modified = deleted.length > 0;
     if (modified) {
-        this.dispatchEvent({type: 'LIB_delete', relatedTargets: deleted, bubbles: false});
-        this.dispatchEvent({type: 'LIB_afterDelete', relatedTargets: deleted});
+        this.dispatchEvent({type: 'delete', relatedTargets: deleted, bubbles: false});
+        this.dispatchEvent({type: 'afterDelete', relatedTargets: deleted});
     }
     return modified;
 };
@@ -70,14 +70,14 @@ maria.SetModel.prototype.empty = function() {
         for (var i = 0, ilen = deleted.length; i < ilen; i++) {
             var element = deleted[i];
             if (typeof element.removeEventListener === 'function') {
-                element.removeEventListener('LIB_destroy', this);
+                element.removeEventListener('destroy', this);
             }
             if (typeof element.removeParentEventTarget === 'function') {
                 element.removeParentEventTarget(this);
             }
         }
-        this.dispatchEvent({type: 'LIB_delete', relatedTargets: deleted, bubbles: false});
-        this.dispatchEvent({type: 'LIB_afterDelete', relatedTargets: deleted});
+        this.dispatchEvent({type: 'delete', relatedTargets: deleted, bubbles: false});
+        this.dispatchEvent({type: 'afterDelete', relatedTargets: deleted});
     }
     return result;
 };
@@ -87,7 +87,7 @@ maria.SetModel.prototype.handleEvent = function(ev) {
     // If it is a destroy event being dispatched on the
     // destroyed element then we want to remove it from
     // this set.
-    if ((ev.type === 'LIB_destroy') &&
+    if ((ev.type === 'destroy') &&
         (ev.currentTarget === ev.target)) {
         this['delete'](ev.target);
     }
