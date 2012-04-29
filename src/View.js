@@ -1,6 +1,7 @@
 maria.View = function(model, controller) {
     maria.Node.call(this);
-    this.setModelAndController(model, controller);
+    this.setModel(model);
+    this.setController(controller);
 };
 
 maria.Node.mixin(maria.View.prototype);
