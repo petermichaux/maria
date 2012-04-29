@@ -18,10 +18,10 @@ SRCS = src/header.js                 \
 build: $(LIBS_MIN) $(LIBS) $(SRCS)
 	mkdir -p build
 	cat $(LIBS) $(SRCS) >build/maria.js
-	cat $(SRCS) > build/maria-tmp1.js
+	cat $(SRCS) >build/maria-tmp1.js
 	jsmin <build/maria-tmp1.js >build/maria-tmp2.js
 	rm build/maria-tmp1.js
-	cat $(LIBS_MIN) src/header.js build/maria-tmp2.js > build/maria-min.js
+	cat $(LIBS_MIN) src/header.js build/maria-tmp2.js >build/maria-min.js
 	rm build/maria-tmp2.js
 
 clean:
