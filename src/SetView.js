@@ -1,6 +1,6 @@
 maria.SetView = function() {
     maria.View.apply(this, arguments);
-}
+};
 
 maria.SetView.prototype = new maria.View();
 maria.SetView.prototype.constructor = maria.SetView;
