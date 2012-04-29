@@ -24,6 +24,12 @@ Dependencies
 None. Maria combines several independent micro libraries which are all included.
 
 
+Build
+-----
+
+To build, you need [JSMin](http://www.crockford.com/javascript/jsmin.html) or any other tool with the same command line interface. Then just type "make" at the command line and look in the build directory for the results.
+
+
 Tests
 -----
 
