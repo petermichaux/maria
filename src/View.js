@@ -74,11 +74,9 @@ maria.View.prototype.setModelAndController = function(model, controller) {
         }
         this._model = model;
     }
-    if (this._controller !== controller) {
-        if (controller) {
-            controller.setView(this);
-            controller.setModel(model);
-        }
-        this._controller = controller;
+    if (controller) {
+        controller.setView(this);
+        controller.setModel(model);
     }
+    this._controller = controller;
 };
