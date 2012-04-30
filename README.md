@@ -31,7 +31,7 @@ To build the production ready files, you need [JSMin](http://www.crockford.com/j
 
 For the record, this is how I installed JSMin:
 
-```bash
+```sh
 $ cd ~/tmp
 $ curl -O https://raw.github.com/douglascrockford/JSMin/master/jsmin.c
 $ gcc -o jsmin jsmin.c
