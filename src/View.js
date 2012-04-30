@@ -16,23 +16,6 @@ maria.View.prototype.destroy = function() {
     maria.Node.prototype.destroy.call(this);
 };
 
-maria.View.prototype.displayView = function() {
-    // to be overridden by concrete view subclasses
-};
-
-maria.View.prototype.displayChildViews = function() {
-    var node = this.firstChild;
-    while (node) {
-        node.display();
-        node = node.nextSibling;
-    }
-};
-
-maria.View.prototype.display = function() {
-    this.displayView();
-    this.displayChildViews();
-};
-
 maria.View.prototype.update = function() {
     // to be overridden by concrete view subclasses
 };
