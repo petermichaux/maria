@@ -13,6 +13,8 @@ SRCS = src/header.js                 \
        src/Model.js                  \
        src/SetModel.js               \
        src/View.js                   \
+       src/ContainerView.js          \
+       src/SetListView.js            \
        src/Controller.js
 
 build: $(LIBS_MIN) $(LIBS) $(SRCS)
