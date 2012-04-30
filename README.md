@@ -27,7 +27,19 @@ None. Maria combines several independent micro libraries which are all included.
 Build
 -----
 
-To build, you need [JSMin](http://www.crockford.com/javascript/jsmin.html) or any other tool with the same command line interface. Then just type "make" at the command line and look in the build directory for the results.
+To build the production ready files, you need [JSMin](http://www.crockford.com/javascript/jsmin.html) or any other tool with the same command line interface. Then just type "make" at the command line and look in the build directory for the results.
+
+For the record, this is how I installed JSMin:
+
+```bash
+$ cd ~/tmp
+$ curl -O https://raw.github.com/douglascrockford/JSMin/master/jsmin.c
+$ gcc -o jsmin jsmin.c
+$ mv jsmin ~/bin
+$ rm jsmin.c
+$ which jsmin
+/Users/peter/bin/jsmin
+```
 
 
 Tests
