@@ -13,7 +13,7 @@ SRCS = src/header.js                 \
        src/Model.js                  \
        src/SetModel.js               \
        src/View.js                   \
-       src/ContainerView.js          \
+       src/ElementView.js            \
        src/SetListView.js            \
        src/Controller.js
 

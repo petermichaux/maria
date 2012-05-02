@@ -1,8 +1,8 @@
 maria.SetListView = function() {
-    maria.View.apply(this, arguments);
+    maria.ElementView.apply(this, arguments);
 };
 
-maria.SetListView.prototype = new maria.View();
+maria.SetListView.prototype = new maria.ElementView();
 maria.SetListView.prototype.constructor = maria.SetListView;
 
 maria.SetListView.prototype.getRootEl = function() {
@@ -18,7 +18,7 @@ maria.SetListView.prototype.getRootEl = function() {
 
 maria.SetListView.prototype.setModel = function(model) {
     if (this.getModel() !== model) {
-        maria.View.prototype.setModel.call(this, model);
+        maria.ElementView.prototype.setModel.call(this, model);
 
         // TODO O(n^2)
         this.childNodes.slice(0).forEach(this.removeChild, this);
@@ -30,21 +30,7 @@ maria.SetListView.prototype.setModel = function(model) {
 };
 
 maria.SetListView.prototype.prepChild = function(todoModel) {
-    return new maria.View(todoModel)
-};
-
-maria.SetListView.prototype.insertBefore = function(newChild, oldChild) {
-    maria.View.prototype.insertBefore.call(this, newChild, oldChild);
-    if (this._rootEl) {
-        this._containerEl.insertBefore(newChild.getRootEl(), oldChild ? oldChild.getRootEl() : null);
-    }
-};
-
-maria.SetListView.prototype.removeChild = function(oldChild) {
-    maria.View.prototype.removeChild.call(this, oldChild);
-    if (this._rootEl) {
-        this._containerEl.removeChild(oldChild.getRootEl());
-    }
+    return new maria.ElementView(todoModel)
 };
 
 maria.SetListView.prototype.getModelEventMap = function() {
