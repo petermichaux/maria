@@ -8,10 +8,10 @@ maria.SetListView.prototype.constructor = maria.SetListView;
 maria.SetListView.prototype.getRootEl = function() {
     if (!this._rootEl) {
         this._containerEl = this._rootEl = document.createElement('ul');
-
-        this.childNodes.forEach(function(view) {
-            this._containerEl.appendChild(view.getRootEl());
-        }, this);
+        var childViews = this.childNodes;
+        for (var i = 0, ilen = childViews.length; i < ilen; i++) {
+            this._containerEl.appendChild(childViews[i].getRootEl());
+        }
     }
     return this._rootEl;
 };
@@ -21,11 +21,15 @@ maria.SetListView.prototype.setModel = function(model) {
         maria.ElementView.prototype.setModel.call(this, model);
 
         // TODO O(n^2)
-        this.childNodes.slice(0).forEach(this.removeChild, this);
+        var childViews = this.childNodes.slice(0);
+        for (var i = 0, ilen = childViews.length; i < ilen; i++) {
+            this.removeChild(childViews[i]);
+        }
 
-        this.getModel().map(function(model) {
-            return this.createChildView(model);
-        }, this).forEach(this.appendChild, this);
+        var childModels = this.getModel().toArray();
+        for (var i = 0, ilen = childModels.length; i < ilen; i++) {
+            this.appendChild(this.createChildView(childModels[i]));
+        }
     }
 };
 
@@ -41,22 +45,24 @@ maria.SetListView.prototype.getModelEventMap = function() {
 };
 
 maria.SetListView.prototype.handleAdd = function(evt) {
-    evt.relatedTargets.forEach(function(model) {
-        var todoView = this.createChildView(model);
-        this.appendChild(todoView);
-    }, this);
+    var childModels = evt.relatedTargets;
+    for (var i = 0, ilen = childModels.length; i < ilen; i++) {
+        this.appendChild(this.createChildView(childModels[i]));
+    }
 };
 
 maria.SetListView.prototype.handleDelete = function(evt) {
     // TODO efficiently
-    evt.relatedTargets.forEach(function(model) {
-        var node = this.firstChild;
-        while (node) {
-            if (node.getModel() === model) {
-                this.removeChild(node);
+    var childModels = evt.relatedTargets;
+    for (var i = 0, ilen = childModels.length; i < ilen; i++) {
+        var childModel = childModels[i];
+        var childViews = this.childNodes;
+        for (var j = 0, jlen = childViews.length; j < jlen; j++) {
+            var childView = childViews[j];
+            if (childView.getModel() === childModel) {
+                this.removeChild(childView);
+                break;
             }
-            node = node.nextSibling;
         }
-    }, this);
+    }
 };
-
