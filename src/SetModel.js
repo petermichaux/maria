@@ -2,13 +2,13 @@
 //
 maria.SetModel = function() {
     maria.Set.apply(this, arguments);
-    maria.EventTarget.call(this);
+    maria.Model.call(this);
 };
 
-maria.SetModel.prototype = new maria.Set();
+maria.SetModel.prototype = new maria.Model();
 maria.SetModel.prototype.constructor = maria.SetModel;
 
-maria.EventTarget.mixin(maria.SetModel.prototype);
+maria.Set.mixin(maria.SetModel.prototype);
 
 // Wrap the set mutator methods to dispatch events.
 

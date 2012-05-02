@@ -7,7 +7,7 @@
     }
 
     function initSet(set) {
-        set._elements = {};
+        set._maria_Set_elements = {};
         set.length = 0;
     }
 
@@ -65,7 +65,7 @@ set.has(beta); // false
 */
     maria.Set.prototype.has = function(element) {
         return Object.prototype.hasOwnProperty.call(element, '_maria_Set_id') &&
-               Object.prototype.hasOwnProperty.call(this._elements, element._maria_Set_id);
+               Object.prototype.hasOwnProperty.call(this._maria_Set_elements, element._maria_Set_id);
     };
 
 /**
@@ -94,7 +94,7 @@ set.has(alpha); // false
             if (!Object.prototype.hasOwnProperty.call(element, '_maria_Set_id')) {
                 element._maria_Set_id = getId();
             }
-            this._elements[element._maria_Set_id] = element;
+            this._maria_Set_elements[element._maria_Set_id] = element;
             this.length++;
             return true;
         }
@@ -123,7 +123,7 @@ set['delete'](alpha); // false
 */
     maria.Set.prototype['delete'] = function(element) {
         if (this.has(element)) {
-            delete this._elements[element._maria_Set_id];
+            delete this._maria_Set_elements[element._maria_Set_id];
             this.length--;
             return true;
         }
@@ -168,9 +168,9 @@ Returns the elements of the set in a new array.
 */
     maria.Set.prototype.toArray = function() {
         var elements = [];
-        for (var p in this._elements) {
-            if (Object.prototype.hasOwnProperty.call(this._elements, p)) {
-                elements.push(this._elements[p]);
+        for (var p in this._maria_Set_elements) {
+            if (Object.prototype.hasOwnProperty.call(this._maria_Set_elements, p)) {
+                elements.push(this._maria_Set_elements[p]);
             }
         }
         return elements;
@@ -199,9 +199,9 @@ set.forEach(function(element, set) {
 */
     maria.Set.prototype.forEach = function(callbackfn /*, thisArg */) {
         var thisArg = arguments[1];
-        for (var p in this._elements) {
-            if (Object.prototype.hasOwnProperty.call(this._elements, p)) {
-                callbackfn.call(thisArg, this._elements[p], this);
+        for (var p in this._maria_Set_elements) {
+            if (Object.prototype.hasOwnProperty.call(this._maria_Set_elements, p)) {
+                callbackfn.call(thisArg, this._maria_Set_elements[p], this);
             }
         }
     };
@@ -230,9 +230,9 @@ set.every(function(element, set) {
 */
     maria.Set.prototype.every = function(callbackfn /*, thisArg */) {
         var thisArg = arguments[1];
-        for (var p in this._elements) {
-            if (Object.prototype.hasOwnProperty.call(this._elements, p) &&
-                !callbackfn.call(thisArg, this._elements[p], this)) {
+        for (var p in this._maria_Set_elements) {
+            if (Object.prototype.hasOwnProperty.call(this._maria_Set_elements, p) &&
+                !callbackfn.call(thisArg, this._maria_Set_elements[p], this)) {
                 return false;
             }
         }
@@ -263,9 +263,9 @@ set.some(function(element, set) {
 */
     maria.Set.prototype.some = function(callbackfn /*, thisArg */) {
         var thisArg = arguments[1];
-        for (var p in this._elements) {
-            if (Object.prototype.hasOwnProperty.call(this._elements, p) &&
-                callbackfn.call(thisArg, this._elements[p], this)) {
+        for (var p in this._maria_Set_elements) {
+            if (Object.prototype.hasOwnProperty.call(this._maria_Set_elements, p) &&
+                callbackfn.call(thisArg, this._maria_Set_elements[p], this)) {
                 return true;
             }
         }
@@ -353,9 +353,9 @@ set.map(function(element) {
     maria.Set.prototype.map = function(callbackfn /*, thisArg */) {
         var thisArg = arguments[1];
         var result = [];
-        for (var p in this._elements) {
-            if (Object.prototype.hasOwnProperty.call(this._elements, p)) {
-                result.push(callbackfn.call(thisArg, this._elements[p], this));
+        for (var p in this._maria_Set_elements) {
+            if (Object.prototype.hasOwnProperty.call(this._maria_Set_elements, p)) {
+                result.push(callbackfn.call(thisArg, this._maria_Set_elements[p], this));
             }
         }
         return result;
@@ -387,9 +387,9 @@ set.filter(function(element) {
     maria.Set.prototype.filter = function(callbackfn /*, thisArg */) {
         var thisArg = arguments[1];
         var result = [];
-        for (var p in this._elements) {
-            if (Object.prototype.hasOwnProperty.call(this._elements, p)) {
-                var element = this._elements[p];
+        for (var p in this._maria_Set_elements) {
+            if (Object.prototype.hasOwnProperty.call(this._maria_Set_elements, p)) {
+                var element = this._maria_Set_elements[p];
                 if (callbackfn.call(thisArg, element, this)) {
                     result.push(element);
                 }
@@ -402,3 +402,36 @@ set.filter(function(element) {
 
 // insure prototype object is initialized properly
 maria.Set.call(maria.Set.prototype);
+
+/**
+
+@property maria.Set.mixin
+
+@parameter obj {object} The object to become a Set.
+
+@description
+
+Mixes in the Set methods into any object.
+
+// Example 1
+
+app.MyModel = function() {
+    maria.Set.call(this);
+};
+maria.Set.mixin(app.MyModel.prototype);
+
+// Example 2
+
+var obj = {};
+maria.Set.mixin(obj);
+
+*/
+maria.Set.mixin = function(obj) {
+    for (var p in maria.Set.prototype) {
+        if (Object.prototype.hasOwnProperty.call(maria.Set.prototype, p) &&
+            (typeof maria.Set.prototype[p] === 'function')) {
+            obj[p] = maria.Set.prototype[p];
+        }
+    }
+    maria.Set.call(obj);
+};
