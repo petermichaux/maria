@@ -23,14 +23,14 @@ maria.SetListView.prototype.setModel = function(model) {
         // TODO O(n^2)
         this.childNodes.slice(0).forEach(this.removeChild, this);
 
-        this.getModel().map(function(todoModel) {
-            return this.createChildView(todoModel);
+        this.getModel().map(function(model) {
+            return this.createChildView(model);
         }, this).forEach(this.appendChild, this);
     }
 };
 
-maria.SetListView.prototype.createChildView = function(todoModel) {
-    return new maria.ElementView(todoModel);
+maria.SetListView.prototype.createChildView = function(model) {
+    return new maria.ElementView(model);
 };
 
 maria.SetListView.prototype.getModelEventMap = function() {
@@ -41,18 +41,18 @@ maria.SetListView.prototype.getModelEventMap = function() {
 };
 
 maria.SetListView.prototype.handleAdd = function(evt) {
-    evt.relatedTargets.forEach(function(todoModel) {
-        var todoView = this.createChildView(todoModel);
+    evt.relatedTargets.forEach(function(model) {
+        var todoView = this.createChildView(model);
         this.appendChild(todoView);
     }, this);
 };
 
 maria.SetListView.prototype.handleDelete = function(evt) {
     // TODO efficiently
-    evt.relatedTargets.forEach(function(todoModel) {
+    evt.relatedTargets.forEach(function(model) {
         var node = this.firstChild;
         while (node) {
-            if (node.getModel() === todoModel) {
+            if (node.getModel() === model) {
                 this.removeChild(node);
             }
             node = node.nextSibling;
