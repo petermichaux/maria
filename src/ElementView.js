@@ -9,9 +9,9 @@ maria.ElementView.prototype.constructor = maria.ElementView;
 maria.ElementView.prototype.getRootEl = function() {
     if (!this._rootEl) {
         this._containerEl = this._rootEl = document.createElement('div');
-        var children = this.childNodes;
-        for (var i = 0, ilen = children.length; i < ilen; i++) {
-            this._containerEl.appendChild(children[i].getRootEl());
+        var childViews = this.childNodes;
+        for (var i = 0, ilen = childViews.length; i < ilen; i++) {
+            this._containerEl.appendChild(childViews[i].getRootEl());
         }
     }
     return this._rootEl;
