@@ -30,7 +30,7 @@ maria.SetListView.prototype.setModel = function(model) {
 };
 
 maria.SetListView.prototype.prepChild = function(todoModel) {
-    return new maria.ElementView(todoModel)
+    return new maria.ElementView(todoModel);
 };
 
 maria.SetListView.prototype.getModelEventMap = function() {
