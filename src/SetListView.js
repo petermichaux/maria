@@ -24,12 +24,12 @@ maria.SetListView.prototype.setModel = function(model) {
         this.childNodes.slice(0).forEach(this.removeChild, this);
 
         this.getModel().map(function(todoModel) {
-            return this.prepChild(todoModel);
+            return this.createChildView(todoModel);
         }, this).forEach(this.appendChild, this);
     }
 };
 
-maria.SetListView.prototype.prepChild = function(todoModel) {
+maria.SetListView.prototype.createChildView = function(todoModel) {
     return new maria.ElementView(todoModel);
 };
 
@@ -42,7 +42,7 @@ maria.SetListView.prototype.getModelEventMap = function() {
 
 maria.SetListView.prototype.handleAdd = function(evt) {
     evt.relatedTargets.forEach(function(todoModel) {
-        var todoView = this.prepChild(todoModel);
+        var todoView = this.createChildView(todoModel);
         this.appendChild(todoView);
     }, this);
 };
