@@ -51,7 +51,6 @@ maria.SetListView.prototype.handleAdd = function(evt) {
 };
 
 maria.SetListView.prototype.handleDelete = function(evt) {
-    // TODO efficiently
     var childModels = evt.relatedTargets;
     for (var i = 0, ilen = childModels.length; i < ilen; i++) {
         var childModel = childModels[i];
