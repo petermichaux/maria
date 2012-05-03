@@ -20,7 +20,6 @@ maria.SetListView.prototype.setModel = function(model) {
     if (this.getModel() !== model) {
         maria.ElementView.prototype.setModel.call(this, model);
 
-        // TODO O(n^2)
         var childViews = this.childNodes.slice(0);
         for (var i = 0, ilen = childViews.length; i < ilen; i++) {
             this.removeChild(childViews[i]);
