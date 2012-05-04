@@ -1,10 +1,12 @@
 .PHONY: clean
 
 LIBS_MIN = lib/evento/evento-min.js  \
-           lib/hijos/hijos-min.js
+           lib/hijos/hijos-min.js    \
+           lib/abeja/abeja-min.js
 
 LIBS = lib/evento/evento.js          \
-       lib/hijos/hijos.js
+       lib/hijos/hijos.js            \
+       lib/abeja/abeja.js
 
 SRCS = src/header.js                 \
        src/namespace.js              \
