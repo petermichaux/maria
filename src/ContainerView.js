@@ -1,12 +1,12 @@
 // all children are attached to the same DOM node
-maria.ElementView = function() {
+maria.ContainerView = function() {
     maria.View.apply(this, arguments);
 };
 
-maria.ElementView.prototype = new maria.View();
-maria.ElementView.prototype.constructor = maria.ElementView;
+maria.ContainerView.prototype = new maria.View();
+maria.ContainerView.prototype.constructor = maria.ContainerView;
 
-maria.ElementView.prototype.getRootEl = function() {
+maria.ContainerView.prototype.getRootEl = function() {
     if (!this._rootEl) {
         this._containerEl = this._rootEl = document.createElement('div');
         var childViews = this.childNodes;
@@ -17,14 +17,14 @@ maria.ElementView.prototype.getRootEl = function() {
     return this._rootEl;
 };
 
-maria.ElementView.prototype.insertBefore = function(newChild, oldChild) {
+maria.ContainerView.prototype.insertBefore = function(newChild, oldChild) {
     maria.View.prototype.insertBefore.call(this, newChild, oldChild);
     if (this._rootEl) {
         this._containerEl.insertBefore(newChild.getRootEl(), oldChild ? oldChild.getRootEl() : null);
     }
 };
 
-maria.ElementView.prototype.removeChild = function(oldChild) {
+maria.ContainerView.prototype.removeChild = function(oldChild) {
     maria.View.prototype.removeChild.call(this, oldChild);
     if (this._rootEl) {
         this._containerEl.removeChild(oldChild.getRootEl());

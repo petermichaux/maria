@@ -1,8 +1,8 @@
 maria.SetListView = function() {
-    maria.ElementView.apply(this, arguments);
+    maria.ContainerView.apply(this, arguments);
 };
 
-maria.SetListView.prototype = new maria.ElementView();
+maria.SetListView.prototype = new maria.ContainerView();
 maria.SetListView.prototype.constructor = maria.SetListView;
 
 maria.SetListView.prototype.getRootEl = function() {
@@ -18,7 +18,7 @@ maria.SetListView.prototype.getRootEl = function() {
 
 maria.SetListView.prototype.setModel = function(model) {
     if (this.getModel() !== model) {
-        maria.ElementView.prototype.setModel.call(this, model);
+        maria.ContainerView.prototype.setModel.call(this, model);
 
         var childViews = this.childNodes.slice(0);
         for (var i = 0, ilen = childViews.length; i < ilen; i++) {
@@ -33,7 +33,7 @@ maria.SetListView.prototype.setModel = function(model) {
 };
 
 maria.SetListView.prototype.createChildView = function(model) {
-    return new maria.ElementView(model);
+    return new maria.ContainerView(model);
 };
 
 maria.SetListView.prototype.getModelEventMap = function() {
