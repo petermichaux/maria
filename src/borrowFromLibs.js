@@ -9,3 +9,4 @@ maria.borrow = function(sink, source) {
 maria.borrow(maria, evento);
 maria.borrow(maria, hijos);
 maria.borrow(maria, abeja);
+maria.borrow(maria, pajar);
