@@ -1,24 +1,13 @@
-maria.SetListView = function() {
-    maria.ContainerView.apply(this, arguments);
+maria.SetView = function() {
+    maria.ElementView.apply(this, arguments);
 };
 
-maria.SetListView.prototype = new maria.ContainerView();
-maria.SetListView.prototype.constructor = maria.SetListView;
+maria.SetView.prototype = new maria.ElementView();
+maria.SetView.prototype.constructor = maria.SetView;
 
-maria.SetListView.prototype.getRootEl = function() {
-    if (!this._rootEl) {
-        this._containerEl = this._rootEl = document.createElement('ul');
-        var childViews = this.childNodes;
-        for (var i = 0, ilen = childViews.length; i < ilen; i++) {
-            this._containerEl.appendChild(childViews[i].getRootEl());
-        }
-    }
-    return this._rootEl;
-};
-
-maria.SetListView.prototype.setModel = function(model) {
+maria.SetView.prototype.setModel = function(model) {
     if (this.getModel() !== model) {
-        maria.ContainerView.prototype.setModel.call(this, model);
+        maria.ElementView.prototype.setModel.call(this, model);
 
         var childViews = this.childNodes.slice(0);
         for (var i = 0, ilen = childViews.length; i < ilen; i++) {
@@ -32,25 +21,25 @@ maria.SetListView.prototype.setModel = function(model) {
     }
 };
 
-maria.SetListView.prototype.createChildView = function(model) {
-    return new maria.ContainerView(model);
+maria.SetView.prototype.createChildView = function(model) {
+    return new maria.ElementView(model);
 };
 
-maria.SetListView.prototype.getModelActions = function() {
+maria.SetView.prototype.getModelActions = function() {
     return {
         'add': 'handleAdd',
         'delete': 'handleDelete'
     };
 };
 
-maria.SetListView.prototype.handleAdd = function(evt) {
+maria.SetView.prototype.handleAdd = function(evt) {
     var childModels = evt.relatedTargets;
     for (var i = 0, ilen = childModels.length; i < ilen; i++) {
         this.appendChild(this.createChildView(childModels[i]));
     }
 };
 
-maria.SetListView.prototype.handleDelete = function(evt) {
+maria.SetView.prototype.handleDelete = function(evt) {
     var childModels = evt.relatedTargets;
     for (var i = 0, ilen = childModels.length; i < ilen; i++) {
         var childModel = childModels[i];
@@ -63,4 +52,11 @@ maria.SetListView.prototype.handleDelete = function(evt) {
             }
         }
     }
+};
+
+
+maria.SetView.declareConstructor = function(namespace, name, options) {
+    options = options || {};
+    options.superConstructor = options.superConstructor || maria.SetView;
+    maria.ElementView.declareConstructor(namespace, name, options);
 };

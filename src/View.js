@@ -83,3 +83,34 @@ maria.View.prototype.setModelAndController = function(model, controller) {
     }
     this._controller = controller;
 };
+
+
+maria.View.declareConstructor = function(namespace, name, options) {
+    options = options || {};
+    var modelConstructor = options.modelConstructor;
+    var modelConstructorName = options.modelConstructorName || name.replace(/(View|)$/, 'Model');
+    var controllerConstructor = options.controllerConstructor;
+    var controllerConstructorName = options.controllerConstructorName || name.replace(/(View|)$/, 'Controller');
+    var modelActions = options.modelActions;
+    var methods = options.methods;
+    var superConstructor = options.superConstructor || maria.View;
+    var Constructor = namespace[name] = function(model, controller, doc) {
+        var mc = modelConstructor || namespace[modelConstructorName];
+        superConstructor.call(this, (model || new mc()), controller, doc);
+    };
+    var prototype = Constructor.prototype = new superConstructor();
+    prototype.constructor = Constructor;
+    prototype.getDefaultControllerConstructor = function() {
+        return controllerConstructor || namespace[controllerConstructorName];
+    };
+    if (modelActions) {
+        prototype.getModelActions = function() {
+            return modelActions;
+        };
+    }
+    // Add caller-supplied methods last so they overwrite any
+    // of the automatically created methods defined above.
+    if (methods) {
+        maria.borrow(prototype, methods);
+    }
+};

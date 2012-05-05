@@ -3,12 +3,12 @@
 LIBS_MIN = lib/evento/evento-min.js  \
            lib/hijos/hijos-min.js    \
            lib/abeja/abeja-min.js    \
-           lib/abeja/pajar-min.js
+           lib/pajar/pajar-min.js
 
 LIBS = lib/evento/evento.js          \
        lib/hijos/hijos.js            \
        lib/abeja/abeja.js            \
-       lib/abeja/pajar.js
+       lib/pajar/pajar.js
 
 SRCS = src/header.js                 \
        src/namespace.js              \
@@ -17,8 +17,8 @@ SRCS = src/header.js                 \
        src/Model.js                  \
        src/SetModel.js               \
        src/View.js                   \
-       src/ContainerView.js          \
-       src/SetListView.js            \
+       src/ElementView.js            \
+       src/SetView.js                \
        src/Controller.js
 
 build: $(LIBS_MIN) $(LIBS) $(SRCS)
