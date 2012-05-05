@@ -36,7 +36,7 @@ maria.SetListView.prototype.createChildView = function(model) {
     return new maria.ContainerView(model);
 };
 
-maria.SetListView.prototype.getModelEventMap = function() {
+maria.SetListView.prototype.getModelActions = function() {
     return {
         'add': 'handleAdd',
         'delete': 'handleDelete'

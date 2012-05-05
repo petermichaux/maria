@@ -48,7 +48,7 @@ maria.View.prototype.setController = function(controller) {
     this.setModelAndController(this._model, controller);
 };
 
-maria.View.prototype.getModelEventMap = function() {
+maria.View.prototype.getModelActions = function() {
     return {'change': 'update'};
 };
 
@@ -56,16 +56,16 @@ maria.View.prototype.setModelAndController = function(model, controller) {
     var type, eventMap;
     if (this._model !== model) {
         if (this._model) {
-            eventMap = this._lastModelEventMap;
+            eventMap = this._lastModelActions;
             for (type in eventMap) {
                 if (Object.prototype.hasOwnProperty.call(eventMap, type)) {
                     maria.removeEventListener(this._model, type, this, eventMap[type]);
                 }
             }
-            delete this._lastModelEventMap;
+            delete this._lastModelActions;
         }
         if (model) {
-            eventMap = this._lastModelEventMap = this.getModelEventMap() || {};
+            eventMap = this._lastModelActions = this.getModelActions() || {};
             for (type in eventMap) {
                 if (Object.prototype.hasOwnProperty.call(eventMap, type)) {
                     maria.addEventListener(model, type, this, eventMap[type]);
