@@ -1,4 +1,8 @@
-maria.Controller = function() {};
+maria.Controller = function() {
+    this.initialize();
+};
+
+maria.Controller.prototype.initialize = function() {};
 
 maria.Controller.prototype.destroy = function() {
     this._model = null;

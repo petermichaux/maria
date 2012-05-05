@@ -2,9 +2,12 @@ maria.View = function(model, controller) {
     maria.Node.call(this);
     this.setModel(model);
     this.setController(controller);
+    this.initialize();
 };
 
 maria.Node.mixin(maria.View.prototype);
+
+maria.View.prototype.initialize = function() {};
 
 maria.View.prototype.destroy = function() {
     maria.purgeEventListener(this);
