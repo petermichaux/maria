@@ -1,6 +1,6 @@
 (function() {
 
-    var F = function() {};
+    function F() {};
 
     maria.subclass = function(namespace, name, options) {
         options = options || {};
