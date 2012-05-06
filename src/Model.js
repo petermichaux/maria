@@ -13,6 +13,6 @@ maria.Model.prototype.destroy = function() {
 
 maria.Model.subclass = function(namespace, name, options) {
     options = options || {};
-    var SuperConstructor = options.SuperConstructor = options.SuperConstructor || maria.Model;
+    options.SuperConstructor = options.SuperConstructor || maria.Model;
     maria.subclass(namespace, name, options);
 };
