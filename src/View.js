@@ -28,7 +28,7 @@ maria.View.prototype.getModel = function() {
 };
 
 maria.View.prototype.setModel = function(model) {
-    this.setModelAndController(model, this._controller);
+    this._setModelAndController(model, this._controller);
 };
 
 maria.View.prototype.getDefaultControllerConstructor = function() {
@@ -48,14 +48,14 @@ maria.View.prototype.getController = function() {
 };
 
 maria.View.prototype.setController = function(controller) {
-    this.setModelAndController(this._model, controller);
+    this._setModelAndController(this._model, controller);
 };
 
 maria.View.prototype.getModelActions = function() {
     return {'change': 'update'};
 };
 
-maria.View.prototype.setModelAndController = function(model, controller) {
+maria.View.prototype._setModelAndController = function(model, controller) {
     var type, eventMap;
     if (this._model !== model) {
         if (this._model) {
