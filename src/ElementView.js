@@ -79,12 +79,12 @@ maria.ElementView.prototype.findAll = function(selector) {
 };
 
 
-maria.ElementView.declareConstructor = function(namespace, name, options) {
+maria.ElementView.subclass = function(namespace, name, options) {
     options = options || {};
-    options.superConstructor = options.superConstructor || maria.ElementView;
+    options.SuperConstructor = options.SuperConstructor || maria.ElementView;
     var template = options.template;
     var uiActions = options.uiActions;
-    var methods = options.methods || {};
+    var methods = options.methods || (options.methods = {});
     if (template && !methods.getTemplate) {
         methods.getTemplate = function() {
             return template;
@@ -109,5 +109,5 @@ maria.ElementView.declareConstructor = function(namespace, name, options) {
             }
         }
     }
-    maria.View.declareConstructor(namespace, name, options);
+    maria.View.subclass(namespace, name, options);
 };

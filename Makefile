@@ -12,6 +12,7 @@ LIBS = lib/evento/evento.js          \
 
 SRCS = src/header.js                 \
        src/namespace.js              \
+       src/subclass.js               \
        src/borrowFromLibs.js         \
        src/Set.js                    \
        src/Model.js                  \

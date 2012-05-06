@@ -85,7 +85,7 @@ maria.View.prototype.setModelAndController = function(model, controller) {
 };
 
 
-maria.View.declareConstructor = function(namespace, name, options) {
+maria.View.subclass = function(namespace, name, options) {
     options = options || {};
     var modelConstructor = options.modelConstructor;
     var modelConstructorName = options.modelConstructorName || name.replace(/(View|)$/, 'Model');
@@ -93,12 +93,20 @@ maria.View.declareConstructor = function(namespace, name, options) {
     var controllerConstructorName = options.controllerConstructorName || name.replace(/(View|)$/, 'Controller');
     var modelActions = options.modelActions;
     var methods = options.methods;
-    var superConstructor = options.superConstructor || maria.View;
-    var Constructor = namespace[name] = function(model, controller, doc) {
+    var SuperConstructor = options.SuperConstructor || maria.View;
+    var Constructor = namespace[name] = function() {
         var mc = modelConstructor || namespace[modelConstructorName];
-        superConstructor.call(this, (model || new mc()), controller, doc);
+        // Note: The SpiderMonkey JavaScript engine has a bug in which arguments[n] cannot be set if n is greater than the number of formal or actual parameters. This has been fixed in the engine for JavaScript 1.6.
+        //
+        // this means a lot of horsing around to ensure we can set the model...
+        var args = [];
+        for (var i = 0, ilen = arguments.length; i < ilen; i++) {
+            args.push(arguments[i]);
+        }
+        args[0] = args[0] || new mc();
+        SuperConstructor.apply(this, args);
     };
-    var prototype = Constructor.prototype = new superConstructor();
+    var prototype = Constructor.prototype = new SuperConstructor();
     prototype.constructor = Constructor;
     prototype.getDefaultControllerConstructor = function() {
         return controllerConstructor || namespace[controllerConstructorName];

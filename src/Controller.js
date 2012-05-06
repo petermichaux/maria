@@ -27,3 +27,10 @@ maria.Controller.prototype.getView = function() {
 maria.Controller.prototype.setView = function(view) {
     this._view = view;
 };
+
+
+maria.Controller.subclass = function(namespace, name, options) {
+    options = options || {};
+    options.SuperConstructor = options.SuperConstructor || maria.Controller;
+    maria.subclass(namespace, name, options);
+};

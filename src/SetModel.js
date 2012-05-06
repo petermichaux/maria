@@ -94,5 +94,9 @@ maria.SetModel.prototype.handleEvent = function(ev) {
 
 };
 
-// insure prototype object is initialized properly
-maria.SetModel.call(maria.SetModel.prototype);
+
+maria.SetModel.subclass = function(namespace, name, options) {
+    options = options || {};
+    options.SuperConstructor = options.SuperConstructor || maria.SetModel;
+    maria.Model.subclass(namespace, name, options);
+};
