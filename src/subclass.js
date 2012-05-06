@@ -8,7 +8,6 @@
         var SuperConstructor = options.SuperConstructor || F;
         var Constructor = namespace[name] = function() {
             SuperConstructor.apply(this, arguments);
-            // this.initialize.apply(this, arguments);
         };
         var prototype = Constructor.prototype = new SuperConstructor();
         prototype.constructor = Constructor;
