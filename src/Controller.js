@@ -27,6 +27,3 @@ maria.Controller.prototype.getView = function() {
 maria.Controller.prototype.setView = function(view) {
     this._view = view;
 };
-
-
-maria.Controller.subclass = maria.subclass;

@@ -10,5 +10,3 @@ maria.Model.prototype.initialize = function() {};
 maria.Model.prototype.destroy = function() {
     this.dispatchEvent({type: 'destroy'});
 };
-
-maria.Model.subclass = maria.subclass;

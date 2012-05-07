@@ -93,6 +93,3 @@ maria.SetModel.prototype.handleEvent = function(ev) {
     }
 
 };
-
-
-maria.SetModel.subclass = maria.Model.subclass;

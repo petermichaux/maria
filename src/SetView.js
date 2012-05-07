@@ -53,6 +53,3 @@ maria.SetView.prototype.handleDelete = function(evt) {
         }
     }
 };
-
-
-maria.SetView.subclass = maria.ElementView.subclass;

@@ -13,14 +13,24 @@ LIBS = lib/evento/evento.js          \
 SRCS = src/header.js                 \
        src/namespace.js              \
        src/subclass.js               \
-       src/borrowFromLibs.js         \
+       src/borrow.js                 \
+       src/borrowEvento.js           \
+       src/borrowHijos.js            \
+       src/borrowAbeja.js            \
+       src/borrowPajar.js            \
        src/Set.js                    \
        src/Model.js                  \
+       src/Model.subclass.js         \
        src/SetModel.js               \
+       src/SetModel.subclass.js      \
        src/View.js                   \
+       src/View.subclass.js          \
        src/ElementView.js            \
+       src/ElementView.subclass.js   \
        src/SetView.js                \
-       src/Controller.js
+       src/SetView.subclass.js       \
+       src/Controller.js             \
+       src/Controller.subclass.js
 
 build: $(LIBS_MIN) $(LIBS) $(SRCS)
 	mkdir -p build
