@@ -92,39 +92,24 @@ maria.View.subclass = function(namespace, name, options) {
     var controllerConstructor = options.controllerConstructor;
     var controllerConstructorName = options.controllerConstructorName || name.replace(/(View|)$/, 'Controller');
     var modelActions = options.modelActions;
-    var methods = options.methods;
-    var SuperConstructor = options.SuperConstructor || maria.View;
-    var Constructor = namespace[name] = function() {
-        var mc = modelConstructor || namespace[modelConstructorName];
-        // Note: The SpiderMonkey JavaScript engine has a bug in which arguments[n] cannot be set if n is greater than the number of formal or actual parameters. This has been fixed in the engine for JavaScript 1.6.
-        //
-        // this means a lot of horsing around to ensure we can set the model...
-        var args = [];
-        for (var i = 0, ilen = arguments.length; i < ilen; i++) {
-            args.push(arguments[i]);
-        }
-        args[0] = args[0] || new mc();
-        SuperConstructor.apply(this, args);
-    };
-    var prototype = Constructor.prototype = new SuperConstructor();
-    prototype.constructor = Constructor;
-    prototype.getDefaultControllerConstructor = function() {
-        return controllerConstructor || namespace[controllerConstructorName];
-    };
-    if (modelActions) {
-        prototype.getModelActions = function() {
+    var methods = options.methods || (option.methods = {});
+    if (!Object.prototype.hasOwnProperty.call(methods, 'getDefaultControllerConstructor')) {
+        methods.getDefaultControllerConstructor = function() {
+            return controllerConstructor || namespace[controllerConstructorName];
+        };
+    }
+    if (modelActions && !Object.prototype.hasOwnProperty.call(methods, 'getModelActions')) {
+        methods.getModelActions = function() {
             return modelActions;
         };
     }
-    // Add caller-supplied methods last so they overwrite any
-    // of the automatically created methods defined above.
-    if (methods) {
-        maria.borrow(prototype, methods);
+    if (!Object.prototype.hasOwnProperty.call(methods, 'initialize')) {
+        methods.initialize = function() {
+            if (!this.getModel()) {
+                var mc = modelConstructor || namespace[modelConstructorName];
+                this.setModel(new mc());
+            }
+        };
     }
-    
-    Constructor.subclass = function(namespace, name, options) {
-        options = options || {};
-        options.SuperConstructor = options.SuperConstructor || Constructor;
-        SuperConstructor.subclass(namespace, name, options);
-    };
+    maria.subclass.call(this, namespace, name, options);
 };

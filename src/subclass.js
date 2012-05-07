@@ -6,7 +6,8 @@
         options = options || {};
         var members = options.members;
         var methods = options.methods;
-        var SuperConstructor = options.SuperConstructor || F;
+        // the "maria" object is the top of the chain and not a function
+        var SuperConstructor = (typeof this === 'function') ? this : F;
         var Constructor = namespace[name] = function() {
             SuperConstructor.apply(this, arguments);
         };
@@ -18,10 +19,8 @@
         if (methods) {
             maria.borrow(prototype, methods);
         }
-        Constructor.subclass = function(namespace, name, options) {
-            options = options || {};
-            options.SuperConstructor = options.SuperConstructor || Constructor;
-            SuperConstructor.subclass(namespace, name, options);
+        Constructor.subclass = function() {
+            SuperConstructor.subclass.apply(this, arguments);
         };
     };
 

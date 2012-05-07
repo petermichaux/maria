@@ -81,17 +81,16 @@ maria.ElementView.prototype.findAll = function(selector) {
 
 maria.ElementView.subclass = function(namespace, name, options) {
     options = options || {};
-    options.SuperConstructor = options.SuperConstructor || maria.ElementView;
     var template = options.template;
     var uiActions = options.uiActions;
     var methods = options.methods || (options.methods = {});
-    if (template && !methods.getTemplate) {
+    if (template && !Object.prototype.hasOwnProperty.call(methods, 'getTemplate')) {
         methods.getTemplate = function() {
             return template;
         };
     }
     if (uiActions) {
-        if (!methods.getUIActions) {
+        if (!Object.prototype.hasOwnProperty.call(methods, 'getUIActions')) {
             methods.getUIActions = function() {
                 return uiActions;
             };
@@ -99,7 +98,7 @@ maria.ElementView.subclass = function(namespace, name, options) {
         for (var key in uiActions) {
             if (Object.prototype.hasOwnProperty.call(uiActions, key)) {
                 var methodName = uiActions[key];
-                if (!methods[methodName]) {
+                if (!Object.prototype.hasOwnProperty.call(methods, methodName)) {
                     (function(methodName) {
                         methods[methodName] = function(evt) {
                             this.getController()[methodName](evt);
@@ -109,5 +108,5 @@ maria.ElementView.subclass = function(namespace, name, options) {
             }
         }
     }
-    maria.View.subclass(namespace, name, options);
+    maria.View.subclass.call(this, namespace, name, options);
 };

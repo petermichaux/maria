@@ -55,8 +55,4 @@ maria.SetView.prototype.handleDelete = function(evt) {
 };
 
 
-maria.SetView.subclass = function(namespace, name, options) {
-    options = options || {};
-    options.SuperConstructor = options.SuperConstructor || maria.SetView;
-    maria.ElementView.subclass(namespace, name, options);
-};
+maria.SetView.subclass = maria.ElementView.subclass;

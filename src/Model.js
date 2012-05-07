@@ -11,8 +11,4 @@ maria.Model.prototype.destroy = function() {
     this.dispatchEvent({type: 'destroy'});
 };
 
-maria.Model.subclass = function(namespace, name, options) {
-    options = options || {};
-    options.SuperConstructor = options.SuperConstructor || maria.Model;
-    maria.subclass(namespace, name, options);
-};
+maria.Model.subclass = maria.subclass;

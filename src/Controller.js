@@ -29,8 +29,4 @@ maria.Controller.prototype.setView = function(view) {
 };
 
 
-maria.Controller.subclass = function(namespace, name, options) {
-    options = options || {};
-    options.SuperConstructor = options.SuperConstructor || maria.Controller;
-    maria.subclass(namespace, name, options);
-};
+maria.Controller.subclass = maria.subclass;
