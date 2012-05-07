@@ -1,9 +1,7 @@
 maria.Model.subclass(checkit, 'TodoModel', {
-    members: {
+    properties: {
         _content: '',
-        _isDone: false
-    },
-    methods: {
+        _isDone: false,
         getContent: function() {
             return this._content;
         },

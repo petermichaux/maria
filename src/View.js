@@ -92,19 +92,19 @@ maria.View.subclass = function(namespace, name, options) {
     var controllerConstructor = options.controllerConstructor;
     var controllerConstructorName = options.controllerConstructorName || name.replace(/(View|)$/, 'Controller');
     var modelActions = options.modelActions;
-    var methods = options.methods || (option.methods = {});
-    if (!Object.prototype.hasOwnProperty.call(methods, 'getDefaultControllerConstructor')) {
-        methods.getDefaultControllerConstructor = function() {
+    var properties = options.properties || (option.properties = {});
+    if (!Object.prototype.hasOwnProperty.call(properties, 'getDefaultControllerConstructor')) {
+        properties.getDefaultControllerConstructor = function() {
             return controllerConstructor || namespace[controllerConstructorName];
         };
     }
-    if (modelActions && !Object.prototype.hasOwnProperty.call(methods, 'getModelActions')) {
-        methods.getModelActions = function() {
+    if (modelActions && !Object.prototype.hasOwnProperty.call(properties, 'getModelActions')) {
+        properties.getModelActions = function() {
             return modelActions;
         };
     }
-    if (!Object.prototype.hasOwnProperty.call(methods, 'initialize')) {
-        methods.initialize = function() {
+    if (!Object.prototype.hasOwnProperty.call(properties, 'initialize')) {
+        properties.initialize = function() {
             if (!this.getModel()) {
                 var mc = modelConstructor || namespace[modelConstructorName];
                 this.setModel(new mc());

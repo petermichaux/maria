@@ -83,24 +83,24 @@ maria.ElementView.subclass = function(namespace, name, options) {
     options = options || {};
     var template = options.template;
     var uiActions = options.uiActions;
-    var methods = options.methods || (options.methods = {});
-    if (template && !Object.prototype.hasOwnProperty.call(methods, 'getTemplate')) {
-        methods.getTemplate = function() {
+    var properties = options.properties || (options.properties = {});
+    if (template && !Object.prototype.hasOwnProperty.call(properties, 'getTemplate')) {
+        properties.getTemplate = function() {
             return template;
         };
     }
     if (uiActions) {
-        if (!Object.prototype.hasOwnProperty.call(methods, 'getUIActions')) {
-            methods.getUIActions = function() {
+        if (!Object.prototype.hasOwnProperty.call(properties, 'getUIActions')) {
+            properties.getUIActions = function() {
                 return uiActions;
             };
         }
         for (var key in uiActions) {
             if (Object.prototype.hasOwnProperty.call(uiActions, key)) {
                 var methodName = uiActions[key];
-                if (!Object.prototype.hasOwnProperty.call(methods, methodName)) {
+                if (!Object.prototype.hasOwnProperty.call(properties, methodName)) {
                     (function(methodName) {
-                        methods[methodName] = function(evt) {
+                        properties[methodName] = function(evt) {
                             this.getController()[methodName](evt);
                         };
                     }(methodName));

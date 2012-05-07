@@ -1,5 +1,5 @@
 maria.SetModel.subclass(checkit, 'TodosModel', {
-    methods: {
+    properties: {
         getDone: function() {
             return this.filter(function(todo) {
                 return todo.isDone();
