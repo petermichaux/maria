@@ -10,30 +10,34 @@ LIBS = lib/evento/evento.js          \
        lib/abeja/abeja.js            \
        lib/grail/grail.js
 
-SRCS = src/header.js                 \
-       src/namespace.js              \
-       src/subclass.js               \
-       src/borrow.js                 \
-       src/borrowEvento.js           \
-       src/borrowHijos.js            \
-       src/borrowAbeja.js            \
-       src/borrowGrail.js            \
-       src/Set.js                    \
-       src/Model.js                  \
-       src/Model.subclass.js         \
-       src/SetModel.js               \
-       src/SetModel.subclass.js      \
-       src/View.js                   \
-       src/View.subclass.js          \
-       src/ElementView.js            \
-       src/ElementView.subclass.js   \
-       src/SetView.js                \
-       src/SetView.subclass.js       \
-       src/Controller.js             \
-       src/Controller.subclass.js
+SRCS_CORE =  src/header.js                 \
+             src/namespace.js              \
+             src/subclass.js               \
+             src/borrow.js                 \
+             src/borrowEvento.js           \
+             src/borrowHijos.js            \
+             src/borrowAbeja.js            \
+             src/borrowGrail.js            \
+             src/Set.js                    \
+             src/Model.js                  \
+             src/SetModel.js               \
+             src/View.js                   \
+             src/ElementView.js            \
+             src/SetView.js                \
+             src/Controller.js
+
+SRCS_SUGAR = src/Model.subclass.js         \
+             src/SetModel.subclass.js      \
+             src/View.subclass.js          \
+             src/ElementView.subclass.js   \
+             src/SetView.subclass.js       \
+             src/Controller.subclass.js
+
+SRCS = $(SRCS_CORE) $(SRCS_SUGAR)
 
 build: $(LIBS_MIN) $(LIBS) $(SRCS)
 	mkdir -p build
+	cat $(LIBS) $(SRCS_CORE) >build/maria-core.js
 	cat $(LIBS) $(SRCS) >build/maria.js
 	cat $(SRCS) >build/maria-tmp1.js
 	jsmin <build/maria-tmp1.js >build/maria-tmp2.js
