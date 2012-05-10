@@ -3,12 +3,12 @@
 LIBS_MIN = lib/evento/evento-min.js  \
            lib/hijos/hijos-min.js    \
            lib/abeja/abeja-min.js    \
-           lib/pajar/pajar-min.js
+           lib/grail/grail-min.js
 
 LIBS = lib/evento/evento.js          \
        lib/hijos/hijos.js            \
        lib/abeja/abeja.js            \
-       lib/pajar/pajar.js
+       lib/grail/grail.js
 
 SRCS = src/header.js                 \
        src/namespace.js              \
@@ -17,7 +17,7 @@ SRCS = src/header.js                 \
        src/borrowEvento.js           \
        src/borrowHijos.js            \
        src/borrowAbeja.js            \
-       src/borrowPajar.js            \
+       src/borrowGrail.js            \
        src/Set.js                    \
        src/Model.js                  \
        src/Model.subclass.js         \
