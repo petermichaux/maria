@@ -17,9 +17,9 @@ maria.ElementView.subclass(checkit, 'TodoView', {
             aristocrat[model.isDone() ? 'addClass' : 'removeClass'](this.getRootEl(), 'done');
         },
         showEdit: function() {
-            aristocrat.addClass(this.getRootEl(), 'editing');
             var input = this.find('.todo-input');
             input.value = this.getModel().getContent();
+            aristocrat.addClass(this.getRootEl(), 'editing');
             input.focus();
         },
         showDisplay: function() {
