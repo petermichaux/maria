@@ -24,6 +24,12 @@ Dependencies
 None. Maria combines several independent micro libraries which are all included.
 
 
+Examples
+--------
+
+The directory eg/checkit contains the canonical to-do example application. Still under construction.
+
+
 Build
 -----
 
