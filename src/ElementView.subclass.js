@@ -1,12 +1,20 @@
 maria.ElementView.subclass = function(namespace, name, options) {
     options = options || {};
     var template = options.template;
+    var templateName = options.templateName || name.replace(/(View|)$/, 'Template');
     var uiActions = options.uiActions;
     var properties = options.properties || (options.properties = {});
-    if (template && !Object.prototype.hasOwnProperty.call(properties, 'getTemplate')) {
-        properties.getTemplate = function() {
-            return template;
-        };
+    if (!Object.prototype.hasOwnProperty.call(properties, 'getTemplate')) {
+        if (template) {
+            properties.getTemplate = function() {
+                return template;
+            };
+        }
+        else if (templateName) {
+            properties.getTemplate = function() {
+                return namespace.templates[templateName];
+            };
+        }
     }
     if (uiActions) {
         if (!Object.prototype.hasOwnProperty.call(properties, 'getUIActions')) {
