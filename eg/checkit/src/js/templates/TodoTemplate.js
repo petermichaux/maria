@@ -6,7 +6,7 @@
 // any special server environment to try, the manually compiled version is
 // included here.
 //
-checkit.templates.TodoTemplate =
+checkit.TodoTemplate =
     '<li class="todo">' +
         '<div class="display">' +
             '<input class="check" type="checkbox">' +

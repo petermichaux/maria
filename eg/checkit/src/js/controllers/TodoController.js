@@ -13,8 +13,7 @@ maria.Controller.subclass(checkit, 'TodoController', {
             var view = this.getView();
             if (/\S/.test(view.getInputValue())) {
                 view.showToolTip();
-            }
-            else {
+            } else {
                 view.hideToolTip();
             }
         },

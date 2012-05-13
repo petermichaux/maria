@@ -12,7 +12,7 @@ maria.ElementView.subclass = function(namespace, name, options) {
         }
         else if (templateName) {
             properties.getTemplate = function() {
-                return namespace.templates[templateName];
+                return namespace[templateName];
             };
         }
     }
