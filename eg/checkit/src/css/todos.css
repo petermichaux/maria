@@ -148,6 +148,9 @@ body {
 	top: 14px;
 	display:none;
 }
+.todos-list .todo-hover .todo-destroy {
+    display:block;
+}
 
 .todos-stats {
 	*zoom: 1;

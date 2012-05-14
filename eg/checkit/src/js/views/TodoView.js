@@ -1,11 +1,13 @@
 maria.ElementView.subclass(checkit, 'TodoView', {
     uiActions: {
-        'click    .check'       : 'onClickCheck'     ,
-        'click    .todo-destroy': 'onClickDestroy'   ,
-        'dblclick .todo-content': 'onDblclickDisplay',
-        'keyup    .todo-input'  : 'onKeyupInput'     ,
-        'keypress .todo-input'  : 'onKeypressInput'  ,
-        'blur     .todo-input'  : 'onBlurInput'
+        'mouseover .todo'        : 'onMouseoverRoot'  ,
+        'mouseout  .todo'        : 'onMouseoutRoot'   ,
+        'click     .check'       : 'onClickCheck'     ,
+        'click     .todo-destroy': 'onClickDestroy'   ,
+        'dblclick  .todo-content': 'onDblclickDisplay',
+        'keyup     .todo-input'  : 'onKeyupInput'     ,
+        'keypress  .todo-input'  : 'onKeypressInput'  ,
+        'blur      .todo-input'  : 'onBlurInput'
     },
     properties: {
         update: function() {
@@ -27,6 +29,12 @@ maria.ElementView.subclass(checkit, 'TodoView', {
         },
         getInputValue: function() {
             return this.find('.todo-input').value;
+        },
+        showHoverState: function() {
+            aristocrat.addClass(this.find('.todo'), 'todo-hover');
+        },
+        hideHoverState: function() {
+            aristocrat.removeClass(this.find('.todo'), 'todo-hover');
         },
         showToolTip: function() {
             this.find('.ui-tooltip-top').style.display = 'block';

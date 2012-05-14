@@ -1,5 +1,11 @@
 maria.Controller.subclass(checkit, 'TodoController', {
     properties: {
+        onMouseoverRoot: function() {
+            this.getView().showHoverState();
+        },
+        onMouseoutRoot: function() {
+            this.getView().hideHoverState();
+        },
         onClickCheck: function() {
             this.getModel().toggleDone();
         },
