@@ -133,25 +133,20 @@ body {
 	margin: 0 10px 0 7px;
 	float: left;
 }
+.todos-list .todo-content {
+    width:400px;
+    display:block;
+}
 .todos-list .done .todo-content {
 	text-decoration: line-through;
 	color: #777777;
 }
 .todos-list .todo-destroy {
+	cursor: pointer;
 	position: absolute;
 	right: 5px;
 	top: 14px;
-	display: none;
-	cursor: pointer;
-	width: 20px;
-	height: 20px;
-	background: url(destroy.png) no-repeat 0 0;
-}
-.todos-list li:hover .todo-destroy {
-	display: block;
-}
-.todos-list .todo-destroy:hover {
-	background-position: 0 -20px;
+	display:none;
 }
 
 .todos-stats {
@@ -412,20 +407,6 @@ body {
 .todos-app .content ul.todos-list li.done .todo-content {
 	text-decoration: line-through;
 	color: #777777;
-}
-/* line 96 */
-.todos-app .content ul.todos-list li .todo-destroy {
-	position: absolute;
-	right: 0px;
-	top: 16px;
-	display: none;
-	cursor: pointer;
-	width: 20px;
-	height: 20px;
-}
-/* line 106 */
-.todos-app .content ul.todos-list li:hover .todo-destroy {
-	display: block;
 }
 /* line 109 */
 .todos-app .todos-stats {
