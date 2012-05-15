@@ -9,11 +9,11 @@
             var alpha = {};
 
             assert.same(false, s.has(alpha), 'alpha not in set to start.');
-            assert.same(false, s.delete(alpha), 'deleting alpha not in set returns false.');
+            assert.same(false, s['delete'](alpha), 'deleting alpha not in set returns false.');
             assert.same(true, s.add(alpha), 'adding alpha to set returns true.');
             assert.same(true, s.has(alpha), 'alpha is now in the set.');
             assert.same(false, s.add(alpha), 'adding alpha again to set returns false.');
-            assert.same(true, s.delete(alpha), 'deleting alpha in set returns true.');
+            assert.same(true, s['delete'](alpha), 'deleting alpha in set returns true.');
         },
 
         "test add no items": function() {
@@ -47,10 +47,10 @@
             s.add(alpha);
             assert.same(0, deletions, 'no deletions after failed addition.');
             assert.same(1, additions, 'when adding an item in the list, listeners not called.');
-            s.delete(alpha);
+            s['delete'](alpha);
             assert.same(1, additions, 'still 1 addition after first delete.')
             assert.same(1, deletions, 'when deleting an item in the list, listeners are called.');
-            s.delete(alpha);
+            s['delete'](alpha);
             assert.same(1, additions, 'still 1 addition after failed delete.')
             assert.same(1, deletions, 'when deleting an item now in the list, listeners not called.');
 
