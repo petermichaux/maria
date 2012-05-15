@@ -2,12 +2,12 @@
 
 LIBS_MIN = lib/evento/evento-min.js  \
            lib/hijos/hijos-min.js    \
-           lib/abeja/abeja-min.js    \
+           lib/arbutus/arbutus-min.js\
            lib/grail/grail-min.js
 
 LIBS = lib/evento/evento.js          \
        lib/hijos/hijos.js            \
-       lib/abeja/abeja.js            \
+       lib/arbutus/arbutus.js        \
        lib/grail/grail.js
 
 SRCS_CORE =  src/header.js                 \
@@ -16,7 +16,7 @@ SRCS_CORE =  src/header.js                 \
              src/borrow.js                 \
              src/borrowEvento.js           \
              src/borrowHijos.js            \
-             src/borrowAbeja.js            \
+             src/borrowArbutus.js          \
              src/borrowGrail.js            \
              src/Set.js                    \
              src/Model.js                  \
