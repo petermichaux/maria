@@ -29,12 +29,6 @@ maria.ElementView.subclass(checkit, 'TodosAppView', {
                     childViews[i].setModel(model);
                 }
             }
-        },
-        focus: function() {
-            var childViews = this.childNodes;
-            for (var i = 0, ilen = childViews.length; i < ilen; i++) {
-                childViews[i].focus();
-            }
         }
     }
 });

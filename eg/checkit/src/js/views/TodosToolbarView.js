@@ -6,18 +6,12 @@ maria.ElementView.subclass(checkit, 'TodosToolbarView', {
         'click .markallUndone' : 'onClickMarkAllUndone',
         'click .deleteComplete': 'onClickDeleteDone'
     },
-    modelActions: {
-        'change': 'update', // change events bubble up from TodoModel instances
-        'add'   : 'update',
-        'delete': 'update'
-    },
     properties: {
         update: function() {
             var model = this.getModel();
             var checkbox = this.find('.allCheckbox');
             checkbox.checked = model.isAllDone();
             checkbox.disabled = model.isEmpty();
-        },
-        focus: function() {}
+        }
     }
 });

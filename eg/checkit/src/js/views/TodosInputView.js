@@ -18,9 +18,6 @@ maria.ElementView.subclass(checkit, 'TodosInputView', {
         },
         hideToolTip: function() {
             this.find('.ui-tooltip-top').style.display = 'none';
-        },
-        focus: function() {
-            this.find('.new-todo').focus();
         }
     }
 });

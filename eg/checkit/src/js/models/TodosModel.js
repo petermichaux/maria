@@ -29,6 +29,21 @@ maria.SetModel.subclass(checkit, 'TodosModel', {
         },
         deleteDone: function() {
             this['delete'].apply(this, this.getDone());
+        },
+        toJSON: function() {
+            return this.map(function(todo) {
+                return todo.toJSON();
+            });
         }
     }
 });
+
+checkit.TodosModel.fromJSON = function(todosJSON) {
+    var todosModel = new checkit.TodosModel();
+    for (var i = 0, ilen = todosJSON.length; i < ilen; i++) {
+        var todoJSON = todosJSON[i];
+        var todo = checkit.TodoModel.fromJSON(todoJSON);
+        todosModel.add(todo);
+    }
+    return todosModel;
+};

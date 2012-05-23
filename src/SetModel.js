@@ -33,8 +33,7 @@ maria.SetModel.prototype.add = function() {
     }
     var modified = added.length > 0;
     if (modified) {
-        this.dispatchEvent({type: 'add', relatedTargets: added, bubbles: false});
-        this.dispatchEvent({type: 'afterAdd', relatedTargets: added});
+        this.dispatchEvent({type: 'change', addedTargets: added, deletedTargets: []});
     }
     return modified;
 };
@@ -57,8 +56,7 @@ maria.SetModel.prototype['delete'] = function() {
     }
     var modified = deleted.length > 0;
     if (modified) {
-        this.dispatchEvent({type: 'delete', relatedTargets: deleted, bubbles: false});
-        this.dispatchEvent({type: 'afterDelete', relatedTargets: deleted});
+        this.dispatchEvent({type: 'change', addedTargets: [], deletedTargets: deleted});
     }
     return modified;
 };
@@ -76,8 +74,7 @@ maria.SetModel.prototype.empty = function() {
                 element.removeParentEventTarget(this);
             }
         }
-        this.dispatchEvent({type: 'delete', relatedTargets: deleted, bubbles: false});
-        this.dispatchEvent({type: 'afterDelete', relatedTargets: deleted});
+        this.dispatchEvent({type: 'change', addedTargets: [], deletedTargets: deleted});
     }
     return result;
 };

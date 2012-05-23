@@ -25,22 +25,28 @@ maria.SetView.prototype.createChildView = function(model) {
     return new maria.ElementView(model);
 };
 
-maria.SetView.prototype.getModelActions = function() {
-    return {
-        'add': 'handleAdd',
-        'delete': 'handleDelete'
-    };
+maria.SetView.prototype.update = function(evt) {
+    // Check if there is an event as this method is also called
+    // at the end of building the view.
+    if (evt) {
+        if (evt.addedTargets && evt.addedTargets.length) {
+            this.handleAdd(evt);
+        }
+        if (evt.deletedTargets && evt.deletedTargets.length) {
+            this.handleDelete(evt);
+        }
+    }
 };
 
 maria.SetView.prototype.handleAdd = function(evt) {
-    var childModels = evt.relatedTargets;
+    var childModels = evt.addedTargets;
     for (var i = 0, ilen = childModels.length; i < ilen; i++) {
         this.appendChild(this.createChildView(childModels[i]));
     }
 };
 
 maria.SetView.prototype.handleDelete = function(evt) {
-    var childModels = evt.relatedTargets;
+    var childModels = evt.deletedTargets;
     for (var i = 0, ilen = childModels.length; i < ilen; i++) {
         var childModel = childModels[i];
         var childViews = this.childNodes;

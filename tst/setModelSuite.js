@@ -35,9 +35,15 @@
             var alpha = {};
 
             var additions = 0;
-            s.addEventListener('add', function(){additions++;});
             var deletions = 0;
-            s.addEventListener('delete', function(){deletions++;});
+            s.addEventListener('change', function(evt) {
+                if (evt.addedTargets && evt.addedTargets.length) {
+                    additions++;
+                }
+                if (evt.deletedTargets && evt.deletedTargets.length) {
+                    deletions++;
+                }
+            });
 
             assert.same(0, additions, 'no additions to start.');
             assert.same(0, deletions, 'no deletions to start.');
@@ -66,12 +72,13 @@
             var addEvents = 0;
             var deleteEvents = 0;
 
-            s.addEventListener('add', function() {
-                addEvents++;
-            });
-
-            s.addEventListener('delete', function() {
-                deleteEvents++;
+            s.addEventListener('change', function(evt) {
+                if (evt.addedTargets && evt.addedTargets.length) {
+                    addEvents++;
+                }
+                if (evt.deletedTargets && evt.deletedTargets.length) {
+                    deleteEvents++;
+                }
             });
 
             assert.same(false, s.has(alpha), 'alpha not in set to start.');
@@ -156,60 +163,52 @@
 
         },
 
-        "test add does not bubble and afterAdd does bubble": function() {
+        "test add does bubble": function() {
             var alpha = {};
             var childSet = new maria.SetModel();
             var parentSet = new maria.SetModel();
             var addBubbled = false;
             var afterAddBubbled = true;
             parentSet.add(childSet);
-            parentSet.addEventListener('add', function(ev) {
+            parentSet.addEventListener('change', function(ev) {
                 addBubbled = true;
             });
-            parentSet.addEventListener('afterAdd', function(ev) {
-                afterAddBubbled = true;
-            });
             childSet.add(alpha);
-            assert.same(false, addBubbled, 'the parent set should not know an element is added to the child set');
-            assert.same(true, afterAddBubbled, 'the parent set should know *after* an element is added to the child set');
+            assert.same(true, addBubbled, 'the parent set should know an element is added to the child set');
         },
 
-        "test delete does not bubble and afterDelete does bubble": function() {
+        "test delete does bubble": function() {
             var alpha = {};
             var childSet = new maria.SetModel();
             var parentSet = new maria.SetModel();
             var deleteBubbled = false;
             var afterDeleteBubbled = true;
             parentSet.add(childSet);
-            parentSet.addEventListener('delete', function(ev) {
-                deleteBubbled = true;
-            });
-            parentSet.addEventListener('afterDelete', function(ev) {
-                afterDeleteBubbled = true;
+            parentSet.addEventListener('change', function(ev) {
+                if (ev.deletedTargets && ev.deletedTargets.length) {
+                    deleteBubbled = true;
+                }
             });
             childSet.add(alpha);
             childSet['delete'](alpha);
-            assert.same(false, deleteBubbled, 'the parent set should not know an element is deleted from the child set');
-            assert.same(true, afterDeleteBubbled, 'the parent set should know *after* an element is deleted from the child set');
+            assert.same(true, deleteBubbled, 'the parent set should know an element is deleted from the child set');
         },
 
-        "test delete does not bubble and afterDelete does bubble when emptying": function() {
+        "test delete does bubble when emptying": function() {
             var alpha = {};
             var childSet = new maria.SetModel();
             var parentSet = new maria.SetModel();
             var deleteBubbled = false;
             var afterDeleteBubbled = true;
             parentSet.add(childSet);
-            parentSet.addEventListener('delete', function(ev) {
-                deleteBubbled = true;
-            });
-            parentSet.addEventListener('afterDelete', function(ev) {
-                afterDeleteBubbled = true;
+            parentSet.addEventListener('change', function(ev) {
+                if (ev.deletedTargets && ev.deletedTargets.length) {
+                    deleteBubbled = true;
+                }
             });
             childSet.add(alpha);
             childSet.empty();
-            assert.same(false, deleteBubbled, 'the parent set should not know an element is deleted from the child set when emptying the child set');
-            assert.same(true, afterDeleteBubbled, 'the parent set should know *after* an element is deleted from the child set when emptying the child set');
+            assert.same(true, deleteBubbled, 'the parent set should know an element is deleted from the child set when emptying the child set');
         },
 
         "test destroy event on element removes it from the set": function() {
@@ -228,8 +227,10 @@
             var beta = {};
             var s = new maria.SetModel(alpha, beta);
             var deleteEvents = 0;
-            s.addEventListener('delete', function() {
-                deleteEvents++;
+            s.addEventListener('change', function(evt) {
+                if (evt.deletedTargets && evt.deletedTargets.length) {
+                    deleteEvents++;
+                }
             });
             s.empty();
             assert.same(1, deleteEvents, "the delete listener should have been called only once");
