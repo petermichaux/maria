@@ -35,8 +35,8 @@ maria.Model.subclass(checkit, 'TodoModel', {
 });
 
 checkit.TodoModel.fromJSON = function(todoJSON) {
-    var todoModel = new checkit.TodoModel();
-    todoModel._content = todoJSON.content;
-    todoModel._isDone = todoJSON.is_done;
-    return todoModel;
+    var model = new checkit.TodoModel();
+    model._content = todoJSON.content;
+    model._isDone = todoJSON.is_done;
+    return model;
 };
