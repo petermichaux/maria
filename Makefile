@@ -1,14 +1,16 @@
 .PHONY: clean
 
-LIBS_MIN = lib/evento/evento-min.js  \
-           lib/hijos/hijos-min.js    \
-           lib/arbutus/arbutus-min.js\
-           lib/grail/grail-min.js
+LIBS_MIN = lib/evento/evento-min.js        \
+           lib/hijos/hijos-min.js          \
+           lib/arbutus/arbutus-min.js      \
+           lib/grail/grail-min.js          \
+           lib/hormigas/hormigas-min.js
 
-LIBS = lib/evento/evento.js          \
-       lib/hijos/hijos.js            \
-       lib/arbutus/arbutus.js        \
-       lib/grail/grail.js
+LIBS = lib/evento/evento.js                \
+       lib/hijos/hijos.js                  \
+       lib/arbutus/arbutus.js              \
+       lib/grail/grail.js                  \
+       lib/hormigas/hormigas.js
 
 SRCS_CORE =  src/header.js                 \
              src/namespace.js              \
@@ -18,7 +20,6 @@ SRCS_CORE =  src/header.js                 \
              src/borrowHijos.js            \
              src/borrowArbutus.js          \
              src/borrowGrail.js            \
-             src/Set.js                    \
              src/Model.js                  \
              src/SetModel.js               \
              src/View.js                   \
