@@ -53,7 +53,7 @@ of your application's model. The following example shows how this
 can be done at a low level for a to-do application.
 See maria.Model.subclass for a more compact way to accomplish the same.
 
-    var checkit.TodoModel = function() {
+    checkit.TodoModel = function() {
         maria.Model.apply(this, arguments);
     };
     checkit.TodoModel.prototype = new maria.Model();
