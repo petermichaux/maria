@@ -8,8 +8,8 @@ A constructor function to create new set model objects. A set model
 object is a collection of elements. An element can only be included
 once in a set model object.
 
-The constructor takes multiple arguments and populates the set
-with those objects.
+The constructor takes multiple arguments and populates the set model
+with those elements.
 
     var alpha = new maria.Model();
     alpha.name = 'Alpha';
