@@ -4,7 +4,7 @@
 
 @description
 
-A function that makes subclassing maria.Model much more compact.
+A function that makes subclassing maria.Model more compact.
 
 The following example creates a checkit.TodoModel constructor function
 equivalent to the more verbose example shown in the documentation
@@ -41,5 +41,4 @@ for maria.Model.
     });
 
 */
-
 maria.Model.subclass = maria.subclass;
