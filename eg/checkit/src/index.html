@@ -3,36 +3,17 @@
 <head>
     <title>To-do App</title>
 
-    <noscript>
-        <style>
-            #loading {
-                display: none;
-            }
-        </style>
-    </noscript>
-
-    <style type="text/css">
-        .nostyle {
-            display: none;
-        }
-    </style>
-
     <link href="css/todos.css" rel="stylesheet" type="text/css">
 
 </head>
 <body>
 
-    <div class="nostyle">
-        <p>This application uses CSS. Please enable CSS in your browser and refresh the page.</p>
-    </div>
-
     <noscript>
         <p>This application uses JavaScript. Please enable JavaScript in your browser and refresh the page.</p>
     </noscript>
-
-    <div id="loading">
-        <p>loading...</p>
-    </div>
+    <script>
+        document.write('<p id="loading">loading...</p>');
+    </script>
 
     <script src="../../../lib/evento/evento.js"></script>
     <script src="../../../lib/hijos/hijos.js"></script>
