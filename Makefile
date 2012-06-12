@@ -20,6 +20,7 @@ SRCS_CORE =  src/header.js                 \
              src/borrowHijos.js            \
              src/borrowArbutus.js          \
              src/borrowGrail.js            \
+             src/borrowHormigas.js         \
              src/Model.js                  \
              src/SetModel.js               \
              src/View.js                   \
