@@ -15,7 +15,7 @@ The three core design patterns of MVC (observer, composite, and strategy) are em
 Status
 ------
 
-Maria is a new project and under construction.
+The code has stabilized quite a bit. Now is the time to give it a try in an application. Documentation and tests are the focus of current development.
 
 
 Dependencies
