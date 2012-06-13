@@ -240,7 +240,7 @@
             var element = new maria.EventTarget();
             var set = new maria.SetModel();
             set.add(element);
-            
+
             var calls = 0;
             set.addEventListener('foo', function(ev) {
                 calls++;
