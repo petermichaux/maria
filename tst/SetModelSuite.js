@@ -1,6 +1,6 @@
 (function() {
 
-    buster.testCase('observableSetSuite', {
+    buster.testCase('SetModel Suite', {
 
         "test has, add, and delete still work": function() {
 
