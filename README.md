@@ -7,7 +7,7 @@ An MVC framework for JavaScript applications. The real MVC. The Smalltalk MVC. T
 
 * A view observes a model and represents its model's current state. A view has a controller. A view can have child views.
 
-* A controller decides what happens when a user interacts with its view.
+* A controller decides what happens when a user interacts with the controller's view.
 
 The three core design patterns of MVC (observer, composite, and strategy) are embedded in Maria's Model, View, and Controller objects. Other patterns traditionally included in MVC implementations (e.g. factory method and template) make appearances too.
 
