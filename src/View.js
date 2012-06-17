@@ -23,6 +23,15 @@ maria.View.prototype.update = function() {
     // to be overridden by concrete view subclasses
 };
 
+maria.View.prototype.getDefaultModelConstructor = function() {
+    return maria.Model;
+};
+
+maria.View.prototype.getDefaultModel = function() {
+    var constructor = this.getDefaultModelConstructor();
+    return new constructor();
+};
+
 maria.View.prototype.getModel = function() {
     return this._model;
 };

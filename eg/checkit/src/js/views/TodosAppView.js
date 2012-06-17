@@ -2,6 +2,7 @@
 // the same model as the TodosAppView has.
 //
 maria.ElementView.subclass(checkit, 'TodosAppView', {
+    modelConstructor: checkit.TodosModel,
     properties: {
         getContainerEl: function() {
             return this.find('.content'); // child views will be appended to this element
@@ -9,7 +10,7 @@ maria.ElementView.subclass(checkit, 'TodosAppView', {
         initialize: function() {
             var model = this.getModel();
             if (!model) {
-                model = new checkit.TodosModel();
+                model = this.getDefaultModel();
                 this.setModel(model);
             }
             this.appendChild(new checkit.TodosInputView(model));

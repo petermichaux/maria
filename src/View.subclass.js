@@ -11,6 +11,11 @@ maria.View.subclass = function(namespace, name, options) {
             return controllerConstructor || namespace[controllerConstructorName];
         };
     }
+    if (!Object.prototype.hasOwnProperty.call(properties, 'getDefaultModelConstructor')) {
+        properties.getDefaultModelConstructor = function() {
+            return modelConstructor || namespace[modelConstructorName];
+        };
+    }
     if (modelActions && !Object.prototype.hasOwnProperty.call(properties, 'getModelActions')) {
         properties.getModelActions = function() {
             return modelActions;
@@ -19,8 +24,7 @@ maria.View.subclass = function(namespace, name, options) {
     if (!Object.prototype.hasOwnProperty.call(properties, 'initialize')) {
         properties.initialize = function() {
             if (!this.getModel()) {
-                var mc = modelConstructor || namespace[modelConstructorName];
-                this.setModel(new mc());
+                this.setModel(this.getDefaultModel());
             }
         };
     }
