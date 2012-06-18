@@ -68,7 +68,7 @@ in this example).
 maria.ElementView.subclass(checkit, 'TodoView', {
     modelConstructor     : 'TodoModel'     ,
     controllerConstructor: 'TodoController',
-    template             : 'TodoTemplate'  ,
+    templateName         : 'TodoTemplate'  ,
     uiActions: {
     ...
 
