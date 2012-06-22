@@ -66,9 +66,9 @@ objects in the application's namespace object (i.e. the checkit object
 in this example).
 
 maria.ElementView.subclass(checkit, 'TodoView', {
-    modelConstructor     : 'TodoModel'     ,
-    controllerConstructor: 'TodoController',
-    templateName         : 'TodoTemplate'  ,
+    modelConstructorName     : 'TodoModel'     ,
+    controllerConstructorName: 'TodoController',
+    templateName             : 'TodoTemplate'  ,
     uiActions: {
     ...
 
