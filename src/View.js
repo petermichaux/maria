@@ -1,3 +1,114 @@
+/**
+
+@property maria.View
+
+@parameter model {Object} Optional
+
+@parameter controller {Object} Optional
+
+@description
+
+A constructor function to create new view objects.
+
+    var view = new maria.View();
+
+This constructor function takes two optional arguments.
+
+    var model = new maria.Model();
+    var controller = new maria.Controller();
+    var view = new maria.View(model, controller);
+
+The null or undefined value can be passed for either of these two
+parameters to skip setting it.
+
+A view is has a model. You can get the current model which might
+be undefined.
+
+    view.getModel();
+
+You can set the model.
+
+    view.setModel(model);
+
+When a view object's model object is set, the view will, by convention,
+observe the model's "change" event. When a "change" event is dispatched
+on the model, the view's "update" method will be called.
+
+Your application will redefine or more likely override the update method.
+
+    maria.View.prototype.update = function(evt) {
+        alert('the model changed');
+    };
+
+If necessary, you can change the events and methods that the view will
+observe when the model is set by redefining or overriding the
+getModelActions method.
+
+    maria.View.prototype.getModelActions = function() {
+        return {
+            'squashed': 'onSquashed',
+            'squished': 'onSquished'
+        };
+    };
+
+When the model is set, if the view had a previous model then the view
+will unsubscribe from the events it subscribed to on the prevous model
+when the previous model was set.
+
+A view has a controller. You can get the current controller.
+
+    view.getController();
+
+The view's controller is created lazily the first time the
+getController method is called. The view's 
+getDefaultControllerConstructor method returns the constructor function
+to create the controller object and the getDefaultController actually
+calls that constructor. Your application may redefine or override
+either of these methods.
+
+A view's initialize method is called when the view is constructed.
+
+A view has a destroy method which should be called before your
+application looses its last reference to the view.
+
+The maria.View constructor is relatively abstract. It is most likely
+that your application can use maria.ElementView; however, if you are
+creating a new type of view where maria.ElementView is not a good fit,
+for example a view that represents part of a bitmap drawing on a canvas
+element, then you may want to use maria.View as the "superclass" of
+your new view constructor. The following example shows how this can be
+done at a low level. See maria.View.subclass for a more compact way to
+accomplish the same.
+
+    myapp.MyView = function() {
+        maria.View.apply(this, arguments);
+    };
+    myapp.MyView.prototype = new maria.View();
+    myapp.MyView.prototype.constructor = myapp.MyView;
+    myapp.MyView.prototype.initialize = function() {
+        alert('a new view created');
+    };
+    myapp.MyView.prototype.destroy = function() {
+        alert('a view destroyed');
+        maria.View.prototype.destroy.call(this);
+    };
+    myapp.MyView.prototype.getModelActions = function() {
+        return {
+            'squashed': 'onSquashed',
+            'squished': 'onSquished'
+        };
+    };
+    maria.MyView.prototype.onSquished = function(evt) {
+        this.getController().onSquished(evt);
+    };
+    maria.MyView.prototype.onSquashed = function() {
+    this.getController().onSquashed(evt);
+    };
+    myapp.MyView.prototype.getDefaultControllerConstructor = function() {
+        return myapp.MyController;
+    };
+
+*/
 maria.View = function(model, controller) {
     maria.Node.call(this);
     this.setModel(model);
