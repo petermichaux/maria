@@ -112,11 +112,8 @@ the same.
     checkit.TodoView.prototype.constructor = checkit.TodoView;
     checkit.TodoView.prototype.initialize = function() {
         if (!this.getModel()) {
-            this.setModel(this.getDefaultModel());
+            this.setModel(new checkit.TodoModel());
         }
-    };
-    checkit.TodoView.prototype.getDefaultModelConstructor = function() {
-        return checkit.TodoModel;
     };
     checkit.TodoView.prototype.getDefaultControllerConstructor = function() {
         return checkit.TodoController;

@@ -16,22 +16,19 @@ for maria.View.
             'squished': 'onSquished'
         },
         properties: {
-            initialize: function() {
-                alert('a new view created');
-            },
-            destroy: function() {
-                alert('a view destroyed');
-                maria.View.prototype.destroy.call(this);
+            anotherMethod: function() {
+                alert('another method');
             }
         }
     });
 
 This subclassing function implements options following the
 "convention over configuration" philosophy. The myapp.MyView will,
-by convention, use the myapp.MyController constructor. This can be
-configured.
+by convention, use the myapp.MyView and myapp.MyController
+constructors. These can be configured.
 
     maria.View.subclass(myapp, 'MyView', {
+        modelConstructor     : myapp.MyModel     ,
         controllerConstructor: myapp.MyController,
         modelActions: {
         ...
@@ -41,6 +38,7 @@ objects in the application's namespace object (i.e. the myapp object
 in this example).
 
     maria.View.subclass(myapp, 'MyView', {
+        modelConstructorName     : 'MyModel'     ,
         controllerConstructorName: 'MyController',
         modelActions: {
         ...
@@ -59,11 +57,6 @@ maria.View.subclass = function(namespace, name, options) {
             return controllerConstructor || namespace[controllerConstructorName];
         };
     }
-    if (!Object.prototype.hasOwnProperty.call(properties, 'getDefaultModelConstructor')) {
-        properties.getDefaultModelConstructor = function() {
-            return modelConstructor || namespace[modelConstructorName];
-        };
-    }
     if (modelActions && !Object.prototype.hasOwnProperty.call(properties, 'getModelActions')) {
         properties.getModelActions = function() {
             return modelActions;
@@ -72,7 +65,8 @@ maria.View.subclass = function(namespace, name, options) {
     if (!Object.prototype.hasOwnProperty.call(properties, 'initialize')) {
         properties.initialize = function() {
             if (!this.getModel()) {
-                this.setModel(this.getDefaultModel());
+                var mc = modelConstructor || namespace[modelConstructorName];
+                this.setModel(new mc());
             }
         };
     }

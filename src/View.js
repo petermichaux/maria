@@ -86,11 +86,9 @@ accomplish the same.
     myapp.MyView.prototype = new maria.View();
     myapp.MyView.prototype.constructor = myapp.MyView;
     myapp.MyView.prototype.initialize = function() {
-        alert('a new view created');
-    };
-    myapp.MyView.prototype.destroy = function() {
-        alert('a view destroyed');
-        maria.View.prototype.destroy.call(this);
+        if (!this.getModel()) {
+            this.setModel(new myapp.MyModel());
+        }
     };
     myapp.MyView.prototype.getModelActions = function() {
         return {
@@ -106,6 +104,9 @@ accomplish the same.
     };
     myapp.MyView.prototype.getDefaultControllerConstructor = function() {
         return myapp.MyController;
+    };
+    myapp.MyView.prototype.anotherMethod = function() {
+        alert('another method');
     };
 
 */
@@ -132,15 +133,6 @@ maria.View.prototype.destroy = function() {
 
 maria.View.prototype.update = function() {
     // to be overridden by concrete view subclasses
-};
-
-maria.View.prototype.getDefaultModelConstructor = function() {
-    return maria.Model;
-};
-
-maria.View.prototype.getDefaultModel = function() {
-    var constructor = this.getDefaultModelConstructor();
-    return new constructor();
 };
 
 maria.View.prototype.getModel = function() {
