@@ -15,7 +15,7 @@ The three core design patterns of MVC (observer, composite, and strategy) are em
 Status
 ------
 
-The code has stabilized quite a bit. The source code documentation is written. Now is the time to give it a try in an application. There are a few more automated tests to write and that is the focus of current development.
+Code, documentation, and tests are written. Now heading towards release candidates. Looking for your feedback.
 
 
 Dependencies
