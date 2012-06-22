@@ -71,6 +71,26 @@ A view's initialize method is called when the view is constructed.
 A view has a destroy method which should be called before your
 application looses its last reference to the view.
 
+An view object is a composite view. This means the view can have child
+views added and removed. This functionality is provided by the Hijos
+library. Briefly,
+
+    var childView1 = new maria.View();
+    var childView2 = new maria.View();
+    view.appendChild(childView1);
+    view.replaceChild(childView2, childView1);
+    view.insertBefore(childView1, childView2);
+    view.removeChild(childView2);
+    view.childNodes;
+    view.firstChild;
+    view.lastChild;
+    childView1.nextSibling;
+    childView1.previousSibling;
+    childView1.parentNode;
+
+When a view's destroy method executes, it calls each child's destroy
+method.
+
 The maria.View constructor is relatively abstract. It is most likely
 that your application can use maria.ElementView; however, if you are
 creating a new type of view where maria.ElementView is not a good fit,
