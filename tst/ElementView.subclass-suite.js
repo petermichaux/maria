@@ -60,7 +60,7 @@
             assert.same(uiActions, app.Alpha.prototype.getUIActions());
         },
 
-        "test uiActions property prefered over uiActions": function() {
+        "test getUIActions property prefered over uiActions": function() {
             var app = {};
             var uiActions0 = {};
             var uiActions1 = {};
