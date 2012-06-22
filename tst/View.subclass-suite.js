@@ -2,8 +2,150 @@
 
     buster.testCase('View.subclass Suite', {
 
-        "test trival": function() {
-            assert(true);
+        "test getDefaultControllerConstructor property prefered over controllerConstructor and controllerConstructorName": function() {
+            var app = {
+                AlphaController: function() {
+                    this.alpha = true;
+                },
+                BetaController: function() {
+                    this.beta = true;
+                },
+                GammaController: function() {
+                    this.gamma = true;
+                }
+            };
+            maria.View.subclass(app, 'FooView', {
+                controllerConstructor: app.BetaController,
+                controllerConstructorName: 'GammaController',
+                properties: {
+                    getDefaultControllerConstructor: function() {
+                        return app.AlphaController;
+                    }
+                }
+            });
+            assert.same(true, app.FooView.prototype.getDefaultController().alpha);
+        },
+
+        "test controllerConstructor prefered over controllerConstructorName": function() {
+            var app = {
+                BetaController: function() {
+                    this.beta = true;
+                },
+                GammaController: function() {
+                    this.gamma = true;
+                }
+            };
+            maria.View.subclass(app, 'FooView', {
+                controllerConstructor: app.BetaController,
+                controllerConstructorName: 'GammaController'
+            });
+            assert.same(true, app.FooView.prototype.getDefaultController().beta);
+        },
+
+        "test controllerConstructorName used": function() {
+            var app = {
+                GammaController: function() {
+                    this.gamma = true;
+                }
+            };
+            maria.View.subclass(app, 'FooView', {
+                controllerConstructorName: 'GammaController'
+            });
+            assert.same(true, app.FooView.prototype.getDefaultController().gamma);
+        },
+
+        "test convention for controller constructor name": function() {
+            var app = {};
+            maria.Controller.subclass(app, 'FooController', {
+                properties: {
+                    initialize: function() {
+                        this.foo = true;
+                    }
+                }
+            });
+            maria.View.subclass(app, 'FooView', {
+                modelConstructor: maria.Model
+            });
+            var view = new app.FooView();
+            assert.same(true, view.getController().foo);
+        },
+
+        "test subclass model actions sugar": function() {
+            var app = {};
+            var modelActions = {};
+            maria.View.subclass(app, 'AlphaView', {
+                modelActions: modelActions
+            });
+            assert.same(modelActions, app.AlphaView.prototype.getModelActions());
+        },
+
+        "test getModelActions property prefered over modelActions": function() {
+            var app = {};
+            var modelActions0 = {};
+            var modelActions1 = {};
+            maria.View.subclass(app, 'AlphaView', {
+                modelActions: modelActions1,
+                properties: {
+                    getModelActions: function() {
+                        return modelActions0;
+                    }
+                }
+            });
+            assert.same(modelActions0, app.AlphaView.prototype.getModelActions());
+        },
+
+        "test modelConstructor prefered over modelConstructorName": function() {
+            var app = {};
+            maria.Model.subclass(app, 'BetaModel', {
+                properties: {
+                    initialize: function() {
+                        this.beta = true;
+                    }
+                }
+            });
+            maria.Model.subclass(app, 'GammaModel', {
+                properties: {
+                    initialize: function() {
+                        this.gamma = true;
+                    }
+                }
+            });
+            maria.View.subclass(app, 'FooView', {
+                modelConstructor: app.BetaModel,
+                modelConstructorName: 'GammaModel'
+            });
+            var view = new app.FooView();
+            assert.same(true, view.getModel().beta);
+        },
+
+        "test modelConstructorName used": function() {
+            var app = {};
+            maria.Model.subclass(app, 'GammaModel', {
+                properties: {
+                    initialize: function() {
+                        this.gamma = true;
+                    }
+                }
+            });
+            maria.View.subclass(app, 'FooView', {
+                modelConstructorName: 'GammaModel'
+            });
+            var view = new app.FooView();
+            assert.same(true, view.getModel().gamma);
+        },
+
+        "test conventional naming for model constructor": function() {
+            var app = {};
+            maria.Model.subclass(app, 'FooModel', {
+                properties: {
+                    initialize: function() {
+                        this.foo = true;
+                    }
+                }
+            });
+            maria.View.subclass(app, 'FooView');
+            var view = new app.FooView();
+            assert.same(true, view.getModel().foo);
         }
 
     });
