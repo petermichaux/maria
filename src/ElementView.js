@@ -30,7 +30,7 @@ of element views in one window that will be shown in another window.
 At least some older browsers do not allow a DOM element created with
 one document object to be appended to another document object.
 
-An an element view is a view (inheriting from maria.View) and so has
+An element view is a view (inheriting from maria.View) and so has
 a model and controller. See maria.View for more documentation about
 setting and getting the model and controller objects.
 
