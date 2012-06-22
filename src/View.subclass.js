@@ -51,7 +51,7 @@ maria.View.subclass = function(namespace, name, options) {
     var controllerConstructor = options.controllerConstructor;
     var controllerConstructorName = options.controllerConstructorName || name.replace(/(View|)$/, 'Controller');
     var modelActions = options.modelActions;
-    var properties = options.properties || (option.properties = {});
+    var properties = options.properties || (options.properties = {});
     if (!Object.prototype.hasOwnProperty.call(properties, 'getDefaultControllerConstructor')) {
         properties.getDefaultControllerConstructor = function() {
             return controllerConstructor || namespace[controllerConstructorName];
