@@ -61,7 +61,9 @@ maria.SetView.prototype.setModel = function(model) {
 
         var childViews = this.childNodes.slice(0);
         for (var i = 0, ilen = childViews.length; i < ilen; i++) {
-            this.removeChild(childViews[i]);
+            var childView = childViews[i];
+            this.removeChild(childView);
+            childView.destroy();
         }
 
         var childModels = this.getModel().toArray();
@@ -104,6 +106,7 @@ maria.SetView.prototype.handleDelete = function(evt) {
             var childView = childViews[j];
             if (childView.getModel() === childModel) {
                 this.removeChild(childView);
+                childView.destroy();
                 break;
             }
         }
