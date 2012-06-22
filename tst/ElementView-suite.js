@@ -68,7 +68,8 @@
 
             var args = [];
 
-            evento.addEventListener = function(node, eventType, listener, methodName) {
+            var originalAddEventListener = maria.addEventListener;
+            maria.addEventListener = function(node, eventType, listener, methodName) {
                 args.push({
                     node: node,
                     eventType: eventType,
@@ -80,7 +81,7 @@
             // next line will trigger creation of DOM node and addition of listeners.
             elementView.getRootEl();
 
-            assert.same(4, args.length, 'evento.addEventListener should have been called twice');
+            assert.same(4, args.length, 'maria.addEventListener should have been called four times');
 
             // need a predictable order to test
             args.sort(function(a, b) {
@@ -113,6 +114,8 @@
             assert.same('mouseover', args[3].eventType);
             assert.same(elementView, args[3].listener);
             assert.same('onMouseoverDiv', args[3].methodName);
+            
+            maria.addEventListener = originalAddEventListener;
         },
 
         "test getRootEl returns a DOM node": function() {

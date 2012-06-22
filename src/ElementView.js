@@ -210,7 +210,7 @@ maria.ElementView.prototype.getUIActions = function() {
                         methodName = uiActions[key],
                         elements = maria.findAll(selector, this._rootEl);
                     for (var i = 0, ilen = elements.length; i < ilen; i++) {
-                        evento.addEventListener(elements[i], eventType, this, methodName);
+                        maria.addEventListener(elements[i], eventType, this, methodName);
                     }
                 }
             }
