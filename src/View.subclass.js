@@ -24,7 +24,7 @@ for maria.View.
 
 This subclassing function implements options following the
 "convention over configuration" philosophy. The myapp.MyView will,
-by convention, use the myapp.MyView and myapp.MyController
+by convention, use the myapp.MyModel and myapp.MyController
 constructors. These can be configured.
 
     maria.View.subclass(myapp, 'MyView', {
