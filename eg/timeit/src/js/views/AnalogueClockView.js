@@ -1,7 +1,6 @@
 if (timeit.isCanvasSupported()) {
 
     maria.ElementView.subclass(timeit, 'AnalogueClockView', {
-        modelConstructor: timeit.ClockModel,
         properties: {
             update: function() {
                 var time = this.getModel().getTime();

@@ -1,5 +1,4 @@
 maria.ElementView.subclass(checkit, 'TodosToolbarView', {
-    modelConstructor: checkit.TodosModel,
     uiActions: {
         'click .allCheckbox'   : 'onClickAllCheckbox'  ,
         'click .markallDone'   : 'onClickMarkAllDone'  ,

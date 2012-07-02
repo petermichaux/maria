@@ -9,7 +9,6 @@
     }
 
     maria.ElementView.subclass(timeit, 'DigitalClockView', {
-        modelConstructor: timeit.ClockModel,
         properties: {
             update: function() {
                 var time = this.getModel().getTime();

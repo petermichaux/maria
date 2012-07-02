@@ -105,11 +105,6 @@ accomplish the same.
     };
     myapp.MyView.prototype = new maria.View();
     myapp.MyView.prototype.constructor = myapp.MyView;
-    myapp.MyView.prototype.initialize = function() {
-        if (!this.getModel()) {
-            this.setModel(new myapp.MyModel());
-        }
-    };
     myapp.MyView.prototype.getModelActions = function() {
         return {
             'squashed': 'onSquashed',
@@ -127,6 +122,14 @@ accomplish the same.
     };
     myapp.MyView.prototype.anotherMethod = function() {
         alert('another method');
+    };
+
+The above MyView example does not have an "initialize" method;
+however, if some special initialization is requried, maria.View
+will automatically call your "initialize" method.
+
+    myapp.MyView.prototype.initialize = function() {
+        alert('Another view has been created.');
     };
 
 */

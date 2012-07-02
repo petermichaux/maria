@@ -92,60 +92,6 @@
                 }
             });
             assert.same(modelActions0, app.AlphaView.prototype.getModelActions());
-        },
-
-        "test modelConstructor prefered over modelConstructorName": function() {
-            var app = {};
-            maria.Model.subclass(app, 'BetaModel', {
-                properties: {
-                    initialize: function() {
-                        this.beta = true;
-                    }
-                }
-            });
-            maria.Model.subclass(app, 'GammaModel', {
-                properties: {
-                    initialize: function() {
-                        this.gamma = true;
-                    }
-                }
-            });
-            maria.View.subclass(app, 'FooView', {
-                modelConstructor: app.BetaModel,
-                modelConstructorName: 'GammaModel'
-            });
-            var view = new app.FooView();
-            assert.same(true, view.getModel().beta);
-        },
-
-        "test modelConstructorName used": function() {
-            var app = {};
-            maria.Model.subclass(app, 'GammaModel', {
-                properties: {
-                    initialize: function() {
-                        this.gamma = true;
-                    }
-                }
-            });
-            maria.View.subclass(app, 'FooView', {
-                modelConstructorName: 'GammaModel'
-            });
-            var view = new app.FooView();
-            assert.same(true, view.getModel().gamma);
-        },
-
-        "test conventional naming for model constructor": function() {
-            var app = {};
-            maria.Model.subclass(app, 'FooModel', {
-                properties: {
-                    initialize: function() {
-                        this.foo = true;
-                    }
-                }
-            });
-            maria.View.subclass(app, 'FooView');
-            var view = new app.FooView();
-            assert.same(true, view.getModel().foo);
         }
 
     });
