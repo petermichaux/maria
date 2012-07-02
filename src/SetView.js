@@ -80,7 +80,8 @@ maria.SetView.prototype.createChildView = function(model) {
 maria.SetView.prototype.update = function(evt) {
     // Check if there is an event as this method is also called
     // at the end of building the view.
-    if (evt) {
+    // Also don't update for bubbling events.
+    if (evt && (evt.target === this.getModel())) {
         if (evt.addedTargets && evt.addedTargets.length) {
             this.handleAdd(evt);
         }
