@@ -15,6 +15,6 @@ maria.addEventListener(window, 'load', function() {
         model = new checkit.TodosModel();
     }
 
-    var app = new checkit.TodosAppView(model);
-    document.body.appendChild(app.build());
+    var view = new checkit.TodosAppView(model);
+    document.body.appendChild(view.build());
 });
