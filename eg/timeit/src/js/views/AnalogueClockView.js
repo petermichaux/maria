@@ -2,7 +2,7 @@ if (timeit.isCanvasSupported()) {
 
     maria.ElementView.subclass(timeit, 'AnalogueClockView', {
         properties: {
-            update: function() {
+            buildData: function() {
                 var time = this.getModel().getTime();
                 var ctx = this.find('canvas.time').getContext('2d');
 
@@ -98,6 +98,9 @@ if (timeit.isCanvasSupported()) {
                 ctx.stroke();
 
                 ctx.restore();
+            },
+            update: function() {
+                this.buildData();
             }
         }
     });

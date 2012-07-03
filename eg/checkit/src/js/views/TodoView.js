@@ -10,13 +10,16 @@ maria.ElementView.subclass(checkit, 'TodoView', {
         'blur      .todo-input'  : 'onBlurInput'
     },
     properties: {
-        update: function() {
+        buildData: function() {
             var model = this.getModel();
             var content = model.getContent();
             this.find('.todo-content').innerHTML =
                 content.replace('&', '&amp;').replace('<', '&lt;');
             this.find('.check').checked = model.isDone();
             aristocrat[model.isDone() ? 'addClass' : 'removeClass'](this.getRootEl(), 'done');
+        },
+        update: function() {
+            this.buildData();
         },
         showEdit: function() {
             var input = this.find('.todo-input');

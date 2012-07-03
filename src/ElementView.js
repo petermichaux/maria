@@ -140,13 +140,16 @@ the same.
     checkit.TodoView.prototype.onBlurInput = function(evt) {
         this.getController().onBlurInput(evt);
     };
-    checkit.TodoView.prototype.update = function() {
+    checkit.TodoView.prototype.buildData = function() {
         var model = this.getModel();
         var content = model.getContent();
         this.find('.todo-content').innerHTML =
             content.replace('&', '&amp;').replace('<', '&lt;');
         this.find('.check').checked = model.isDone();
         aristocrat[model.isDone() ? 'addClass' : 'removeClass'](this.getRootEl(), 'done');
+    };
+    checkit.TodoView.prototype.update = function() {
+        this.buildData();
     };
     checkit.TodoView.prototype.showEdit = function() {
         var input = this.find('.todo-input');
@@ -188,39 +191,56 @@ maria.ElementView.prototype.getUIActions = function() {
     return {};
 };
 
+maria.ElementView.prototype.getRootEl = function() {
+    if (!this._rootEl) {
+        this.buildTemplate();
+        this.buildUIActions();
+        this.buildData();
+        this.buildChildViews();
+    }
+    return this._rootEl;
+};
+
+maria.ElementView.prototype.buildTemplate = function() {
+    // parseHTML returns a DocumentFragment so take firstChild as the rootEl
+    this._rootEl = maria.parseHTML(this.getTemplate(), this._doc).firstChild;
+};
+
 (function() {
     var actionRegExp = /^(\S+)\s*(.*)$/;
 
-    maria.ElementView.prototype.getRootEl = function() {
-        if (!this._rootEl) {
-            // parseHTML returns a DocumentFragment so take firstChild as the rootEl
-            var rootEl = this._rootEl = maria.parseHTML(this.getTemplate(), this._doc).firstChild;
-
-            var uiActions = this.getUIActions();
-            for (var key in uiActions) {
-                if (Object.prototype.hasOwnProperty.call(uiActions, key)) {
-                    var matches = key.match(actionRegExp),
-                        eventType = matches[1],
-                        selector = matches[2],
-                        methodName = uiActions[key],
-                        elements = maria.findAll(selector, this._rootEl);
-                    for (var i = 0, ilen = elements.length; i < ilen; i++) {
-                        maria.addEventListener(elements[i], eventType, this, methodName);
-                    }
-                }
-            }
-
-            var childViews = this.childNodes;
-            for (var i = 0, ilen = childViews.length; i < ilen; i++) {
-                this.getContainerEl().appendChild(childViews[i].getRootEl());
-            }
-
-            this.update();
-        }
-        return this._rootEl;
-    };
+    maria.ElementView.prototype.buildUIActions = function() {
+        var uiActions = this.getUIActions();
+        for (var key in uiActions) {
+            if (Object.prototype.hasOwnProperty.call(uiActions, key)) {
+                var matches = key.match(actionRegExp),
+                    eventType = matches[1],
+                    selector = matches[2],
+                    methodName = uiActions[key],
+                    elements = maria.findAll(selector, this._rootEl);
+                for (var i = 0, ilen = elements.length; i < ilen; i++) {
+                    maria.addEventListener(elements[i], eventType, this, methodName);
+                } 
+            } 
+        } 
+    }; 
 
 }());
+
+maria.ElementView.prototype.buildData = function() {
+    // to be overridden by concrete ElementView subclasses
+};
+
+maria.ElementView.prototype.buildChildViews = function() {
+    var childViews = this.childNodes;
+    for (var i = 0, ilen = childViews.length; i < ilen; i++) {
+        this.getContainerEl().appendChild(childViews[i].getRootEl());
+    }
+};
+
+maria.ElementView.prototype.update = function() {
+    // to be overridden by concrete ElementView subclasses
+};
 
 maria.ElementView.prototype.getContainerEl = function() {
     return this.getRootEl();

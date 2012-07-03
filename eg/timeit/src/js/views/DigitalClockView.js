@@ -10,10 +10,13 @@
 
     maria.ElementView.subclass(timeit, 'DigitalClockView', {
         properties: {
-            update: function() {
+            buildData: function() {
                 var time = this.getModel().getTime();
                 this.find('.time').innerHTML =
                     formatTimeString(time.hour, time.minute, time.second);
+            },
+            update: function() {
+                this.buildData();
             }
         }
     });
