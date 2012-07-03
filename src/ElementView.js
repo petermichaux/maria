@@ -220,10 +220,10 @@ maria.ElementView.prototype.buildTemplate = function() {
                     elements = maria.findAll(selector, this._rootEl);
                 for (var i = 0, ilen = elements.length; i < ilen; i++) {
                     maria.addEventListener(elements[i], eventType, this, methodName);
-                } 
-            } 
-        } 
-    }; 
+                }
+            }
+        }
+    };
 
 }());
 
