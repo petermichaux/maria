@@ -110,11 +110,6 @@ the same.
     };
     checkit.TodoView.prototype = new maria.ElementView();
     checkit.TodoView.prototype.constructor = checkit.TodoView;
-    checkit.TodoView.prototype.initialize = function() {
-        if (!this.getModel()) {
-            this.setModel(new checkit.TodoModel());
-        }
-    };
     checkit.TodoView.prototype.getDefaultControllerConstructor = function() {
         return checkit.TodoController;
     };
