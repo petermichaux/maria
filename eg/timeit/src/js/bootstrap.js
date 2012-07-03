@@ -6,12 +6,12 @@ maria.addEventListener(window, 'load', function() {
 
     if (typeof timeit.AnalogueClockView === 'function') {
         var analogueClockView = new timeit.AnalogueClockView(model);
-        document.body.appendChild(analogueClockView.getRootEl());
+        document.body.appendChild(analogueClockView.build());
     }
 
     var digitalClockView = new timeit.DigitalClockView(model);
-    document.body.appendChild(digitalClockView.getRootEl());
+    document.body.appendChild(digitalClockView.build());
     
     var clockKnobsView = new timeit.ClockKnobsView(model);
-    document.body.appendChild(clockKnobsView.getRootEl());
+    document.body.appendChild(clockKnobsView.build());
 });

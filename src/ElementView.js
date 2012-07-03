@@ -146,7 +146,7 @@ the same.
         this.find('.todo-content').innerHTML =
             content.replace('&', '&amp;').replace('<', '&lt;');
         this.find('.check').checked = model.isDone();
-        aristocrat[model.isDone() ? 'addClass' : 'removeClass'](this.getRootEl(), 'done');
+        aristocrat[model.isDone() ? 'addClass' : 'removeClass'](this.find('.todo'), 'done');
     };
     checkit.TodoView.prototype.update = function() {
         this.buildData();
@@ -154,11 +154,11 @@ the same.
     checkit.TodoView.prototype.showEdit = function() {
         var input = this.find('.todo-input');
         input.value = this.getModel().getContent();
-        aristocrat.addClass(this.getRootEl(), 'editing');
+        aristocrat.addClass(this.find('.todo'), 'editing');
         input.select();
     };
     checkit.TodoView.prototype.showDisplay = function() {
-        aristocrat.removeClass(this.getRootEl(), 'editing');
+        aristocrat.removeClass(this.find('.todo'), 'editing');
     };
     checkit.TodoView.prototype.getInputValue = function() {
         return this.find('.todo-input').value;
@@ -191,7 +191,7 @@ maria.ElementView.prototype.getUIActions = function() {
     return {};
 };
 
-maria.ElementView.prototype.getRootEl = function() {
+maria.ElementView.prototype.build = function() {
     if (!this._rootEl) {
         this.buildTemplate();
         this.buildUIActions();
@@ -234,7 +234,7 @@ maria.ElementView.prototype.buildData = function() {
 maria.ElementView.prototype.buildChildViews = function() {
     var childViews = this.childNodes;
     for (var i = 0, ilen = childViews.length; i < ilen; i++) {
-        this.getContainerEl().appendChild(childViews[i].getRootEl());
+        this.getContainerEl().appendChild(childViews[i].build());
     }
 };
 
@@ -243,27 +243,27 @@ maria.ElementView.prototype.update = function() {
 };
 
 maria.ElementView.prototype.getContainerEl = function() {
-    return this.getRootEl();
+    return this.build();
 };
 
 maria.ElementView.prototype.insertBefore = function(newChild, oldChild) {
     maria.View.prototype.insertBefore.call(this, newChild, oldChild);
     if (this._rootEl) {
-        this.getContainerEl().insertBefore(newChild.getRootEl(), oldChild ? oldChild.getRootEl() : null);
+        this.getContainerEl().insertBefore(newChild.build(), oldChild ? oldChild.build() : null);
     }
 };
 
 maria.ElementView.prototype.removeChild = function(oldChild) {
     maria.View.prototype.removeChild.call(this, oldChild);
     if (this._rootEl) {
-        this.getContainerEl().removeChild(oldChild.getRootEl());
+        this.getContainerEl().removeChild(oldChild.build());
     }
 };
 
 maria.ElementView.prototype.find = function(selector) {
-    return maria.find(selector, this.getRootEl());
+    return maria.find(selector, this.build());
 };
 
 maria.ElementView.prototype.findAll = function(selector) {
-    return maria.findAll(selector, this.getRootEl());
+    return maria.findAll(selector, this.build());
 };

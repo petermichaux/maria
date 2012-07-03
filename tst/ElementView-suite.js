@@ -79,7 +79,7 @@
             };
 
             // next line will trigger creation of DOM node and addition of listeners.
-            elementView.getRootEl();
+            elementView.build();
 
             assert.same(4, args.length, 'maria.addEventListener should have been called four times');
 
@@ -92,7 +92,7 @@
                                0;
             });
 
-            assert.same(elementView.getRootEl(), args[0].node);
+            assert.same(elementView.build(), args[0].node);
             assert.same('click', args[0].eventType);
             assert.same(elementView, args[0].listener);
             assert.same('onClickDiv', args[0].methodName);
@@ -110,7 +110,7 @@
             // don't know the order of the spans just tested but they must be different
             refute.same(args[1].node, args[2].node);
 
-            assert.same(elementView.getRootEl(), args[3].node);
+            assert.same(elementView.build(), args[3].node);
             assert.same('mouseover', args[3].eventType);
             assert.same(elementView, args[3].listener);
             assert.same('onMouseoverDiv', args[3].methodName);
@@ -118,22 +118,22 @@
             maria.addEventListener = originalAddEventListener;
         },
 
-        "test getRootEl returns a DOM node": function() {
+        "test build returns a DOM node": function() {
             var elementView = new maria.ElementView();
-            var rootEl = elementView.getRootEl();
+            var rootEl = elementView.build();
             assert.same('DIV', rootEl.tagName);
         },
 
         "test by default the containerEl for children is the rootEl": function() {
             var elementView = new maria.ElementView();
-            assert.same(elementView.getRootEl(), elementView.getContainerEl());
+            assert.same(elementView.build(), elementView.getContainerEl());
         },
 
         "test appending a sub-view appends the sub-view's DOM node": function() {
             var parent = new maria.ElementView();
             var child = new maria.ElementView();
             parent.appendChild(child);
-            assert.same(child.getRootEl(), parent.getRootEl().firstChild);
+            assert.same(child.build(), parent.build().firstChild);
         },
 
         "test inserting a sub-view inserts the sub-view's DOM node": function() {
@@ -143,10 +143,10 @@
             var child2 = new maria.ElementView();
             parent.appendChild(child0);
             parent.appendChild(child2);
-            assert.same(child0.getRootEl(), parent.getRootEl().firstChild);
-            assert.same(child2.getRootEl(), parent.getRootEl().lastChild);
+            assert.same(child0.build(), parent.build().firstChild);
+            assert.same(child2.build(), parent.build().lastChild);
             parent.insertBefore(child1, child2);
-            assert.same(child1.getRootEl(), parent.getRootEl().firstChild.nextSibling);
+            assert.same(child1.build(), parent.build().firstChild.nextSibling);
         },
 
         "test removing a sub-view removes the sub-view's DOM node": function() {
@@ -157,19 +157,19 @@
             parent.appendChild(child0);
             parent.appendChild(child1);
             parent.appendChild(child2);
-            assert.same(child0.getRootEl(), parent.getRootEl().firstChild);
-            assert.same(child1.getRootEl(), parent.getRootEl().firstChild.nextSibling);
-            assert.same(child2.getRootEl(), parent.getRootEl().lastChild);
+            assert.same(child0.build(), parent.build().firstChild);
+            assert.same(child1.build(), parent.build().firstChild.nextSibling);
+            assert.same(child2.build(), parent.build().lastChild);
             parent.removeChild(child1);
-            assert.same(child0.getRootEl(), parent.getRootEl().firstChild);
-            assert.same(child2.getRootEl(), parent.getRootEl().firstChild.nextSibling);
-            assert.same(child2.getRootEl(), parent.getRootEl().lastChild);
+            assert.same(child0.build(), parent.build().firstChild);
+            assert.same(child2.build(), parent.build().firstChild.nextSibling);
+            assert.same(child2.build(), parent.build().lastChild);
         },
 
         "test find can find the root element div": function() {
             var elementView = new maria.ElementView();
             var foundDiv = elementView.find('div');
-            assert.same(elementView.getRootEl(), foundDiv);
+            assert.same(elementView.build(), foundDiv);
         },
 
         "test findAll can find the root element div": function() {
@@ -177,7 +177,7 @@
             var foundDivs = elementView.findAll('div');
             assert.isArray(foundDivs, 'foundDivs should be an array');
             assert.same(1, foundDivs.length, 'there should only be one div found');
-            assert.same(elementView.getRootEl(), foundDivs[0]);
+            assert.same(elementView.build(), foundDivs[0]);
         }
 
     });
