@@ -59,8 +59,8 @@ maria.SetView.prototype.buildChildViews = function() {
     var childModels = this.getModel().toArray();
     for (var i = 0, ilen = childModels.length; i < ilen; i++) {
         this.appendChild(this.createChildView(childModels[i]));
-    } 
-}; 
+    }
+};
 
 maria.SetView.prototype.createChildView = function(model) {
     return new maria.ElementView(model);
