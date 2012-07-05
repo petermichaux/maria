@@ -55,23 +55,12 @@ maria.SetView = function() {
 maria.SetView.prototype = new maria.ElementView();
 maria.SetView.prototype.constructor = maria.SetView;
 
-maria.SetView.prototype.setModel = function(model) {
-    if (this.getModel() !== model) {
-        maria.ElementView.prototype.setModel.call(this, model);
-
-        var childViews = this.childNodes.slice(0);
-        for (var i = 0, ilen = childViews.length; i < ilen; i++) {
-            var childView = childViews[i];
-            this.removeChild(childView);
-            childView.destroy();
-        }
-
-        var childModels = this.getModel().toArray();
-        for (var i = 0, ilen = childModels.length; i < ilen; i++) {
-            this.appendChild(this.createChildView(childModels[i]));
-        }
-    }
-};
+maria.SetView.prototype.buildChildViews = function() {
+    var childModels = this.getModel().toArray();
+    for (var i = 0, ilen = childModels.length; i < ilen; i++) {
+        this.appendChild(this.createChildView(childModels[i]));
+    } 
+}; 
 
 maria.SetView.prototype.createChildView = function(model) {
     return new maria.ElementView(model);
