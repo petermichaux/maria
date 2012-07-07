@@ -93,9 +93,9 @@ Thanks to the Git and GitHub teams for making it easy to collaborate with others
 Author
 ------
 
-Peter Michaux
-petermichaux@gmail.com
-http://peter.michaux.ca/
+Peter Michaux<br>
+petermichaux@gmail.com<br>
+http://peter.michaux.ca/<br>
 @petermichaux
 
 
