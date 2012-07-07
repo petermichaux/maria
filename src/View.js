@@ -142,7 +142,9 @@ maria.View = function(model, controller) {
 
 maria.Node.mixin(maria.View.prototype);
 
-maria.View.prototype.initialize = function() {};
+maria.View.prototype.initialize = function() {
+    // to be overridden by concrete view subclasses
+};
 
 maria.View.prototype.destroy = function() {
     maria.purgeEventListener(this);
