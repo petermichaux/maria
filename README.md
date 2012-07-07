@@ -19,7 +19,7 @@ See http://peter.michaux.ca/downloads/maria/
 
 ```maria.js``` contains all the Maria source files concatenated together. This is a good file to use during the development of your application.
 
-```maria-min.js``` contains the same code as ```maria.js``` but ```maria-min.js``` has been minified to remove whitespace and code comments.
+```maria-min.js``` contains the same code as ```maria.js``` but ```maria-min.js``` has been minified to remove whitespace and code comments. This is a good file to serve in production.
 
 
 Status
