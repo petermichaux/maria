@@ -12,10 +12,16 @@ An MVC framework for JavaScript applications. The real MVC. The Smalltalk MVC. T
 The three core design patterns of MVC (observer, composite, and strategy) are embedded in Maria's Model, View, and Controller objects. Other patterns traditionally included in MVC implementations (e.g. factory method and template) make appearances too.
 
 
+Downloads
+---------
+
+See http://peter.michaux.ca/downloads/maria/
+
+
 Status
 ------
 
-Code, documentation, and tests are written. Now heading towards release candidates. Looking for your feedback.
+Release candidates are in progress.
 
 
 Browser Support
