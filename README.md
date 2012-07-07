@@ -44,6 +44,12 @@ Google Group: http://groups.google.com/group/maria-js
 IRC: #maria.js on irc.freenode.net
 
 
+Source Code
+-----------
+
+GitHub: https://github.com/petermichaux/maria
+
+
 Build
 -----
 
