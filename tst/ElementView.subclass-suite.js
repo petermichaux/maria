@@ -128,6 +128,72 @@
             
             app.Alpha.prototype.onClickDiv(evt);
             assert.same(evt, calledEvt);
+        },
+
+        "test inheritied ui action is called rather than one generated": function() {
+
+            var app = {};
+
+            var wasSquishedFromAlpha = false;
+            var wasSquishedFromGamma = false;
+            var wasSquashed = false;
+
+            maria.Controller.subclass(app, 'GammaController', {
+                properties: {
+                    onSquishedFromAlpha: function() {
+                        wasSquishedFromAlpha = true;
+                    },
+                    onSquished: function() {
+                        wasSquishedFromGamma = true;
+                    },
+                    onSquashed: function() {
+                        wasSquashed = true;
+                    }
+                }
+            });
+
+            var handler = function() {
+                this.getController().onSquishedFromAlpha();
+            };
+
+            maria.ElementView.subclass(app, 'AlphaView', {
+                properties: {
+                    onSquished: handler
+                }
+            });
+
+            app.AlphaView.subclass(app, 'BetaView', {});
+
+            app.BetaView.subclass(app, 'GammaView', {
+                uiActions: {
+                    'click .asdf': 'onSquished',
+                    'click .qwerty': 'onSquashed'
+                }
+            });
+
+            var gammaView = new app.GammaView();
+
+            assert.equals(handler, gammaView.onSquished, 'the gammaView.onSquished handler should be inheritied from app.AlphaView.prototype.onSquished. An app.GammaView.prototype.onSquished method should not have been auto generated.');
+
+            // The following two checks are actually redundant. The above on check is sufficient.
+            // I want to have the following two checks to be doubly sure the whole system all the way
+            // to the controller is tested as working correctly.
+
+            gammaView.onSquished();
+
+            assert.equals(true, wasSquishedFromAlpha, 'wasSquishedFromAlpha should be true because the inheritied app.AlphaView.prototype.onSquished method should have been used.');
+
+            assert.equals(false, wasSquishedFromGamma, 'wasSquishedFromGamma should be false because no generated app.GammaView.prototype.onSquished method should have been generated.');
+
+            // check that other non-inherited handlers are still generated even when some handlers are inherited
+
+            assert.equals(true, Object.prototype.hasOwnProperty.call(app.GammaView.prototype, 'onSquashed'), 'an app.BetaView.prototype.onSquashed property should have been generated');
+
+            assert.isFunction(app.GammaView.prototype.onSquashed, 'app.BetaView.prototype.onSquashed should be a function');
+            assert.equals(false, wasSquashed, 'wasSquashed should still be false at this point.');
+            gammaView.onSquashed();
+            assert.equals(true, wasSquashed, 'wasSquashed should be true now that gammaView.onSquashed was called.');
+
         }
 
     });

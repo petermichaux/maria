@@ -103,7 +103,8 @@ maria.ElementView.subclass = function(namespace, name, options) {
         for (var key in uiActions) {
             if (Object.prototype.hasOwnProperty.call(uiActions, key)) {
                 var methodName = uiActions[key];
-                if (!Object.prototype.hasOwnProperty.call(properties, methodName)) {
+                if ((!Object.prototype.hasOwnProperty.call(properties, methodName)) &&
+                    (!(methodName in this.prototype))) {
                     (function(methodName) {
                         properties[methodName] = function(evt) {
                             this.getController()[methodName](evt);
