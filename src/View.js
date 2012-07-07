@@ -135,9 +135,9 @@ will automatically call your "initialize" method.
 */
 maria.View = function(model, controller) {
     maria.Node.call(this);
+    this.initialize();
     this.setModel(model);
     this.setController(controller);
-    this.initialize();
 };
 
 maria.Node.mixin(maria.View.prototype);

@@ -172,15 +172,23 @@ the same.
 
 */
 maria.ElementView = function(model, controller, doc) {
-    this._doc = doc || document;
     maria.View.call(this, model, controller);
+    this.setDocument(doc);
 };
 
 maria.ElementView.prototype = new maria.View();
 maria.ElementView.prototype.constructor = maria.ElementView;
 
 maria.ElementView.prototype.getDocument = function() {
-    return this._doc;
+    return this._doc || document;
+};
+
+maria.ElementView.prototype.setDocument = function(doc) {
+    this._doc = doc;
+    var childViews = this.childNodes;
+    for (var i = 0, ilen = childViews.length; i < ilen; i++) {
+        childViews[i].setDocument(doc);
+    }
 };
 
 maria.ElementView.prototype.getTemplate = function() {
@@ -203,7 +211,7 @@ maria.ElementView.prototype.build = function() {
 
 maria.ElementView.prototype.buildTemplate = function() {
     // parseHTML returns a DocumentFragment so take firstChild as the rootEl
-    this._rootEl = maria.parseHTML(this.getTemplate(), this._doc).firstChild;
+    this._rootEl = maria.parseHTML(this.getTemplate(), this.getDocument()).firstChild;
 };
 
 (function() {
