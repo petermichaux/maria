@@ -73,7 +73,10 @@ Thanks to the Git and GitHub teams for making it easy to collaborate with others
 Author
 ------
 
-Peter Michaux - petermichaux@gmail.com
+Peter Michaux
+petermichaux@gmail.com
+http://peter.michaux.ca/
+@petermichaux
 
 
 License
