@@ -68,3 +68,15 @@ Thanks to [James Ladd](http://jamesladdcode.com/) for encouraging me to start th
 Thanks to the [Buster.JS](http://busterjs.org/) development team for providing a great, automated testing tool.
 
 Thanks to the Git and GitHub teams for making it easy to collaborate with others on code projects.
+
+
+Author
+------
+
+Peter Michaux - petermichaux@gmail.com
+
+
+License
+-------
+
+Simplified BSD License. See the included LICENSE file for details.
