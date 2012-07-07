@@ -18,6 +18,12 @@ Status
 Code, documentation, and tests are written. Now heading towards release candidates. Looking for your feedback.
 
 
+Browser Support
+---------------
+
+Tested working in IE6 and newer browsers by a variety of manufacturers.
+
+
 Dependencies
 ------------
 
