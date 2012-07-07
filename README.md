@@ -36,6 +36,14 @@ Examples
 The eg directory contains example applications including the canonical to-do application.
 
 
+Community
+---------
+
+Google Group: http://groups.google.com/group/maria-js
+
+IRC: #maria.js on irc.freenode.net
+
+
 Build
 -----
 
