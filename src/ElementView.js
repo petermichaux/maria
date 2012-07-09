@@ -246,10 +246,6 @@ maria.ElementView.prototype.buildChildViews = function() {
     }
 };
 
-maria.ElementView.prototype.update = function() {
-    // to be overridden by concrete ElementView subclasses
-};
-
 maria.ElementView.prototype.getContainerEl = function() {
     return this.build();
 };
