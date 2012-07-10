@@ -1,18 +1,18 @@
 .PHONY: clean
 
-LIBS_MIN = lib/evento/evento-min.js        \
-           lib/hijos/hijos-min.js          \
-           lib/arbutus/arbutus-min.js      \
-           lib/grail/grail-min.js          \
-           lib/hormigas/hormigas-min.js
+LIBS_MIN   = lib/evento/evento-min.js      \
+             lib/hijos/hijos-min.js        \
+             lib/arbutus/arbutus-min.js    \
+             lib/grail/grail-min.js        \
+             lib/hormigas/hormigas-min.js
 
-LIBS = lib/evento/evento.js                \
-       lib/hijos/hijos.js                  \
-       lib/arbutus/arbutus.js              \
-       lib/grail/grail.js                  \
-       lib/hormigas/hormigas.js
+LIBS       = lib/evento/evento.js          \
+             lib/hijos/hijos.js            \
+             lib/arbutus/arbutus.js        \
+             lib/grail/grail.js            \
+             lib/hormigas/hormigas.js
 
-SRCS_CORE =  src/header.js                 \
+SRCS_CORE  = src/header.js                 \
              src/namespace.js              \
              src/subclass.js               \
              src/borrow.js                 \
@@ -35,7 +35,7 @@ SRCS_SUGAR = src/Model.subclass.js         \
              src/SetView.subclass.js       \
              src/Controller.subclass.js
 
-SRCS = $(SRCS_CORE) $(SRCS_SUGAR)
+SRCS       = $(SRCS_CORE) $(SRCS_SUGAR)
 
 build: $(LIBS_MIN) $(LIBS) $(SRCS)
 	mkdir -p build
