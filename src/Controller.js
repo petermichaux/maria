@@ -110,6 +110,9 @@ maria.Controller.prototype.getModel = function() {
     return this._model;
 };
 
+// setModel is intended to be called *only* by 
+// the view _setModelAndController method.
+// Do otherwise at your own risk.
 maria.Controller.prototype.setModel = function(model) {
     this._model = model;
 };
@@ -118,6 +121,9 @@ maria.Controller.prototype.getView = function() {
     return this._view;
 };
 
+// setView is intended to be called *only* by
+// the view _setModelAndController method.
+// Do otherwise at your own risk.
 maria.Controller.prototype.setView = function(view) {
     this._view = view;
 };
