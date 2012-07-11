@@ -2,7 +2,7 @@
 
     buster.testCase('ElementView.subclass Suite', {
 
-        "test template sugar": function() {
+        "test template property sugar": function() {
             var app = {};
             var template = '<span>the template</span>';
             maria.ElementView.subclass(app, 'Alpha', {
@@ -11,7 +11,7 @@
             assert.same(template, app.Alpha.prototype.getTemplate());
         },
 
-        "test templateName sugar": function() {
+        "test templateName property sugar": function() {
             var app = {
                 'myTemplate': '<ul class="test-ul-template"></ul>'
             };
