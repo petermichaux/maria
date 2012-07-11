@@ -55,7 +55,7 @@ This subclassing function implements options following the
 "convention over configuration" philosophy. The checkit.TodoView will,
 by convention, use the checkit.TodoController
 and checkit.TodoTemplate objects. All of these can be configured
-explicitely if these conventions do not match your view's needs.
+explicitly if these conventions do not match your view's needs.
 
     maria.ElementView.subclass(checkit, 'TodoView', {
         controllerConstructor: checkit.TodoController,
