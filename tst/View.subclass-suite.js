@@ -63,9 +63,7 @@
                     }
                 }
             });
-            maria.View.subclass(app, 'FooView', {
-                modelConstructor: maria.Model
-            });
+            maria.View.subclass(app, 'FooView');
             var view = new app.FooView();
             assert.same(true, view.getController().foo);
         },
