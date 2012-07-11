@@ -44,4 +44,6 @@ the documentation for maria.Controller.
     });
 
 */
-maria.Controller.subclass = maria.subclass;
+maria.Controller.subclass = function() {
+    maria.subclass.apply(this, arguments);
+};

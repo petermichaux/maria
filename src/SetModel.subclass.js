@@ -46,4 +46,6 @@ for maria.SetModel.
     });
 
 */
-maria.SetModel.subclass = maria.Model.subclass;
+maria.SetModel.subclass = function() {
+    maria.Model.subclass.apply(this, arguments);
+};

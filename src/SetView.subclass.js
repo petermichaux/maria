@@ -21,4 +21,6 @@ documentation for maria.SetView.
     });
 
 */
-maria.SetView.subclass = maria.ElementView.subclass;
+maria.SetView.subclass = function() {
+    maria.ElementView.subclass.apply(this, arguments);
+};
