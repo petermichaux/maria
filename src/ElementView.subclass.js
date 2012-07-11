@@ -53,12 +53,11 @@ for maria.ElementView.
 
 This subclassing function implements options following the
 "convention over configuration" philosophy. The checkit.TodoView will,
-by convention, use the checkit.TodoModel, checkit.TodoController
+by convention, use the checkit.TodoController
 and checkit.TodoTemplate objects. All of these can be configured
 explicitely if these conventions do not match your view's needs.
 
     maria.ElementView.subclass(checkit, 'TodoView', {
-        modelConstructor     : checkit.TodoModel     ,
         controllerConstructor: checkit.TodoController,
         template             : checkit.TodoTemplate  ,
         uiActions: {
@@ -69,7 +68,6 @@ objects in the application's namespace object (i.e. the checkit object
 in this example).
 
 maria.ElementView.subclass(checkit, 'TodoView', {
-    modelConstructorName     : 'TodoModel'     ,
     controllerConstructorName: 'TodoController',
     templateName             : 'TodoTemplate'  ,
     uiActions: {

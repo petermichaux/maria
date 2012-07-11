@@ -13,7 +13,6 @@ function equivalent to the more verbose example shown in the
 documentation for maria.SetView.
 
     maria.SetView.subclass(checkit, 'TodosListView', {
-        modelConstructor: checkit.TodosModel,
         properties: {
             createChildView: function(todoModel) {
                 return new checkit.TodoView(todoModel);
