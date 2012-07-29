@@ -11,7 +11,7 @@ maria.SetModel.subclass(checkit, 'TodosModel', {
             });
         },
         isAllDone: function() {
-            return this.length > 0 &&
+            return (this.length > 0) &&
                    (this.getDone().length === this.length);
         },
         markAllDone: function() {
