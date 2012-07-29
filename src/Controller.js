@@ -62,10 +62,10 @@ to accomplish the same.
     };
     checkit.TodoController.prototype.onKeyupInput = function() {
         var view = this.getView();
-        if (/\S/.test(view.getInputValue())) {
-            view.showToolTip();
-        } else {
+        if (checkit.isBlank(view.getInputValue())) {
             view.hideToolTip();
+        } else {
+            view.showToolTip();
         }
     };
     checkit.TodoController.prototype.onKeypressInput = function(evt) {
@@ -78,7 +78,7 @@ to accomplish the same.
         var value = view.getInputValue();
         view.hideToolTip();
         view.showDisplay();
-        if (!/^\s*$/.test(value)) {
+        if (!checkit.isBlank(value)) {
             this.getModel().setContent(value);
         }
     };

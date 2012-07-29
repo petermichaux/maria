@@ -20,10 +20,10 @@ the documentation for maria.Controller.
             },
             onKeyupInput: function() {
                 var view = this.getView();
-                if (/\S/.test(view.getInputValue())) {
-                    view.showToolTip();
-                } else {
+                if (checkit.isBlank(view.getInputValue())) {
                     view.hideToolTip();
+                } else {
+                    view.showToolTip();
                 }
             },
             onKeypressInput: function(evt) {
@@ -36,7 +36,7 @@ the documentation for maria.Controller.
                 var value = view.getInputValue();
                 view.hideToolTip();
                 view.showDisplay();
-                if (!/^\s*$/.test(value)) {
+                if (!checkit.isBlank(value)) {
                     this.getModel().setContent(value);
                 }
             }

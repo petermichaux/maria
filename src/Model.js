@@ -64,7 +64,7 @@ See maria.Model.subclass for a more compact way to accomplish the same.
         return this._content;
     };
     checkit.TodoModel.prototype.setContent = function(content) {
-        content = ('' + content).replace(/^\s+|\s+$/g, '');
+        content = checkit.trim('' + content);
         if (this._content !== content) {
             this._content = content;
             this.dispatchEvent({type: 'change'});
