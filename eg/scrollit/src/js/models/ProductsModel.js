@@ -13,9 +13,9 @@ maria.SetModel.subclass(scrollit, 'ProductsModel', {
             if (this._isComplete || this._isLoading) {
                 return;
             }
-            var self = this;
             this._isLoading = true;
-            self.dispatchEvent({type: 'change'});
+            this.dispatchEvent({type: 'change'});
+            var self = this;
             myth.xhr('GET', '/products.json?offset='+this._nextOffset, {
                 on200: function(xhr) {
                     var productsJSON = JSON.parse(xhr.responseText);
