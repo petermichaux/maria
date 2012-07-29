@@ -15,18 +15,16 @@ maria.Controller.subclass(checkit, 'TodosInputController', {
             }
         },
         onKeypressInput: function(evt) {
-            if (evt.keyCode != 13) {
-                return;
+            if (evt.keyCode == 13) {
+                var view = this.getView();
+                var value = view.getInputValue();
+                if (!checkit.isBlank(value)) {
+                    var todo = new checkit.TodoModel();
+                    todo.setContent(value);
+                    this.getModel().add(todo);
+                    view.clearInput();
+                }
             }
-            var view = this.getView();
-            var value = view.getInputValue();
-            if (checkit.isBlank(value)) { // don't create an empty Todo
-                return;
-            }
-            var todo = new checkit.TodoModel();
-            todo.setContent(value);
-            this.getModel().add(todo);
-            view.clearInput();
         }
     }
 });
