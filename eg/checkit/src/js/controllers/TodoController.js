@@ -17,10 +17,10 @@ maria.Controller.subclass(checkit, 'TodoController', {
         },
         onKeyupInput: function() {
             var view = this.getView();
-            if (/\S/.test(view.getInputValue())) {
-                view.showToolTip();
-            } else {
+            if (checkit.isBlank(view.getInputValue())) {
                 view.hideToolTip();
+            } else {
+                view.showToolTip();
             }
         },
         onKeypressInput: function(evt) {
@@ -33,7 +33,7 @@ maria.Controller.subclass(checkit, 'TodoController', {
             var value = view.getInputValue();
             view.hideToolTip();
             view.showDisplay();
-            if (!/^\s*$/.test(value)) {
+            if (!checkit.isBlank(value)) {
                 this.getModel().setContent(value);
             }
         }

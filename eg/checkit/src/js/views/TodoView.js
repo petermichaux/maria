@@ -13,8 +13,7 @@ maria.ElementView.subclass(checkit, 'TodoView', {
         buildData: function() {
             var model = this.getModel();
             var content = model.getContent();
-            this.find('.todo-content').innerHTML =
-                content.replace('&', '&amp;').replace('<', '&lt;');
+            this.find('.todo-content').innerHTML = checkit.escapeHTML(content);
             this.find('.check').checked = model.isDone();
             aristocrat[model.isDone() ? 'addClass' : 'removeClass'](this.find('.todo'), 'done');
         },

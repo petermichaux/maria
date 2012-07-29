@@ -6,7 +6,7 @@ maria.Model.subclass(checkit, 'TodoModel', {
             return this._content;
         },
         setContent: function(content) {
-            content = ('' + content).replace(/^\s+|\s+$/g, '');
+            content = checkit.trim('' + content);
             if (this._content !== content) {
                 this._content = content;
                 this.dispatchEvent({type: 'change'});

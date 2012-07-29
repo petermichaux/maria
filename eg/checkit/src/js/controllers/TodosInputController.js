@@ -8,10 +8,10 @@ maria.Controller.subclass(checkit, 'TodosInputController', {
         },
         onKeyupInput: function() {
             var view = this.getView();
-            if (/\S/.test(view.getInputValue())) {
-                view.showToolTip();
-            } else {
+            if (checkit.isBlank(view.getInputValue())) {
                 view.hideToolTip();
+            } else {
+                view.showToolTip();
             }
         },
         onKeypressInput: function(evt) {
@@ -20,7 +20,7 @@ maria.Controller.subclass(checkit, 'TodosInputController', {
             }
             var view = this.getView();
             var value = view.getInputValue();
-            if (/^\s*$/.test(value)) { // don't create an empty Todo
+            if (checkit.isBlank(value)) { // don't create an empty Todo
                 return;
             }
             var todo = new checkit.TodoModel();
