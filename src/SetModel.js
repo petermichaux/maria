@@ -141,9 +141,6 @@ to accomplish the same.
     };
     checkit.TodosModel.prototype = new maria.SetModel();
     checkit.TodosModel.prototype.constructor = checkit.TodosModel;
-    checkit.TodosModel.prototype.isEmpty = function() {
-        return this.length === 0;
-    };
     checkit.TodosModel.prototype.getDone = function() {
         return this.filter(function(todo) {
             return todo.isDone();
