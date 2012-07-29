@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Maria - Quick Start for the Impatient</title>
+
+    <link href="css/base.css" rel="stylesheet">
+
+</head>
+<body>
+
+    <div class="wrapper">
+
+
+        <h1>Quick Start for the Impatient</h1>
+
+        <p>We have things to do. Let&rsquo;s build an application called &ldquo;checkit&rdquo; to organize our to-dos using Maria and the MVC architecture.</p>
+
+
+        <h2>Separate Their Code From Our Code</h2>
+
+        <p>There are generic libraries out there in the world that are written, ready, and just waiting for us to download for use in our application. There are application-specific source code files that we need to write. Create a <code>checkit</code> directory to contain the entire application with <code>lib</code> and <code>src</code> sub-directories to keep these two types of files separate.</p>
+
+        <ul class="filetree">
+            <li>
+                checkit/
+                <ul>
+                    <li>lib/</li>
+                    <li>src/</li>
+                </ul>
+            </li>
+        </ul>
+
+
+        <h2>Download Maria and Other Libraries</h2>
+
+        <p>To give our application structure, we'll use the <a href="https://github.com/petermichaux/maria">Maria</a> framework. Download the latest version from the following link and save it as <code>checkit/lib/maria/maria.js</code>.</p>
+
+        <p><a href="http://peter.michaux.ca/downloads/maria/rc2/maria.js">http://peter.michaux.ca/downloads/maria/rc2/maria.js</a></p>
+
+        <p>In this application, we&rsquo;ll need to manipulate the <code>class</code> attribute values of DOM elements. We&rsquo;ll use the <a href="https://github.com/petermichaux/aristocrat">Aristocrat</a> library. Download the latest version from the following link and save it as <code>checkit/lib/aristocrat/aristocrat.js</code>.</p>
+
+        <p><a href="http://peter.michaux.ca/downloads/aristocrat/1/aristocrat.js">http://peter.michaux.ca/downloads/aristocrat/1/aristocrat.js</a></p>
+
+
+        <h2>Namespace Our Application Code</h2>
+
+        <p>The conventions built into Maria expect your application classes are all properties of a single namespace object. Create a file <code>checkit/src/js/namespace.js</code> defining our namespace object.</p>
+
+<pre><code>var checkit = {};</code></pre>
+
+
+        <h2>Our Own Utilities</h2>
+
+        <p>It&rsquo;d be great if every miscellaneous utility function we need in our application was available in a third-party library; however, that is rarely the case in any application. Create a <code>checkit/src/js/util.js</code> file where we&rsquo;ll add utility functions as we find needs for them.</p>
+
+
+        <h2>Models</h2>
+
+        <p>We are building an application for organizing to-dos. For each individual thing we need to do, we&rsquo;ll create a model object representing that individual to-do. As life moves along, we&rsquo;ll think of more things to do and hopefully we&rsquo;ll actually get some things done. We'll add and delete individual to-do objects from another kind of model object representing a set of to-dos.</p>
+
+        <p>Create a <code>checkit/src/js/models/</code> directory to contain both of our model classes.</p>
+
+        <p>Let&rsquo;s start by designing a class for an individual to-do. The two fundamental questions we&rsquo;ll ask a to-do model are:</p>
+
+        <ol>
+            <li>What needs doing?</li>
+            <li>Has it been already been done?</li>
+        </ol>
+
+        <p>We&rsquo;ll use the <code>maria.Model</code> class as the parent class for our <code>checkit.Todo</code> class.</p>
+
+<pre><code>maria.Model.subclass(checkit, 'TodoModel', {
+    properties: {
+        _content: '',
+        _isDone: false,
+        getContent: function() {
+            return this._content;
+        },
+        setContent: function(content) {
+            content = checkit.trim('' + content);
+            if (this._content !== content) {
+                this._content = content;
+                this.dispatchEvent({type: 'change'});
+            }
+        },
+        isDone: function() {
+            return this._isDone;
+        },
+        setDone: function(isDone) {
+            isDone = !!isDone;
+            if (this._isDone !== isDone) {
+                this._isDone = isDone;
+                this.dispatchEvent({type: 'change'});
+            }
+        },
+        toggleDone: function() {
+            this.setDone(!this.isDone());
+        }
+    }
+});</code></pre>
+
+        <p>The <code>checkit.trim</code> function is an example of a utility function that we&rsquo;ll add to our <code>checkit/src/js/util.js</code> file.</p>
+
+<pre><code>checkit.trim = function(str) {
+    return str.replace(/^\s+|\s+$/g, '');
+};</code></pre>
+
+        <p>If you are a devout test-driven developer, you&rsquo;re already disappointed that code&rsquo;s been written but tests haven&rsquo;t. Forgive us. We have sinned. Now is a good time to repent and make amends. Add your test library in a subdirectory of <code>checkit/lib/</code> if necessary, your tests in a <code>checkit/tst</code> or <code>checkit/spec</code> directory, and float your boat. I recommend you check out the great <a href="http://busterjs.org/">Buster</a> automated testing tools which are used for testing the Maria source code.</p>
+
+
+    </div><!-- wrapper -->
+
+</body>
+</html>

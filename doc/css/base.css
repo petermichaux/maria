@@ -1,0 +1,47 @@
+body {
+    font-family: Georgia,"Times New Roman",serif;
+}
+
+.wrapper {
+    margin: 0 auto;
+    max-width: 800px;
+    min-width: 300px;
+}
+
+.footer {
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+}
+
+pre,
+.filetree {
+    background: #eee;
+    padding:1em;
+}
+
+.filetree {
+    font-family: monospace;
+    
+}
+
+.filetree,
+.filetree ul {
+    margin: 0;
+}
+
+.filetree ul {
+    margin: 0;
+    padding: 0;
+}
+
+.filetree li {
+    list-style-type: none;
+}
+
+.filetree ul li {
+    margin: 0 0 0 2em;
+    padding:0;
+}
