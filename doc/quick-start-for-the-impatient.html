@@ -178,10 +178,108 @@ todoModel.setDone(false);
 undefined
 </code></pre>
 
-        <p>Try adding multiple fake views as observers of one model. Try calling <code>todoModel.setDone(true)</code> multiple times consecutively. Experiment. Explore.</p>
+        <p>Try adding multiple fake views as observers of one model. Try calling <code>todoModel.setDone(true)</code> multiple times consecutively. What information does the <code>evt</code> object contain that is passed to the observer's method? Experiment. Explore.</p>
 
         <p>If you are a devout test-driven developer, you&rsquo;re surely disappointed that code&rsquo;s been written but tests haven&rsquo;t. Forgive us. We have sinned. Now is a good time to repent and make amends. Add your test library in a subdirectory of <code>checkit/lib/</code> if necessary, your tests in a <code>checkit/tst/</code> or <code>checkit/spec/</code> directory, and float your boat. By the way, I recommend you check out the great <a href="http://busterjs.org/">Buster</a> automated testing tools which are used for testing the Maria source code.</p>
 
+
+        <h2>The checkit.TodosModel Class</h2>
+
+        <p>There&rsquo;s never enough time in life for all things we want to do. We need to manage a set of to-dos. Let&rsquo;s create a class who&rsquo;s objects can do just that.</p>
+
+        <p>An object of the <code>maria.SetModel</code> class is an unordered set that can hold any number of other model objects. Observers of a set model are notified when those other model objects are added or deleted from the set. We can subclass <code>maria.SetModel</code> as a starting point for our <code>checkit.TodosModel</code> class in a file <code>checkit/src/js/models/TodosModel.js</code>.</p>
+
+<pre><code>maria.SetModel.subclass(checkit, 'TodosModel', {
+    properties: {
+        getDone: function() {
+            return this.filter(function(todo) {
+                return todo.isDone();
+            });
+        },
+        isAllDone: function() {
+            return (this.length > 0) &amp;&amp;
+                   (this.getDone().length === this.length);
+        },
+        isAllUndone: function() {
+            return this.getDone().length &lt; 1;
+        },
+        markAllDone: function() {
+            this.forEach(function(todo) {
+                todo.setDone(true);
+            });
+        },
+        markAllUndone: function() {
+            this.forEach(function(todo) {
+                todo.setDone(false);
+            });
+        },
+        deleteDone: function() {
+            this['delete'].apply(this, this.getDone());
+        }
+    }
+});</code></pre>
+
+        <p>Add this file to the <code>checkit/src/index.html</code> page, reload the browser, and explore some more.</p>
+
+        <p>Create a set for to-dos and add an observer who will log to-dos added to an the set.</p>
+
+<pre><code>> var todosModel = new checkit.TodosModel();
+undefined
+> var view = {update: function(evt) {console.log(evt.addedTargets.map(function(todo) {return todo.getContent();}));}};
+undefined
+> maria.addEventListener(todosModel, 'change', view, 'update');
+undefined</code></pre>
+
+        <p>Now add a to-do to the set.</p>
+
+<pre><code>> var todoModel = new checkit.TodoModel();
+undefined
+> todoModel.setContent('dinner date with Maria');
+undefined
+> todosModel.add(todoModel);
+["dinner date with Maria"]
+undefined</code></pre>
+
+        <p>There are a few things we should probably do before our date. Let&rsquo;s add them.</p>
+
+<pre><code>> var flowers = new checkit.TodoModel();
+undefined
+> flowers.setContent('buy flowers');
+undefined
+> var shower = new checkit.TodoModel();
+undefined
+> shower.setContent('take a shower');
+undefined
+> todosModel.add(flowers, shower);
+["buy flowers", "take a shower"]
+undefined</code></pre>
+
+        <p>We see that adding multiple to-do models to the set with one call to the set&rsquo;s <code>add</code> method means only one event is fired. This can be good for efficiency by reducing the number of updates views have to do.</p>
+
+        <p>When we go out and buy the flowers, we&rsquo;ll mark the corresponding to-do as done. Let&rsquo; change the view&rsquo;s <code>update</code> method so we can examine what happens to the set when the to-do is marked as done. Remember the view is observing the set.</p>
+
+<pre><code>> view.update = function(evt) {console.log(evt.target.constructor === checkit.TodoModel, evt.currentTarget.constructor === checkit.TodosModel);};
+function()
+> flowers.setDone(true);
+true true
+undefined
+</code></pre>
+
+        <p>What&rsquo;s important to note above is that the <code>evt.target</code> is the flowers to-do but that the event bubbles up to the containing to-dos set which is the <code>evt.currentTarget</code>. This bubbling makes it possible for views to observe all the activity on an entire set of models without our application code having to manually add and remove the view as an observer for each model in the set.</p>
+
+        <p>We might want to clean up our to-dos set by deleting all the to-do models that are done.</p>
+
+<pre><code>> todosModel.deleteDone();
+undefined
+> todosModel.length;
+2
+</code></pre>
+
+        <p>You may have noticed that the implementation of the <code>deleteDone</code> method contains <code>this['delete']</code> syntax. Since <code>delete</code> is a JavaScript keyword, older browsers did not allow us to write the simpler <code>this.delete</code> syntax. If you are only need to support newer browsers, you can use the simpler version.</p>
+
+        <p>Our model layer is complete.</p>
+
+        <p>Well. The tests. Yes, yes. Please write them.</p>
 
     </div><!-- wrapper -->
 
