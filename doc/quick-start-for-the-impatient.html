@@ -13,12 +13,16 @@
 
         <h1>Quick Start for the Impatient</h1>
 
-        <p>We have things to do. Let&rsquo;s build an application called &ldquo;checkit&rdquo; to organize our to-dos using Maria and the MVC architecture.</p>
+        <p>We have things to do. Let&rsquo;s use Maria to build an application called &ldquo;checkit&rdquo; to organize our to-dos.</p>
+        
+        <p>By the end of this tutorial, you&rsquo;ll understand how the components of an application written in the MVC style with Maria communicate and be ready to create more complex client-side application on your own.</p>
+
+        <p>Let&rsquo;s go...</p>
 
 
         <h2>Separate Their Code From Our Code</h2>
 
-        <p>There are generic libraries out there in the world that are written, ready, and just waiting for us to download for use in our application. There are application-specific source code files that we need to write. Create a <code>checkit</code> directory to contain the entire application with <code>lib</code> and <code>src</code> sub-directories to keep these two types of files separate.</p>
+        <p>There are generic libraries out there in the world that are written, ready, and just waiting for us to download for use in our application. There is application-specific source code that we will write. Create a <code>checkit/</code> directory to contain the entire application with <code>lib/</code> and <code>src/</code> sub-directories to keep these two types of files separate.</p>
 
         <ul class="filetree">
             <li>
@@ -44,27 +48,30 @@
 
         <h2>Namespace Our Application Code</h2>
 
-        <p>The conventions built into Maria expect your application classes are all properties of a single namespace object. Create a file <code>checkit/src/js/namespace.js</code> defining our namespace object.</p>
+        <p>The conventions built into Maria expect our application classes are all properties of a single namespace object. Create a file <code>checkit/src/js/namespace.js</code> defining our namespace object.</p>
 
 <pre><code>var checkit = {};</code></pre>
 
 
-        <h2>Our Own Utilities</h2>
+        <h2>Prepare for Our Own Utilities</h2>
 
         <p>It&rsquo;d be great if every miscellaneous utility function we need in our application was available in a third-party library; however, that is rarely the case in any application. Create a <code>checkit/src/js/util.js</code> file where we&rsquo;ll add utility functions as we find needs for them.</p>
 
 
-        <h2>Models</h2>
+        <h2>Create Model Classes</h2>
 
         <p>We are building an application for organizing to-dos. For each individual thing we need to do, we&rsquo;ll create a model object representing that individual to-do. As life moves along, we&rsquo;ll think of more things to do and hopefully we&rsquo;ll actually get some things done. We'll add and delete individual to-do objects from another kind of model object representing a set of to-dos.</p>
 
         <p>Create a <code>checkit/src/js/models/</code> directory to contain both of our model classes.</p>
 
+
+        <h3>The <code>checkit.TodoModel</code> Class</h3>
+
         <p>Let&rsquo;s start by designing a class for an individual to-do. The two fundamental questions we&rsquo;ll ask a to-do model are:</p>
 
         <ol>
             <li>What needs doing?</li>
-            <li>Has it been already been done?</li>
+            <li>Has it already been done?</li>
         </ol>
 
         <p>We&rsquo;ll use the <code>maria.Model</code> class as the parent class for our <code>checkit.Todo</code> class.</p>
@@ -105,7 +112,75 @@
     return str.replace(/^\s+|\s+$/g, '');
 };</code></pre>
 
-        <p>If you are a devout test-driven developer, you&rsquo;re already disappointed that code&rsquo;s been written but tests haven&rsquo;t. Forgive us. We have sinned. Now is a good time to repent and make amends. Add your test library in a subdirectory of <code>checkit/lib/</code> if necessary, your tests in a <code>checkit/tst</code> or <code>checkit/spec</code> directory, and float your boat. I recommend you check out the great <a href="http://busterjs.org/">Buster</a> automated testing tools which are used for testing the Maria source code.</p>
+        <p>To find out more about the this <code>checkit.TodoModel</code> class, let&rsquo;s get our hands dirty and experiment in a browser console like Firebug. Create an HTML document called <code>checkit/src/index.html</code> that loads both the libraries and our application code.</p>
+
+<pre><code>&lt;!DOCTYPE html>
+&lt;html>
+&lt;head>
+    &lt;title>checkit&lt;/title>
+
+&lt;/head>
+&lt;body>
+
+    &lt;script src="../lib/maria/maria.js">&lt;/script>
+    &lt;script src="../lib/aristocrat/aristocrat.js">&lt;/script>
+
+    &lt;script src="js/namespace.js">&lt;/script>
+    &lt;script src="js/util.js">&lt;/script>
+    &lt;script src="js/models/TodoModel.js">&lt;/script>
+
+&lt;/body>
+&lt;/html></code></pre>
+
+        <p>With the above page loaded in the browser, we can interactively explore in the console.</p>
+
+        <p>Create a new to-do and check its default content and done values.</p>
+
+<pre><code>> var todoModel = new checkit.TodoModel();
+undefined
+> todoModel.getContent();
+""
+> todoModel.isDone();
+false</code></pre>
+
+        <p>Let&rsquo;s make the to-do more motivating to do.</p>
+
+<pre><code>> todoModel.setContent('test drive Ferrari');
+undefined
+> todoModel.getContent();
+"test drive Ferrari"
+</code></pre>
+
+        <p>Looking good so far but those are just getters and setters. We haven&rsquo;t seen any MVC magic yet. The observer pattern is the first bit of MVC magic we&rsquo;ll explore.</p>
+
+        <p>In most MVC applications, a model object communicates with one or more view objects via the observer pattern. It is a very loose coupling between a model and the views as the model object doesn&rsquo;t  know or even care about what the view objects are doing. When a particular event type happens on the model, the model notifies all the views who&rsquo;ve added themselves as observers of that event type on that view. This gives the views an opportunity to react to the model&rsquo;s event. Typically a view object wants to keep its visual representation up-to-date to match the model object&rsquo;s current state.</p>
+
+        <p>Let&rsquo;s see the observer pattern relationship between a to-do model object and fake view object.</p>
+    
+        <p>We create a fake view object and add it as an observer of the to-do model object.</p>
+
+<pre><code>> var view = {update: function(evt) {console.log('The model changed!')}};
+undefined
+> maria.addEventListener(todoModel, 'change', view, 'update');
+undefined</code></pre>
+
+        <p>Now a change to the model object&rsquo;s done value will cause the model to call the view&rsquo;s <code>update</code> method.<p>
+
+<pre><code>> todoModel.setDone(true);
+"The model changed!"
+undefined</code></pre>
+
+        <p>If we remove the observer from the model and change the done value again, we see the view is no longer notified.</p>
+
+<pre><code>> maria.removeEventListener(todoModel, 'change', view, 'update);
+undefined
+todoModel.setDone(false);
+undefined
+</code></pre>
+
+        <p>Try adding multiple fake views as observers of one model. Try calling <code>todoModel.setDone(true)</code> multiple times consecutively. Experiment. Explore.</p>
+
+        <p>If you are a devout test-driven developer, you&rsquo;re surely disappointed that code&rsquo;s been written but tests haven&rsquo;t. Forgive us. We have sinned. Now is a good time to repent and make amends. Add your test library in a subdirectory of <code>checkit/lib/</code> if necessary, your tests in a <code>checkit/tst/</code> or <code>checkit/spec/</code> directory, and float your boat. By the way, I recommend you check out the great <a href="http://busterjs.org/">Buster</a> automated testing tools which are used for testing the Maria source code.</p>
 
 
     </div><!-- wrapper -->
