@@ -22,6 +22,26 @@ See http://peter.michaux.ca/downloads/maria/
 ```maria-min.js``` contains the same code as ```maria.js``` but ```maria-min.js``` has been minified to remove whitespace and code comments. This is a good file to serve in production.
 
 
+Documentation
+-------------
+
+See the doc directory which is also available at [http://peter.michaux.ca/maria/](http://peter.michaux.ca/maria/).
+
+
+Examples
+--------
+
+The eg directory contains example applications including the canonical to-do application.
+
+
+Community
+---------
+
+Google Group: http://groups.google.com/group/maria-js
+
+IRC: #maria.js on irc.freenode.net
+
+
 Status
 ------
 
@@ -38,20 +58,6 @@ Dependencies
 ------------
 
 None. Maria combines several independent micro libraries which are all included.
-
-
-Examples
---------
-
-The eg directory contains example applications including the canonical to-do application.
-
-
-Community
----------
-
-Google Group: http://groups.google.com/group/maria-js
-
-IRC: #maria.js on irc.freenode.net
 
 
 Source Code
