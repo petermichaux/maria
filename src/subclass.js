@@ -5,9 +5,12 @@ maria.subclass = function(namespace, name, options) {
     options = options || {};
     var properties = options.properties;
     var SuperConstructor = this;
-    var Constructor = namespace[name] = function() {
-        SuperConstructor.apply(this, arguments);
-    };
+    var Constructor = namespace[name] =
+        Object.prototype.hasOwnProperty.call(options, 'constructor') ?
+            options.constructor :
+            function() {
+                SuperConstructor.apply(this, arguments);
+            };
     var prototype = Constructor.prototype = new SuperConstructor();
     prototype.constructor = Constructor;
     if (properties) {

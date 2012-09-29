@@ -24,18 +24,6 @@
             assert.same(controller, view.getController(), 'controller should be same');
         },
 
-        "test initialize called when creating instance": function() {
-            var originalInitialize = maria.View.prototype.initialize;
-            maria.View.prototype.initialize = function() {
-                this.wasInitialized = true;
-            };
-
-            var view = new maria.View();
-            assert.same(true, view.wasInitialized);
-
-            maria.View.prototype.initialize = originalInitialize;
-        },
-
         "test default model actions change/update": function() {
             var view = new maria.View();
             var count = 0;

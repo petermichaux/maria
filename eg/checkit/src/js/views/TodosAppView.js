@@ -2,15 +2,16 @@
 // the same model as the TodosAppView has.
 //
 maria.ElementView.subclass(checkit, 'TodosAppView', {
+    constructor: function() {
+        maria.ElementView.apply(this, arguments);
+        this.appendChild(new checkit.TodosInputView());
+        this.appendChild(new checkit.TodosToolbarView());
+        this.appendChild(new checkit.TodosListView());
+        this.appendChild(new checkit.TodosStatsView());
+    },
     properties: {
         getContainerEl: function() {
             return this.find('.content'); // child views will be appended to this element
-        },
-        initialize: function() {
-            this.appendChild(new checkit.TodosInputView());
-            this.appendChild(new checkit.TodosToolbarView());
-            this.appendChild(new checkit.TodosListView());
-            this.appendChild(new checkit.TodosStatsView());
         },
         insertBefore: function(newChild, oldChild) {
             newChild.setModel(this.getModel());

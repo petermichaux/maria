@@ -84,14 +84,6 @@ See maria.Model.subclass for a more compact way to accomplish the same.
         this.setDone(!this.isDone());
     };
 
-The above TodoModel example does not have an "initialize" method;
-however, if some special initialization is requried, maria.Model will
-automatically call your "initialize" method.
-
-    checkit.TodoModel.prototype.initialize = function() {
-        alert('Another to-do has been created. You better get busy.');
-    };
-
 When a model's "destroy" method is called, a "destroy" event is
 dispatched and all event listeners who've been added for this event
 type will be notified.
@@ -102,12 +94,9 @@ using "addParentEventTarget" and "removeParentEventTarget".)
 */
 maria.Model = function() {
     maria.EventTarget.call(this);
-    this.initialize();
 };
 
 maria.EventTarget.mixin(maria.Model.prototype);
-
-maria.Model.prototype.initialize = function() {};
 
 maria.Model.prototype.destroy = function() {
     this.dispatchEvent({type: 'destroy'});

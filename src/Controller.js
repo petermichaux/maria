@@ -83,20 +83,8 @@ to accomplish the same.
         }
     };
 
-The above TodoController example does not have an "initialize" method;
-however, if some special initialization is requried, maria.Controller
-will automatically call your "initialize" method.
-
-    checkit.TodoController.prototype.initialize = function() {
-        alert('Another to-do controller has been created.');
-    };
-
 */
-maria.Controller = function() {
-    this.initialize();
-};
-
-maria.Controller.prototype.initialize = function() {};
+maria.Controller = function() {};
 
 maria.Controller.prototype.destroy = function() {
     this._model = null;

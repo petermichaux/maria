@@ -57,10 +57,9 @@
         "test convention for controller constructor name": function() {
             var app = {};
             maria.Controller.subclass(app, 'FooController', {
-                properties: {
-                    initialize: function() {
-                        this.foo = true;
-                    }
+                constructor: function() {
+                    maria.Controller.apply(this, arguments);
+                    this.foo = true;
                 }
             });
             maria.View.subclass(app, 'FooView');

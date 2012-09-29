@@ -12,19 +12,6 @@
             assert.isFunction(m.removeParentEventTarget, 'should have removeParentEventTarget');
         },
 
-        "test models call initialize method when created": function() {
-            var originalInitialize = maria.Model.prototype.initialize;
-
-            maria.Model.prototype.initialize = function() {
-                this.iAmInitialized = true;
-            };
-            var m = new maria.Model();
-            assert.same(true, m.iAmInitialized);
-
-            // clean up
-            maria.Model.prototype.initialize = originalInitialize;
-        },
-
         "test models dispatch a destroy event when destroy method is called": function() {
             var m = new maria.Model();
             var called = false;

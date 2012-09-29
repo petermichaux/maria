@@ -66,8 +66,6 @@ to create the controller object and the getDefaultController actually
 calls that constructor. Your application may redefine or override
 either of these methods.
 
-A view's initialize method is called when the view is constructed.
-
 A view has a destroy method which should be called before your
 application looses its last reference to the view.
 
@@ -124,27 +122,14 @@ accomplish the same.
         alert('another method');
     };
 
-The above MyView example does not have an "initialize" method;
-however, if some special initialization is requried, maria.View
-will automatically call your "initialize" method.
-
-    myapp.MyView.prototype.initialize = function() {
-        alert('Another view has been created.');
-    };
-
 */
 maria.View = function(model, controller) {
     maria.Node.call(this);
-    this.initialize();
     this.setModel(model);
     this.setController(controller);
 };
 
 maria.Node.mixin(maria.View.prototype);
-
-maria.View.prototype.initialize = function() {
-    // to be overridden by concrete view subclasses
-};
 
 maria.View.prototype.destroy = function() {
     maria.purgeEventListener(this);
