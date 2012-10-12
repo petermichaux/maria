@@ -139,7 +139,7 @@ to accomplish the same.
     checkit.TodosModel = function() {
         maria.SetModel.apply(this, arguments);
     };
-    checkit.TodosModel.prototype = new maria.SetModel();
+    checkit.TodosModel.prototype = maria.create(maria.SetModel.prototype);
     checkit.TodosModel.prototype.constructor = checkit.TodosModel;
     checkit.TodosModel.prototype.getDone = function() {
         return this.filter(function(todo) {
@@ -181,7 +181,7 @@ maria.SetModel = function() {
     maria.Model.call(this);
 };
 
-maria.SetModel.prototype = new maria.Model();
+maria.SetModel.prototype = maria.create(maria.Model.prototype);
 maria.SetModel.prototype.constructor = maria.SetModel;
 
 maria.ObjectSet.mixin(maria.SetModel.prototype);

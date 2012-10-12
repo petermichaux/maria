@@ -1,3 +1,11 @@
+maria.create = (function() {
+    function F() {}
+    return function(obj) {
+        F.prototype = obj;
+        return new F();
+    };
+}());
+
 // "this" must be a constructor function
 // mix the "subclass" function into your constructor function
 //
@@ -11,7 +19,7 @@ maria.subclass = function(namespace, name, options) {
             function() {
                 SuperConstructor.apply(this, arguments);
             };
-    var prototype = Constructor.prototype = new SuperConstructor();
+    var prototype = Constructor.prototype = maria.create(SuperConstructor.prototype);
     prototype.constructor = Constructor;
     if (properties) {
         maria.borrow(prototype, properties);

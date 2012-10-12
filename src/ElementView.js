@@ -108,7 +108,7 @@ the same.
     checkit.TodoView = function() {
         maria.ElementView.apply(this, arguments);
     };
-    checkit.TodoView.prototype = new maria.ElementView();
+    checkit.TodoView.prototype = maria.create(maria.ElementView.prototype);
     checkit.TodoView.prototype.constructor = checkit.TodoView;
     checkit.TodoView.prototype.getDefaultControllerConstructor = function() {
         return checkit.TodoController;
@@ -175,7 +175,7 @@ maria.ElementView = function(model, controller, doc) {
     this.setDocument(doc);
 };
 
-maria.ElementView.prototype = new maria.View();
+maria.ElementView.prototype = maria.create(maria.View.prototype);
 maria.ElementView.prototype.constructor = maria.ElementView;
 
 maria.ElementView.prototype.getDocument = function() {

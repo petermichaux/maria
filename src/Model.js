@@ -56,7 +56,7 @@ See maria.Model.subclass for a more compact way to accomplish the same.
     checkit.TodoModel = function() {
         maria.Model.apply(this, arguments);
     };
-    checkit.TodoModel.prototype = new maria.Model();
+    checkit.TodoModel.prototype = maria.create(maria.Model.prototype);
     checkit.TodoModel.prototype.constructor = checkit.TodoModel;
     checkit.TodoModel.prototype._content = '';
     checkit.TodoModel.prototype._isDone = false;
