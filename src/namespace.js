@@ -1,1 +1,1 @@
-var maria = maria || {};
+var maria = {};
