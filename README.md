@@ -37,9 +37,7 @@ The eg directory contains example applications including the canonical to-do app
 Community
 ---------
 
-Google Group: http://groups.google.com/group/maria-js
-
-IRC: #maria.js on irc.freenode.net
+You can report bugs, suggest features, or join general discussion at https://github.com/petermichaux/maria/issues
 
 
 Status
