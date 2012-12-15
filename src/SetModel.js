@@ -177,14 +177,14 @@ example. This can complement well the flyweight pattern used in a view.
 
 */
 maria.SetModel = function() {
-    maria.ObjectSet.apply(this, arguments);
+    hormigas.ObjectSet.apply(this, arguments);
     maria.Model.call(this);
 };
 
 maria.SetModel.prototype = maria.create(maria.Model.prototype);
 maria.SetModel.prototype.constructor = maria.SetModel;
 
-maria.ObjectSet.mixin(maria.SetModel.prototype);
+hormigas.ObjectSet.mixin(maria.SetModel.prototype);
 
 // Wrap the set mutator methods to dispatch events.
 
@@ -194,7 +194,7 @@ maria.SetModel.prototype.add = function() {
     var added = [];
     for (var i = 0, ilen = arguments.length; i < ilen; i++) {
         var argument = arguments[i];
-        if (maria.ObjectSet.prototype.add.call(this, argument)) {
+        if (hormigas.ObjectSet.prototype.add.call(this, argument)) {
             added.push(argument);
             if ((typeof argument.addEventListener === 'function') &&
                 (typeof argument.removeEventListener === 'function')) {
@@ -220,7 +220,7 @@ maria.SetModel.prototype['delete'] = function() {
     var deleted = [];
     for (var i = 0, ilen = arguments.length; i < ilen; i++) {
         var argument = arguments[i];
-        if (maria.ObjectSet.prototype['delete'].call(this, argument)) {
+        if (hormigas.ObjectSet.prototype['delete'].call(this, argument)) {
             deleted.push(argument);
             if (typeof argument.removeEventListener === 'function') {
                 argument.removeEventListener('destroy', this);
@@ -239,7 +239,7 @@ maria.SetModel.prototype['delete'] = function() {
 
 maria.SetModel.prototype.empty = function() {
     var deleted = this.toArray();
-    var result = maria.ObjectSet.prototype.empty.call(this);
+    var result = hormigas.ObjectSet.prototype.empty.call(this);
     if (result) {
         for (var i = 0, ilen = deleted.length; i < ilen; i++) {
             var element = deleted[i];

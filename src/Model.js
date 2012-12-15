@@ -93,10 +93,10 @@ using "addParentEventTarget" and "removeParentEventTarget".)
 
 */
 maria.Model = function() {
-    maria.EventTarget.call(this);
+    evento.EventTarget.call(this);
 };
 
-maria.EventTarget.mixin(maria.Model.prototype);
+evento.EventTarget.mixin(maria.Model.prototype);
 
 maria.Model.prototype.destroy = function() {
     this.dispatchEvent({type: 'destroy'});

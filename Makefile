@@ -15,13 +15,9 @@ LIBS       = lib/evento/evento.js          \
 SRCS       = src/header.js                 \
              src/namespace.js              \
              src/create.js                 \
-             src/subclass.js               \
              src/borrow.js                 \
+             src/subclass.js               \
              src/borrowEvento.js           \
-             src/borrowHijos.js            \
-             src/borrowArbutus.js          \
-             src/borrowGrail.js            \
-             src/borrowHormigas.js         \
              src/Model.js                  \
              src/SetModel.js               \
              src/View.js                   \

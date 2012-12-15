@@ -210,7 +210,7 @@ maria.ElementView.prototype.build = function() {
 
 maria.ElementView.prototype.buildTemplate = function() {
     // parseHTML returns a DocumentFragment so take firstChild as the rootEl
-    this._rootEl = maria.parseHTML(this.getTemplate(), this.getDocument()).firstChild;
+    this._rootEl = arbutus.parseHTML(this.getTemplate(), this.getDocument()).firstChild;
 };
 
 (function() {
@@ -264,9 +264,9 @@ maria.ElementView.prototype.removeChild = function(oldChild) {
 };
 
 maria.ElementView.prototype.find = function(selector) {
-    return maria.find(selector, this.build());
+    return grail.find(selector, this.build());
 };
 
 maria.ElementView.prototype.findAll = function(selector) {
-    return maria.findAll(selector, this.build());
+    return grail.findAll(selector, this.build());
 };

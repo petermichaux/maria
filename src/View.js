@@ -124,12 +124,12 @@ accomplish the same.
 
 */
 maria.View = function(model, controller) {
-    maria.Node.call(this);
+    hijos.Node.call(this);
     this.setModel(model);
     this.setController(controller);
 };
 
-maria.Node.mixin(maria.View.prototype);
+hijos.Node.mixin(maria.View.prototype);
 
 maria.View.prototype.destroy = function() {
     maria.purgeEventListener(this);
@@ -138,7 +138,7 @@ maria.View.prototype.destroy = function() {
         this._controller.destroy();
         this._controller = null;
     }
-    maria.Node.prototype.destroy.call(this);
+    hijos.Node.prototype.destroy.call(this);
 };
 
 maria.View.prototype.update = function() {

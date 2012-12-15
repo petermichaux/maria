@@ -114,7 +114,7 @@
 
         "test automatic bubbling": function() {
 
-            var child = new maria.EventTarget();
+            var child = new evento.EventTarget();
             var parent = new maria.SetModel();
             var root = new maria.SetModel();
 
@@ -212,7 +212,7 @@
         },
 
         "test destroy event on element removes it from the set": function() {
-            var element = new maria.EventTarget();
+            var element = new evento.EventTarget();
             var set = new maria.SetModel();
             set.add(element);
             assert.same(1, set.length, "the set should contain the element and so have length 1");
@@ -237,7 +237,7 @@
         },
 
         "test empty removes listeners from subject elements": function() {
-            var element = new maria.EventTarget();
+            var element = new evento.EventTarget();
             var set = new maria.SetModel();
             set.add(element);
 
