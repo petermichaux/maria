@@ -224,7 +224,7 @@ maria.ElementView.prototype.buildTemplate = function() {
                     eventType = matches[1],
                     selector = matches[2],
                     methodName = uiActions[key],
-                    elements = maria.findAll(selector, this._rootEl);
+                    elements = this.findAll(selector, this._rootEl);
                 for (var i = 0, ilen = elements.length; i < ilen; i++) {
                     maria.addEventListener(elements[i], eventType, this, methodName);
                 }
