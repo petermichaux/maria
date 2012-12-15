@@ -16,6 +16,7 @@ document.write('<script src="../../../src/borrowHijos.js"></script>');
 document.write('<script src="../../../src/borrowArbutus.js"></script>');
 document.write('<script src="../../../src/borrowGrail.js"></script>');
 document.write('<script src="../../../src/borrowHormigas.js"></script>');
+document.write('<script src="../../../src/create.js"></script>');
 document.write('<script src="../../../src/subclass.js"></script>');
 document.write('<script src="../../../src/Model.js"></script>');
 document.write('<script src="../../../src/SetModel.js"></script>');

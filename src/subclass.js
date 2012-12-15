@@ -1,11 +1,3 @@
-maria.create = (function() {
-    function F() {}
-    return function(obj) {
-        F.prototype = obj;
-        return new F();
-    };
-}());
-
 // "this" must be a constructor function
 // mix the "subclass" function into your constructor function
 //

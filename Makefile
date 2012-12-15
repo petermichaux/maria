@@ -14,6 +14,7 @@ LIBS       = lib/evento/evento.js          \
 
 SRCS       = src/header.js                 \
              src/namespace.js              \
+             src/create.js                 \
              src/subclass.js               \
              src/borrow.js                 \
              src/borrowEvento.js           \
