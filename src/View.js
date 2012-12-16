@@ -129,7 +129,8 @@ maria.View = function(model, controller) {
     this.setController(controller);
 };
 
-hijos.Node.mixin(maria.View.prototype);
+maria.View.prototype = maria.create(hijos.Node.prototype);
+maria.View.prototype.constructor = maria.View;
 
 maria.View.prototype.destroy = function() {
     maria.purgeEventListener(this);
