@@ -96,7 +96,8 @@ maria.Model = function() {
     evento.EventTarget.call(this);
 };
 
-evento.EventTarget.mixin(maria.Model.prototype);
+maria.Model.prototype = maria.create(evento.EventTarget.prototype);
+maria.Model.prototype.constructor = maria.Model;
 
 maria.Model.prototype.destroy = function() {
     this.dispatchEvent({type: 'destroy'});
