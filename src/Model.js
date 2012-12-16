@@ -21,7 +21,7 @@ when a "change" event is dispatched on the model objects.
             alert('The model changed!');
         }
     };
-    maria.addEventListener(model, 'change', view, 'update');
+    maria.on(model, 'change', view, 'update');
 
 The model can dispatch a "change" event on itself when the model
 changes.
@@ -46,7 +46,7 @@ including that data on the event object.
 
 An event listener can be removed from a model object.
 
-    maria.removeEventListener(model, 'change', view, 'update');
+    maria.off(model, 'change', view, 'update');
 
 A particularly useful pattern is using maria.Model as the "superclass"
 of your application's model. The following example shows how this

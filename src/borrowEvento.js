@@ -1,11 +1,11 @@
-maria.addEventListener = function() {
-    evento.addEventListener.apply(this, arguments);
+maria.on = function() {
+    evento.on.apply(this, arguments);
 };
 
-maria.removeEventListener = function() {
-    evento.removeEventListener.apply(this, arguments);
+maria.off = function() {
+    evento.off.apply(this, arguments);
 };
 
-maria.purgeEventListener = function() {
-    evento.purgeEventListener.apply(this, arguments);
+maria.purge = function() {
+    evento.purge.apply(this, arguments);
 };

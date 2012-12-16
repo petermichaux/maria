@@ -162,7 +162,7 @@ undefined
 
 <pre><code>> var view = {update: function(evt) {console.log('The model changed!');}};
 undefined
-> maria.addEventListener(todoModel, 'change', view, 'update');
+> maria.on(todoModel, 'change', view, 'update');
 undefined</code></pre>
 
         <p>Now a change to the model object&rsquo;s done value will cause the model to call the view&rsquo;s <code>update</code> method.<p>
@@ -173,7 +173,7 @@ undefined</code></pre>
 
         <p>If we remove the observer from the model and change the done value again, we see the view is no longer notified.</p>
 
-<pre><code>> maria.removeEventListener(todoModel, 'change', view, 'update');
+<pre><code>> maria.off(todoModel, 'change', view, 'update');
 undefined
 todoModel.setDone(false);
 undefined
@@ -438,7 +438,7 @@ undefined
 undefined
 > var view = {update: function(evt) {console.log(evt.addedTargets.map(function(todo) {return todo.getContent();}));}};
 undefined
-> maria.addEventListener(todosModel, 'change', view, 'update');
+> maria.on(todosModel, 'change', view, 'update');
 undefined</code></pre>
 
         <p>Now add a to-do to the set.</p>
@@ -524,7 +524,7 @@ undefined
         <p>To see a list in the browser, let&rsquo;s update the <code>checkit/src/js/bootstrap.js</code> file to create a set model containing a few to-do items and add a view to the page.</p>
 
 <pre><code>
-maria.addEventListener(window, 'load', function() {
+maria.on(window, 'load', function() {
 
     var todosModel = new checkit.TodosModel();
 
@@ -663,7 +663,7 @@ maria.addEventListener(window, 'load', function() {
 
         <p>Update the <code>checkit/src/js/bootstrap.js</code> so that the to-do set starts empty and the input form is added.</p>
 
-<pre><code>maria.addEventListener(window, 'load', function() {
+<pre><code>maria.on(window, 'load', function() {
 
     var model = new checkit.TodosModel();
 
@@ -796,7 +796,7 @@ maria.addEventListener(window, 'load', function() {
 
         <p>Create a new toolbar view during bootstrapping in <code>checkit/src/js/bootstrap.js</code>.</p>
 
-<pre><code>maria.addEventListener(window, 'load', function() {
+<pre><code>maria.on(window, 'load', function() {
 
     var model = new checkit.TodosModel();
 

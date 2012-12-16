@@ -49,8 +49,8 @@
 
             var args = [];
 
-            var originalAddEventListener = maria.addEventListener;
-            maria.addEventListener = function(node, eventType, listener, methodName) {
+            var originalOn = maria.on;
+            maria.on = function(node, eventType, listener, methodName) {
                 args.push({
                     node: node,
                     eventType: eventType,
@@ -63,7 +63,7 @@
             var model = new maria.Model();
             view.setModel(model);
 
-            assert.same(2, args.length, 'evento.addEventListener should have been called twice');
+            assert.same(2, args.length, 'maria.on should have been called twice');
 
             // need a predictable order to test
             args.sort(function(a, b) {
@@ -84,7 +84,7 @@
             assert.same(view, args[1].listener);
             assert.same('onSquished', args[1].methodName);
 
-            maria.addEventListener = originalAddEventListener;
+            maria.on = originalOn;
         },
 
         "test when model changed unsubscribe from previous model": function() {
@@ -99,8 +99,8 @@
 
             var args = [];
 
-            var originalRemoveEventListener = maria.removeEventListener;
-            maria.removeEventListener = function(node, eventType, listener, methodName) {
+            var originalRemoveEventListener = maria.off;
+            maria.off = function(node, eventType, listener, methodName) {
                 args.push({
                     node: node,
                     eventType: eventType,
@@ -139,7 +139,7 @@
             assert.same(view, args[1].listener);
             assert.same('onSquished', args[1].methodName);
 
-            maria.removeEventListener = originalRemoveEventListener;
+            maria.off = originalRemoveEventListener;
         },
 
         "test after destroy the model has no listeners": function() {

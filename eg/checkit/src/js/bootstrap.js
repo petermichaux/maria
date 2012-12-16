@@ -1,4 +1,4 @@
-maria.addEventListener(window, 'load', function() {
+maria.on(window, 'load', function() {
     var loading = document.getElementById('loading');
     loading.parentNode.removeChild(loading);
 
@@ -7,7 +7,7 @@ maria.addEventListener(window, 'load', function() {
         var store = localStorage.getItem('todos-maria');
         model = store ? checkit.TodosModel.fromJSON(JSON.parse(store)) :
                         new checkit.TodosModel();
-        evento.addEventListener(model, 'change', function() {
+        maria.on(model, 'change', function() {
             localStorage.setItem('todos-maria', JSON.stringify(model.toJSON()));
         });
     }

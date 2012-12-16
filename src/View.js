@@ -133,7 +133,7 @@ maria.View.prototype = maria.create(hijos.Node.prototype);
 maria.View.prototype.constructor = maria.View;
 
 maria.View.prototype.destroy = function() {
-    maria.purgeEventListener(this);
+    maria.purge(this);
     this._model = null;
     if (this._controller) {
         this._controller.destroy();
@@ -185,7 +185,7 @@ maria.View.prototype._setModelAndController = function(model, controller) {
             eventMap = this._lastModelActions;
             for (type in eventMap) {
                 if (Object.prototype.hasOwnProperty.call(eventMap, type)) {
-                    maria.removeEventListener(this._model, type, this, eventMap[type]);
+                    maria.off(this._model, type, this, eventMap[type]);
                 }
             }
             delete this._lastModelActions;
@@ -194,7 +194,7 @@ maria.View.prototype._setModelAndController = function(model, controller) {
             eventMap = this._lastModelActions = this.getModelActions() || {};
             for (type in eventMap) {
                 if (Object.prototype.hasOwnProperty.call(eventMap, type)) {
-                    maria.addEventListener(model, type, this, eventMap[type]);
+                    maria.on(model, type, this, eventMap[type]);
                 }
             }
         }

@@ -31,7 +31,7 @@ events when elements are added or deleted from the the set.
             alert(setModel.length + ' element(s) in the set.');
         }
     };
-    maria.addEventListener(setModel, 'change', view, 'update');
+    maria.on(setModel, 'change', view, 'update');
 
 You can add elements to the set. Adding an element
 that is already in the set has no effect. The add method returns
