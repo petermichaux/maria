@@ -33,6 +33,8 @@ Examples
 
 The eg directory contains example applications including the canonical to-do application.
 
+Maria is one of the frameworks included in the [TodoMVC project](http://addyosmani.github.com/todomvc/).
+
 
 Community
 ---------
