@@ -1,5 +1,5 @@
 /*
-Maria release candidate 4 - an MVC framework for JavaScript applications
+Maria release candidate 5 - an MVC framework for JavaScript applications
 Copyright (c) 2012, Peter Michaux
 All rights reserved.
 Licensed under the Simplified BSD License.
