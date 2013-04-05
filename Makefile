@@ -1,4 +1,4 @@
-.PHONY: clean
+.PHONY: all clean cleaner
 
 LIBS_MIN   = lib/evento/evento-min.js      \
              lib/hijos/hijos-min.js        \
@@ -31,14 +31,27 @@ SRCS       = src/header.js                 \
              src/SetView.subclass.js       \
              src/Controller.subclass.js
 
-build: $(LIBS_MIN) $(LIBS) $(SRCS)
+all: build/maria.js build/maria-min.js
+
+build/maria.js: $(LIBS) $(SRCS)
 	mkdir -p build
 	cat $(LIBS) $(SRCS) >build/maria.js
-	cat $(SRCS) >build/maria-tmp1.js
-	jsmin <build/maria-tmp1.js >build/maria-tmp2.js
-	rm build/maria-tmp1.js
-	cat $(LIBS_MIN) src/header.js build/maria-tmp2.js >build/maria-min.js
-	rm build/maria-tmp2.js
+
+build/maria-min.js: $(LIBS_MIN) $(SRCS) compiler.jar
+	mkdir -p build tmp
+	cat $(SRCS) >tmp/maria-tmp1.js
+	java -jar compiler.jar --js tmp/maria-tmp1.js --js_output_file tmp/maria-tmp2.js
+	cat $(LIBS_MIN) src/header.js tmp/maria-tmp2.js >build/maria-min.js
+
+compiler.jar:
+	mkdir -p tmp
+	cd tmp && \
+	curl -O http://closure-compiler.googlecode.com/files/compiler-latest.zip && \
+	unzip compiler-latest.zip && \
+	mv compiler.jar ..
 
 clean:
-	rm -rf build
+	rm -rf build tmp
+
+cleaner: clean
+	rm -f compiler.jar
