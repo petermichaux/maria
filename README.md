@@ -25,7 +25,7 @@ See http://peter.michaux.ca/downloads/maria/
 Documentation
 -------------
 
-See the doc directory which is also available at [http://peter.michaux.ca/maria/](http://peter.michaux.ca/maria/).
+See [http://peter.michaux.ca/maria/](http://peter.michaux.ca/maria/).
 
 
 Examples
