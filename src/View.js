@@ -116,6 +116,8 @@ accomplish the same.
 
 @constructor
 
+@extends hijos.Node
+
 @param {maria.Model} [model]
 
 @param {maria.Controller} [controller]
