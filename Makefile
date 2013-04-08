@@ -31,7 +31,7 @@ SRCS       = src/header.js                 \
              src/SetView.subclass.js       \
              src/Controller.subclass.js
 
-all: build/maria.js build/maria-min.js
+all: build/maria.js build/maria-min.js build/doc
 
 build/maria.js: $(LIBS) $(SRCS)
 	mkdir -p build
@@ -43,6 +43,11 @@ build/maria-min.js: $(LIBS_MIN) $(SRCS) compiler.jar
 	java -jar compiler.jar --js tmp/maria-tmp1.js --js_output_file tmp/maria-tmp2.js
 	cat $(LIBS_MIN) src/header.js tmp/maria-tmp2.js >build/maria-min.js
 
+build/doc: build/maria.js jsdoc
+	mkdir -p build
+	rm -rf build/doc
+	jsdoc/jsdoc build/maria.js --destination build/doc --configure etc/jsdoc-config.js
+
 compiler.jar:
 	mkdir -p tmp
 	cd tmp && \
@@ -50,8 +55,15 @@ compiler.jar:
 	unzip compiler-latest.zip && \
 	mv compiler.jar ..
 
+jsdoc:
+	mkdir -p tmp
+	cd tmp && \
+	curl curl -O https://nodeload.github.com/jsdoc3/jsdoc/tar.gz/v3.1.1 --output jsdoc-3.1.1.tar.gz && \
+	tar xvzf jsdoc-3.1.1.tar.gz && \
+	mv jsdoc-3.1.1 ../jsdoc
+
 clean:
 	rm -rf build tmp
 
 cleaner: clean
-	rm -f compiler.jar
+	rm -rf compiler.jar jsdoc
