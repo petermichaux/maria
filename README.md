@@ -63,13 +63,13 @@ None. Maria combines several independent micro libraries which are all included.
 Source Code
 -----------
 
-GitHub: https://github.com/petermichaux/maria
+See https://github.com/petermichaux/maria
 
 
 Build
 -----
 
-To build the production ready files, just type "make" at the command line and look in the build directory for the results. The first time you run make it will download some libraries: currently only Google's Closure Compiler.
+To build the production ready files, just type "make" at the command line and look in the build directory for the results. The first time you run make, it will download some libraries used during the build process: [Google's Closure Compiler](https://developers.google.com/closure/compiler/) and [JSDoc3](https://github.com/jsdoc3/jsdoc).
 
 
 Tests
