@@ -1,13 +1,5 @@
 /**
 
-@property maria.View
-
-@parameter model {Object} Optional
-
-@parameter controller {Object} Optional
-
-@description
-
 A constructor function to create new view objects.
 
     var view = new maria.View();
@@ -122,6 +114,12 @@ accomplish the same.
         alert('another method');
     };
 
+@constructor
+
+@param {maria.Model} model Optional
+
+@param {maria.Controller} controller Optional
+
 */
 maria.View = function(model, controller) {
     hijos.Node.call(this);
@@ -132,6 +130,14 @@ maria.View = function(model, controller) {
 maria.View.prototype = maria.create(hijos.Node.prototype);
 maria.View.prototype.constructor = maria.View;
 
+/*
+
+Call before your application looses its last reference to this view.
+
+This will unsubcribe this view from its model so that this view
+does not become a zombie view.
+
+*/
 maria.View.prototype.destroy = function() {
     maria.purge(this);
     this._model = null;
@@ -142,27 +148,77 @@ maria.View.prototype.destroy = function() {
     hijos.Node.prototype.destroy.call(this);
 };
 
+/**
+
+By default, a view will observe its model for `change` events. When
+a `change` event is dispatched on the model then this `update` method
+is the handler. (The "change" and "update" names are inherited directly
+from Smalltalk implementations.)
+
+To be overridden by subclasses.
+
+@param {object} event The event object.
+
+*/
 maria.View.prototype.update = function() {
     // to be overridden by concrete view subclasses
 };
 
+/**
+
+Returns the current model object of this view.
+
+@return {maria.Model} The model object.
+
+*/
 maria.View.prototype.getModel = function() {
     return this._model;
 };
 
+/**
+
+Set the current model object of this view.
+
+@param {maria.Model} model The model object.
+
+*/
 maria.View.prototype.setModel = function(model) {
     this._setModelAndController(model, this._controller);
 };
 
+/**
+
+Returns a controller constructor function to be used to create
+a controller for this view.
+
+@return {function} The controller constructor function. 
+
+*/
 maria.View.prototype.getDefaultControllerConstructor = function() {
     return maria.Controller;
 };
 
+/**
+
+Creates a new default controller for this view.
+
+@return {maria.Controller} The controller object.
+
+*/
 maria.View.prototype.getDefaultController = function() {
     var constructor = this.getDefaultControllerConstructor();
     return new constructor();
 };
 
+
+/**
+
+If this view has not yet had its controller set then this method
+creates a controller and sets it as this view's controller.
+
+@return {maria.Controller} The controller object.
+
+*/
 maria.View.prototype.getController = function() {
     if (!this._controller) {
         this.setController(this.getDefaultController());
@@ -170,10 +226,33 @@ maria.View.prototype.getController = function() {
     return this._controller;
 };
 
+/**
+
+Set the current controller for this view.
+
+@param {maria.Controller} The controller object.
+
+*/
 maria.View.prototype.setController = function(controller) {
     this._setModelAndController(this._model, controller);
 };
 
+
+/**
+
+When the model is set for this view, the view will automatically
+observe the events which are keys of the returned object. The values
+for each key is the view's handler method to be called when the corresponding
+event is dispatched on the model.
+
+By default, a view will observe the model for `change` events and handle
+those events with the view's `update` method.
+
+You can override this method but, beware, doing so can lead to the dark side.
+
+@return {Object} The map of model events and view handers.
+
+*/
 maria.View.prototype.getModelActions = function() {
     return {'change': 'update'};
 };

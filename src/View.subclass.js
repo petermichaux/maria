@@ -1,9 +1,5 @@
 /**
 
-@property maria.View.subclass
-
-@description
-
 A function that makes subclassing maria.View more compact.
 
 The following example creates a myapp.MyView constructor function

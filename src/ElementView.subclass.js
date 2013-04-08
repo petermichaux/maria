@@ -1,9 +1,5 @@
 /**
 
-@property maria.ElementView.subclass
-
-@description
-
 A function that makes subclassing maria.ElementView more compact.
 
 The following example creates a checkit.TodoView constructor function

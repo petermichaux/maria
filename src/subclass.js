@@ -1,6 +1,16 @@
-// "this" must be a constructor function
-// mix the "subclass" function into your constructor function
-//
+/**
+
+When executing, `this` must be a constructor function.
+
+Mix the "subclass" function into your constructor function.
+
+@param {Object} namespace
+
+@param {string} name
+
+@param {Object} options Optional
+
+*/
 maria.subclass = function(namespace, name, options) {
     options = options || {};
     var properties = options.properties;

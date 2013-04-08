@@ -1,9 +1,5 @@
 /**
 
-@property maria.SetModel
-
-@description
-
 A constructor function to create new set model objects. A set model
 object is a collection of elements. An element can only be included
 once in a set model object.
@@ -175,6 +171,11 @@ set model object. This makes it possible to observe only the set model
 object and still know when elements in the set are changing, for
 example. This can complement well the flyweight pattern used in a view.
 
+@constructor
+
+@extends maria.Model
+@extends hormigas.ObjectSet
+
 */
 maria.SetModel = function() {
     hormigas.ObjectSet.apply(this, arguments);
@@ -188,8 +189,25 @@ hormigas.ObjectSet.mixin(maria.SetModel.prototype);
 
 // Wrap the set mutator methods to dispatch events.
 
-// takes multiple arguments so that only one event will be fired
-//
+/**
+
+Takes multiple arguments each to be added to the set.
+
+  setModel.add(item1)
+  setModel.add(item1, item2)
+  ...
+
+If the set is modified as a result of the add request then a `change`
+event is dispatched on the set model object. If all of the arguments
+are already in the set then this event will not be dispatched.
+
+@param {Object} item The item to be added to the set.
+
+@return {boolean} True if the set was modified. Otherwise false.
+
+@override
+
+*/
 maria.SetModel.prototype.add = function() {
     var added = [];
     for (var i = 0, ilen = arguments.length; i < ilen; i++) {
@@ -214,8 +232,25 @@ maria.SetModel.prototype.add = function() {
     return modified;
 };
 
-// takes multiple arguments so that only one event will be fired
-//
+/**
+
+Takes multiple arguments each to be deleted from the set.
+
+  setModel['delete'](item1)
+  setModel['delete'](item1, item2)
+  ...
+
+If the set is modified as a result of the delete request then a `change`
+event is dispatched on the set model object. If all of the arguments
+were already not in the set then this event will not be dispatched.
+
+@param {Object} item The item to be removed from the set.
+
+@return {boolean} True if the set was modified. Otherwise false.
+
+@override
+
+*/
 maria.SetModel.prototype['delete'] = function() {
     var deleted = [];
     for (var i = 0, ilen = arguments.length; i < ilen; i++) {
@@ -237,6 +272,18 @@ maria.SetModel.prototype['delete'] = function() {
     return modified;
 };
 
+/**
+
+Deletes all elements of the set.
+
+If the set is modified as a result of this empty request then a `change`
+event is dispatched on the set model object.
+
+@override
+
+@return {boolean} True if the set was modified. Otherwise false.
+
+*/
 maria.SetModel.prototype.empty = function() {
     var deleted = this.toArray();
     var result = hormigas.ObjectSet.prototype.empty.call(this);
@@ -255,6 +302,14 @@ maria.SetModel.prototype.empty = function() {
     return result;
 };
 
+/**
+
+If a member of the set fires a `destroy` event then that member
+must be deleted from this set. This handler will do the delete.
+
+@param {Object} event The event object.
+
+*/
 maria.SetModel.prototype.handleEvent = function(ev) {
 
     // If it is a destroy event being dispatched on the

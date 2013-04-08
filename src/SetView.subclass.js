@@ -1,9 +1,5 @@
 /**
 
-@property maria.SetView.subclass
-
-@description
-
 The same as maria.ElementView.
 
 You will likely want to specify a createChildView method.

@@ -1,15 +1,5 @@
 /**
 
-@property maria.SetView
-
-@parameter model {Object} Optional
-
-@parameter controller {Object} Optional
-
-@parameter document {Document} Optional
-
-@description
-
 A constructor function to create new set view objects.
 
     var setView = new maria.SetView();
@@ -47,6 +37,16 @@ maria.SetView.subclass for a more compact way to accomplish the same.
         return new checkit.TodoView(todoModel);
     };
 
+@constructor
+
+@param {maria.Model} model Optional
+
+@param {maria.Controller} controller Optional
+
+@param {Document} document Optional
+
+@extends maria.ElementView
+
 */
 maria.SetView = function() {
     maria.ElementView.apply(this, arguments);
@@ -55,6 +55,15 @@ maria.SetView = function() {
 maria.SetView.prototype = maria.create(maria.ElementView.prototype);
 maria.SetView.prototype.constructor = maria.SetView;
 
+/**
+
+The model of the view is a `maria.SetModel`. A new view will be created
+for each model in that set model and the view will be appended as a child
+view of this set view.
+
+@override
+
+*/
 maria.SetView.prototype.buildChildViews = function() {
     var childModels = this.getModel().toArray();
     for (var i = 0, ilen = childModels.length; i < ilen; i++) {
@@ -62,10 +71,26 @@ maria.SetView.prototype.buildChildViews = function() {
     }
 };
 
+/**
+
+Creates a child view for a model. To be overridden by subclasses.
+
+@param {maria.Model} model The model for the child view.
+
+*/
 maria.SetView.prototype.createChildView = function(model) {
     return new maria.ElementView(model);
 };
 
+/**
+
+The handler for `change` events on this view's set model object.
+
+@param {Object} event The event object.
+
+@override
+
+*/
 maria.SetView.prototype.update = function(evt) {
     // Don't update for bubbling events.
     if (evt.target === this.getModel()) {
@@ -78,6 +103,16 @@ maria.SetView.prototype.update = function(evt) {
     }
 };
 
+
+/**
+
+When a `change` event is fired on this view's set model because
+some models were added to the set model, this method
+will create child views and append them as children of this set view.
+
+@param {Object} event The event object.
+
+*/
 maria.SetView.prototype.handleAdd = function(evt) {
     var childModels = evt.addedTargets;
     for (var i = 0, ilen = childModels.length; i < ilen; i++) {
@@ -85,6 +120,16 @@ maria.SetView.prototype.handleAdd = function(evt) {
     }
 };
 
+/**
+
+When a `change` event is fired on this view's set model because
+some models were deleted from the set model, this method
+will find, remove, and destroy the corresponding child views
+of this set view.
+
+@param {Object} event The event object.
+
+*/
 maria.SetView.prototype.handleDelete = function(evt) {
     var childModels = evt.deletedTargets;
     for (var i = 0, ilen = childModels.length; i < ilen; i++) {

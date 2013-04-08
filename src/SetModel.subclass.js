@@ -1,9 +1,5 @@
 /**
 
-@property maria.SetModel.subclass
-
-@description
-
 A function that makes subclassing maria.SetModel more compact.
 
 The following example creates a checkit.TodosModel constructor function

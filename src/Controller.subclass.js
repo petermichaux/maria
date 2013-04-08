@@ -1,9 +1,5 @@
 /**
 
-@property maria.Controller.subclass
-
-@description
-
 A function that makes subclassing maria.Controller more compact.
 
 The following example creates a checkit.TodoController constructor

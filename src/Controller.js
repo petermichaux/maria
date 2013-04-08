@@ -1,9 +1,5 @@
 /**
 
-@property maria.Controller
-
-@description
-
 A constructor function to create new controller objects.
 
 Controller objects are usually created lazily on demand by a view
@@ -83,9 +79,16 @@ to accomplish the same.
         }
     };
 
+@constructor
+
 */
 maria.Controller = function() {};
 
+/**
+
+The destroy method.
+
+*/
 maria.Controller.prototype.destroy = function() {
     this._model = null;
     if (this._view) {
@@ -94,24 +97,50 @@ maria.Controller.prototype.destroy = function() {
     }
 };
 
+/**
+
+Returns the current model object of the controller.
+
+@return {maria.Model} The model object.
+
+*/
 maria.Controller.prototype.getModel = function() {
     return this._model;
 };
 
-// setModel is intended to be called *only* by 
-// the view _setModelAndController method.
-// Do otherwise at your own risk.
+/**
+
+`setModel` is intended to be called **only** by 
+the view `_setModelAndController` method. **Do otherwise
+at your own risk!**
+
+@param {maria.Model} model The model object.
+
+*/
 maria.Controller.prototype.setModel = function(model) {
     this._model = model;
 };
 
+/**
+
+Returns the current view object of the controller.
+
+@return {maria.View} The view object.
+
+*/
 maria.Controller.prototype.getView = function() {
     return this._view;
 };
 
-// setView is intended to be called *only* by
-// the view _setModelAndController method.
-// Do otherwise at your own risk.
+/**
+
+`setView` is intended to be called **only** by 
+the view `_setModelAndController` method. **Do otherwise
+at your own risk!**
+
+@param {maria.View} view The view object.
+
+*/
 maria.Controller.prototype.setView = function(view) {
     this._view = view;
 };

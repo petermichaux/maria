@@ -1,9 +1,5 @@
 /**
 
-@property maria.Model
-
-@description
-
 A constructor function to create new model objects.
 
     var model = new maria.Model();
@@ -91,6 +87,10 @@ type will be notified.
 (See evento.EventTarget for advanced information about event bubbling
 using "addParentEventTarget" and "removeParentEventTarget".)
 
+@constructor
+
+@extends evento.EventTarget
+
 */
 maria.Model = function() {
     evento.EventTarget.call(this);
@@ -99,6 +99,13 @@ maria.Model = function() {
 maria.Model.prototype = maria.create(evento.EventTarget.prototype);
 maria.Model.prototype.constructor = maria.Model;
 
+/**
+
+When a model is destroyed, it dispatches a `destroy` event to let
+listeners (especially containing `maria.SetModel` objects) that
+this particular model is no longer useful/reliable.
+
+*/
 maria.Model.prototype.destroy = function() {
     this.dispatchEvent({type: 'destroy'});
 };
