@@ -8,7 +8,7 @@ Mix the "subclass" function into your constructor function.
 
 @param {string} name
 
-@param {Object} options Optional
+@param {Object} [options]
 
 */
 maria.subclass = function(namespace, name, options) {

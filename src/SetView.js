@@ -39,11 +39,11 @@ maria.SetView.subclass for a more compact way to accomplish the same.
 
 @constructor
 
-@param {maria.Model} model Optional
+@param {maria.Model} [model]
 
-@param {maria.Controller} controller Optional
+@param {maria.Controller} [controller]
 
-@param {Document} document Optional
+@param {Document} [document]
 
 @extends maria.ElementView
 
