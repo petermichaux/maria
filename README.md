@@ -25,7 +25,7 @@ See http://peter.michaux.ca/downloads/maria/
 Documentation
 -------------
 
-See [http://peter.michaux.ca/maria/](http://peter.michaux.ca/maria/).
+See [http://peter.michaux.ca/maria/](http://peter.michaux.ca/maria/)
 
 
 Examples
