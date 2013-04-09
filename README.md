@@ -17,9 +17,9 @@ Downloads
 
 See http://peter.michaux.ca/downloads/maria/
 
-```maria.js``` contains all the Maria source files concatenated together. This is a good file to use during the development of your application.
+`maria.js` contains all the Maria source files concatenated together. This is a good file to use during the development of your application.
 
-```maria-min.js``` contains the same code as ```maria.js``` but ```maria-min.js``` has been minified to remove whitespace and code comments. This is a good file to serve in production.
+`maria-min.js` contains the same code as `maria.js` but `maria-min.js` has been minified to remove whitespace and code comments. This is a good file to serve in production.
 
 
 Documentation
@@ -31,7 +31,7 @@ See [http://peter.michaux.ca/maria/](http://peter.michaux.ca/maria/)
 Examples
 --------
 
-The eg directory contains example applications including the canonical to-do application.
+The `eg` directory contains several example applications.
 
 Maria is one of the frameworks included in the [TodoMVC project](http://addyosmani.github.com/todomvc/).
 
@@ -45,7 +45,7 @@ You can report bugs, suggest features, or join general discussion at https://git
 Status
 ------
 
-Release candidates are in progress.
+Release candidates are in progress. Moving towards v1.0.0.
 
 
 Browser Support
@@ -69,13 +69,13 @@ See https://github.com/petermichaux/maria
 Build
 -----
 
-To build the production ready files, just type "make" at the command line and look in the build directory for the results. The first time you run make, it will download some libraries used during the build process: [Google's Closure Compiler](https://developers.google.com/closure/compiler/) and [JSDoc3](https://github.com/jsdoc3/jsdoc).
+To build the production ready files, just type `make` at the command line and look in the `build` directory for the results. The first time you run `make`, it will download some libraries used during the build process and install them in the `lib` directory: [Google's Closure Compiler](https://developers.google.com/closure/compiler/) and [JSDoc3](https://github.com/jsdoc3/jsdoc).
 
 
 Tests
 -----
 
-To run the automated tests, open tst/runner.html in a web browser.
+To run the automated tests, open `tst/runner.html` in a web browser.
 
 
 Acknowledgements
