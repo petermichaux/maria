@@ -44,7 +44,7 @@ build/dist/maria-min.js: $(LIBS_MIN) $(SRCS) lib/compiler
 	cat $(LIBS_MIN) src/header.js tmp/maria-tmp2.js >build/dist/maria-min.js
 
 deploy-www: build/www
-	scp -r build/www/* peter@peter.michaux.ca:~/sites/maria
+	scp -r build/www/* peter@michaux.ca:~/sites/maria
 
 build/www: build/www/eg build/www/api doc/* doc/*/* doc/*/*/* doc/*/*/* doc/*/*/*/* doc/*/*/*/*/*
 	mkdir -p build/www
