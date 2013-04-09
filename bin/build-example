@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+# $1 is the name of the example in the eg directory
+
+cp -R "eg/"$1 "build/www/eg/"$1
+cp build/dist/maria.js build/www/eg/$1/lib/maria/
+cd build/www/eg && tar czf $1.tar.gz $1

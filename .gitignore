@@ -1,4 +1,4 @@
 build
 tmp
-compiler.jar
-jsdoc
+lib/compiler
+lib/jsdoc
