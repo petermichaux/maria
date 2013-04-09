@@ -37,11 +37,10 @@ build/dist/maria.js: $(LIBS) $(SRCS)
 	mkdir -p build/dist
 	cat $(LIBS) $(SRCS) >build/dist/maria.js
 
-build/dist/maria-min.js: $(LIBS_MIN) $(SRCS) lib/compiler
+build/dist/maria-min.js: src/header.js build/dist/maria.js lib/compiler
 	mkdir -p build/dist tmp
-	cat $(SRCS) >tmp/maria-tmp1.js
-	java -jar lib/compiler/compiler.jar --js tmp/maria-tmp1.js --js_output_file tmp/maria-tmp2.js
-	cat $(LIBS_MIN) src/header.js tmp/maria-tmp2.js >build/dist/maria-min.js
+	java -jar lib/compiler/compiler.jar --js build/dist/maria.js --js_output_file tmp/maria-tmp.js
+	cat src/header.js tmp/maria-tmp.js >build/dist/maria-min.js
 
 deploy-www: build/www
 	scp -r build/www/* peter@michaux.ca:~/sites/maria
