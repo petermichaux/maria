@@ -39,8 +39,7 @@ build/dist/maria.js: $(LIBS) $(SRCS)
 
 build/dist/maria-min.js: src/header.js build/dist/maria.js lib/compiler
 	mkdir -p build/dist tmp
-	java -jar lib/compiler/compiler.jar --js build/dist/maria.js --js_output_file tmp/maria-tmp.js
-	cat src/header.js tmp/maria-tmp.js >build/dist/maria-min.js
+	cd build/dist && java -jar ../../lib/compiler/compiler.jar --js maria.js --js_output_file maria-min.js --create_source_map maria-min.map --source_map_format V3
 
 deploy-www: build/www
 	scp -r build/www/* peter@michaux.ca:~/sites/maria
