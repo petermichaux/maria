@@ -1,0 +1,27 @@
+.TodosToolbar {
+    margin: 0;
+    padding: 0 0 0 20px;
+    position: relative;
+}
+
+.TodosToolbar li {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: inline;
+}
+
+.TodosToolbar .allCheckbox {
+    height: 20px;
+    width: 20px;
+    background: url(../img/undone.png) no-repeat center center;
+    cursor: pointer;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.TodosToolbar .allCheckboxAllDone {
+    background-image: url(../img/done.png);
+}
