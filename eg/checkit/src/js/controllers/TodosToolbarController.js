@@ -8,12 +8,6 @@ maria.Controller.subclass(checkit, 'TodosToolbarController', {
                 model.markAllDone();
             }
         },
-        onClickMarkAllDone: function() {
-            this.getModel().markAllDone();
-        },
-        onClickMarkAllUndone: function() {
-            this.getModel().markAllUndone();
-        },
         onClickDeleteDone: function() {
             this.getModel().deleteDone();
         }

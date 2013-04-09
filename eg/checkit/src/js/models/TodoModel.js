@@ -24,19 +24,6 @@ maria.Model.subclass(checkit, 'TodoModel', {
         },
         toggleDone: function() {
             this.setDone(!this.isDone());
-        },
-        toJSON: function() {
-            return {
-                content: this._content,
-                is_done: this._isDone
-            };
         }
     }
 });
-
-checkit.TodoModel.fromJSON = function(todoJSON) {
-    var model = new checkit.TodoModel();
-    model._content = todoJSON.content;
-    model._isDone = todoJSON.is_done;
-    return model;
-};

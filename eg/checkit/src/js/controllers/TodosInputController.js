@@ -4,15 +4,11 @@ maria.Controller.subclass(checkit, 'TodosInputController', {
             this.onKeyupInput();
         },
         onBlurInput: function() {
-            this.getView().hideToolTip();
+            this.getView().setPending(false);
         },
         onKeyupInput: function() {
             var view = this.getView();
-            if (checkit.isBlank(view.getInputValue())) {
-                view.hideToolTip();
-            } else {
-                view.showToolTip();
-            }
+            view.setPending(!checkit.isBlank(view.getInputValue()));
         },
         onKeypressInput: function(evt) {
             if (evt.keyCode == 13) {

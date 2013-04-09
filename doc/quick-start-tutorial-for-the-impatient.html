@@ -247,9 +247,9 @@ undefined
         
         <p>The part that most programmers will find interesting is bringing the to-do item to life so that it always reflects the state of a particular to-do model object and reacting to user clicks to mark the to-do as complete. Some JavaScript please...</p>
 
-        <p>Create a directory <code>checkit/src/js/models/</code> for all our view classes.</p>
+        <p>Create a directory <code>checkit/src/js/views/</code> for all our view classes.</p>
 
-        <p>Create a file <code>checkit/src/js/models/TodoView.js</code> containing the following.</p>
+        <p>Create a file <code>checkit/src/js/views/TodoView.js</code> containing the following.</p>
 
 <pre><code>maria.ElementView.subclass(checkit, 'TodoView', {
     uiActions: {
@@ -449,7 +449,7 @@ undefined
 undefined
 > todosModel.add(todoModel);
 ["dinner date with Maria"]
-undefined</code></pre>
+true</code></pre>
 
         <p>There are a few things we should probably do before our date. Let&rsquo;s add them.</p>
 
@@ -463,7 +463,7 @@ undefined
 undefined
 > todosModel.add(flowers, shower);
 ["buy flowers", "take a shower"]
-undefined</code></pre>
+true</code></pre>
 
         <p>We see that adding multiple to-do models to the set with one call to the set&rsquo;s <code>add</code> method means only one event is fired. This reduces the number of updates that views have to do. Since updating views usually involves manipulating the DOM and manipulating the DOM is usually slow, keeping view updates to a minimum is a particularly good part of the application to be conservative.</p>
 
@@ -481,6 +481,7 @@ undefined
         <p>We might want to clean up our to-dos set by deleting all the to-do models that are done.</p>
 
 <pre><code>> todosModel.deleteDone();
+false true
 undefined
 > todosModel.length;
 2
@@ -523,8 +524,7 @@ undefined
 
         <p>To see a list in the browser, let&rsquo;s update the <code>checkit/src/js/bootstrap.js</code> file to create a set model containing a few to-do items and add a view to the page.</p>
 
-<pre><code>
-maria.on(window, 'load', function() {
+<pre><code>maria.on(window, 'load', function() {
 
     var todosModel = new checkit.TodosModel();
 

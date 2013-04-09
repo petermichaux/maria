@@ -5,14 +5,12 @@ maria.SetModel.subclass(checkit, 'TodosModel', {
                 return todo.isDone();
             });
         },
-        getUndone: function() {
-            return this.filter(function(todo) {
-                return !todo.isDone();
-            });
-        },
         isAllDone: function() {
             return (this.length > 0) &&
                    (this.getDone().length === this.length);
+        },
+        isAllUndone: function() {
+            return this.getDone().length < 1;
         },
         markAllDone: function() {
             this.forEach(function(todo) {
@@ -26,19 +24,6 @@ maria.SetModel.subclass(checkit, 'TodosModel', {
         },
         deleteDone: function() {
             this['delete'].apply(this, this.getDone());
-        },
-        toJSON: function() {
-            return this.map(function(todo) {
-                return todo.toJSON();
-            });
         }
     }
 });
-
-checkit.TodosModel.fromJSON = function(todosJSON) {
-    var model = new checkit.TodosModel();
-    for (var i = 0, ilen = todosJSON.length; i < ilen; i++) {
-        model.add(checkit.TodoModel.fromJSON(todosJSON[i]));
-    }
-    return model;
-};
