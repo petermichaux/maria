@@ -1,16 +1,15 @@
 maria.SetModel.subclass(checkit, 'TodosModel', {
     properties: {
-        getDone: function() {
-            return this.filter(function(todo) {
-                return todo.isDone();
-            });
-        },
         isAllDone: function() {
             return (this.length > 0) &&
-                   (this.getDone().length === this.length);
+                   this.every(function(todo) {
+                       return todo.isDone();
+                   });
         },
         isAllUndone: function() {
-            return this.getDone().length < 1;
+            return this.every(function(todo) {
+                       return !todo.isDone();
+                   });
         },
         markAllDone: function() {
             this.forEach(function(todo) {
@@ -23,7 +22,13 @@ maria.SetModel.subclass(checkit, 'TodosModel', {
             });
         },
         deleteDone: function() {
-            this['delete'].apply(this, this.getDone());
+            var doneTodos = [];
+            this.forEach(function(todo) {
+                if (todo.isDone()) {
+                    doneTodos.push(todo);
+                }
+            });
+            this['delete'].apply(this, doneTodos);
         }
     }
 });
