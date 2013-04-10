@@ -9,5 +9,5 @@
 scrollit.ProductTemplate =
     '<li class="Product">' +
         '<span class="name"></span> ' +
-        '<span class="price"></span>' +
+        '$<span class="price"></span>' +
     '</li>';

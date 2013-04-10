@@ -8,28 +8,121 @@ var myth = myth || {};
     function randomXToY(minVal, maxVal) {
       return Math.round(minVal + (Math.random() * (maxVal - minVal)));
     }
-    
-    function makeName() {
-        var text = "";
-        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        var length = randomXToY(5, 10);
-        for (var i = 0; i < length; i++ ) {
-            text += possible.charAt(Math.floor(Math.random() * possible.length));
-        }
-        return text;
-    }
-    
+
     function makePrice() {
         return randomXToY(1, 10000) / 100;
     }
-    
-    var products = [];
-    for (var i = 0; i < 100; i++) {
-        products.push({
+
+    var products = [
+        "apple",
+        "orange",
+        "banana",
+        "pineapple",
+        "mango",
+        "blackberry",
+        "macadamia",
+        "onion",
+        "lemon",
+        "dragonfruit",
+        "jackfruit",
+        "lychee",
+        "parsnip",
+        "celery",
+        "peach",
+        "jujube",
+        "carrot",
+        "raspberry",
+        "acorn",
+        "papaya",
+        "mangosteen",
+        "nectarine",
+        "guava",
+        "lingonberry",
+        "pmegranate",
+        "cascade berry",
+        "lime",
+        "potato",
+        "cucumber",
+        "persimmon",
+        "blueberry",
+        "hazelnut",
+        "almond",
+        "olive",
+        "grapefruit",
+        "cherimoya",
+        "date",
+        "prickly pear",
+        "quince",
+        "sapote",
+        "currant",
+        "oregon grape",
+        "tangerine",
+        "feijoa",
+        "honeydue",
+        "brazil nut",
+        "tomato",
+        "pecan",
+        "salmonberry",
+        "loganberry",
+        "strawberry",
+        "saskatoonberry",
+        "fig",
+        "sesame seed",
+        "pumpkin",
+        "mandarine",
+        "mulberry",
+        "apricot",
+        "cashew",
+        "kiwi",
+        "chestnut",
+        "clementine",
+        "watermelon",
+        "elderberry",
+        "walnut",
+        "gooseberry",
+        "peanut",
+        "kumquat",
+        "pear",
+        "rhubarb",
+        "huckleberry",
+        "pine nut",
+        "kola nut",
+        "cantaloupe",
+        "tamarind",
+        "cranberry",
+        "grape",
+        "bell pepper",
+        "plantain",
+        "zucchini",
+        "coconut",
+        "loquat",
+        "durian",
+        "avocado",
+        "kiwano",
+        "pistachio",
+        "star fruit",
+        "sapodillas",
+        "cherry",
+        "olallieberries",
+        "crenshaw melon",
+        "rambutan",
+        "boysenberry",
+        "mushroom",
+        "eggplant",
+        "walnut",
+        "asparagus",
+        "peas",
+        "beans",
+        "plum"
+    ];
+
+    for (var i = 0, ilen = products.length; i < ilen; i++) {
+        var name = products[i];
+        products[i] = {
             id: i,
-            name: makeName(),
+            name: name,
             price: makePrice()
-        });
+        };
     }
 
     myth.xhr = function(method, url, options) {
