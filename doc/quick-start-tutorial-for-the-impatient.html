@@ -15,7 +15,7 @@
 
         <p>We have things to do. Let&rsquo;s use Maria to build an application called &ldquo;checkit&rdquo; to organize our to-dos.</p>
 
-        <p><img src="img/checkit-ui.png" alt="checkit UI"></p>
+        <p><img src="img/tutorial-500.png" alt=""></p>
 
         <p>By the end of this tutorial, you&rsquo;ll understand how the components communicate in an application written in the MVC style with Maria and be ready to create more complex client-side application on your own.</p>
 
@@ -317,7 +317,7 @@ undefined</code></pre>
 
         <p>There it is. Our nice to-do view sitting pretty in the browser!</p>
 
-        <p><img src="img/one-todo.png" alt="One To-do"></p>
+        <p><img src="img/tutorial-100.png" alt="One To-do"></p>
 
         <p>What I&rsquo;ll bet you&rsquo;re really dying to see is the observer pattern in action and the view staying in sync with the model object&rsquo;s changing state. It&rsquo;s easy to see with a few more lines in the console.</p>
 
@@ -329,7 +329,10 @@ undefined
 
         <p>Ta-da! Magic. Notice we don&rsquo;t have to manually add the view as an observer of the model. The Maria framework makes that connection for us.</p>
 
+        <p><img src="img/tutorial-200.png" alt="One To-do"></p>
+
         <p>Try adding two views with the <em>same</em> model to the document. Changing the model object once will update both views! That is a peak at more MVC magic.</p>
+
 
         <h2>Reacting to User Action with Controllers</h2>
 
@@ -554,7 +557,7 @@ undefined
     var todosModel = new checkit.TodosModel();
 
     var todoModel = new checkit.TodoModel();
-    todoModel.setContent('diner date with Maria');
+    todoModel.setContent('dinner date with Maria');
     todosModel.add(todoModel);
 
     var todoModel = new checkit.TodoModel();
@@ -600,6 +603,8 @@ undefined
 &lt;/html></code></pre>
 
         <p>Reload the browser and voila! A set of to-dos displayed as a list in the browser.</p>
+
+        <p><img src="img/tutorial-300.png" alt="One To-do"></p>
 
         <p>Feel free to click the checkboxes of the to-do items in the list.</p>
 
@@ -734,6 +739,8 @@ undefined
 &lt;/html></code></pre>
 
         <p>Reload the browser and fill the list with all the things you want to-dos.</p>
+
+        <p><img src="img/tutorial-400.png" alt="One To-do"></p>
 
 
         <h2>A Toolbar to Manage the Set of To-dos</h2>
@@ -875,6 +882,9 @@ undefined
 
         <p>Reload the browser and play with the new toolbar tools.</p>
 
+        <p><img src="img/tutorial-500.png" alt=""></p>
+
+
         <h2>Combine Smaller Views Into a Single View</h2>
 
         <p>Our bootstrap file currently creates three views, all observing the same model, and add each view to the page. That is fine and dandy. It something you want to do at times. That said, it is also useful to be able to gather together multiple views as children of a single parent view. This allows the bootstrapping code to deal with only one view (i.e. the parent view) and the three child views will still appear in the page. This is the beauty of the composite pattern: the third of the three primary patterns in the MVC architecture.</p>
@@ -948,6 +958,9 @@ undefined
 &lt;/html></code></pre>
 
         <p>When you reload the page, you&rsquo;ll see that nothing has changed. The three smaller views appear just as they did before but the bootstrapping code has been significantly simplified. Bootstrapping is only concerned with dealing with one view and can ignore the fact that that view is a composite comprised of three other views.</p>
+
+        <p><img src="tutorial-500.png" alt=""></p>
+
 
         <h2>The Grand Finally</h2>
 
