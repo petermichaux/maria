@@ -163,6 +163,19 @@
             assert.same(true, called);
         },
 
+        "test destroy does not call destroy on ex-controller": function() {
+            var controller = new maria.Controller();
+            var view = new maria.View();
+            view.setController(controller);
+            view.setController(null);
+            var called = false;
+            controller.destroy = function() {
+                called = true;
+            };
+            view.destroy();
+            assert.same(false, called);
+        },
+
         "test destroy calls destroy on child views": function() {
             var view = new maria.View();
 
