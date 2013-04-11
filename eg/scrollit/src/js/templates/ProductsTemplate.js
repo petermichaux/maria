@@ -11,7 +11,7 @@ scrollit.ProductsTemplate =
         '<h1>Products</h1>' +
         '<p>Scroll down the list to watch more items load.</p>' +
         '<div class="productsListWrapper">' +
-            '<ol class="productsList"></ol>' +
+            '<ul class="productsList"></ul>' +
             '<p class="loading"><img src="img/throbber.gif" alt=""> loading more products</p>' +
         '</div>' +
     '</div>';
