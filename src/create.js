@@ -7,10 +7,11 @@ Not all browsers supported by Maria have the native `Object.create` from ECMAScr
 @param {Object} obj The object to be the prototype of the new object
 
 */
-maria.create = (function() {
-    function F() {}
+maria.create = (function(F) {
     return function(obj) {
         F.prototype = obj;
-        return new F();
+        obj = new F();
+        F.prototype = null;
+        return obj;
     };
-}());
+}(function F() {}));
