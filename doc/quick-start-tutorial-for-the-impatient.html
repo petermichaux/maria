@@ -406,7 +406,7 @@ undefined
 <pre><code>maria.SetModel.subclass(checkit, 'TodosModel', {
     properties: {
         isAllDone: function() {
-            return (this.length > 0) &amp;&amp;
+            return (this.size > 0) &amp;&amp;
                    this.every(function(todo) {
                        return todo.isDone();
                    });
@@ -516,7 +516,7 @@ undefined
 <pre><code>> todosModel.deleteDone();
 false true
 undefined
-> todosModel.length;
+> todosModel.size;
 2
 </code></pre>
 

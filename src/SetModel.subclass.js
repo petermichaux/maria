@@ -8,19 +8,16 @@ for maria.SetModel.
 
     maria.SetModel.subclass(checkit, 'TodosModel', {
         properties: {
-            getDone: function() {
-                return this.filter(function(todo) {
-                    return todo.isDone();
-                });
-            },
-            getUndone: function() {
-                return this.filter(function(todo) {
-                    return !todo.isDone();
-                });
-            },
             isAllDone: function() {
-                return this.length > 0 &&
-                       (this.getDone().length === this.length);
+                return (this.size > 0) &&
+                       this.every(function(todo) {
+                           return todo.isDone();
+                       });
+            },
+            isAllUndone: function() {
+                return this.every(function(todo) {
+                           return !todo.isDone();
+                       });
             },
             markAllDone: function() {
                 this.forEach(function(todo) {
@@ -33,7 +30,13 @@ for maria.SetModel.
                 });
             },
             deleteDone: function() {
-                this['delete'].apply(this, this.getDone());
+                var doneTodos = [];
+                this.forEach(function(todo) {
+                    if (todo.isDone()) {
+                        doneTodos.push(todo);
+                    }
+                });
+                this['delete'].apply(this, doneTodos);
             }
         }
     });

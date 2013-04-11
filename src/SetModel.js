@@ -24,7 +24,7 @@ events when elements are added or deleted from the the set.
 
     var view = {
         update: function(evt) {
-            alert(setModel.length + ' element(s) in the set.');
+            alert(setModel.size + ' element(s) in the set.');
         }
     };
     maria.on(setModel, 'change', view, 'update');
@@ -53,7 +53,7 @@ You can check if an element is in the set.
 
 You can get the number of elements in the set.
 
-    setModel.length; // returns 2
+    setModel.size; // returns 2
 
 An element can be deleted from the set. Removing it multiple times
 has no effect. The delete method returns true if the element is
@@ -78,9 +78,9 @@ setModel.delete if old browsers are not supported by your application.
 You can empty a set in one call. The method returns true if any
 elements are removed from the set model object.
 
-    setModel.empty(); // returns false, alpha and beta removed above.
+    setModel.clear(); // returns false, alpha and beta removed above.
 
-If the call to empty does delete elements from the set, all "change"
+If the call to `clear` does delete elements from the set, all "change"
 event listeners are passed an event object with deletedTargets just
 as for the delete method.
 
@@ -113,14 +113,6 @@ A set model object has some other handy methods.
         return accumulator + element.name.length;
     }, 0); // returns 9
 
-    setModel.map(function(element) {
-        return element.name.length;
-    }); // returns [4, 5] or [5, 4]
-
-    setModel.filter(function(element) {
-        return element.name.length > 4;
-    }); // returns [alpha]
-
 The order of the elements returned by toArray and the order of
 iteration of the other methods is undefined as a set is an unordered
 collection. Do not depend on any ordering that the current
@@ -137,19 +129,16 @@ to accomplish the same.
     };
     checkit.TodosModel.prototype = maria.create(maria.SetModel.prototype);
     checkit.TodosModel.prototype.constructor = checkit.TodosModel;
-    checkit.TodosModel.prototype.getDone = function() {
-        return this.filter(function(todo) {
-            return todo.isDone();
-        });
-    };
-    checkit.TodosModel.prototype.getUndone = function() {
-        return this.filter(function(todo) {
-            return !todo.isDone();
-        });
-    };
     checkit.TodosModel.prototype.isAllDone = function() {
-        return this.length > 0 &&
-               (this.getDone().length === this.length);
+        return (this.size > 0) &&
+               this.every(function(todo) {
+                   return todo.isDone();
+               });
+    };
+    checkit.TodosModel.prototype.isAllUndone = function() {
+        return this.every(function(todo) {
+                   return !todo.isDone();
+               });
     };
     checkit.TodosModel.prototype.markAllDone = function() {
         this.forEach(function(todo) {
@@ -162,7 +151,13 @@ to accomplish the same.
         });
     };
     checkit.TodosModel.prototype.deleteDone = function() {
-        this['delete'].apply(this, this.getDone());
+        var doneTodos = [];
+        this.forEach(function(todo) {
+            if (todo.isDone()) {
+                doneTodos.push(todo);
+            }
+        });
+        this['delete'].apply(this, doneTodos);
     };
 
 Another feature of set model objects is that events dispatched on
@@ -276,7 +271,7 @@ maria.SetModel.prototype['delete'] = function() {
 
 Deletes all elements of the set.
 
-If the set is modified as a result of this empty request then a `change`
+If the set is modified as a result of this `clear` request then a `change`
 event is dispatched on the set model object.
 
 @override
@@ -284,9 +279,9 @@ event is dispatched on the set model object.
 @return {boolean} True if the set was modified. Otherwise false.
 
 */
-maria.SetModel.prototype.empty = function() {
+maria.SetModel.prototype.clear = function() {
     var deleted = this.toArray();
-    var result = hormigas.ObjectSet.prototype.empty.call(this);
+    var result = hormigas.ObjectSet.prototype.clear.call(this);
     if (result) {
         for (var i = 0, ilen = deleted.length; i < ilen; i++) {
             var element = deleted[i];

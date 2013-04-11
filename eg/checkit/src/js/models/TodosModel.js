@@ -1,7 +1,7 @@
 maria.SetModel.subclass(checkit, 'TodosModel', {
     properties: {
         isAllDone: function() {
-            return (this.length > 0) &&
+            return (this.size > 0) &&
                    this.every(function(todo) {
                        return todo.isDone();
                    });

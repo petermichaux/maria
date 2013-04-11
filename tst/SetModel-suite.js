@@ -102,16 +102,6 @@
 
         },
 
-        "test filter and map return arrays": function() {
-            var s = new maria.SetModel();
-            var alpha = {};
-            var beta = {};
-            s.add(alpha);
-            s.add(beta);
-            assert.isArray(s.filter(function(element) {return element === alpha}));
-            assert.isArray(s.map(function(element) {return element;}));
-        },
-
         "test automatic bubbling": function() {
 
             var child = new evento.EventTarget();
@@ -194,7 +184,7 @@
             assert.same(true, deleteBubbled, 'the parent set should know an element is deleted from the child set');
         },
 
-        "test delete does bubble when emptying": function() {
+        "test delete does bubble when clearing": function() {
             var alpha = {};
             var childSet = new maria.SetModel();
             var parentSet = new maria.SetModel();
@@ -207,22 +197,22 @@
                 }
             });
             childSet.add(alpha);
-            childSet.empty();
-            assert.same(true, deleteBubbled, 'the parent set should know an element is deleted from the child set when emptying the child set');
+            childSet.clear();
+            assert.same(true, deleteBubbled, 'the parent set should know an element is deleted from the child set when clearing the child set');
         },
 
         "test destroy event on element removes it from the set": function() {
             var element = new evento.EventTarget();
             var set = new maria.SetModel();
             set.add(element);
-            assert.same(1, set.length, "the set should contain the element and so have length 1");
+            assert.same(1, set.size, "the set should contain the element and so have size 1");
             assert.same(true, set.has(element), "the set should contain the element");
             element.dispatchEvent({type: 'destroy'});
-            assert.same(0, set.length, "the set should not contain the element and so should have length 0");
+            assert.same(0, set.size, "the set should not contain the element and so should have size 0");
             assert.same(false, set.has(element), "the set should not contain the element");
         },
 
-        "test empty dispatches events": function() {
+        "test clear dispatches events": function() {
             var alpha = {};
             var beta = {};
             var s = new maria.SetModel(alpha, beta);
@@ -232,11 +222,11 @@
                     deleteEvents++;
                 }
             });
-            s.empty();
+            s.clear();
             assert.same(1, deleteEvents, "the delete listener should have been called only once");
         },
 
-        "test empty removes listeners from subject elements": function() {
+        "test clear removes listeners from subject elements": function() {
             var element = new evento.EventTarget();
             var set = new maria.SetModel();
             set.add(element);
@@ -247,9 +237,9 @@
             });
             element.dispatchEvent({type: 'foo'});
             assert.same(1, calls, "the element listener from the set should have been called when the element is in the set");
-            set.empty();
+            set.clear();
             element.dispatchEvent({type: 'foo'});
-            assert.same(1, calls, "the element listener from the set should not have been called after emptying the set");
+            assert.same(1, calls, "the element listener from the set should not have been called after clearing the set");
 
         }
 
