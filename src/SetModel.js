@@ -305,14 +305,14 @@ must be deleted from this set. This handler will do the delete.
 @param {Object} event The event object.
 
 */
-maria.SetModel.prototype.handleEvent = function(ev) {
+maria.SetModel.prototype.handleEvent = function(evt) {
 
     // If it is a destroy event being dispatched on the
     // destroyed element then we want to remove it from
     // this set.
-    if ((ev.type === 'destroy') &&
-        (ev.currentTarget === ev.target)) {
-        this['delete'](ev.target);
+    if ((evt.type === 'destroy') &&
+        (evt.currentTarget === evt.target)) {
+        this['delete'](evt.target);
     }
 
 };
