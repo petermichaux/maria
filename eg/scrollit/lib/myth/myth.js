@@ -38,7 +38,7 @@ var myth = myth || {};
         "nectarine",
         "guava",
         "lingonberry",
-        "pmegranate",
+        "pomegranate",
         "cascade berry",
         "lime",
         "potato",
