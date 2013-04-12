@@ -31,7 +31,17 @@ SRCS       = src/header.js                 \
              src/SetView.subclass.js       \
              src/Controller.subclass.js
 
-all: build/dist/maria.js build/dist/maria-min.js build/www
+all: build/dist build/dist/maria-min.js build/www
+
+build/dist: build/dist/README.md build/dist/LICENSE build/dist/maria.js build/dist/maria-min.js
+
+build/dist/README.md: README.md
+	mkdir -p build/dist
+	cp README.md build/dist/README.md
+
+build/dist/LICENSE: LICENSE
+	mkdir -p build/dist
+	cp LICENSE build/dist/LICENSE
 
 build/dist/maria.js: $(LIBS) $(SRCS)
 	mkdir -p build/dist
