@@ -370,10 +370,10 @@ By default Maria uses the Grail library as its DOM query engine. This is
 to support older browsers that do not have `querySelector`. The Grail
 engine only a limited set of simple selectors.
 
-  .class
-  tag
-  tag.class
-  #id
+    .class
+    tag
+    tag.class
+    #id
 
 If your application only needs to work in newer browsers you can create
 a Maria plugin to use `querySelector` but ensure the root element will
