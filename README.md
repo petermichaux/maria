@@ -47,7 +47,7 @@ You can report bugs, suggest features, or join general discussion at https://git
 Status
 ------
 
-Release candidates are in progress. Moving towards v1.0.0.
+Final version 1.0.0 release candidates are in progress.
 
 
 Browser Support
