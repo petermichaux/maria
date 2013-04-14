@@ -1,6 +1,6 @@
 /**
 @license
-Maria release candidate 8 - an MVC framework for JavaScript applications
+Maria 1.0.0-rc.8
 Copyright (c) 2013, Peter Michaux
 All rights reserved.
 Licensed under the Simplified BSD License.
