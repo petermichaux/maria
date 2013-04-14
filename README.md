@@ -21,6 +21,8 @@ See http://peter.michaux.ca/downloads/maria/
 
 `maria-min.js` contains the same code as `maria.js` but `maria-min.js` has been minified to remove whitespace and code comments. This is a good file to serve in production.
 
+`maria-amd.js` contains the same code as `maria.js` but it is wrapped in an AMD module definition that returns the `maria` object.
+
 
 Documentation
 -------------
