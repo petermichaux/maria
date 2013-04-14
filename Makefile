@@ -55,7 +55,7 @@ build/dist/maria-min.js: build/dist/maria.js lib/compiler
 	gzip --best -c build/dist/maria-min.js > build/dist/maria-min.js.gz
 
 build/dist/maria-amd.js: build/dist/maria.js
-	echo "define(function(){ // AMD" > build/dist/maria-amd.js
+	echo "define(function() { // AMD" > build/dist/maria-amd.js
 	cat build/dist/maria.js >> build/dist/maria-amd.js
 	echo "\nreturn maria;}); // AMD" >> build/dist/maria-amd.js
 
