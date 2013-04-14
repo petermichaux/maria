@@ -2,10 +2,8 @@ maria.ElementView.subclass(scrollit, 'ProductView', {
     properties: {
         buildData: function() {
             var model = this.getModel();
-            this.find('.name').innerHTML =
-                model.getName().replace('&', '&amp;').replace('<', '&lt;');
-            this.find('.price').innerHTML =
-                (''+model.getPrice()).replace('&', '&amp;').replace('<', '&lt;');
+            this.find('.name').innerHTML = scrollit.escapeHTML(model.getName());
+            this.find('.price').innerHTML = scrollit.escapeHTML('' + model.getPrice());
         },
         update: function() {
             this.buildData();
