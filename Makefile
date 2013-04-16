@@ -43,9 +43,15 @@ build/dist/LICENSE: LICENSE
 	mkdir -p build/dist
 	cp LICENSE build/dist/LICENSE
 
-build/dist/maria.js: $(LIBS) $(SRCS)
+tmp/maria-raw.js: $(LIBS) $(SRCS)
+	mkdir -p build/dist tmp
+	cat $(LIBS) $(SRCS) >tmp/maria-raw.js
+
+build/dist/maria.js: tmp/maria-raw.js
 	mkdir -p build/dist
-	cat $(LIBS) $(SRCS) >build/dist/maria.js
+	echo "var maria = (function() { // IIFE" > build/dist/maria.js
+	cat tmp/maria-raw.js >> build/dist/maria.js
+	echo "\nreturn maria;}()); // IIFE" >> build/dist/maria.js
 	gzip --best -c build/dist/maria.js > build/dist/maria.js.gz
 
 build/dist/maria-min.js: build/dist/maria.js lib/compiler
@@ -54,9 +60,9 @@ build/dist/maria-min.js: build/dist/maria.js lib/compiler
 	echo "/*\n//@ sourceMappingURL=maria-min.map\n*/\n" >> build/dist/maria-min.js
 	gzip --best -c build/dist/maria-min.js > build/dist/maria-min.js.gz
 
-build/dist/maria-amd.js: build/dist/maria.js
+build/dist/maria-amd.js: tmp/maria-raw.js
 	echo "define(function() { // AMD" > build/dist/maria-amd.js
-	cat build/dist/maria.js >> build/dist/maria-amd.js
+	cat tmp/maria-raw.js >> build/dist/maria-amd.js
 	echo "\nreturn maria;}); // AMD" >> build/dist/maria-amd.js
 
 deploy-www: build/www
