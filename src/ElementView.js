@@ -375,9 +375,9 @@ engine only a limited set of simple selectors.
     tag.class
     #id
 
-If your application only needs to work in newer browsers you can create
-a Maria plugin to use `querySelector` but ensure the root element will
-be returned if it matches `selector`.
+If your application only needs to work in newer browsers then you can create
+a Maria plugin to use `querySelector`. Consider if you want the root element
+to be returned if it matches `selector`.
 
 If your application needs to work in older browsers but you need more
 complex CSS `selector` strings then you can create a Maria plugin
