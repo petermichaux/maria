@@ -18,6 +18,7 @@ SRCS       = src/header.js                 \
              src/borrow.js                 \
              src/subclass.js               \
              src/borrowEvento.js           \
+             src/borrowHijos.js            \
              src/Model.js                  \
              src/SetModel.js               \
              src/View.js                   \

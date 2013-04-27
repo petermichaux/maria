@@ -116,7 +116,7 @@ accomplish the same.
 
 @constructor
 
-@extends hijos.Node
+@extends maria.Node
 
 @param {maria.Model} [model]
 
@@ -124,12 +124,12 @@ accomplish the same.
 
 */
 maria.View = function(model, controller) {
-    hijos.Node.call(this);
+    maria.Node.call(this);
     this.setModel(model);
     this.setController(controller);
 };
 
-maria.View.prototype = maria.create(hijos.Node.prototype);
+maria.View.prototype = maria.create(maria.Node.prototype);
 maria.View.prototype.constructor = maria.View;
 
 /*
@@ -147,7 +147,7 @@ maria.View.prototype.destroy = function() {
         this._controller.destroy();
         this._controller = null;
     }
-    hijos.Node.prototype.destroy.call(this);
+    maria.Node.prototype.destroy.call(this);
 };
 
 /**
