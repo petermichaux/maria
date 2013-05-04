@@ -45,16 +45,16 @@ getModelActions method.
 
 By overriding the `getModelActions` method, the view will only observe
 the model's `change` event if you explicitely list it which is not done
-above. If you want to observe the `squashed`, `squished`, **and** `change`
+above. If you want to observe the `squashed`, `squished`, *and* `change`
 events then you need to write the following.
 
-maria.View.prototype.getModelActions = function() {
-    return {
-        'change'  : 'update'    ,
-        'squashed': 'onSquashed',
-        'squished': 'onSquished'
+    maria.View.prototype.getModelActions = function() {
+        return {
+            'change'  : 'update'    ,
+            'squashed': 'onSquashed',
+            'squished': 'onSquished'
+        };
     };
-};
 
 When the model is set, if the view had a previous model then the view
 will unsubscribe from the events it subscribed to on the prevous model
