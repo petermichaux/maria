@@ -74,10 +74,30 @@ build/www: build/www/eg build/www/api doc/* doc/*/* doc/*/*/* doc/*/*/* doc/*/*/
 	touch build/www
 	cp -R doc/* build/www
 
-build/www/api: build/dist/maria.js lib/jsdoc
+# Need to make the file tmp/maria.js as the input source code used by JSDoc
+# for three reasons:
+#
+# The real build/dist/maria.js is wrapped in an IIFE and using that file as the source
+# that JSDoc processes makes JSDoc unable to produce HTML documentation with
+# the appropriate filenames. For example, the filename for maria.Controller documentation
+# ends up being 5a25124d2e.html.
+#
+# We cannot use tmp/maria-raw.js as the source file processed by JSDoc because an extra
+# line is needed at the top of the file. This is the line that is used in
+# build/dist/maria.js for the IIFE. At least an empty line is needed here so that line
+# numbers in the documentation match the distribution built code.
+#
+# The file needs to be named "maria.js" so that the built documentation says "maria.js"
+# rather than "maria-raw.js" or something else that is not the name of the real file
+# that is distributed.
+#
+build/www/api: tmp/maria-raw.js lib/jsdoc
 	mkdir -p build/www
+	rm -f tmp/maria.js
+	echo "" > tmp/maria.js
+	cat tmp/maria-raw.js >> tmp/maria.js
 	rm -rf build/www/api
-	lib/jsdoc/jsdoc build/dist/maria.js --destination build/www/api --configure etc/jsdoc-config.js
+	lib/jsdoc/jsdoc tmp/maria.js --destination build/www/api --configure etc/jsdoc-config.js
 
 build/www/eg: build/dist/maria.js eg/* eg/*/* eg/*/*/* eg/*/*/* eg/*/*/*/* eg/*/*/*/*/*
 	mkdir -p build/www
