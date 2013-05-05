@@ -1,6 +1,6 @@
 /**
 @license
-Maria 1.0.0-rc.10
+Maria 1.0.0-rc.11
 Copyright (c) 2013, Peter Michaux
 All rights reserved.
 Licensed under the Simplified BSD License.
