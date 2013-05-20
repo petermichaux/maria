@@ -236,6 +236,13 @@ h1, h2, h3, h4, h5, h6 {
             margin-bottom: 6px;
         }
 
+.main-info a {
+    color: #3a7d9c;
+}
+.main-info pre {
+    display: inline;
+}
+
 .small-aside {
     float: left;
     width: 180px;
