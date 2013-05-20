@@ -1,3 +1,5 @@
+@import url(http://fonts.googleapis.com/css?family=Lato:400,300,300italic,400italic,700,700italic);
+
 html,
 button,
 input,
@@ -50,115 +52,27 @@ a {
     text-decoration: none;
 }
 
-/* ==========================================================================
-    FONTS
-===========================================================================*/
-
-@font-face {
-    font-family: 'LatoBlack';
-    src: url('fonts/Lato-Bla-webfont.eot');
-    src: url('fonts/Lato-Bla-webfont.eot?#iefix') format('embedded-opentype'),
-         url('fonts/Lato-Bla-webfont.woff') format('woff'),
-         url('fonts/Lato-Bla-webfont.ttf') format('truetype'),
-         url('fonts/Lato-Bla-webfont.svg#LatoBlack') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-@font-face {
-    font-family: 'LatoLight';
-    src: url('fonts/Lato-Lig-webfont.eot');
-    src: url('fonts/Lato-Lig-webfont.eot?#iefix') format('embedded-opentype'),
-         url('fonts/Lato-Lig-webfont.woff') format('woff'),
-         url('fonts/Lato-Lig-webfont.ttf') format('truetype'),
-         url('fonts/Lato-Lig-webfont.svg#LatoLight') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-@font-face {
-    font-family: 'LatoRegular';
-    src: url('fonts/Lato-Reg-webfont.eot');
-    src: url('fonts/Lato-Reg-webfont.eot?#iefix') format('embedded-opentype'),
-         url('fonts/Lato-Reg-webfont.woff') format('woff'),
-         url('fonts/Lato-Reg-webfont.ttf') format('truetype'),
-         url('fonts/Lato-Reg-webfont.svg#LatoRegular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-@font-face {
-    font-family: 'LatoBold';
-    src: url('fonts/Lato-Bol-webfont.eot');
-    src: url('fonts/Lato-Bol-webfont.eot?#iefix') format('embedded-opentype'),
-         url('fonts/Lato-Bol-webfont.woff') format('woff'),
-         url('fonts/Lato-Bol-webfont.ttf') format('truetype'),
-         url('fonts/Lato-Bol-webfont.svg#LatoBold') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-@font-face {
-    font-family: 'VollkornItalic';
-    src: url('fonts/Vollkorn-Italic-webfont.eot');
-    src: url('fonts/Vollkorn-Italic-webfont.eot?#iefix') format('embedded-opentype'),
-         url('fonts/Vollkorn-Italic-webfont.woff') format('woff'),
-         url('fonts/Vollkorn-Italic-webfont.ttf') format('truetype'),
-         url('fonts/Vollkorn-Italic-webfont.svg#VollkornItalic') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-@font-face {
-    font-family: 'VollkornRegular';
-    src: url('fonts/Vollkorn-Regular-webfont.eot');
-    src: url('fonts/Vollkorn-Regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('fonts/Vollkorn-Regular-webfont.woff') format('woff'),
-         url('fonts/Vollkorn-Regular-webfont.ttf') format('truetype'),
-         url('fonts/Vollkorn-Regular-webfont.svg#VollkornRegular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-@font-face {
-    font-family: 'VollkornBold';
-    src: url('fonts/Vollkorn-Bold-webfont.eot');
-    src: url('fonts/Vollkorn-Bold-webfont.eot?#iefix') format('embedded-opentype'),
-         url('fonts/Vollkorn-Bold-webfont.woff') format('woff'),
-         url('fonts/Vollkorn-Bold-webfont.ttf') format('truetype'),
-         url('fonts/Vollkorn-Bold-webfont.svg#VollkornBold') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
 /* ========================================================================== */
 
 body {
-    font-family: 'LatoRegular', sans-serif;
+    font-family: 'Lato', sans-serif;
 
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'LatoBold', sans-serif;
+    font-family: 'Lato', sans-serif;
 }
 .main-title {
     text-transform: uppercase;
     font-weight: lighter;
-    font-family: 'LatoLight', sans-serif;
+    font-family: 'Lato', sans-serif;
 }
 .medium-subtitle {
     margin: 20px 0;
     color: #3a7d9c;
     text-transform: uppercase;
     font-weight: lighter;
-    font-family: 'LatoLight', sans-serif;
+    font-family: 'Lato', sans-serif;
 }
 .wrapper {
     width: 960px;
@@ -216,7 +130,7 @@ h1, h2, h3, h4, h5, h6 {
     text-align: center;
     font-weight: lighter;
     text-transform: uppercase;
-    font-family: 'LatoLight', sans-serif;
+    font-family: 'Lato', sans-serif;
 }
     .tagline span {
         color: #3a7d9c;
@@ -268,7 +182,7 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0;
     padding: 0 0 0 50px;
     color:#fff;
-    font-family: 'LatoLight', sans-serif;
+    font-family: 'Lato', sans-serif;
     font-weight: lighter;
     background: url('../img/download-btn.png');
 }
@@ -312,7 +226,7 @@ h1, h2, h3, h4, h5, h6 {
         color: #333;
         font-size: 24px;
         font-weight: lighter;
-        font-family: 'LatoRegular', sans-serif;
+        font-family: 'Lato', sans-serif;
     }
     .boxes .box {
         color: #666;
@@ -335,7 +249,7 @@ h1, h2, h3, h4, h5, h6 {
     text-align: center;
     font-size: 13px;
     font-weight: lighter;
-    font-family: 'LatoLight', sans-serif;
+    font-family: 'Lato', sans-serif;
 }
     .footer a {
         color: #3a7d9c;
