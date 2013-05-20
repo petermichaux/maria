@@ -114,11 +114,6 @@ h1, h2, h3, h4, h5, h6 {
     left: 0;
 }
 
-.tagline,
-.main-content {
-    clear: both;
-}
-
 .tagline {
     padding: 20px 0;
     margin-bottom: 60px;
@@ -148,14 +143,14 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 22px;
 }
 
-.content {
+.intro {
     float:left;
     width: 725px;
     color: #333;
     font-size: 16px;
 }
 
-.content .subtitle {
+.intro .subtitle {
     font-size:16px;
     text-transform: uppercase;
 }
