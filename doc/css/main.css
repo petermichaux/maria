@@ -81,48 +81,42 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .main-header {
+    position: relative;
     overflow: hidden;
     border-bottom: 1px solid #dbdad6;
-}
-
-.logo {
-    position: relative;
-    top:20px;
-    width: 183px;
-    height: 74px;
-    margin: 0;
-    background-image: url('../img/maria-logo.png');
-}
-
-.logo a {
-    display: block;
-}
-
-.header-logo {
-    float:left;
+    height: 105px;
+    text-align: right;
 }
 
 .main-nav {
-    float: right;
     padding-top: 50px;
     font-size: 16px;
     text-transform: uppercase;
 }
 
 .main-nav li {
-    display: inline-block;
+    display: inline;
     margin-left: 20px;
+    list-style-type: none;
 }
 
 .main-nav a {
     color: #333;
 }
 
-.main-nav a:hover, .main-nav a.active {
+.main-nav a:hover,
+.main-nav a.active {
     color: #3a7d9c;
 }
 
-.tagline, .main-content {
+.main-nav .logo {
+    position: absolute;
+    top: 20px;
+    left: 0;
+}
+
+.tagline,
+.main-content {
     clear: both;
 }
 
@@ -132,7 +126,8 @@ h1, h2, h3, h4, h5, h6 {
     border-bottom: 1px solid #dbdad6;
 }
 
-.tagline h2, .tagline h3 {
+.tagline h2,
+.tagline h3 {
     margin: 0;
     text-align: center;
     font-weight: lighter;
