@@ -34,6 +34,10 @@ hr {
     padding: 0;
 }
 
+a img {
+    border: 0;
+}
+
 img {
     vertical-align: middle;
 }
@@ -61,13 +65,13 @@ h1, h2, h3, h4, h5, h6 {
     font-family: 'Lato', sans-serif;
 }
 
-.main-title {
+h1 {
     text-transform: uppercase;
     font-weight: lighter;
     font-family: 'Lato', sans-serif;
 }
 
-.medium-subtitle {
+h2 {
     margin: 20px 0;
     color: #3a7d9c;
     text-transform: uppercase;
@@ -184,10 +188,6 @@ h1, h2, h3, h4, h5, h6 {
     font-family: 'Lato', sans-serif;
     font-weight: lighter;
     background: url('../img/download-btn.png');
-}
-
-.main-info {
-    overflow: hidden;
 }
 
 .boxes {
