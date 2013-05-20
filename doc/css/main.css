@@ -1,0 +1,469 @@
+html,
+button,
+input,
+select,
+textarea {
+    color: #222;
+}
+
+body {
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 1em;
+    line-height: 1.4;
+}
+
+::-moz-selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+img {
+    vertical-align: middle;
+}
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+textarea {
+    resize: vertical;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* ==========================================================================
+    FONTS
+===========================================================================*/
+
+@font-face {
+    font-family: 'LatoBlack';
+    src: url('fonts/Lato-Bla-webfont.eot');
+    src: url('fonts/Lato-Bla-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/Lato-Bla-webfont.woff') format('woff'),
+         url('fonts/Lato-Bla-webfont.ttf') format('truetype'),
+         url('fonts/Lato-Bla-webfont.svg#LatoBlack') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'LatoLight';
+    src: url('fonts/Lato-Lig-webfont.eot');
+    src: url('fonts/Lato-Lig-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/Lato-Lig-webfont.woff') format('woff'),
+         url('fonts/Lato-Lig-webfont.ttf') format('truetype'),
+         url('fonts/Lato-Lig-webfont.svg#LatoLight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'LatoRegular';
+    src: url('fonts/Lato-Reg-webfont.eot');
+    src: url('fonts/Lato-Reg-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/Lato-Reg-webfont.woff') format('woff'),
+         url('fonts/Lato-Reg-webfont.ttf') format('truetype'),
+         url('fonts/Lato-Reg-webfont.svg#LatoRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'LatoBold';
+    src: url('fonts/Lato-Bol-webfont.eot');
+    src: url('fonts/Lato-Bol-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/Lato-Bol-webfont.woff') format('woff'),
+         url('fonts/Lato-Bol-webfont.ttf') format('truetype'),
+         url('fonts/Lato-Bol-webfont.svg#LatoBold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'VollkornItalic';
+    src: url('fonts/Vollkorn-Italic-webfont.eot');
+    src: url('fonts/Vollkorn-Italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/Vollkorn-Italic-webfont.woff') format('woff'),
+         url('fonts/Vollkorn-Italic-webfont.ttf') format('truetype'),
+         url('fonts/Vollkorn-Italic-webfont.svg#VollkornItalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'VollkornRegular';
+    src: url('fonts/Vollkorn-Regular-webfont.eot');
+    src: url('fonts/Vollkorn-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/Vollkorn-Regular-webfont.woff') format('woff'),
+         url('fonts/Vollkorn-Regular-webfont.ttf') format('truetype'),
+         url('fonts/Vollkorn-Regular-webfont.svg#VollkornRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'VollkornBold';
+    src: url('fonts/Vollkorn-Bold-webfont.eot');
+    src: url('fonts/Vollkorn-Bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/Vollkorn-Bold-webfont.woff') format('woff'),
+         url('fonts/Vollkorn-Bold-webfont.ttf') format('truetype'),
+         url('fonts/Vollkorn-Bold-webfont.svg#VollkornBold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+/* ========================================================================== */
+
+body {
+    font-family: 'LatoRegular', sans-serif;
+
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'LatoBold', sans-serif;
+}
+.main-title {
+    text-transform: uppercase;
+    font-weight: lighter;
+    font-family: 'LatoLight', sans-serif;
+}
+.medium-subtitle {
+    margin: 20px 0;
+    color: #3a7d9c;
+    text-transform: uppercase;
+    font-weight: lighter;
+    font-family: 'LatoLight', sans-serif;
+}
+.wrapper {
+    width: 960px;
+    margin: 0 auto;
+}
+
+.main-header {
+    overflow: hidden;
+    border-bottom: 1px solid #dbdad6;
+}
+
+.logo {
+    position: relative;
+    top:20px;
+    width: 183px;
+    height: 74px;
+    margin: 0;
+    background-image: url('../img/maria-logo.png');
+}
+    .logo a { display: block; }
+
+.header-logo {
+    float:left;
+}
+
+.main-nav {
+    float: right;
+    padding-top: 50px;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+    .main-nav li {
+        display: inline-block;
+        margin-left: 20px;
+    }
+    .main-nav a {
+        color: #333;
+    }
+        .main-nav a:hover, .main-nav a.active {
+            color: #3a7d9c;
+        }
+
+.tagline, .main-content {
+    clear: both;
+}
+
+.tagline {
+    padding: 20px 0;
+    margin-bottom: 80px;
+    border-bottom: 1px solid #dbdad6;
+}
+
+.tagline h2, .tagline h3 {
+    margin: 0;
+    text-align: center;
+    font-weight: lighter;
+    text-transform: uppercase;
+    font-family: 'LatoLight', sans-serif;
+}
+    .tagline span {
+        color: #3a7d9c;
+    }
+    .tagline h2 {
+        color: #000000;
+        font-size: 33px;
+    }
+    .tagline h3 {
+        color: #333333;
+        font-size: 22px;
+    }
+
+.content {
+    float:left;
+    width: 725px;
+    color: #333;
+    font-size: 16px;
+}
+    .content .subtitle {
+        font-size:16px;
+        text-transform: uppercase;
+    }
+    .content ul {
+        padding: 0;
+        list-style: none;
+    }
+        .content li {
+            margin-bottom: 6px;
+        }
+
+.main-info a {
+    color: #3a7d9c;
+}
+.main-info pre {
+    display: inline;
+}
+
+.small-aside {
+    float: left;
+    width: 180px;
+    padding: 40px 0 0 50px;
+}
+.main-info .btn-download {
+    display: block;
+    width: 117px;
+    height: 63px;
+    line-height: 63px;
+    margin: 0;
+    padding: 0 0 0 50px;
+    color:#fff;
+    font-family: 'LatoLight', sans-serif;
+    font-weight: lighter;
+    background: url('../img/download-btn.png');
+}
+
+.main-info {
+    overflow: hidden;
+}
+.boxes {
+    clear: both;
+    overflow: hidden;
+    margin-top: 60px;
+    padding-top: 60px;
+    border-top: 1px solid #dbdad6;
+}
+    .boxes .box {
+        float:left;
+        width: 225px;
+        margin-right: 15px;
+    }
+    .boxes .btn-box {
+        width: 225px;
+        height: 152px;
+        background-image: url('../img/sprite-home-btns.png');
+
+    -webkit-transition: all 0.5s ease-in-out;
+       -moz-transition: all 0.5s ease-in-out;
+            transition: all 0.5s ease-in-out;
+    }
+
+    .boxes .quick-start {background-position: 0 0;}
+        .boxes .quick-start:hover {background-position: 0 -153px;}
+    .boxes .plugins {background-position: -226px 0;}
+        .boxes .plugins:hover {background-position: -226px -153px;}
+    .boxes .api-documentation {background-position: -452px 0;}
+        .boxes .api-documentation:hover {background-position: -452px -153px;}
+    .boxes .github-project {background-position: -678px 0;}
+        .boxes .github-project:hover {background-position: -678px -153px;}
+
+    .boxes .medium-title {
+        margin: 20px 0 0;
+        color: #333;
+        font-size: 24px;
+        font-weight: lighter;
+        font-family: 'LatoRegular', sans-serif;
+    }
+    .boxes .box {
+        color: #666;
+        font-size: 13px;
+    }
+
+.simple-list {
+
+}
+    .simple-list a {
+        color:#3a7d9c;
+    }
+
+.footer {
+    clear:both;
+    margin: 40px 0;
+    padding: 40px 0;
+    border-top: 1px solid #dbdad6;
+    color:#333;
+    text-align: center;
+    font-size: 13px;
+    font-weight: lighter;
+    font-family: 'LatoLight', sans-serif;
+}
+    .footer a {
+        color: #3a7d9c;
+    }
+/* ==========================================================================
+   Media Queries
+   ========================================================================== */
+
+@media only screen and (min-width: 35em) {
+
+}
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+.ir { display: block; border: 0; text-indent: -999em; overflow: hidden; background-color: transparent; background-repeat: no-repeat; text-align: left; direction: ltr; *line-height: 0; }
+
+.hidden {
+    display: none !important;
+    visibility: hidden;
+}
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+}
+
+/* ==========================================================================
+   Print styles
+   ========================================================================== */
+
+@media print {
+    * {
+        background: transparent !important;
+        color: #000 !important; /* Black prints faster: h5bp.com/s */
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+
+    /*
+     * Don't show links for images, or javascript/internal links
+     */
+
+    .ir a:after,
+    a[href^="javascript:"]:after,
+    a[href^="#"]:after {
+        content: "";
+    }
+
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+
+    thead {
+        display: table-header-group; /* h5bp.com/t */
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    img {
+        max-width: 100% !important;
+    }
+
+    @page {
+        margin: 0.5cm;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+}

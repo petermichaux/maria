@@ -1,83 +1,111 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Maria - The MVC Framework for JavaScript Application</title>
 
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
 
-    <link href="css/base.css" rel="stylesheet">
-    <style type="text/css">
-        table.examples {
-            margin: 10px auto;
-            text-align:center;
-        }
-        table.examples td {
-            padding:10px 40px;
-            vertical-align:top;
-        }
-    </style>
+    <!--[if lt IE 9]>
+        <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
 
-
+    <link href="css/normalize.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
 </head>
 <body>
-
     <div class="wrapper">
-        <div class="liner">
 
-            <div class="header">
-                <div class="liner">
+        <header class="main-header">
 
-                    <div class="logo">
-                        <a href="index.html"><img src="img/profile.png" alt="" height="160"><img src="img/logo.png" alt="Maria" height="140"></a>
-                        <p>The MVC Framework for JavaScript Applications</p>
-                    </div><!-- logo -->
+            <div class="header-logo">
+                <h1 class="ir logo"><a href="index.html">Maria MVC</a></h1>
+            </div>
 
-                </div><!-- liner -->
-            </div><!-- header -->
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="quick-start-tutorial-for-the-impatient.html">Quick Start</a></li>
+                    <li><a href="plugins.html">Plugins</a></li>
+                    <li><a href="/api/maria.html">Documentation</a></li>
+                    <li><a href="https://github.com/petermichaux/maria">GitHub</a></li>
+                </ul>
+            </nav>
 
-            <div class="content">
-                <div class="liner">
+        </header>
 
-                    <ul>
-                        <li><a href="quick-start-tutorial-for-the-impatient.html">Quick Start for the Impatient</a></li>
-                        <li><a href="plugins.html">Plugins</a></li>
-                        <li><a href="api/maria.html">API Documentation</a></li>
-                        <li><a href="https://github.com/petermichaux/maria">GitHub Project</a></li>
-                    </ul>
+        <section class="tagline">
 
-                    <h2>Example Applications</h2>
-                    
-                    <table cellspacing="0" class="examples">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <a href="eg/checkit/src/index.html"><img src="img/checkit.png" alt="" height="100"><br>checkit</a><br><span class="note">(<a href="eg/timeit.tar.gz">tarball</a>)</span>
-                                </td>
-                                <td>
-                                    <a href="eg/timeit/src/index.html"><img src="img/timeit.png" alt="" height="100"><br>timeit</a><br><span class="note">(<a href="eg/timeit.tar.gz">tarball</a>)</span>
-                                </td>
-                                <td>
-                                    <a href="eg/scrollit/src/index.html"><img src="img/scrollit.png" alt="" height="100"><br>scrollit</a><br><span class="note">(<a href="eg/timeit.tar.gz">tarball</a>)</span>
-                                </td>
-                                <td>
-                                    <a href="http://todomvc.com/architecture-examples/maria/" target="_blank"><img src="img/todomvc.png" alt="" height="100"><br>TodoMVC</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <h2>The <span>MVC</span> framework for <span>javascript</span> applications</h2>
+            <h3>The real MVC. The Smalltalk MVC. The Gang of Four MVC.</h3>
 
-                </div><!-- liner -->
-            </div><!-- content -->
+        </section>
 
-            <div class="footer">
-                <div class="liner">
-                    &copy; 2013 Peter Michaux
-                </div><!-- liner -->
-            </div><!-- footer -->
+        <section class="main-content">
 
-        </div><!-- liner -->
-    </div><!-- wrapper -->
+            <div class="main-info">
+                <div class="content">
+                      <h3 class="subtitle">Model View Controller</h3>
+                      <ul>
+                          <li>- A model contains domain data.  When a model changes, it informs its observers.</li>
+                          <li>- A view observes a model and represents its model's current state. A view has a controller. A view can have child views.</li>
+                          <li>- A controller decides what happens when a user interacts with the controller's view.</li>
+                      </ul>
+                      <p>The three core design patterns of MVC (observer, composite, and strategy) are embedded in Maria's Model, View, and Controller objects. Other patterns traditionally included in MVC implementations (e.g. factory method and template) make appearances too.</p>
+                  </div>
 
+                  <aside class="small-aside">
+                      <a href="http://peter.michaux.ca/downloads/maria/1.0.0-rc.11/maria.js" class="btn btn-download">maria.js</a>
+                      <a href="http://peter.michaux.ca/downloads/maria/1.0.0-rc.11/maria-min.js" class="btn btn-download">maria.min.js</a>
+                      <a href="http://peter.michaux.ca/downloads/maria/1.0.0-rc.11/maria-amd.js" class="btn btn-download">maria.amd.js</a>
+                  </aside>
+
+            </div>
+
+            <div class="boxes">
+
+                <div class="box">
+                    <a href="quick-start-tutorial-for-the-impatient.html" class="ir btn-box quick-start">Quick Start</a>
+                    <h4 class="medium-title">Quick Start</h4>
+                    <p>By the end of this tutorial, you’ll understand how the components communicate in an application written in the MVC style with Maria and be ready to create more complex client-side application on your own.</p>
+                </div>
+
+                <div class="box">
+                    <a href="plugins.html" class="ir btn-box plugins">Plugins</a>
+                    <h4 class="medium-title">Plugins</h4>
+                    <p>Maria is designed to be flexible so that plugins can modify virtually any of the framework’s functionality. This allows plugins to modify Maria to suit your needs and preferences.</p>
+                </div>
+
+                <div class="box">
+                    <a href="/api/maria.html" class="ir btn-box api-documentation">API Documentation</a>
+                    <h4 class="medium-title">API Documentation</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit distinctio dicta provident. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit distinctio dicta provident.</p>
+                </div>
+
+                <div class="box">
+                    <a href="https://github.com/petermichaux/maria" class="ir btn-box github-project">GitHub Project</a>
+                    <h4 class="medium-title">GitHub Project</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit distinctio dicta provident. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit distinctio dicta provident.</p>
+                </div>
+
+            </div>
+
+            <div>
+                <h3 class="subtitle">Example Applications</h3>
+                <ul class="simple-list">
+                    <li><a href="/maria/eg/checkit/src/index.html">Check It </a> - <a href="#">(download)</a></li>
+                    <li><a href="/maria/eg/timeit/src/index.html">Time It </a> - <a href="#">(download)</a></li>
+                    <li><a href="/maria/eg/scrollit/src/index.html">Scroll It </a> - <a href="#">(download)</a></li>
+                    <li><a href="http://todomvc.com/architecture-examples/maria/" target="_blank">todoMVC</a></li>
+                </ul>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>&copy; 2013 Peter Michaux - <a href="https://twitter.com/petermichaux">@petermichaux</a></p>
+            <p>Designed by <a href="http://laantorcha.net" target="_blank">laantorcha.net</a></p>
+        </footer>
+
+    </div>
 </body>
 </html>

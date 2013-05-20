@@ -1,56 +1,63 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <title>Maria - Plugins</title>
+    <meta charset="UTF-8">
+    <title>Maria - The MVC Framework for JavaScript Application</title>
 
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
 
-    <link href="css/base.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+        <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
 
+    <link href="css/normalize.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
 </head>
 <body>
-
     <div class="wrapper">
-        <div class="liner">
 
-            <div class="header">
-                <div class="liner">
+        <header class="main-header">
 
-                    <div class="logo">
-                        <a href="index.html"><img src="img/profile.png" alt="" height="160"><img src="img/logo.png" alt="Maria" height="140"></a>
-                        <p>The MVC Framework for JavaScript Applications</p>
-                    </div><!-- logo -->
+            <div class="header-logo">
+                <h1 class="ir logo"><a href="index.html">Maria MVC</a></h1>
+            </div>
 
-                </div><!-- liner -->
-            </div><!-- header -->
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="quick-start-tutorial-for-the-impatient.html">Quick Start</a></li>
+                    <li><a href="plugins.html" class="active">Plugins</a></li>
+                    <li><a href="/api/maria.html">Documentation</a></li>
+                    <li><a href="https://github.com/petermichaux/maria">GitHub</a></li>
+                </ul>
+            </nav>
 
-            <div class="content">
-                <div class="liner">
+        </header>
 
-                    <h1>Plugins</h1>
+        <section class="main-content">
 
-                    <p>Maria is designed to be flexible so that plugins can modify virtually any of the framework&rsquo;s functionality. This allows plugins to modify Maria to suit your needs and preferences.</p>
-                    
-                    <p>If you have a plugin you would like to promote. Please create <a href="https://github.com/petermichaux/maria">a pull request on GitHub</a> to add your plugin to this page.</p>
-                    
-                    <ul>
-                        <li><a href="https://github.com/petermichaux/maria-script-template">maria-script-template</a> - use <code>&lt;script id="TodoTemplate" type="text/template">&lt;script></code> templates</li>
-                        <li><a href="https://github.com/petermichaux/maria-emphasize">maria-emphasize</a> - adds <code>emphasize</code> and <code>deEmphasize</code> methods to your views.</li>
-                        <li><a href="https://github.com/petermichaux/maria-NodeModel">maria-NodeModel</a> - sets are not the only useful collection model. In case you have need for tree-structured models.</li>
-                    </ul>
+            <div class="main-info">
+                <h2 class="main-title">Plugins</h2>
 
-                </div><!-- liner -->
-            </div><!-- content -->
+                <p>Maria is designed to be flexible so that plugins can modify virtually any of the framework&rsquo;s functionality. This allows plugins to modify Maria to suit your needs and preferences.</p>
 
-            <div class="footer">
-                <div class="liner">
-                    &copy; 2013 Peter Michaux
-                </div><!-- liner -->
-            </div><!-- footer -->
+                <p>If you have a plugin you would like to promote. Please create <a href="https://github.com/petermichaux/maria">a pull request on GitHub</a> to add your plugin to this page.</p>
 
-        </div><!-- liner -->
-    </div><!-- wrapper -->
+                <ul>
+                    <li><a href="https://github.com/petermichaux/maria-script-template">maria-script-template</a> - use <pre>&lt;script id="TodoTemplate" type="text/template">&lt;script></pre> templates</li>
+                    <li><a href="https://github.com/petermichaux/maria-emphasize">maria-emphasize</a> - adds <pre>emphasize</pre> and <pre>deEmphasize</pre> methods to your views.</li>
+                    <li><a href="https://github.com/petermichaux/maria-NodeModel">maria-NodeModel</a> - sets are not the only useful collection model. In case you have need for tree-structured models.</li>
+                </ul>
 
+            </div>
+
+        </section>
+
+        <footer class="footer">
+            <p>&copy; 2013 Peter Michaux - <a href="https://twitter.com/petermichaux">@petermichaux</a></p>
+            <p>Designed by <a href="http://laantorcha.net" target="_blank">laantorcha.net</a></p>
+        </footer>
+
+    </div>
 </body>
 </html>
