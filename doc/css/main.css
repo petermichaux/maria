@@ -165,15 +165,8 @@ pre {
 }
 
 .content li {
-    margin-bottom: 6px;
-}
-
-.main-info a {
-    color: #3a7d9c;
-}
-
-.main-info pre {
-    display: inline;
+    margin-bottom: 0.25em;
+    margin-top: 0.25em;
 }
 
 .small-aside {
@@ -182,7 +175,7 @@ pre {
     padding: 40px 0 0 50px;
 }
 
-.main-info .btn-download {
+.btn-download {
     display: block;
     width: 117px;
     height: 63px;
@@ -250,7 +243,7 @@ pre {
     background-position: -678px -153px;
 }
 
-.boxes .medium-title {
+.boxes h4 {
     margin: 20px 0 0;
     color: #333;
     font-size: 24px;
