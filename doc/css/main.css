@@ -148,7 +148,18 @@ body {
 h1, h2, h3, h4, h5, h6 {
     font-family: 'LatoBold', sans-serif;
 }
-
+.main-title {
+    text-transform: uppercase;
+    font-weight: lighter;
+    font-family: 'LatoLight', sans-serif;
+}
+.medium-subtitle {
+    margin: 20px 0;
+    color: #3a7d9c;
+    text-transform: uppercase;
+    font-weight: lighter;
+    font-family: 'LatoLight', sans-serif;
+}
 .wrapper {
     width: 960px;
     margin: 0 auto;
@@ -158,6 +169,7 @@ h1, h2, h3, h4, h5, h6 {
     overflow: hidden;
     border-bottom: 1px solid #dbdad6;
 }
+
 .logo {
     position: relative;
     top:20px;
@@ -248,8 +260,7 @@ h1, h2, h3, h4, h5, h6 {
     width: 180px;
     padding: 40px 0 0 50px;
 }
-
-.btn-download {
+.main-info .btn-download {
     display: block;
     width: 117px;
     height: 63px;

@@ -1,97 +1,109 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <title>Maria - Quick Start Tutorial for the Impatient</title>
+    <meta charset="UTF-8">
+    <title>Maria - The MVC Framework for JavaScript Application</title>
 
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
 
-    <link href="css/base.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+        <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
 
+    <link rel="stylesheet" href="css/github.css">
+    <script src="js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <link href="css/normalize.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
 </head>
 <body>
-
     <div class="wrapper">
-        <div class="liner">
 
-            <div class="header">
-                <div class="liner">
+        <header class="main-header">
 
-                    <div class="logo">
-                        <a href="index.html"><img src="img/profile.png" alt="" height="160"><img src="img/logo.png" alt="Maria" height="140"></a>
-                        <p>The MVC Framework for JavaScript Applications</p>
-                    </div><!-- logo -->
+            <div class="header-logo">
+                <h1 class="ir logo"><a href="index.html">Maria MVC</a></h1>
+            </div>
 
-                </div><!-- liner -->
-            </div><!-- header -->
-
-            <div class="content">
-                <div class="liner">
-
-
-        <h1>Quick Start Tutorial for the Impatient</h1>
-
-        <p>We have things to do. Let&rsquo;s use Maria to build an application called &ldquo;checkit&rdquo; to organize our to-dos.</p>
-
-        <p><img src="img/tutorial-500.png" alt=""></p>
-
-        <p>By the end of this tutorial, you&rsquo;ll understand how the components communicate in an application written in the MVC style with Maria and be ready to create more complex client-side application on your own.</p>
-
-        <p>Let&rsquo;s go...</p>
-
-
-        <h2>Separate Their Code From Our Code</h2>
-
-        <p>There are generic libraries out there in the world that are written, ready, and just waiting for us to download for use in our application. There is application-specific source code that we will write. Create a <code>checkit/</code> directory to contain the entire application with <code>lib/</code> and <code>src/</code> sub-directories to keep these two types of files separate.</p>
-
-        <ul class="filetree">
-            <li>
-                <code>checkit/</code>
+            <nav class="main-nav">
                 <ul>
-                    <li><code>lib/</code></li>
-                    <li><code>src/</code></li>
+                    <li><a href="quick-start-tutorial-for-the-impatient.html" class="active">Quick Start</a></li>
+                    <li><a href="plugins.html">Plugins</a></li>
+                    <li><a href="/api/maria.html">Documentation</a></li>
+                    <li><a href="https://github.com/petermichaux/maria">GitHub</a></li>
                 </ul>
-            </li>
-        </ul>
+            </nav>
+
+        </header>
+
+        <section class="main-content">
+
+            <div class="main-info">
+                <h2 class="main-title">Quick Start Tutorial for the Impatient</h2>
+
+                <p>We have things to do. Let&rsquo;s use Maria to build an application called &ldquo;checkit&rdquo; to organize our to-dos.</p>
+
+                <p><img src="img/tutorial-500.png" alt=""></p>
+
+                <p>By the end of this tutorial, you&rsquo;ll understand how the components communicate in an application written in the MVC style with Maria and be ready to create more complex client-side application on your own.</p>
+
+                <p>Let&rsquo;s go...</p>
 
 
-        <h2>Download Maria and Other Libraries</h2>
+                <h3 class="medium-subtitle">Separate Their Code From Our Code</h3>
 
-        <p>To give our application structure, we&rsquo;ll use the <a href="https://github.com/petermichaux/maria" target="_blank">Maria</a> framework. Download the latest version from the following link and save it as <code>checkit/lib/maria/maria.js</code>.</p>
+                <p>There are generic libraries out there in the world that are written, ready, and just waiting for us to download for use in our application. There is application-specific source code that we will write. Create a <code>checkit/</code> directory to contain the entire application with <code>lib/</code> and <code>src/</code> sub-directories to keep these two types of files separate.</p>
 
-        <p><a href="http://peter.michaux.ca/downloads/maria/current/maria.js" target="_blank">http://peter.michaux.ca/downloads/maria/current/maria.js</a></p>
-
-        <p>In this application, we&rsquo;ll need to manipulate the <code>class</code> attribute values of DOM elements. We&rsquo;ll use the <a href="https://github.com/petermichaux/aristocrat" target="_blank">Aristocrat</a> library. Download the latest version from the following link and save it as <code>checkit/lib/aristocrat/aristocrat.js</code>.</p>
-
-        <p><a href="http://peter.michaux.ca/downloads/aristocrat/current/aristocrat.js" target="_blank">http://peter.michaux.ca/downloads/aristocrat/current/aristocrat.js</a></p>
-
-
-        <h2>Namespace Our Application Code</h2>
-
-        <p>The conventions built into Maria expect our application classes are all properties of a single namespace object. Create a file <code>checkit/src/js/namespace.js</code> defining our namespace object.</p>
-
-<pre><code>var checkit = {};</code></pre>
+                <ul class="filetree">
+                    <li>
+                        <code>checkit/</code>
+                        <ul>
+                            <li><code>lib/</code></li>
+                            <li><code>src/</code></li>
+                        </ul>
+                    </li>
+                </ul>
 
 
-        <h2>Prepare for Our Own Utilities</h2>
+                <h3 class="medium-subtitle">Download Maria and Other Libraries</h3>
 
-        <p>It&rsquo;d be great if every miscellaneous utility function we need in our application was available in a third-party library; however, that is rarely the case in any application. Create a <code>checkit/src/js/util.js</code> file where we&rsquo;ll add utility functions that we&rsquo;ll write as we find needs for them.</p>
+                <p>To give our application structure, we&rsquo;ll use the <a href="https://github.com/petermichaux/maria" target="_blank">Maria</a> framework. Download the latest version from the following link and save it as <code>checkit/lib/maria/maria.js</code>.</p>
+
+                <p><a href="http://peter.michaux.ca/downloads/maria/current/maria.js" target="_blank">http://peter.michaux.ca/downloads/maria/current/maria.js</a></p>
+
+                <p>In this application, we&rsquo;ll need to manipulate the <code>class</code> attribute values of DOM elements. We&rsquo;ll use the <a href="https://github.com/petermichaux/aristocrat" target="_blank">Aristocrat</a> library. Download the latest version from the following link and save it as <code>checkit/lib/aristocrat/aristocrat.js</code>.</p>
+
+                <p><a href="http://peter.michaux.ca/downloads/aristocrat/current/aristocrat.js" target="_blank">http://peter.michaux.ca/downloads/aristocrat/current/aristocrat.js</a></p>
 
 
-        <h2>Modelling To-do Items</h2>
+                <h3 class="medium-subtitle">Namespace Our Application Code</h3>
 
-        <p>We&rsquo;re building an application for organizing to-do items. For each individual thing we need to do, we&rsquo;ll create a model object representing that individual to-do.</p>
+                <p>The conventions built into Maria expect our application classes are all properties of a single namespace object. Create a file <code>checkit/src/js/namespace.js</code> defining our namespace object.</p>
 
-        <p>We must design a class for an individual to-do. The two fundamental questions we&rsquo;ll ask a to-do model object are:</p>
+        <pre><code>var checkit = {};</code></pre>
 
-        <ol>
-            <li>What needs doing?</li>
-            <li>Has it already been done?</li>
-        </ol>
 
-        <p>Create a <code>checkit/src/js/models/</code> directory for all our model classes.</p>
+                <h3 class="medium-subtitle">Prepare for Our Own Utilities</h3>
 
-        <p>We&rsquo;ll use <code>maria.Model</code> as the parent class for our <code>checkit.TodoModel</code> class in a file called <code>checkit/src/js/models/TodoModel.js</code>.</p>
+                <p>It&rsquo;d be great if every miscellaneous utility function we need in our application was available in a third-party library; however, that is rarely the case in any application. Create a <code>checkit/src/js/util.js</code> file where we&rsquo;ll add utility functions that we&rsquo;ll write as we find needs for them.</p>
+
+
+                <h3 class="medium-subtitle">Modelling To-do Items</h3>
+
+                <p>We&rsquo;re building an application for organizing to-do items. For each individual thing we need to do, we&rsquo;ll create a model object representing that individual to-do.</p>
+
+                <p>We must design a class for an individual to-do. The two fundamental questions we&rsquo;ll ask a to-do model object are:</p>
+
+                <ol>
+                    <li>What needs doing?</li>
+                    <li>Has it already been done?</li>
+                </ol>
+
+                <p>Create a <code>checkit/src/js/models/</code> directory for all our model classes.</p>
+
+                <p>We&rsquo;ll use <code>maria.Model</code> as the parent class for our <code>checkit.TodoModel</code> class in a file called <code>checkit/src/js/models/TodoModel.js</code>.</p>
 
 <pre><code>maria.Model.subclass(checkit, 'TodoModel', {
     properties: {
@@ -123,15 +135,15 @@
     }
 });</code></pre>
 
-        <p>The <code>checkit.trim</code> function is an example of a utility function that we&rsquo;ll add to our <code>checkit/src/js/util.js</code> file.</p>
+                <p>The <code>checkit.trim</code> function is an example of a utility function that we&rsquo;ll add to our <code>checkit/src/js/util.js</code> file.</p>
 
 <pre><code>checkit.trim = function(str) {
     return str.replace(/^\s+|\s+$/g, '');
 };</code></pre>
 
-        <p>To find out more about this <code>checkit.TodoModel</code> class, let&rsquo;s get our hands dirty and experiment in a browser console like <a href="http://getfirebug.com/" target="_blank">Firebug</a>.</p>
-        
-        <p>Create an HTML document called <code>checkit/src/index.html</code> that loads both the libraries and our application code.</p>
+                <p>To find out more about this <code>checkit.TodoModel</code> class, let&rsquo;s get our hands dirty and experiment in a browser console like <a href="http://getfirebug.com/" target="_blank">Firebug</a>.</p>
+
+                <p>Create an HTML document called <code>checkit/src/index.html</code> that loads both the libraries and our application code.</p>
 
 <pre><code>&lt;!DOCTYPE html>
 &lt;html>
@@ -151,9 +163,9 @@
 &lt;/body>
 &lt;/html></code></pre>
 
-        <p>With the above page loaded in the browser, we can interactively explore in the console.</p>
+                <p>With the above page loaded in the browser, we can interactively explore in the console.</p>
 
-        <p>Create a new to-do and check its default content and done values.</p>
+                <p>Create a new to-do and check its default content and done values.</p>
 
 <pre><code>> var todoModel = new checkit.TodoModel();
 undefined
@@ -162,7 +174,7 @@ undefined
 > todoModel.isDone();
 false</code></pre>
 
-        <p>Let&rsquo;s make the to-do more motivating to do.</p>
+                <p>Let&rsquo;s make the to-do more motivating to do.</p>
 
 <pre><code>> todoModel.setContent('test drive Ferrari');
 undefined
@@ -170,26 +182,26 @@ undefined
 "test drive Ferrari"
 </code></pre>
 
-        <p>Looking good so far but those are just getters and setters. We haven&rsquo;t seen any MVC magic yet. The observer pattern is the first bit of magic we&rsquo;ll explore.</p>
+                <p>Looking good so far but those are just getters and setters. We haven&rsquo;t seen any MVC magic yet. The observer pattern is the first bit of magic we&rsquo;ll explore.</p>
 
-        <p>In most MVC applications, a model object communicates with one or more view objects via the observer pattern. When a particular event type happens on the model, the model notifies all the views who&rsquo;ve added themselves as observers of that event type on that view. This gives the views an opportunity to react to the model&rsquo;s event. Typically a view object wants to keep its visual representation up-to-date to match the model object&rsquo;s current state. The observer pattern creates a very loose coupling between a model and the views as the model object doesn&rsquo;t  know or even care about what the view objects are doing.</p>
+                <p>In most MVC applications, a model object communicates with one or more view objects via the observer pattern. When a particular event type happens on the model, the model notifies all the views who&rsquo;ve added themselves as observers of that event type on that view. This gives the views an opportunity to react to the model&rsquo;s event. Typically a view object wants to keep its visual representation up-to-date to match the model object&rsquo;s current state. The observer pattern creates a very loose coupling between a model and the views as the model object doesn&rsquo;t  know or even care about what the view objects are doing.</p>
 
-        <p>Let&rsquo;s see the observer pattern relationship between a to-do model object and fake view object.</p>
-    
-        <p>We create a fake view object and add it as an observer of the to-do model object.</p>
+                <p>Let&rsquo;s see the observer pattern relationship between a to-do model object and fake view object.</p>
+
+                <p>We create a fake view object and add it as an observer of the to-do model object.</p>
 
 <pre><code>> var view = {update: function(evt) {console.log('The model changed!');}};
 undefined
 > maria.on(todoModel, 'change', view, 'update');
 undefined</code></pre>
 
-        <p>Now a change to the model object&rsquo;s done value will cause the model to call the view&rsquo;s <code>update</code> method.<p>
+                <p>Now a change to the model object&rsquo;s done value will cause the model to call the view&rsquo;s <code>update</code> method.<p>
 
 <pre><code>> todoModel.setDone(true);
 "The model changed!"
 undefined</code></pre>
 
-        <p>If we remove the observer from the model and change the done value again, we see the view is no longer notified.</p>
+             <p>If we remove the observer from the model and change the done value again, we see the view is no longer notified.</p>
 
 <pre><code>> maria.off(todoModel, 'change', view, 'update');
 undefined
@@ -197,18 +209,18 @@ todoModel.setDone(false);
 undefined
 </code></pre>
 
-        <p>Try adding multiple fake views as observers of one model. Try calling <code>todoModel.setDone(true)</code> multiple times consecutively. What information does the <code>evt</code> object contain that is passed to the observer's method? Experiment. Explore.</p>
+                <p>Try adding multiple fake views as observers of one model. Try calling <code>todoModel.setDone(true)</code> multiple times consecutively. What information does the <code>evt</code> object contain that is passed to the observer's method? Experiment. Explore.</p>
 
-        <p>If you are a devout test-driven developer, you&rsquo;re surely disappointed that code&rsquo;s been written but tests haven&rsquo;t. Forgive us. We have sinned. Now is a good time to repent and make amends. Add your test library in a subdirectory of <code>checkit/lib/</code> if necessary, your tests in a <code>checkit/tst/</code> or <code>checkit/spec/</code> directory, and float your boat. By the way, I recommend you check out the great <a href="http://busterjs.org/" target="_blank">Buster</a> automated testing tools which are used for testing the Maria source code.</p>
+                <p>If you are a devout test-driven developer, you&rsquo;re surely disappointed that code&rsquo;s been written but tests haven&rsquo;t. Forgive us. We have sinned. Now is a good time to repent and make amends. Add your test library in a subdirectory of <code>checkit/lib/</code> if necessary, your tests in a <code>checkit/tst/</code> or <code>checkit/spec/</code> directory, and float your boat. By the way, I recommend you check out the great <a href="http://busterjs.org/" target="_blank">Buster</a> automated testing tools which are used for testing the Maria source code.</p>
 
 
-        <h2>Viewing a To-do</h2>
+                <h3 class="medium-subtitle">Viewing a To-do</h3>
 
-        <p>Now that we can model a to-do item, we&rsquo;ll need a way to show it in the browser. We'll create a view for a to-do. Creating a view can use several files. In this case, there will be an HTML template, some CSS, a couple images, and the JavaScript that brings to view to life.</p>
+                <p>Now that we can model a to-do item, we&rsquo;ll need a way to show it in the browser. We'll create a view for a to-do. Creating a view can use several files. In this case, there will be an HTML template, some CSS, a couple images, and the JavaScript that brings to view to life.</p>
 
-        <p>Create a directory <code>checkit/src/js/templates/</code> for all our HTML templates.</p>
-        
-        <p>Add the following code to a file <code>checkit/src/js/templates/TodoTemplate.js</code>.</p>
+                <p>Create a directory <code>checkit/src/js/templates/</code> for all our HTML templates.</p>
+
+                <p>Add the following code to a file <code>checkit/src/js/templates/TodoTemplate.js</code>.</p>
 
 <pre><code>checkit.TodoTemplate =
     '&lt;li class="Todo">' +
@@ -216,13 +228,13 @@ undefined
         '&lt;span class="content">&lt;/span>' +
     '&lt;/li>';</code></pre>
 
-        <p>(In a full, industrial-strength development environment this template would be expressed in a file containing only HTML and be compiled to the JavaScript above as part of the server/build functionality. Due to the limitations of a simple example that does not require any special server environment to try, the manually compiled version is included.)</p>
+                <p>(In a full, industrial-strength development environment this template would be expressed in a file containing only HTML and be compiled to the JavaScript above as part of the server/build functionality. Due to the limitations of a simple example that does not require any special server environment to try, the manually compiled version is included.)</p>
 
-        <p>Notice that the elements that will be interesting to our JavaScript view objects are identified by class attributes. There are no id attributes. This is always a good practice and is necessary so that we can have multiple to-do items displayed simultaneously in the browser.</p>
+                <p>Notice that the elements that will be interesting to our JavaScript view objects are identified by class attributes. There are no id attributes. This is always a good practice and is necessary so that we can have multiple to-do items displayed simultaneously in the browser.</p>
 
-        <p>Create a directory <code>checkit/src/css/</code> for all our CSS files.</p>
+                <p>Create a directory <code>checkit/src/css/</code> for all our CSS files.</p>
 
-        <p>The CSS for the to-do view goes in <code>checkit/src/css/Todo.css</code>.</p>
+                <p>The CSS for the to-do view goes in <code>checkit/src/css/Todo.css</code>.</p>
 
 <pre><code>.Todo {
     list-style-type: none;
@@ -250,24 +262,24 @@ undefined
     background-image: url(../img/done.png);
 }</code></pre>
 
-        <p>Create a directory <code>checkit/src/img/</code> for all our images.</p>
-        
-        <p>Save the following two images.</p>
+                <p>Create a directory <code>checkit/src/img/</code> for all our images.</p>
 
-        <dl>
-            <dt><code>checkit/src/img/undone.png</code></dt>
-            <dd><img src="img/undone.png" alt="undone.png"></dd>
-            <dt><code>checkit/src/img/done.png</code></dt>
-            <dd><img src="img/done.png" alt="done.png"></dd>
-        </dl>
+                <p>Save the following two images.</p>
 
-        <p>The HTML, CSS, and images files above are things that a non-programmer might work on. We want to keep their work as non-technical as possible.</p>
-        
-        <p>The part that most programmers will find interesting is bringing the to-do item to life so that it always reflects the state of a particular to-do model object and reacting to user clicks to mark the to-do as complete. Some JavaScript please...</p>
+                <dl>
+                    <dt><code>checkit/src/img/undone.png</code></dt>
+                    <dd><img src="img/undone.png" alt="undone.png"></dd>
+                    <dt><code>checkit/src/img/done.png</code></dt>
+                    <dd><img src="img/done.png" alt="done.png"></dd>
+                </dl>
 
-        <p>Create a directory <code>checkit/src/js/views/</code> for all our view classes.</p>
+                <p>The HTML, CSS, and images files above are things that a non-programmer might work on. We want to keep their work as non-technical as possible.</p>
 
-        <p>Create a file <code>checkit/src/js/views/TodoView.js</code> containing the following.</p>
+                <p>The part that most programmers will find interesting is bringing the to-do item to life so that it always reflects the state of a particular to-do model object and reacting to user clicks to mark the to-do as complete. Some JavaScript please...</p>
+
+                <p>Create a directory <code>checkit/src/js/views/</code> for all our view classes.</p>
+
+                <p>Create a file <code>checkit/src/js/views/TodoView.js</code> containing the following.</p>
 
 <pre><code>maria.ElementView.subclass(checkit, 'TodoView', {
     uiActions: {
@@ -286,19 +298,19 @@ undefined
     }
 });</code></pre>
 
-        <p>The <code>uiActions</code> specify user events that will be passed on to a controller object which we&rsquo;ll see soon. For a to-do, the only thing the user can do is check or uncheck that the to-do is done or not done.</p>
+                <p>The <code>uiActions</code> specify user events that will be passed on to a controller object which we&rsquo;ll see soon. For a to-do, the only thing the user can do is check or uncheck that the to-do is done or not done.</p>
 
-        <p>By naming convention, Maria knows to use the HTML in <code>checkit.TodoTemplate</code> when creating a <code>checkit.TodoView</code>. This HTML is used to construct a DOM node that will represent the to-do on screen. The <code>buildData</code> property is used to show the to-do model data in that DOM node. In this case, we just need to show the content and whether or not the to-do is done.</p>
+                <p>By naming convention, Maria knows to use the HTML in <code>checkit.TodoTemplate</code> when creating a <code>checkit.TodoView</code>. This HTML is used to construct a DOM node that will represent the to-do on screen. The <code>buildData</code> property is used to show the to-do model data in that DOM node. In this case, we just need to show the content and whether or not the to-do is done.</p>
 
-        <p>When the view&rsquo;s model object changes, the view&rsquo;s <code>update</code> method will be called. Since an update requires that we just do the same things that are done in <code>buildData</code> to keep the view in sync with model, we can simply reuse <code>buildData</code>. Reusing various bits of building code during updating is a common way to keep a view up-to-date as the model changes.</p>
+                <p>When the view&rsquo;s model object changes, the view&rsquo;s <code>update</code> method will be called. Since an update requires that we just do the same things that are done in <code>buildData</code> to keep the view in sync with model, we can simply reuse <code>buildData</code>. Reusing various bits of building code during updating is a common way to keep a view up-to-date as the model changes.</p>
 
-        <p>The view uses another utility function that we can add to <code>checkit/src/js/util.js</code>.</p>
+                <p>The view uses another utility function that we can add to <code>checkit/src/js/util.js</code>.</p>
 
 <pre><code>checkit.escapeHTML = function(str) {
     return str.replace('&amp;', '&amp;amp;').replace('&lt;', '&amp;lt;');
 };</code></pre>
 
-        <p>We&rsquo;re itching to see our to-do in the browser. Update our <code>checkit/src/index.html</code> file.</p>
+                <p>We&rsquo;re itching to see our to-do in the browser. Update our <code>checkit/src/index.html</code> file.</p>
 
 <pre><code>&lt;!DOCTYPE html>
 &lt;html>
@@ -352,7 +364,7 @@ undefined
         <p>Try adding two views with the <em>same</em> model to the document. Changing the model object once will update both views! That is a peak at more MVC magic.</p>
 
 
-        <h2>Reacting to User Action with Controllers</h2>
+        <h3 class="medium-subtitle">Reacting to User Action with Controllers</h3>
 
         <p>In the <code>checkit.TodoView</code> we&rsquo;ve used the <code>uiActions</code> to map a click on the to-do&rsquo;s checkbox to a <code>checkit.TodoController</code> object. Since we haven&rsquo;t written the controller class yet, clicking on the to-do&rsquo;s checkbox will cause an error. Let&rsquo;s fix that.</p>
 
@@ -415,7 +427,7 @@ undefined
         <p>It even works in Internet Explorer 6.</p>
 
 
-        <h2>Modelling a Set of To-dos</h2>
+        <h3 class="medium-subtitle">Modelling a Set of To-dos</h3>
 
         <p>There&rsquo;s never enough time in life for all things we want to do. We need to manage a set of to-dos.  As life moves along, we&rsquo;ll think of more things to do and hopefully we&rsquo;ll actually get some things done. We'll add and delete individual to-do objects from another kind of model object representing a set of to-dos. Let&rsquo;s create a class who&rsquo;s objects are just that.</p>
 
@@ -545,7 +557,7 @@ undefined
         <p>Well. The tests. Yes, yes. Please write them.</p>
 
 
-        <h2>Viewing a Set of To-dos</h2>
+        <h3 class="medium-subtitle">Viewing a Set of To-dos</h3>
 
         <p>Now that we can model a set of to-dos, it would be great to see them. Let&rsquo;s build a list view for to-dos.</p>
 
@@ -562,7 +574,7 @@ undefined
 }</code></pre>
 
         <p>Simple so far.</p>
-        
+
         <p>The <code>checkit.TodosListView</code> class will inherit from <code>maria.SetView</code>. This means our view will automatically add and delete child <code>checkit.TodoView</code> objects for us when a <code>checkit.TodoModel</code> is added or deleted from the <code>checkit.TodosModel</code>. Add the following in <code>checkit/src/js/views/TodosListView.js</code>.</p>
 
 <pre><code>maria.SetView.subclass(checkit, 'TodosListView', {
@@ -634,7 +646,7 @@ undefined
         <p>Note there is no controller class called <code>checkit.TodosListController</code>. Since a <code>checkit.TodosListView</code> object never delegates any decisions to a controller object, a controller object is never created and so it is ok that the <code>checkit.TodosListController</code> is not defined.</p>
 
 
-        <h2>Creating To-do Items</h2>
+        <h3 class="medium-subtitle">Creating To-do Items</h3>
 
         <p>There is an obviously missing piece of functionality. We need to be able to create to-do items through a form in the user interface and see them appear in the list. Easy peasy. Just another round of HTML, CSS, a view and a controller.</p>
 
@@ -766,7 +778,7 @@ undefined
         <p><img src="img/tutorial-400.png" alt="One To-do"></p>
 
 
-        <h2>A Toolbar to Manage the Set of To-dos</h2>
+        <h3 class="medium-subtitle">A Toolbar to Manage the Set of To-dos</h3>
 
         <p>Our application is quite advanced already. We&rsquo;ll carry on and add a toolbar that allows us to mark all to-do items in the set as done or undone and allows us to clear all completed to-do items from the set.</p>
 
@@ -906,7 +918,7 @@ undefined
         <p><img src="img/tutorial-500.png" alt=""></p>
 
 
-        <h2>Combine Smaller Views Into a Single View</h2>
+        <h3 class="medium-subtitle">Combine Smaller Views Into a Single View</h3>
 
         <p>Our bootstrap file currently creates three views, all observing the same model, and add each view to the page. That is fine and dandy. It something you want to do at times. That said, it is also useful to be able to gather together multiple views as children of a single parent view. This allows the bootstrapping code to deal with only one view (i.e. the parent view) and the three child views will still appear in the page. This is the beauty of the composite pattern: the third of the three primary patterns in the MVC architecture.</p>
 
@@ -929,7 +941,7 @@ undefined
         <p>This view shows a feature of the <code>subclass</code> mechanism that we haven't seen before. The optional <code>constructor</code> property makes it possible to specify the constructor function that is <code>checkit.TodosAppView</code>. Just remember to call the super class constructor function with the appropriate arguments as shown with <code>apply</code> in the first line of this constructor function.</p>
 
         <p>Update the <code>checkit/src/js/bootstrap.js</code> file to create a single <code>checkit.TodosAppView</code> instead of three separate views for the input, toolbar, and list views.</p>
-        
+
 <pre><code>maria.on(window, 'load', function() {
 
     var model = new checkit.TodosModel();
@@ -983,7 +995,7 @@ undefined
         <p><img src="img/tutorial-500.png" alt=""></p>
 
 
-        <h2>The Grand Finally</h2>
+        <h3 class="medium-subtitle">The Grand Finally</h3>
 
             <p>To see the amazing power of the MVC architecture, try the following <code>checkit/src/js/bootstrap.js</code> file.</p>
 
@@ -998,20 +1010,18 @@ undefined
 });</code></pre>
 
             <p>Reload the browser. Create a few to-do items. Mark some of them as done. Click the delete button.</p>
-            
+
             <p>Yes this is exciting. Remain calm. We don&rsquo;t want you to blow a gasket. Meditate on what you have just witnessed. Then join us over at the <a href="https://github.com/petermichaux/maria">Maria project on GitHub</a>.</p>
 
-                    </div><!-- liner -->
-                </div><!-- content -->
+            </div>
 
-                <div class="footer">
-                    <div class="liner">
-                        &copy; 2013 Peter Michaux
-                    </div><!-- liner -->
-                </div><!-- footer -->
+        </section>
 
-            </div><!-- liner -->
-        </div><!-- wrapper -->
+        <footer class="footer">
+            <p>&copy; 2013 Peter Michaux - <a href="https://twitter.com/petermichaux">@petermichaux</a></p>
+            <p>Designed by <a href="http://laantorcha.net" target="_blank">laantorcha.net</a></p>
+        </footer>
 
+    </div>
 </body>
 </html>
