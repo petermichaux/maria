@@ -79,6 +79,11 @@ h2 {
     font-family: 'Lato', sans-serif;
 }
 
+pre {
+    width:100%;
+    overflow:auto;
+}
+
 .wrapper {
     width: 960px;
     margin: 0 auto;
