@@ -25,15 +25,6 @@ body {
     text-shadow: none;
 }
 
-hr {
-    display: block;
-    height: 1px;
-    border: 0;
-    border-top: 1px solid #ccc;
-    margin: 1em 0;
-    padding: 0;
-}
-
 a img {
     border: 0;
 }
@@ -54,6 +45,7 @@ textarea {
 
 a {
     text-decoration: none;
+    color:#3a7d9c;
 }
 
 body {
@@ -159,7 +151,7 @@ pre {
     font-size: 16px;
 }
 
-.intro .subtitle {
+.intro h3 {
     font-size:16px;
     text-transform: uppercase;
 }
@@ -256,13 +248,6 @@ pre {
     font-size: 13px;
 }
 
-.simple-list {
-
-}
-.simple-list a {
-    color:#3a7d9c;
-}
-
 .footer {
     clear: both;
     margin: 30px 0 0 0;
@@ -296,45 +281,6 @@ pre {
 .hidden {
     display: none !important;
     visibility: hidden;
-}
-
-.visuallyhidden {
-    border: 0;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
-}
-
-.visuallyhidden.focusable:active,
-.visuallyhidden.focusable:focus {
-    clip: auto;
-    height: auto;
-    margin: 0;
-    overflow: visible;
-    position: static;
-    width: auto;
-}
-
-.invisible {
-    visibility: hidden;
-}
-
-.clearfix:before,
-.clearfix:after {
-    content: " ";
-    display: table;
-}
-
-.clearfix:after {
-    clear: both;
-}
-
-.clearfix {
-    *zoom: 1;
 }
 
 /* Print styles */
