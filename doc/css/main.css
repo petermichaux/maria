@@ -9,38 +9,17 @@ textarea {
 }
 
 body {
-    min-width: 100%;
-    min-height: 100%;
-    font-size: 1em;
     line-height: 1.4;
+    font-family: 'Lato', sans-serif;
 }
 
 a img {
     border: 0;
 }
 
-img {
-    vertical-align: middle;
-}
-
-fieldset {
-    border: 0;
-    margin: 0;
-    padding: 0;
-}
-
-textarea {
-    resize: vertical;
-}
-
 a {
     text-decoration: none;
     color:#3a7d9c;
-}
-
-body {
-    font-family: 'Lato', sans-serif;
-
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -105,6 +84,29 @@ pre {
     left: 0;
 }
 
+.content li {
+    margin-bottom: 0.25em;
+    margin-top: 0.25em;
+}
+
+.footer {
+    clear: both;
+    margin: 30px 0 0 0;
+    padding: 20px 0;
+    border-top: 1px solid #dbdad6;
+    color:#333;
+    text-align: center;
+    font-size: 13px;
+    font-weight: lighter;
+    font-family: 'Lato', sans-serif;
+}
+
+.footer a {
+    color: #3a7d9c;
+}
+
+/* for index.html ------------------------------------------------ */
+
 .tagline {
     padding: 20px 0;
     margin-bottom: 60px;
@@ -144,11 +146,6 @@ pre {
 .intro h3 {
     font-size:16px;
     text-transform: uppercase;
-}
-
-.content li {
-    margin-bottom: 0.25em;
-    margin-top: 0.25em;
 }
 
 .small-aside {
@@ -238,24 +235,6 @@ pre {
     font-size: 13px;
 }
 
-.footer {
-    clear: both;
-    margin: 30px 0 0 0;
-    padding: 20px 0;
-    border-top: 1px solid #dbdad6;
-    color:#333;
-    text-align: center;
-    font-size: 13px;
-    font-weight: lighter;
-    font-family: 'Lato', sans-serif;
-}
-
-.footer a {
-    color: #3a7d9c;
-}
-
-/* Helper classes */
-
 .ir {
     display: block;
     border: 0;
@@ -266,78 +245,4 @@ pre {
     text-align: left;
     direction: ltr;
     *line-height: 0;
-}
-
-.hidden {
-    display: none !important;
-    visibility: hidden;
-}
-
-/* Print styles */
-
-@media print {
-    * {
-        background: transparent !important;
-        color: #000 !important; /* Black prints faster: h5bp.com/s */
-        box-shadow: none !important;
-        text-shadow: none !important;
-    }
-
-    a,
-    a:visited {
-        text-decoration: underline;
-    }
-
-    a[href]:after {
-        content: " (" attr(href) ")";
-    }
-
-    abbr[title]:after {
-        content: " (" attr(title) ")";
-    }
-
-    /*
-     * Don't show links for images, or javascript/internal links
-     */
-
-    .ir a:after,
-    a[href^="javascript:"]:after,
-    a[href^="#"]:after {
-        content: "";
-    }
-
-    pre,
-    blockquote {
-        border: 1px solid #999;
-        page-break-inside: avoid;
-    }
-
-    thead {
-        display: table-header-group; /* h5bp.com/t */
-    }
-
-    tr,
-    img {
-        page-break-inside: avoid;
-    }
-
-    img {
-        max-width: 100% !important;
-    }
-
-    @page {
-        margin: 0.5cm;
-    }
-
-    p,
-    h2,
-    h3 {
-        orphans: 3;
-        widows: 3;
-    }
-
-    h2,
-    h3 {
-        page-break-after: avoid;
-    }
 }
