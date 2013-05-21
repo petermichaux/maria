@@ -12,6 +12,7 @@ document.write('<script src="../../../lib/hormigas/hormigas.js"></script>');
 document.write('<script src="../../../src/namespace.js"></script>');
 document.write('<script src="../../../src/borrow.js"></script>');
 document.write('<script src="../../../src/borrowEvento.js"></script>');
+document.write('<script src="../../../src/borrowHijos.js"></script>');
 document.write('<script src="../../../src/create.js"></script>');
 document.write('<script src="../../../src/subclass.js"></script>');
 document.write('<script src="../../../src/Model.js"></script>');
