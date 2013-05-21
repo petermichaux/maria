@@ -8,10 +8,12 @@
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="css/github.css">
-    <!--[if gte IE 9]> 
     <script src="js/highlight.pack.js" type="text/javascript"></script>
-    <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
-    <![endif]--> 
+    <script type="text/javascript">
+        if (typeof window.addEventListener === 'function') {
+            hljs.initHighlightingOnLoad();
+        }
+    </script>
     <link href="css/main.css" rel="stylesheet">
 </head>
 <body>
