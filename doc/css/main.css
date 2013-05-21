@@ -15,16 +15,6 @@ body {
     line-height: 1.4;
 }
 
-::-moz-selection {
-    background: #b3d4fc;
-    text-shadow: none;
-}
-
-::selection {
-    background: #b3d4fc;
-    text-shadow: none;
-}
-
 a img {
     border: 0;
 }
