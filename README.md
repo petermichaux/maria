@@ -23,6 +23,8 @@ See http://peter.michaux.ca/downloads/maria/
 
 `maria-amd.js` contains the same code as `maria.js` but it is wrapped in an AMD module definition that returns the `maria` object.
 
+Install via Bower with ```bower install maria```
+
 
 Documentation
 -------------
