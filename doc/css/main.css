@@ -102,7 +102,7 @@ pre {
 
 .tagline {
     padding: 20px 0;
-    margin-bottom: 60px;
+    margin-bottom: 40px;
     border-bottom: 1px solid #dbdad6;
 }
 
@@ -134,17 +134,13 @@ pre {
     width: 725px;
     color: #333;
     font-size: 16px;
-}
-
-.intro h3 {
-    font-size:16px;
-    text-transform: uppercase;
+    padding-bottom: 20px;
 }
 
 .small-aside {
     float: left;
     width: 180px;
-    padding: 40px 0 0 50px;
+    padding: 0 0 20px 50px;
 }
 
 .btn-download {
@@ -163,7 +159,6 @@ pre {
 .boxes {
     clear: both;
     overflow: hidden;
-    margin-top: 60px;
     padding-top: 60px;
     border-top: 1px solid #dbdad6;
 }
