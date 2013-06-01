@@ -1,9 +1,8 @@
 /**
 @license
-Maria 1.0.0-rc.11
+Maria 1.0.0
 Copyright (c) 2013, Peter Michaux
 All rights reserved.
 Licensed under the Simplified BSD License.
-https://github.com/petermichaux/maria/blob/master/LICENSE
-
+http://peter.michaux.ca/downloads/maria/1.0.0/LICENSE
 */

@@ -49,7 +49,7 @@ You can report bugs, suggest features, or join general discussion at https://git
 Status
 ------
 
-Final version 1.0.0 release candidates are in progress.
+Stable.
 
 
 Browser Support
