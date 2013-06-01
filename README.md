@@ -15,7 +15,7 @@ The three core design patterns of MVC (observer, composite, and strategy) are em
 Downloads
 ---------
 
-See http://peter.michaux.ca/downloads/maria/
+See [http://peter.michaux.ca/downloads/maria/](http://peter.michaux.ca/downloads/maria/?C=M;O=D)
 
 `maria.js` contains all the Maria source files concatenated together. This is a good file to use during the development of your application.
 
