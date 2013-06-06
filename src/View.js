@@ -106,6 +106,7 @@ accomplish the same.
     myapp.MyView = function() {
         maria.View.apply(this, arguments);
     };
+    myapp.MyView.superConstructor = maria.View;
     myapp.MyView.prototype = maria.create(maria.View.prototype);
     myapp.MyView.prototype.constructor = myapp.MyView;
     myapp.MyView.prototype.getModelActions = function() {

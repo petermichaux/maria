@@ -28,6 +28,7 @@ maria.SetView.subclass for a more compact way to accomplish the same.
     checkit.TodosListView = function() {
         maria.SetView.apply(this, arguments);
     };
+    checkit.TodosListView.superConstructor = maria.SetView;
     checkit.TodosListView.prototype = maria.create(maria.SetView.prototype);
     checkit.TodosListView.prototype.constructor = checkit.TodosListView;
     checkit.TodosListView.prototype.getTemplate = function() {

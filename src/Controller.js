@@ -48,6 +48,7 @@ to accomplish the same.
     checkit.TodoController = function() {
         maria.Controller.apply(this, arguments);
     };
+    checkit.TodoController.superConstructor = maria.Controller;
     checkit.TodoController.prototype = maria.create(maria.Controller.prototype);
     checkit.TodoController.prototype.constructor = checkit.TodoController;
     checkit.TodoController.prototype.onClickCheck = function() {

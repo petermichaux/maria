@@ -127,6 +127,7 @@ to accomplish the same.
     checkit.TodosModel = function() {
         maria.SetModel.apply(this, arguments);
     };
+    checkit.TodosModel.superConstructor = maria.SetModel;
     checkit.TodosModel.prototype = maria.create(maria.SetModel.prototype);
     checkit.TodosModel.prototype.constructor = checkit.TodosModel;
     checkit.TodosModel.prototype.isAllDone = function() {

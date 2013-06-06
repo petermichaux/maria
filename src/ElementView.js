@@ -98,6 +98,7 @@ the same.
     checkit.TodoView = function() {
         maria.ElementView.apply(this, arguments);
     };
+    checkit.TodoView.superConstructor = maria.ElementView;
     checkit.TodoView.prototype = maria.create(maria.ElementView.prototype);
     checkit.TodoView.prototype.constructor = checkit.TodoView;
     checkit.TodoView.prototype.getDefaultControllerConstructor = function() {
