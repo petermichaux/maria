@@ -175,6 +175,13 @@ maria.ElementView = function(model, controller, doc) {
     this.setDocument(doc);
 };
 
+/**
+
+@property maria.ElementView.superConstructor
+
+*/
+maria.ElementView.superConstructor = maria.View;
+
 maria.ElementView.prototype = maria.create(maria.View.prototype);
 maria.ElementView.prototype.constructor = maria.ElementView;
 

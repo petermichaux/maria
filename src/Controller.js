@@ -86,6 +86,13 @@ maria.Controller = function() {};
 
 /**
 
+@property maria.Controller.superConstructor
+
+*/
+maria.Controller.superConstructor = Object;
+
+/**
+
 The destroy method.
 
 */

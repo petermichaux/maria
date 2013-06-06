@@ -2,6 +2,10 @@
 
     buster.testCase('SetView Suite', {
 
+        "test SetView has superConstructor ElementView": function() {
+            assert.same(maria.ElementView, maria.SetView.superConstructor);
+        },
+
         "test when element added to set the view created by createChildView is appended to the set view": function() {
             var setView = new maria.SetView();
             var setModel = new maria.SetModel();

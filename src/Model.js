@@ -96,6 +96,13 @@ maria.Model = function() {
     evento.EventTarget.call(this);
 };
 
+/**
+
+@property maria.Model.superConstructor
+
+*/
+maria.Model.superConstructor = evento.EventTarget;
+
 maria.Model.prototype = maria.create(evento.EventTarget.prototype);
 maria.Model.prototype.constructor = maria.Model;
 

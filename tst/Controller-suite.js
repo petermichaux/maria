@@ -2,6 +2,10 @@
 
     buster.testCase('Controller Suite', {
 
+        "test Controller has superConstructor Object": function() {
+            assert.same(Object, maria.Controller.superConstructor);
+        },
+
         "test model is undefined to start": function() {
             var c = new maria.Controller();
             assert.same(undefined, c.getModel());

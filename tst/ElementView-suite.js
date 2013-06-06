@@ -2,6 +2,10 @@
 
     buster.testCase('ElementView Suite', {
 
+        "test ElementView has superConstructor View": function() {
+            assert.same(maria.View, maria.ElementView.superConstructor);
+        },
+
         "test calling constructor with parameters sets them in new instance": function() {
             var model = new maria.Model();
             var controller = new maria.Controller();

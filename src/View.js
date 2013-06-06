@@ -142,6 +142,13 @@ maria.View = function(model, controller) {
     this.setController(controller);
 };
 
+/**
+
+@property maria.View.superConstructor
+
+*/
+maria.View.superConstructor = maria.Node;
+
 maria.View.prototype = maria.create(maria.Node.prototype);
 maria.View.prototype.constructor = maria.View;
 

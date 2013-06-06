@@ -52,6 +52,13 @@ maria.SetView = function() {
     maria.ElementView.apply(this, arguments);
 };
 
+/**
+
+@property maria.SetView.superConstructor
+
+*/
+maria.SetView.superConstructor = maria.ElementView;
+
 maria.SetView.prototype = maria.create(maria.ElementView.prototype);
 maria.SetView.prototype.constructor = maria.SetView;
 

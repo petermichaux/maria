@@ -177,6 +177,13 @@ maria.SetModel = function() {
     maria.Model.call(this);
 };
 
+/**
+
+@property maria.SetModel.superConstructor
+
+*/
+maria.SetModel.superConstructor = maria.Model;
+
 maria.SetModel.prototype = maria.create(maria.Model.prototype);
 maria.SetModel.prototype.constructor = maria.SetModel;
 

@@ -2,6 +2,10 @@
 
     buster.testCase('SetModel Suite', {
 
+        "test SetModel has superConstructor Model": function() {
+            assert.same(maria.Model, maria.SetModel.superConstructor);
+        },
+
         "test has, add, and delete still work": function() {
 
             var s = new maria.SetModel();

@@ -2,6 +2,10 @@
 
     buster.testCase('Model Suite', {
 
+        "test Model has superConstructor evento.EventTarget": function() {
+            assert.same(evento.EventTarget, maria.Model.superConstructor);
+        },
+
         "test models have EventTarget interface": function() {
             var m = new maria.Model();
 
