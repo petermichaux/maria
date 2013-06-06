@@ -2,6 +2,12 @@
 
     buster.testCase('SetView.subclass Suite', {
 
+        "test subclass superConstructor": function() {
+            var app = {};
+            maria.SetView.subclass(app, 'MySetView');
+            assert.same(maria.SetView, app.MySetView.superConstructor);
+        },
+
         "test SetView.subclass passes arguments through to ElementView.subclass": function() {
             var original = maria.ElementView.subclass;
 

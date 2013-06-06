@@ -2,6 +2,12 @@
 
     buster.testCase('View.subclass Suite', {
 
+        "test subclass superConstructor": function() {
+            var app = {};
+            maria.View.subclass(app, 'MyView');
+            assert.same(maria.View, app.MyView.superConstructor);
+        },
+
         "test getDefaultControllerConstructor property prefered over controllerConstructor and controllerConstructorName": function() {
             var app = {
                 AlphaController: function() {

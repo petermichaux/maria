@@ -2,6 +2,12 @@
 
     buster.testCase('ElementView.subclass Suite', {
 
+        "test subclass superConstructor": function() {
+            var app = {};
+            maria.ElementView.subclass(app, 'MyElementView');
+            assert.same(maria.ElementView, app.MyElementView.superConstructor);
+        },
+
         "test template convention sugar": function() {
             var alphaTemplate = 'abc';
             var app = {

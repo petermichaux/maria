@@ -2,6 +2,12 @@
 
     buster.testCase('Model.subclass Suite', {
 
+        "test subclass superConstructor": function() {
+            var app = {};
+            maria.Model.subclass(app, 'MyModel');
+            assert.same(maria.Model, app.MyModel.superConstructor);
+        },
+
         "test Model.subclass passes arguments through to maria.subclass": function() {
             var original = maria.subclass;
 

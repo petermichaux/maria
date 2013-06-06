@@ -21,6 +21,7 @@ maria.subclass = function(namespace, name, options) {
             function() {
                 SuperConstructor.apply(this, arguments);
             };
+    Constructor.superConstructor = SuperConstructor;
     var prototype = Constructor.prototype = maria.create(SuperConstructor.prototype);
     prototype.constructor = Constructor;
     if (properties) {
