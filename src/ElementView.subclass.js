@@ -83,6 +83,11 @@ maria.ElementView.subclass = function(namespace, name, options) {
         }
         else if (templateName) {
             properties.getTemplate = function() {
+                /* DEBUG BEGIN */
+                if (!Object.prototype.hasOwnProperty.call(namespace, templateName)) {
+                    console.error('Could not find template named "' + templateName + '".');
+                }
+                /* DEBUG END */
                 return namespace[templateName];
             };
         }
