@@ -270,8 +270,15 @@ as the root element of this view. All other sibling elements of the
 
 */
 maria.ElementView.prototype.buildTemplate = function() {
-    // parseHTML returns a DocumentFragment so take firstChild as the rootEl
-    this._rootEl = arbutus.parseHTML(this.getTemplate(), this.getDocument()).firstChild;
+    // parseHTML returns a DocumentFragment. Take its firstChild as the rootEl.
+    
+    var fragment = arbutus.parseHTML(this.getTemplate(), this.getDocument());
+    /* DEBUG BEGIN */
+    if (fragment.childNodes.length > 1) {
+        console.warn('The following template has multiple root-level elements. Only the first root-level element is used and all following root-level elements are ignored.', this.getTemplate());
+    }
+    /* DEBUG END */
+    this._rootEl = fragment.firstChild;
 };
 
 (function() {

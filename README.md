@@ -17,11 +17,17 @@ Downloads
 
 See [http://peter.michaux.ca/downloads/maria/](http://peter.michaux.ca/downloads/maria/?C=M;O=D)
 
-`maria.js` contains all the Maria source files concatenated together. This is a good file to use during the development of your application.
+There are several different built files from which to choose:
+
+`maria.js` the main release of the framework. If in doubt, use this file.
 
 `maria-min.js` contains the same code as `maria.js` but `maria-min.js` has been minified to remove whitespace and code comments. This is a good file to serve in production.
 
+`maria-debug.js` contains additional code that is stripped when creating `maria.js`. This additional code points developers to potential problems with more informative console logging. `maria-debug.js` is a good file to use during development.
+
 `maria-amd.js` contains the same code as `maria.js` but it is wrapped in an AMD module definition that returns the `maria` object.
+
+`maria-amd-debug.js` similar to `maria-debug.js` but for developers in the AMD world.
 
 Install via Bower with ```bower install maria```
 
