@@ -46,6 +46,12 @@ maria.View.subclass = function(namespace, name, options) {
     var properties = options.properties || (options.properties = {});
     if (!Object.prototype.hasOwnProperty.call(properties, 'getDefaultControllerConstructor')) {
         properties.getDefaultControllerConstructor = function() {
+            /* DEBUG BEGIN */
+            if ((!controllerConstructor) &&
+                (!Object.prototype.hasOwnProperty.call(namespace, controllerConstructorName))) {
+                console.error('Could not find controller class named "' + controllerConstructorName + '".');    
+            }
+            /* DEBUG END */
             return controllerConstructor || namespace[controllerConstructorName];
         };
     }
