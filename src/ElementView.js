@@ -271,7 +271,6 @@ as the root element of this view. All other sibling elements of the
 */
 maria.ElementView.prototype.buildTemplate = function() {
     // parseHTML returns a DocumentFragment. Take its firstChild as the rootEl.
-    
     var fragment = arbutus.parseHTML(this.getTemplate(), this.getDocument());
     /* DEBUG BEGIN */
     if (fragment.childNodes.length > 1) {
