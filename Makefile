@@ -129,7 +129,7 @@ lib/compiler:
 lib/jsdoc:
 	mkdir -p tmp/jsdoc
 	cd tmp/jsdoc && \
-	curl curl -O https://nodeload.github.com/jsdoc3/jsdoc/tar.gz/v3.1.1 --output jsdoc-3.1.1.tar.gz && \
+	curl https://codeload.github.com/jsdoc3/jsdoc/tar.gz/v3.1.1 --output jsdoc-3.1.1.tar.gz && \
 	tar xvzf jsdoc-3.1.1.tar.gz
 	mkdir -p lib
 	mv tmp/jsdoc/jsdoc-3.1.1 lib/jsdoc

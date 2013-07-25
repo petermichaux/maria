@@ -1,5 +1,5 @@
-1.1.0 - [date]
---------------
+1.1.0 - July 25, 2013
+---------------------
 * development builds in maria-debug.js and maria-amd-debug.js
 * constructor functions have a superConstructor property
 
