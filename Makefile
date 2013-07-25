@@ -34,11 +34,15 @@ SRCS       = src/header.js                 \
 
 all: build/dist build/dist/maria-min.js build/www
 
-build/dist: build/dist/README.md build/dist/LICENSE build/dist/maria.js build/dist/maria-min.js build/dist/maria-amd.js
+build/dist: build/dist/README.md build/dist/CHANGES.md build/dist/LICENSE build/dist/maria.js build/dist/maria-min.js build/dist/maria-amd.js
 
 build/dist/README.md: README.md
 	mkdir -p build/dist
 	cp README.md build/dist/README.md
+
+build/dist/CHANGES.md: CHANGES.md
+	mkdir -p build/dist
+	cp CHANGES.md build/dist/CHANGES.md
 
 build/dist/LICENSE: LICENSE
 	mkdir -p build/dist
