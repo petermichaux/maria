@@ -17,7 +17,7 @@ maria.SetView.subclass(scrollit, 'ProductsView', {
             this.find('.loading').style.display = this.getModel().isLoading() ? '' : 'none';
         },
         update: function(evt) {
-            maria.SetView.prototype.update.call(this, evt);
+            scrollit.ProductsView.superConstructor.prototype.update.call(this, evt);
             this.buildData();
         },
         getContainerEl: function() {
