@@ -66,6 +66,34 @@
             assert.same(template, app.Alpha.prototype.getTemplate());
         },
 
+        "test removeChild removes child root DOM element": function() {
+            var app = {
+                AlphaTemplate: '<div class="Alpha"><div class="aContainer"></div></div>',
+                BetaTemplate: '<div class="Beta"></div>'
+            };
+            maria.ElementView.subclass(app, 'AlphaView', {
+                properties: {
+                    buildChildViews: function() {
+                        // NOTE do not add to the same element returned by getContainerEl
+                        this.build().appendChild(this.childNodes[0].build());
+                    },
+                    getContainerEl: function() {
+                        return this.find('.aContainer');
+                    }
+                }
+            });
+            maria.ElementView.subclass(app, 'BetaView');
+            var alphaView = new app.AlphaView();
+            var betaView = new app.BetaView();
+            alphaView.appendChild(betaView);
+            assert.same(betaView, alphaView.childNodes[0]);
+            assert.same(betaView.build().className, alphaView.build().firstChild.nextSibling.className);
+            alphaView.removeChild(betaView);
+            assert.same(0, alphaView.childNodes.length);
+            assert.same(betaView.parentNode, null);
+            assert.same(betaView.build().parentNode, null);
+        },
+
         "test subclass UI actions sugar": function() {
             var app = {};
             var uiActions = {};

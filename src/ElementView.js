@@ -371,7 +371,8 @@ Remove an existing child view.
 maria.ElementView.prototype.removeChild = function(oldChild) {
     maria.View.prototype.removeChild.call(this, oldChild);
     if (this._rootEl) {
-        this.getContainerEl().removeChild(oldChild.build());
+        var oldChildRootEl = oldChild.build();
+        oldChildRootEl.parentNode.removeChild(oldChildRootEl);
     }
 };
 
