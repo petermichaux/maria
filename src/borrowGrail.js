@@ -16,6 +16,6 @@ See grail.findAll for description.
 
 */
 
-maria.findAll = grail.find;
+maria.findAll = grail.findAll;
 
 
