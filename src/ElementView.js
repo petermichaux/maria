@@ -404,7 +404,7 @@ to use some libray other than Grail.
 
 */
 maria.ElementView.prototype.find = function(selector) {
-    return grail.find(selector, this.build());
+    return maria.find(selector, this.build());
 };
 
 /**
@@ -420,5 +420,5 @@ See `find` for more details.
 
 */
 maria.ElementView.prototype.findAll = function(selector) {
-    return grail.findAll(selector, this.build());
+    return maria.findAll(selector, this.build());
 };
