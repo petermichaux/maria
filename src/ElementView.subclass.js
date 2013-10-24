@@ -71,6 +71,7 @@ maria.ElementView.subclass(checkit, 'TodoView', {
 */
 maria.ElementView.subclass = function(namespace, name, options) {
     options = options || {};
+    var key, superUIActions;
     var template = options.template;
     var templateName = options.templateName || name.replace(/(View|)$/, 'Template');
     var uiActions = options.uiActions;
@@ -108,6 +109,16 @@ maria.ElementView.subclass = function(namespace, name, options) {
                             this.getController()[methodName](evt);
                         };
                     }(methodName));
+                }
+            }
+        }
+        if (Object.prototype.hasOwnProperty.call(this.prototype, 'getUIActions') &&
+            typeof this.prototype.getUIActions === 'function') {
+            superUIActions = this.prototype.getUIActions();
+
+            for (key in superUIActions) {
+                if (Object.prototype.hasOwnProperty.call(superUIActions, key)) {
+                    uiActions[key] = superUIActions[key];
                 }
             }
         }
