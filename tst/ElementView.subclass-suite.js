@@ -118,6 +118,40 @@
             assert.same(uiActions0, app.Alpha.prototype.getUIActions());
         },
 
+        "test subclass UI actions sugar inherits superclass UI actions": function() {
+            var foo, bar,
+                app = {};
+
+            maria.ElementView.subclass(app, 'Alpha', {
+                uiActions: {
+                    'click div'    : 'onClickDiv',
+                    'mouseover div': 'onMouseoverDiv'
+                }
+            });
+
+            app.Alpha.subclass(app, 'Beta', {
+                uiActions: {
+                    'dblclick div': 'onDblClickDiv',
+                    'mouseup div': 'onMouseupDiv'
+                }
+            });
+
+            foo = new app.Alpha();
+            bar = new app.Beta();
+
+            assert.equals(foo.getUIActions(), {
+                'click div': 'onClickDiv',
+                'mouseover div': 'onMouseoverDiv',
+            });
+
+            assert.equals(bar.getUIActions(), {
+                'click div': 'onClickDiv',
+                'mouseover div': 'onMouseoverDiv',
+                'dblclick div': 'onDblClickDiv',
+                'mouseup div': 'onMouseupDiv'
+            });
+        },
+
         "test subclass UI actions sugar creates handler functions": function() {
             var app = {};
             var uiActions = {
