@@ -130,7 +130,7 @@
             });
 
             app.Alpha.subclass(app, 'Beta', {
-                uiActions: {
+                moreUIActions: {
                     'dblclick div': 'onDblClickDiv',
                     'mouseup div': 'onMouseupDiv'
                 }

@@ -75,6 +75,7 @@ maria.ElementView.subclass = function(namespace, name, options) {
     var template = options.template;
     var templateName = options.templateName || name.replace(/(View|)$/, 'Template');
     var uiActions = options.uiActions;
+    var moreUIActions = options.moreUIActions;
     var properties = options.properties || (options.properties = {});
     if (!Object.prototype.hasOwnProperty.call(properties, 'getTemplate')) {
         if (template) {
@@ -92,6 +93,9 @@ maria.ElementView.subclass = function(namespace, name, options) {
                 return namespace[templateName];
             };
         }
+    }
+    if (uiActions && moreUIActions) {
+        throw new Error('maria.ElementView.subclass: uiActions and moreUIActions cannot be defined in the same class. Please select only one.');
     }
     if (uiActions) {
         if (!Object.prototype.hasOwnProperty.call(properties, 'getUIActions')) {
@@ -112,13 +116,33 @@ maria.ElementView.subclass = function(namespace, name, options) {
                 }
             }
         }
+    }
+    if (moreUIActions) {
+        if (!Object.prototype.hasOwnProperty.call(properties, 'getUIActions')) {
+            properties.getUIActions = function() {
+                return moreUIActions;
+            };
+        }
+        for (key in moreUIActions) {
+            if (Object.prototype.hasOwnProperty.call(moreUIActions, key)) {
+                var methodName = moreUIActions[key];
+                if ((!Object.prototype.hasOwnProperty.call(properties, methodName)) &&
+                    (!(methodName in this.prototype))) {
+                    (function(methodName) {
+                        properties[methodName] = function(evt) {
+                            this.getController()[methodName](evt);
+                        };
+                    }(methodName));
+                }
+            }
+        }
         if (Object.prototype.hasOwnProperty.call(this.prototype, 'getUIActions') &&
             typeof this.prototype.getUIActions === 'function') {
             superUIActions = this.prototype.getUIActions();
 
             for (key in superUIActions) {
                 if (Object.prototype.hasOwnProperty.call(superUIActions, key)) {
-                    uiActions[key] = superUIActions[key];
+                    moreUIActions[key] = superUIActions[key];
                 }
             }
         }
