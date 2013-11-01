@@ -120,6 +120,14 @@ maria.ElementView.subclass = function(namespace, name, options) {
     if (moreUIActions) {
         if (!Object.prototype.hasOwnProperty.call(properties, 'getUIActions')) {
             properties.getUIActions = function() {
+                superUIActions = namespace[name].superConstructor.prototype.getUIActions.call(this);
+
+                for (key in superUIActions) {
+                    if (Object.prototype.hasOwnProperty.call(superUIActions, key)) {
+                        moreUIActions[key] = superUIActions[key];
+                    }
+                }
+
                 return moreUIActions;
             };
         }
@@ -133,16 +141,6 @@ maria.ElementView.subclass = function(namespace, name, options) {
                             this.getController()[methodName](evt);
                         };
                     }(methodName));
-                }
-            }
-        }
-        if (Object.prototype.hasOwnProperty.call(this.prototype, 'getUIActions') &&
-            typeof this.prototype.getUIActions === 'function') {
-            superUIActions = this.prototype.getUIActions();
-
-            for (key in superUIActions) {
-                if (Object.prototype.hasOwnProperty.call(superUIActions, key)) {
-                    moreUIActions[key] = superUIActions[key];
                 }
             }
         }
