@@ -71,7 +71,6 @@ maria.ElementView.subclass(checkit, 'TodoView', {
 */
 maria.ElementView.subclass = function(namespace, name, options) {
     options = options || {};
-    var key, superUIActions;
     var template = options.template;
     var templateName = options.templateName || name.replace(/(View|)$/, 'Template');
     var uiActions = options.uiActions;
@@ -103,37 +102,25 @@ maria.ElementView.subclass = function(namespace, name, options) {
                 return uiActions;
             };
         }
-        for (var key in uiActions) {
-            if (Object.prototype.hasOwnProperty.call(uiActions, key)) {
-                var methodName = uiActions[key];
-                if ((!Object.prototype.hasOwnProperty.call(properties, methodName)) &&
-                    (!(methodName in this.prototype))) {
-                    (function(methodName) {
-                        properties[methodName] = function(evt) {
-                            this.getController()[methodName](evt);
-                        };
-                    }(methodName));
-                }
-            }
-        }
     }
     if (moreUIActions) {
         if (!Object.prototype.hasOwnProperty.call(properties, 'getUIActions')) {
             properties.getUIActions = function() {
-                superUIActions = namespace[name].superConstructor.prototype.getUIActions.call(this);
-
-                for (key in superUIActions) {
-                    if (Object.prototype.hasOwnProperty.call(superUIActions, key)) {
-                        moreUIActions[key] = superUIActions[key];
+                var uiActions = namespace[name].superConstructor.prototype.getUIActions.call(this);
+                for (var key in moreUIActions) {
+                    if (Object.prototype.hasOwnProperty.call(moreUIActions, key)) {
+                        uiActions[key] = moreUIActions[key];
                     }
                 }
-
-                return moreUIActions;
+                return uiActions;
             };
         }
-        for (key in moreUIActions) {
-            if (Object.prototype.hasOwnProperty.call(moreUIActions, key)) {
-                var methodName = moreUIActions[key];
+        uiActions = moreUIActions;
+    }
+    if (uiActions) {
+        for (var key in uiActions) {
+            if (Object.prototype.hasOwnProperty.call(uiActions, key)) {
+                var methodName = uiActions[key];
                 if ((!Object.prototype.hasOwnProperty.call(properties, methodName)) &&
                     (!(methodName in this.prototype))) {
                     (function(methodName) {
