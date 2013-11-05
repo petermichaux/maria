@@ -124,15 +124,17 @@
 
             maria.ElementView.subclass(app, 'Alpha', {
                 uiActions: {
-                    'click div'    : 'onClickDiv',
-                    'mouseover div': 'onMouseoverDiv'
+                    'click div': 'onClickDiv',
+                    'mouseover div': 'onMouseoverDiv',
+                    'mousemove div': 'onMousemoveDiv'
                 }
             });
 
             app.Alpha.subclass(app, 'Beta', {
                 moreUIActions: {
                     'dblclick div': 'onDblClickDiv',
-                    'mouseup div': 'onMouseupDiv'
+                    'mouseup div': 'onMouseupDiv',
+                    'mousemove div': 'onMousemoveOverwritten'
                 }
             });
 
@@ -142,13 +144,53 @@
             assert.equals(foo.getUIActions(), {
                 'click div': 'onClickDiv',
                 'mouseover div': 'onMouseoverDiv',
+                'mousemove div': 'onMousemoveDiv'
             });
 
             assert.equals(bar.getUIActions(), {
                 'click div': 'onClickDiv',
                 'mouseover div': 'onMouseoverDiv',
                 'dblclick div': 'onDblClickDiv',
-                'mouseup div': 'onMouseupDiv'
+                'mouseup div': 'onMouseupDiv',
+                'mousemove div': 'onMousemoveOverwritten'
+            });
+        },
+
+        "test dynamically changing superclass affect on subclass UI actions": function() {
+            var foo, bar,
+                app = {};
+
+            maria.ElementView.subclass(app, 'Alpha', {
+                uiActions: {
+                    'click div': 'onClickDiv'
+                }
+            });
+
+            app.Alpha.subclass(app, 'Beta', {
+                moreUIActions: {
+                    'dblclick div': 'onDblClickDiv'
+                }
+            });
+
+            foo = new app.Alpha();
+            bar = new app.Beta();
+
+            assert.equals(bar.getUIActions(), {
+                'click div': 'onClickDiv',
+                'dblclick div': 'onDblClickDiv'
+            });
+
+            app.Alpha.prototype.getUIActions = function () {
+                return {
+                    'click div': 'onClickOverwritten',
+                    'mouseover div': 'onMouseoverDiv'
+                };
+            };
+
+            assert.equals(bar.getUIActions(), {
+                'click div': 'onClickOverwritten',
+                'dblclick div': 'onDblClickDiv',
+                'mouseover div': 'onMouseoverDiv'
             });
         },
 
