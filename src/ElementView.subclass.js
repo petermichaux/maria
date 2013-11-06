@@ -68,6 +68,32 @@ maria.ElementView.subclass(checkit, 'TodoView', {
     uiActions: {
     ...
 
+You can augment uiActions in your subclass by specifying the declarative
+moreUIActions property.
+
+    checkit.TodoView.subclass(checkit, 'ReminderView', {
+        moreUIActions: {
+            'click .reminder': 'onClickReminder'
+        },
+        properties: {
+            showReminder: function() {
+                this.find('.todo-reminder').style.display = 'block';
+            },
+            hideReminder: function() {
+                this.find('.todo-reminder').style.display = 'none';
+            }
+        }
+    });
+
+The ReminderView will inherit the properties defined in uiActions from
+TodoView and augment it with moreUIActions. The subclassing function
+will generate the equivalent of the following function.
+
+    checkit.TodoView.prototype.getUIActions = function () {
+        var uiActions = checkit.TodoView.superConstructor.prototype.getUIActions.call(this);
+        uiActions['click .reminder'] = 'onClickReminder';
+        return uiActions;
+    };
 */
 maria.ElementView.subclass = function(namespace, name, options) {
     options = options || {};
