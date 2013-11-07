@@ -119,9 +119,11 @@ maria.ElementView.subclass = function(namespace, name, options) {
             };
         }
     }
+    /* DEBUG BEGIN */
     if (uiActions && moreUIActions) {
-        throw new Error('maria.ElementView.subclass: uiActions and moreUIActions cannot be defined in the same class. Please select only one.');
+        console.warn('maria.ElementView.subclass: uiActions and moreUIActions are both defined in "' + name + '". uiActions will be used and moreUIactions will be ignored.');
     }
+    /* DEBUG END */
     if (uiActions) {
         if (!Object.prototype.hasOwnProperty.call(properties, 'getUIActions')) {
             properties.getUIActions = function() {
