@@ -91,7 +91,22 @@
             alphaView.removeChild(betaView);
             assert.same(0, alphaView.childNodes.length);
             assert.same(betaView.parentNode, null);
-            assert.same(betaView.build().parentNode, null);
+            // It would be best to check that betaView.build().parentNode is null
+            // however IE8- does not set the parentNode to null after removing
+            // an element from its parent.
+            //
+            // http://cjwainwright.co.uk/webdev/ie8removechild/
+            //
+            // One day when IE8- do not matter, change the following if-else to just
+            //
+            //     assert.same(betaView.build().parentNode, null);
+            //
+            if (betaView.build().parentNode === null) {
+                assert.same(betaView.build().parentNode, null);
+            }
+            else {
+                refute.same(betaView.build().parentNode, alphaView.build());
+            }
         },
 
         "test subclass UI actions sugar": function() {
