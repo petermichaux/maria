@@ -130,7 +130,8 @@ maria.ElementView.subclass = function(namespace, name, options) {
                 return uiActions;
             };
         }
-    } else if (moreUIActions) {
+    }
+    else if (moreUIActions) {
         if (!Object.prototype.hasOwnProperty.call(properties, 'getUIActions')) {
             properties.getUIActions = function() {
                 var uiActions = namespace[name].superConstructor.prototype.getUIActions.call(this);
