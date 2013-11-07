@@ -1,10 +1,10 @@
 /**
 
-A function that makes subclassing maria.ElementView more compact.
+A function that makes subclassing `maria.ElementView` more compact.
 
-The following example creates a checkit.TodoView constructor function
+The following example creates a `checkit.TodoView` constructor function
 equivalent to the more verbose example shown in the documentation
-for maria.ElementView.
+for `maria.ElementView`.
 
     maria.ElementView.subclass(checkit, 'TodoView', {
         uiActions: {
@@ -47,9 +47,9 @@ for maria.ElementView.
     });
 
 This subclassing function implements options following the
-"convention over configuration" philosophy. The checkit.TodoView will,
-by convention, use the checkit.TodoController
-and checkit.TodoTemplate objects. All of these can be configured
+"convention over configuration" philosophy. The `checkit.TodoView` will,
+by convention, use the `checkit.TodoController`
+and `checkit.TodoTemplate` objects. All of these can be configured
 explicitly if these conventions do not match your view's needs.
 
     maria.ElementView.subclass(checkit, 'TodoView', {
@@ -62,14 +62,14 @@ Alternately you can use late binding by supplying string names of
 objects in the application's namespace object (i.e. the checkit object
 in this example).
 
-maria.ElementView.subclass(checkit, 'TodoView', {
-    controllerConstructorName: 'TodoController',
-    templateName             : 'TodoTemplate'  ,
-    uiActions: {
-    ...
+    maria.ElementView.subclass(checkit, 'TodoView', {
+        controllerConstructorName: 'TodoController',
+        templateName             : 'TodoTemplate'  ,
+        uiActions: {
+        ...
 
-You can augment uiActions in your subclass by specifying the declarative
-moreUIActions property.
+You can augment `uiActions` in your subclass by specifying the declarative
+`moreUIActions` property (instead of using `uiActions`.)
 
     checkit.TodoView.subclass(checkit, 'ReminderView', {
         moreUIActions: {
@@ -85,8 +85,8 @@ moreUIActions property.
         }
     });
 
-The ReminderView will inherit the properties defined in uiActions from
-TodoView and augment it with moreUIActions. The subclassing function
+The `ReminderView` will inherit the properties defined in `uiActions` from
+`TodoView` and augment it with `moreUIActions`. The subclassing function
 will generate the equivalent of the following function.
 
     checkit.TodoView.prototype.getUIActions = function () {
