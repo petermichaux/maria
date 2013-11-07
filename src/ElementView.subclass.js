@@ -68,12 +68,39 @@ maria.ElementView.subclass(checkit, 'TodoView', {
     uiActions: {
     ...
 
+You can augment uiActions in your subclass by specifying the declarative
+moreUIActions property.
+
+    checkit.TodoView.subclass(checkit, 'ReminderView', {
+        moreUIActions: {
+            'click .reminder': 'onClickReminder'
+        },
+        properties: {
+            showReminder: function() {
+                this.find('.todo-reminder').style.display = 'block';
+            },
+            hideReminder: function() {
+                this.find('.todo-reminder').style.display = 'none';
+            }
+        }
+    });
+
+The ReminderView will inherit the properties defined in uiActions from
+TodoView and augment it with moreUIActions. The subclassing function
+will generate the equivalent of the following function.
+
+    checkit.TodoView.prototype.getUIActions = function () {
+        var uiActions = checkit.TodoView.superConstructor.prototype.getUIActions.call(this);
+        uiActions['click .reminder'] = 'onClickReminder';
+        return uiActions;
+    };
 */
 maria.ElementView.subclass = function(namespace, name, options) {
     options = options || {};
     var template = options.template;
     var templateName = options.templateName || name.replace(/(View|)$/, 'Template');
     var uiActions = options.uiActions;
+    var moreUIActions = options.moreUIActions;
     var properties = options.properties || (options.properties = {});
     if (!Object.prototype.hasOwnProperty.call(properties, 'getTemplate')) {
         if (template) {
@@ -92,12 +119,31 @@ maria.ElementView.subclass = function(namespace, name, options) {
             };
         }
     }
+    if (uiActions && moreUIActions) {
+        throw new Error('maria.ElementView.subclass: uiActions and moreUIActions cannot be defined in the same class. Please select only one.');
+    }
     if (uiActions) {
         if (!Object.prototype.hasOwnProperty.call(properties, 'getUIActions')) {
             properties.getUIActions = function() {
                 return uiActions;
             };
         }
+    }
+    if (moreUIActions) {
+        if (!Object.prototype.hasOwnProperty.call(properties, 'getUIActions')) {
+            properties.getUIActions = function() {
+                var uiActions = namespace[name].superConstructor.prototype.getUIActions.call(this);
+                for (var key in moreUIActions) {
+                    if (Object.prototype.hasOwnProperty.call(moreUIActions, key)) {
+                        uiActions[key] = moreUIActions[key];
+                    }
+                }
+                return uiActions;
+            };
+        }
+        uiActions = moreUIActions;
+    }
+    if (uiActions) {
         for (var key in uiActions) {
             if (Object.prototype.hasOwnProperty.call(uiActions, key)) {
                 var methodName = uiActions[key];
