@@ -1,5 +1,6 @@
 1.2.0 - [date]
 --------------
+* add `moreUIActions` option to `maria.ElementView.subclass`
 * expose `maria.find` and `maria.findAll` utility functions
 
 1.1.0 - July 25, 2013
