@@ -122,7 +122,7 @@ build/www/eg: build/dist/maria.js eg/* eg/*/* eg/*/*/* eg/*/*/* eg/*/*/*/* eg/*/
 lib/compiler:
 	mkdir -p tmp/compiler
 	cd tmp/compiler && \
-	curl -O http://closure-compiler.googlecode.com/files/compiler-latest.zip && \
+	curl -O http://dl.google.com/closure-compiler/compiler-latest.zip && \
 	unzip compiler-latest.zip
 	mkdir -p lib/compiler
 	mv tmp/compiler/compiler.jar lib/compiler
