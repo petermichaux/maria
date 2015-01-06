@@ -29,8 +29,6 @@ There are several different built files from which to choose:
 
 `maria-amd-debug.js` similar to `maria-debug.js` but for developers in the AMD world.
 
-Install via Bower with ```bower install maria```
-
 
 Documentation
 -------------
