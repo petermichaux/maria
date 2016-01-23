@@ -37,8 +37,6 @@ Examples
 
 The `eg` directory contains several example applications.
 
-Maria is one of the frameworks included in the [TodoMVC project](http://todomvc.com/).
-
 
 Community
 ---------
