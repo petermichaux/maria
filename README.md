@@ -25,10 +25,6 @@ There are several different built files from which to choose:
 
 `maria-debug.js` contains additional code that is stripped when creating `maria.js`. This additional code points developers to potential problems with more informative console logging. `maria-debug.js` is a good file to use during development.
 
-`maria-amd.js` contains the same code as `maria.js` but it is wrapped in an AMD module definition that returns the `maria` object.
-
-`maria-amd-debug.js` similar to `maria-debug.js` but for developers in the AMD world.
-
 
 Documentation
 -------------

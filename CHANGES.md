@@ -2,6 +2,7 @@
 --------------
 * add `moreUIActions` option to `maria.ElementView.subclass`
 * expose `maria.find` and `maria.findAll` utility functions
+* remove AMD builds
 
 1.1.0 - July 25, 2013
 ---------------------

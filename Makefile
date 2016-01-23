@@ -35,7 +35,7 @@ SRCS       = src/header.js                 \
 
 all: build/dist build/dist/maria-min.js build/www
 
-build/dist: build/dist/README.md build/dist/CHANGES.md build/dist/LICENSE build/dist/maria.js build/dist/maria-min.js build/dist/maria-amd.js
+build/dist: build/dist/README.md build/dist/CHANGES.md build/dist/LICENSE build/dist/maria.js build/dist/maria-min.js
 
 build/dist/README.md: README.md
 	mkdir -p build/dist
@@ -69,14 +69,6 @@ build/dist/maria-min.js: build/dist/maria.js lib/compiler
 	cd build/dist && java -jar ../../lib/compiler/compiler.jar --js maria.js --js_output_file maria-min.js --create_source_map maria-min.map --source_map_format V3
 	echo "/*\n//@ sourceMappingURL=maria-min.map\n*/\n" >> build/dist/maria-min.js
 	gzip --best -c build/dist/maria-min.js > build/dist/maria-min.js.gz
-
-build/dist/maria-amd-debug.js: tmp/maria-raw.js
-	echo "define(function() { // AMD" > build/dist/maria-amd-debug.js
-	cat tmp/maria-raw.js >> build/dist/maria-amd-debug.js
-	echo "\nreturn maria;}); // AMD" >> build/dist/maria-amd-debug.js
-
-build/dist/maria-amd.js: build/dist/maria-amd-debug.js
-	bin/strip-debugging-code build/dist/maria-amd-debug.js > build/dist/maria-amd.js
 
 deploy-www: build/www
 	scp -r build/www/* peter@michaux.ca:~/sites/maria
