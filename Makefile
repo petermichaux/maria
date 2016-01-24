@@ -55,9 +55,9 @@ tmp/maria-raw.js: $(LIBS) $(SRCS)
 
 build/dist/maria-debug.js: tmp/maria-raw.js
 	mkdir -p build/dist
-	echo "var maria = (function() { // IIFE" > build/dist/maria-debug.js
+	echo "var maria = (function(/* DEBUG BEGIN */console/* DEBUG END */) { // IIFE" > build/dist/maria-debug.js
 	cat tmp/maria-raw.js >> build/dist/maria-debug.js
-	echo "\nreturn maria;}()); // IIFE" >> build/dist/maria-debug.js
+	echo "\nreturn maria;}(/* DEBUG BEGIN */(typeof console === 'object') ? console : null/* DEBUG END */))); // IIFE" >> build/dist/maria-debug.js
 	gzip --best -c build/dist/maria-debug.js > build/dist/maria-debug.js.gz
 
 build/dist/maria.js: build/dist/maria-debug.js
