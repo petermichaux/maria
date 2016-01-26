@@ -118,7 +118,7 @@
             assert.same('mouseover', args[3].eventType);
             assert.same(elementView, args[3].listener);
             assert.same('onMouseoverDiv', args[3].methodName);
-            
+
             maria.on = originalOn;
         },
 

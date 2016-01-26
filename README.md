@@ -1,7 +1,7 @@
 Maria
 =====
 
-The MVC framework for JavaScript applications. The real MVC. The Smalltalk MVC. The Gang of Four MVC. 
+The MVC framework for JavaScript applications. The real MVC. The Smalltalk MVC. The Gang of Four MVC.
 
 * A model contains domain data. When a model changes, it informs its observers.
 

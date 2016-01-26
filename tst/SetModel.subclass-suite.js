@@ -41,31 +41,31 @@
 
         "test elementConstructorName sugar": function () {
             var app = {};
-            
+
             maria.Model.subclass(app, 'PersonModel');
 
             maria.SetModel.subclass(app, 'PeopleSetModel', {
                 elementConstructorName: 'PersonModel'
             });
-            
+
             assert.same(app.PersonModel, app.PeopleSetModel.prototype.getDefaultElementConstructor());
         },
 
         "test elementConstructor sugar": function () {
             var app = {};
-            
+
             maria.Model.subclass(app, 'PersonModel');
 
             maria.SetModel.subclass(app, 'PeopleSetModel', {
                 elementConstructor: app.PersonModel
             });
-            
+
             assert.same(app.PersonModel, app.PeopleSetModel.prototype.getDefaultElementConstructor());
         },
-        
+
         "test fromJSON class method": function () {
             var app = {};
-            
+
             maria.Model.subclass(app, 'PersonModel', {
                 attributes: {
                     name: {
@@ -77,7 +77,7 @@
             maria.SetModel.subclass(app, 'PeopleSetModel', {
                 elementConstructorName: 'PersonModel'
             });
-            
+
             var people = app.PeopleSetModel.fromJSON([{name: 'Sgt Baker'}, {name: 'Mr Krinkle'}]);
             var result = people.toArray().sort(function (a, b) {
                 return (a.getName() < b.getName()) ?

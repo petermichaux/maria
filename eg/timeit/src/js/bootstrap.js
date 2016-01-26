@@ -11,7 +11,7 @@ maria.on(window, 'load', function() {
 
     var digitalClockView = new timeit.DigitalClockView(model);
     document.body.appendChild(digitalClockView.build());
-    
+
     var clockKnobsView = new timeit.ClockKnobsView(model);
     document.body.appendChild(clockKnobsView.build());
 });

@@ -65,7 +65,7 @@ A view has a controller. You can get the current controller.
     view.getController();
 
 The view's controller is created lazily the first time the
-getController method is called. The view's 
+getController method is called. The view's
 getDefaultControllerConstructor method returns the constructor function
 to create the controller object and the getDefaultController actually
 calls that constructor. Your application may redefine or override
@@ -214,7 +214,7 @@ maria.View.prototype.setModel = function(model) {
 Returns a controller constructor function to be used to create
 a controller for this view.
 
-@return {function} The controller constructor function. 
+@return {function} The controller constructor function.
 
 */
 maria.View.prototype.getDefaultControllerConstructor = function() {

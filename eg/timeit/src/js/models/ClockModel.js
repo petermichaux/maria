@@ -59,7 +59,7 @@
                 var h = this._hour;
                 var m = this._minute;
                 var s = this._second;
-                
+
                 s++;
                 if (s > 59) {
                     s = 0;
@@ -72,7 +72,7 @@
                         }
                     }
                 }
-                
+
                 this.setTime(h, m, s);
             },
             start: function() {

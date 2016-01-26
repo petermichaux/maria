@@ -79,7 +79,7 @@ maria.SetModel.subclass = function(namespace, name, options) {
                 /* DEBUG BEGIN */
                 if ((!elementConstructor) &&
                     (!Object.prototype.hasOwnProperty.call(namespace, elementConstructorName))) {
-                    console.error('Could not find element class named "' + elementConstructorName + '".');    
+                    console.error('Could not find element class named "' + elementConstructorName + '".');
                 }
                 /* DEBUG END */
                 return elementConstructor || namespace[elementConstructorName];

@@ -38,7 +38,7 @@
 
             maria.subclass = original;
         },
-        
+
         "test Model.subclass attributes": function() {
             var app = {};
             maria.Model.subclass(app, 'MyModel', {
@@ -52,7 +52,7 @@
                     }
                 }
             });
-            
+
             var m = new app.MyModel();
             assert.isFunction(m.getName);
             assert.isFunction(m.guardName);
@@ -68,7 +68,7 @@
 
         "test Model.subclass attributes type required": function() {
             var app = {};
-            
+
             assert.exception(function() {
                 maria.Model.subclass(app, 'MyModel', {
                     attributes: {
@@ -77,14 +77,14 @@
                 });
             });
         },
-        
+
         "test Model.subclass attributes do not overwrite properties": function() {
             var app = {};
-            
+
             var guardName = function (v) {
                 return '--' + v + '--';
             };
-        
+
             maria.Model.subclass(app, 'MyModel', {
                 attributes: {
                     name: {
@@ -96,20 +96,20 @@
                     guardName: guardName
                 }
             });
-            
+
             var m = new app.MyModel();
             assert.same(guardName, m.guardName);
             m.setName('Mud');
             assert.same('--Mud--', m.getName());
         },
-        
+
         "test Model.subclass attribute method in attributes spec": function() {
             var app = {};
-            
+
             var guardName = function (v) {
                 return '--' + v + '--';
             };
-        
+
             maria.Model.subclass(app, 'MyModel', {
                 attributes: {
                     name: {
@@ -119,17 +119,17 @@
                     }
                 }
             });
-            
+
             var m = new app.MyModel();
             assert.same(guardName, m.guardName);
             assert.same('Lemmy', m.getName());
             m.setName('Mud');
             assert.same('--Mud--', m.getName());
         },
-        
+
         "test Model.subclass adds fromJSON method to subclass": function() {
             var app = {};
-        
+
             maria.Model.subclass(app, 'MyModel', {
                 attributes: {
                     id: {
@@ -142,12 +142,12 @@
             });
 
             assert.isFunction(app.MyModel.fromJSON);
-            
+
             var m = app.MyModel.fromJSON({
                 id: 123,
                 name: 'Harold'
             });
-            
+
             assert.same(123, m.getId());
             assert.same('Harold', m.getName());
         }

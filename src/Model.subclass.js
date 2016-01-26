@@ -12,7 +12,7 @@ for maria.Model.
                 type: 'string',
                 coerce: true,
                 trim: true
-            }, 
+            },
             done: {
                 type: 'boolean',
                 coerce: true

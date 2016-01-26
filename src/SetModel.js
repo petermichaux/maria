@@ -16,7 +16,7 @@ with those elements.
 
 You can create an empty set model object.
 
-    var setModel = new maria.SetModel(); 
+    var setModel = new maria.SetModel();
 
 What makes a set model object interesting in comparison to a set is
 that a set model object is a model object that dispatches "change"
@@ -219,7 +219,7 @@ maria.SetModel.prototype.add = function() {
             added.push(argument);
             if ((typeof argument.addEventListener === 'function') &&
                 (typeof argument.removeEventListener === 'function')) {
-                argument.addEventListener('destroy', this);    
+                argument.addEventListener('destroy', this);
             }
             if ((typeof argument.addParentEventTarget === 'function') &&
                 // want to know can remove later

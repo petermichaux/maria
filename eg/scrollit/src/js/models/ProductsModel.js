@@ -3,16 +3,16 @@ maria.SetModel.subclass(scrollit, 'ProductsModel', {
     attributes: {
         loading: {
             type: 'boolean'
-        }, 
+        },
         complete: {
             type: 'boolean'
-        }, 
+        },
         nextOffset: {
             type: 'number',
             integer: true,
             min: 0
-        } 
-    }, 
+        }
+    },
     properties: {
         load: function() {
             if (this.isComplete() || this.isLoading()) {

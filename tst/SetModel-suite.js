@@ -290,7 +290,7 @@
 
         "test fromJSON": function () {
             var app = {};
-            
+
             app.PersonModel = function() {
                 maria.Model.apply(this, arguments);
             };
@@ -311,7 +311,7 @@
             app.PeopleSetModel.prototype.getDefaultElementConstructor = function() {
                 return app.PersonModel;
             };
-            
+
             var people = new app.PeopleSetModel();
             people.fromJSON([{name: 'Sgt Baker'}, {name: 'Mr Krinkle'}]);
             var result = people.toArray().sort(function (a, b) {
@@ -328,7 +328,7 @@
 
         "test fromJSON class method": function () {
             var app = {};
-            
+
             app.PersonModel = function() {
                 maria.Model.apply(this, arguments);
             };
@@ -352,7 +352,7 @@
             app.PeopleSetModel.fromJSON = function(json) {
                 return maria.SetModel.fromJSON.call(this, json);
             };
-            
+
             var people = app.PeopleSetModel.fromJSON([{name: 'Sgt Baker'}, {name: 'Mr Krinkle'}]);
             var result = people.toArray().sort(function (a, b) {
                 return (a.getName() < b.getName()) ?

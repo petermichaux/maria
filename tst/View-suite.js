@@ -40,7 +40,7 @@
             assert.same(1, count, 'there should be one model actions by default');
             assert.same('update', modelActions.change);
         },
-        
+
         "test when model actions are not empty then listeners are added": function() {
             var view = new maria.View();
 
@@ -93,7 +93,7 @@
 
         "test when model changed unsubscribe from previous model": function() {
             var view = new maria.View();
-            
+
             view.getModelActions = function() {
                 return {
                     'squashed': 'onSquashed',

@@ -259,7 +259,7 @@
                     }
                 }
             });
-            
+
             app.Alpha.prototype.onClickDiv(evt);
             assert.same(evt, calledEvt);
         },

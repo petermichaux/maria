@@ -15,5 +15,5 @@ Same idea as `String.prototype.trim` in modern JavaScript engines.
 
 */
 maria.trim = function(str) {
-    return str.replace(/^\s+|\s+$/g, ''); 
+    return str.replace(/^\s+|\s+$/g, '');
 };

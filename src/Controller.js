@@ -119,7 +119,7 @@ maria.Controller.prototype.getModel = function() {
 /**
 
 **Pretend you do not know that this method even exists.**
-`setModel` is intended to be called **only** by 
+`setModel` is intended to be called **only** by
 the view `_setModelAndController` method. **Do otherwise
 at your own risk!**
 
@@ -144,7 +144,7 @@ maria.Controller.prototype.getView = function() {
 /**
 
 **Pretend you do not know that this method even exists.**
-`setView` is intended to be called **only** by 
+`setView` is intended to be called **only** by
 the view `_setModelAndController` method. **Do otherwise
 at your own risk!**
 

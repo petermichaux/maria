@@ -117,13 +117,13 @@
             maria.Model.prototype.aFromJSON = function(val) {
                 a = val;
             };
-            
+
             var m = maria.Model.fromJSON({
                 a: 44
             });
-            
+
             assert.same(44, a, 'a not set correctly');
-            
+
             delete maria.Model.prototype.aFromJSON;
         },
 
@@ -142,9 +142,9 @@
             m.resetName();
             assert.same(m.getName(), undefined);
             m.setName(123);
-            assert.same(m.getName(), '123');            
+            assert.same(m.getName(), '123');
         },
-        
+
         "test maria.mixinBooleanAttribute": function() {
             var m = new maria.Model();
             maria.mixinBooleanAttribute(m, 'agreed');

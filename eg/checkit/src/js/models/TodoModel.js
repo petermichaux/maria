@@ -3,9 +3,9 @@ maria.Model.subclass(checkit, 'TodoModel', {
         content: {
             type: 'string',
             trim: true
-        }, 
+        },
         done: {
             type: 'boolean'
-        } 
-    } 
+        }
+    }
 });
