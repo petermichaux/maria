@@ -1,4 +1,4 @@
-maria.on(window, 'load', function() {
+maria.on(window, 'load', function () {
 
     var model = new checkit.TodosModel();
 

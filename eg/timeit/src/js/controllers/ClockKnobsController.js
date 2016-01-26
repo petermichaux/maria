@@ -1,12 +1,12 @@
 maria.Controller.subclass(timeit, 'ClockKnobsController', {
     properties: {
-        onClickStart: function() {
+        onClickStart: function () {
             this.getModel().start();
         },
-        onClickStop: function() {
+        onClickStop: function () {
             this.getModel().stop();
         },
-        onClickReset: function() {
+        onClickReset: function () {
             this.getModel().resetTime();
         }
     }

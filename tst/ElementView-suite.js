@@ -1,12 +1,12 @@
-(function() {
+(function () {
 
     buster.testCase('ElementView Suite', {
 
-        "test ElementView has superConstructor View": function() {
+        "test ElementView has superConstructor View": function () {
             assert.same(maria.View, maria.ElementView.superConstructor);
         },
 
-        "test calling constructor with parameters sets them in new instance": function() {
+        "test calling constructor with parameters sets them in new instance": function () {
             var model = new maria.Model();
             var controller = new maria.Controller();
             var doc = {};
@@ -16,7 +16,7 @@
             assert.same(doc, elementView.getDocument(), 'document should be same');
         },
 
-        "test calling constructor with only model parameter sets it and controller and document are defaults": function() {
+        "test calling constructor with only model parameter sets it and controller and document are defaults": function () {
             var model = new maria.Model();
             var elementView = new maria.ElementView(model);
             assert.same(model, elementView.getModel(), 'model should be same');
@@ -24,7 +24,7 @@
             assert.same(document, elementView.getDocument(), 'document should be default');
         },
 
-        "test calling constructor with only controller parameter sets it and model and document are defaults": function() {
+        "test calling constructor with only controller parameter sets it and model and document are defaults": function () {
             var controller = new maria.Controller();
             var elementView = new maria.ElementView(null, controller);
             assert.same(null, elementView.getModel(), 'model should be null by default');
@@ -32,7 +32,7 @@
             assert.same(document, elementView.getDocument(), 'document should be default');
         },
 
-        "test calling constructor with only document parameter sets it and model and controller are defaults": function() {
+        "test calling constructor with only document parameter sets it and model and controller are defaults": function () {
             var doc = {};
             var elementView = new maria.ElementView(null, null, doc);
             assert.same(null, elementView.getModel(), 'model should be null default');
@@ -40,12 +40,12 @@
             assert.same(doc, elementView.getDocument(), 'document should be same');
         },
 
-        "test default template is for a simple empty div element": function() {
+        "test default template is for a simple empty div element": function () {
             var elementView = new maria.ElementView();
             assert.same('<div></div>', elementView.getTemplate());
         },
 
-        "test default UI actions are empty": function() {
+        "test default UI actions are empty": function () {
             var elementView = new maria.ElementView();
             var count = 0;
             var uiActions = elementView.getUIActions();
@@ -57,12 +57,12 @@
             assert.same(0, count, 'there should be zero ui actions by default');
         },
 
-        "test when UI actions are not empty then listeners are added": function() {
+        "test when UI actions are not empty then listeners are added": function () {
             var elementView = new maria.ElementView();
-            elementView.getTemplate = function() {
+            elementView.getTemplate = function () {
                 return '<div class="abc"><span></span><span></span></div>';
             };
-            elementView.getUIActions = function() {
+            elementView.getUIActions = function () {
                 return {
                     'click div'     : 'onClickDiv'    ,
                     'mouseover .abc': 'onMouseoverDiv',
@@ -73,7 +73,7 @@
             var args = [];
 
             var originalOn = maria.on;
-            maria.on = function(node, eventType, listener, methodName) {
+            maria.on = function (node, eventType, listener, methodName) {
                 args.push({
                     node: node,
                     eventType: eventType,
@@ -88,7 +88,7 @@
             assert.same(4, args.length, 'maria.on should have been called four times');
 
             // need a predictable order to test
-            args.sort(function(a, b) {
+            args.sort(function (a, b) {
                 return a.methodName > b.methodName ?
                            1 :
                            a.methodName < b.methodName ?
@@ -122,25 +122,25 @@
             maria.on = originalOn;
         },
 
-        "test build returns a DOM node": function() {
+        "test build returns a DOM node": function () {
             var elementView = new maria.ElementView();
             var rootEl = elementView.build();
             assert.same('DIV', rootEl.tagName);
         },
 
-        "test by default the containerEl for children is the rootEl": function() {
+        "test by default the containerEl for children is the rootEl": function () {
             var elementView = new maria.ElementView();
             assert.same(elementView.build(), elementView.getContainerEl());
         },
 
-        "test appending a sub-view appends the sub-view's DOM node": function() {
+        "test appending a sub-view appends the sub-view's DOM node": function () {
             var parent = new maria.ElementView();
             var child = new maria.ElementView();
             parent.appendChild(child);
             assert.same(child.build(), parent.build().firstChild);
         },
 
-        "test inserting a sub-view inserts the sub-view's DOM node": function() {
+        "test inserting a sub-view inserts the sub-view's DOM node": function () {
             var parent = new maria.ElementView();
             var child0 = new maria.ElementView();
             var child1 = new maria.ElementView();
@@ -153,7 +153,7 @@
             assert.same(child1.build(), parent.build().firstChild.nextSibling);
         },
 
-        "test removing a sub-view removes the sub-view's DOM node": function() {
+        "test removing a sub-view removes the sub-view's DOM node": function () {
             var parent = new maria.ElementView();
             var child0 = new maria.ElementView();
             var child1 = new maria.ElementView();
@@ -170,13 +170,13 @@
             assert.same(child2.build(), parent.build().lastChild);
         },
 
-        "test find can find the root element div": function() {
+        "test find can find the root element div": function () {
             var elementView = new maria.ElementView();
             var foundDiv = elementView.find('div');
             assert.same(elementView.build(), foundDiv);
         },
 
-        "test findAll can find the root element div": function() {
+        "test findAll can find the root element div": function () {
             var elementView = new maria.ElementView();
             var foundDivs = elementView.findAll('div');
             assert.isArray(foundDivs, 'foundDivs should be an array');

@@ -1,14 +1,14 @@
-(function() {
+(function () {
 
     buster.testCase('ElementView.subclass Suite', {
 
-        "test subclass superConstructor": function() {
+        "test subclass superConstructor": function () {
             var app = {};
             maria.ElementView.subclass(app, 'MyElementView');
             assert.same(maria.ElementView, app.MyElementView.superConstructor);
         },
 
-        "test template convention sugar": function() {
+        "test template convention sugar": function () {
             var alphaTemplate = 'abc';
             var app = {
                 'AlphaTemplate': alphaTemplate
@@ -17,7 +17,7 @@
             assert.same(alphaTemplate, app.AlphaView.prototype.getTemplate());
         },
 
-        "test template property sugar": function() {
+        "test template property sugar": function () {
             var app = {};
             var template = '<span>the template</span>';
             maria.ElementView.subclass(app, 'Alpha', {
@@ -26,7 +26,7 @@
             assert.same(template, app.Alpha.prototype.getTemplate());
         },
 
-        "test templateName property sugar": function() {
+        "test templateName property sugar": function () {
             var app = {
                 'myTemplate': '<ul class="test-ul-template"></ul>'
             };
@@ -36,7 +36,7 @@
             assert.same(app.myTemplate, app.Alpha.prototype.getTemplate());
         },
 
-        "test getTemplate property prefered over template and templateName": function() {
+        "test getTemplate property prefered over template and templateName": function () {
             var app = {
                 'myTemplate': '<ul class="test-ul-template"></ul>'
             };
@@ -46,7 +46,7 @@
                 template: template,
                 templateName: 'myTemplate',
                 properties: {
-                    getTemplate: function() {
+                    getTemplate: function () {
                         return pTemplate;
                     }
                 }
@@ -54,7 +54,7 @@
             assert.same(pTemplate, app.Alpha.prototype.getTemplate());
         },
 
-        "test template prefered over templateName": function() {
+        "test template prefered over templateName": function () {
             var app = {
                 'myTemplate': '<ul class="test-ul-template"></ul>'
             };
@@ -66,18 +66,18 @@
             assert.same(template, app.Alpha.prototype.getTemplate());
         },
 
-        "test removeChild removes child root DOM element": function() {
+        "test removeChild removes child root DOM element": function () {
             var app = {
                 AlphaTemplate: '<div class="Alpha"><div class="aContainer"></div></div>',
                 BetaTemplate: '<div class="Beta"></div>'
             };
             maria.ElementView.subclass(app, 'AlphaView', {
                 properties: {
-                    buildChildViews: function() {
+                    buildChildViews: function () {
                         // NOTE do not add to the same element returned by getContainerEl
                         this.build().appendChild(this.childNodes[0].build());
                     },
-                    getContainerEl: function() {
+                    getContainerEl: function () {
                         return this.find('.aContainer');
                     }
                 }
@@ -109,7 +109,7 @@
             }
         },
 
-        "test subclass UI actions sugar": function() {
+        "test subclass UI actions sugar": function () {
             var app = {};
             var uiActions = {};
             maria.ElementView.subclass(app, 'Alpha', {
@@ -118,14 +118,14 @@
             assert.same(uiActions, app.Alpha.prototype.getUIActions());
         },
 
-        "test getUIActions property prefered over uiActions": function() {
+        "test getUIActions property prefered over uiActions": function () {
             var app = {};
             var uiActions0 = {};
             var uiActions1 = {};
             maria.ElementView.subclass(app, 'Alpha', {
                 uiActions: uiActions1,
                 properties: {
-                    getUIActions: function() {
+                    getUIActions: function () {
                         return uiActions0;
                     }
                 }
@@ -133,7 +133,7 @@
             assert.same(uiActions0, app.Alpha.prototype.getUIActions());
         },
 
-        "test subclass UI actions sugar inherits superclass UI actions": function() {
+        "test subclass UI actions sugar inherits superclass UI actions": function () {
             var foo, bar,
                 app = {};
 
@@ -171,7 +171,7 @@
             });
         },
 
-        "test dynamically changing superclass affect on subclass UI actions": function() {
+        "test dynamically changing superclass affect on subclass UI actions": function () {
             var foo, bar,
                 app = {};
 
@@ -209,7 +209,7 @@
             });
         },
 
-        "test subclass UI actions sugar creates handler functions": function() {
+        "test subclass UI actions sugar creates handler functions": function () {
             var app = {};
             var uiActions = {
                 'click div'    : 'onClickDiv'    ,
@@ -222,13 +222,13 @@
             assert.isFunction(app.Alpha.prototype.onMouseoverDiv);
         },
 
-        "test handler function property prefered over autocreated handler function": function() {
+        "test handler function property prefered over autocreated handler function": function () {
             var app = {};
             var uiActions = {
                 'click div'    : 'onClickDiv'    ,
                 'mouseover div': 'onMouseoverDiv'
             };
-            var onClickDiv = function() {};
+            var onClickDiv = function () {};
             maria.ElementView.subclass(app, 'Alpha', {
                 uiActions: uiActions,
                 properties: {
@@ -238,15 +238,15 @@
             assert.same(onClickDiv, app.Alpha.prototype.onClickDiv);
         },
 
-        "test autocreated handler functions delegate to controller method of the same name": function() {
+        "test autocreated handler functions delegate to controller method of the same name": function () {
             var evt = {};
             var calledEvt;
             var controller = {
-                onClickDiv: function(evt) {
+                onClickDiv: function (evt) {
                     calledEvt = evt;
                 },
-                setView: function() {},
-                setModel: function() {}
+                setView: function () {},
+                setModel: function () {}
             };
             var app = {};
             maria.ElementView.subclass(app, 'Alpha', {
@@ -254,7 +254,7 @@
                     'click div': 'onClickDiv'
                 },
                 properties: {
-                    getDefaultController: function() {
+                    getDefaultController: function () {
                         return controller;
                     }
                 }
@@ -264,7 +264,7 @@
             assert.same(evt, calledEvt);
         },
 
-        "test inheritied ui action is called rather than one generated": function() {
+        "test inheritied ui action is called rather than one generated": function () {
 
             var app = {};
 
@@ -274,19 +274,19 @@
 
             maria.Controller.subclass(app, 'GammaController', {
                 properties: {
-                    onSquishedFromAlpha: function() {
+                    onSquishedFromAlpha: function () {
                         wasSquishedFromAlpha = true;
                     },
-                    onSquished: function() {
+                    onSquished: function () {
                         wasSquishedFromGamma = true;
                     },
-                    onSquashed: function() {
+                    onSquashed: function () {
                         wasSquashed = true;
                     }
                 }
             });
 
-            var handler = function() {
+            var handler = function () {
                 this.getController().onSquishedFromAlpha();
             };
 

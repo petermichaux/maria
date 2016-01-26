@@ -15,32 +15,32 @@ for `maria.ElementView`.
             'blur      .todo-input'  : 'onBlurInput'
         },
         properties: {
-            buildData: function() {
+            buildData: function () {
                 var model = this.getModel();
                 var content = model.getContent();
                 this.find('.todo-content').innerHTML = checkit.escapeHTML(content);
                 this.find('.check').checked = model.isDone();
                 aristocrat[model.isDone() ? 'addClass' : 'removeClass'](this.find('.todo'), 'done');
             },
-            update: function() {
+            update: function () {
                 this.buildData();
             },
-            showEdit: function() {
+            showEdit: function () {
                 var input = this.find('.todo-input');
                 input.value = this.getModel().getContent();
                 aristocrat.addClass(this.find('.todo'), 'editing');
                 input.select();
             },
-            showDisplay: function() {
+            showDisplay: function () {
                 aristocrat.removeClass(this.find('.todo'), 'editing');
             },
-            getInputValue: function() {
+            getInputValue: function () {
                 return this.find('.todo-input').value;
             },
-            showToolTip: function() {
+            showToolTip: function () {
                 this.find('.ui-tooltip-top').style.display = 'block';
             },
-            hideToolTip: function() {
+            hideToolTip: function () {
                 this.find('.ui-tooltip-top').style.display = 'none';
             }
         }
@@ -76,10 +76,10 @@ You can augment `uiActions` in your subclass by specifying the declarative
             'click .reminder': 'onClickReminder'
         },
         properties: {
-            showReminder: function() {
+            showReminder: function () {
                 this.find('.todo-reminder').style.display = 'block';
             },
-            hideReminder: function() {
+            hideReminder: function () {
                 this.find('.todo-reminder').style.display = 'none';
             }
         }
@@ -95,7 +95,7 @@ will generate the equivalent of the following function.
         return uiActions;
     };
 */
-maria.ElementView.subclass = function(namespace, name, options) {
+maria.ElementView.subclass = function (namespace, name, options) {
     options = options || {};
     var template = options.template;
     var templateName = options.templateName || name.replace(/(View|)$/, 'Template');
@@ -104,12 +104,12 @@ maria.ElementView.subclass = function(namespace, name, options) {
     var properties = options.properties || (options.properties = {});
     if (!Object.prototype.hasOwnProperty.call(properties, 'getTemplate')) {
         if (template) {
-            properties.getTemplate = function() {
+            properties.getTemplate = function () {
                 return template;
             };
         }
         else if (templateName) {
-            properties.getTemplate = function() {
+            properties.getTemplate = function () {
                 /* DEBUG BEGIN */
                 if (!Object.prototype.hasOwnProperty.call(namespace, templateName)) {
                     console.error('Could not find template named "' + templateName + '".');
@@ -126,14 +126,14 @@ maria.ElementView.subclass = function(namespace, name, options) {
     /* DEBUG END */
     if (uiActions) {
         if (!Object.prototype.hasOwnProperty.call(properties, 'getUIActions')) {
-            properties.getUIActions = function() {
+            properties.getUIActions = function () {
                 return uiActions;
             };
         }
     }
     else if (moreUIActions) {
         if (!Object.prototype.hasOwnProperty.call(properties, 'getUIActions')) {
-            properties.getUIActions = function() {
+            properties.getUIActions = function () {
                 var uiActions = namespace[name].superConstructor.prototype.getUIActions.call(this);
                 for (var key in moreUIActions) {
                     if (Object.prototype.hasOwnProperty.call(moreUIActions, key)) {
@@ -151,8 +151,8 @@ maria.ElementView.subclass = function(namespace, name, options) {
                 var methodName = uiActions[key];
                 if ((!Object.prototype.hasOwnProperty.call(properties, methodName)) &&
                     (!(methodName in this.prototype))) {
-                    (function(methodName) {
-                        properties[methodName] = function(evt) {
+                    (function (methodName) {
+                        properties[methodName] = function (evt) {
                             this.getController()[methodName](evt);
                         };
                     }(methodName));

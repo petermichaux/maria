@@ -28,7 +28,7 @@ on the model, the view's "update" method will be called.
 
 Your application will redefine or more likely override the update method.
 
-    maria.View.prototype.update = function(evt) {
+    maria.View.prototype.update = function (evt) {
         alert('the model changed');
     };
 
@@ -36,7 +36,7 @@ If necessary, you can change the events and methods that the view will
 observe when the model is set by redefining or overriding the
 getModelActions method.
 
-    maria.View.prototype.getModelActions = function() {
+    maria.View.prototype.getModelActions = function () {
         return {
             'squashed': 'onSquashed',
             'squished': 'onSquished'
@@ -48,7 +48,7 @@ the model's `change` event if you explicitely list it which is not done
 above. If you want to observe the `squashed`, `squished`, *and* `change`
 events then you need to write the following.
 
-    maria.View.prototype.getModelActions = function() {
+    maria.View.prototype.getModelActions = function () {
         return {
             'change'  : 'update'    ,
             'squashed': 'onSquashed',
@@ -103,28 +103,28 @@ your new view constructor. The following example shows how this can be
 done at a low level. See maria.View.subclass for a more compact way to
 accomplish the same.
 
-    myapp.MyView = function() {
+    myapp.MyView = function () {
         maria.View.apply(this, arguments);
     };
     myapp.MyView.superConstructor = maria.View;
     myapp.MyView.prototype = maria.create(maria.View.prototype);
     myapp.MyView.prototype.constructor = myapp.MyView;
-    myapp.MyView.prototype.getModelActions = function() {
+    myapp.MyView.prototype.getModelActions = function () {
         return {
             'squashed': 'onSquashed',
             'squished': 'onSquished'
         };
     };
-    maria.MyView.prototype.onSquished = function(evt) {
+    maria.MyView.prototype.onSquished = function (evt) {
         this.getController().onSquished(evt);
     };
-    maria.MyView.prototype.onSquashed = function() {
+    maria.MyView.prototype.onSquashed = function () {
     this.getController().onSquashed(evt);
     };
-    myapp.MyView.prototype.getDefaultControllerConstructor = function() {
+    myapp.MyView.prototype.getDefaultControllerConstructor = function () {
         return myapp.MyController;
     };
-    myapp.MyView.prototype.anotherMethod = function() {
+    myapp.MyView.prototype.anotherMethod = function () {
         alert('another method');
     };
 
@@ -137,7 +137,7 @@ accomplish the same.
 @param {maria.Controller} [controller]
 
 */
-maria.View = function(model, controller) {
+maria.View = function (model, controller) {
     maria.Node.call(this);
     this.setModel(model);
     this.setController(controller);
@@ -161,7 +161,7 @@ This will unsubcribe this view from its model so that this view
 does not become a zombie view.
 
 */
-maria.View.prototype.destroy = function() {
+maria.View.prototype.destroy = function () {
     maria.purge(this);
     this._model = null;
     if (this._controller) {
@@ -183,7 +183,7 @@ To be overridden by subclasses.
 @param {object} event The event object.
 
 */
-maria.View.prototype.update = function() {
+maria.View.prototype.update = function () {
     // to be overridden by concrete view subclasses
 };
 
@@ -194,7 +194,7 @@ Returns the current model object of this view.
 @return {maria.Model} The model object.
 
 */
-maria.View.prototype.getModel = function() {
+maria.View.prototype.getModel = function () {
     return this._model;
 };
 
@@ -205,7 +205,7 @@ Set the current model object of this view.
 @param {maria.Model} model The model object.
 
 */
-maria.View.prototype.setModel = function(model) {
+maria.View.prototype.setModel = function (model) {
     this._setModelAndController(model, this._controller);
 };
 
@@ -217,7 +217,7 @@ a controller for this view.
 @return {function} The controller constructor function.
 
 */
-maria.View.prototype.getDefaultControllerConstructor = function() {
+maria.View.prototype.getDefaultControllerConstructor = function () {
     return maria.Controller;
 };
 
@@ -228,7 +228,7 @@ Creates a new default controller for this view.
 @return {maria.Controller} The controller object.
 
 */
-maria.View.prototype.getDefaultController = function() {
+maria.View.prototype.getDefaultController = function () {
     var constructor = this.getDefaultControllerConstructor();
     return new constructor();
 };
@@ -242,7 +242,7 @@ creates a controller and sets it as this view's controller.
 @return {maria.Controller} The controller object.
 
 */
-maria.View.prototype.getController = function() {
+maria.View.prototype.getController = function () {
     if (!this._controller) {
         this.setController(this.getDefaultController());
     }
@@ -256,7 +256,7 @@ Set the current controller for this view.
 @param {maria.Controller} The controller object.
 
 */
-maria.View.prototype.setController = function(controller) {
+maria.View.prototype.setController = function (controller) {
     this._setModelAndController(this._model, controller);
 };
 
@@ -276,11 +276,11 @@ You can override this method but, beware, doing so can lead to the dark side.
 @return {Object} The map of model events and view handers.
 
 */
-maria.View.prototype.getModelActions = function() {
+maria.View.prototype.getModelActions = function () {
     return {'change': 'update'};
 };
 
-maria.View.prototype._setModelAndController = function(model, controller) {
+maria.View.prototype._setModelAndController = function (model, controller) {
     var type, eventMap;
     if (this._model !== model) {
         if (this._model) {

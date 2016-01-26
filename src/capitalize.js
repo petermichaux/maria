@@ -9,6 +9,6 @@ Capitalize the first letter of the string.
 @return {string} The capitalized string.
 
 */
-maria.capitalize = function(str) {
+maria.capitalize = function (str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 };

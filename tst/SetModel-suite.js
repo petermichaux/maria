@@ -1,12 +1,12 @@
-(function() {
+(function () {
 
     buster.testCase('SetModel Suite', {
 
-        "test SetModel has superConstructor Model": function() {
+        "test SetModel has superConstructor Model": function () {
             assert.same(maria.Model, maria.SetModel.superConstructor);
         },
 
-        "test has, add, and delete still work": function() {
+        "test has, add, and delete still work": function () {
 
             var s = new maria.SetModel();
 
@@ -20,19 +20,19 @@
             assert.same(true, s['delete'](alpha), 'deleting alpha in set returns true.');
         },
 
-        "test add no items": function() {
+        "test add no items": function () {
             var s = new maria.SetModel();
             assert.same(false, s.add(), "adding nothing should work and return false");
         },
 
-        "test delete no items": function() {
+        "test delete no items": function () {
             var alpha = {};
             var beta = {};
             var s = new maria.SetModel(alpha, beta);
             assert.same(false, s['delete'](), "deleting nothing should work and return false");
         },
 
-        "test add and delete events dispatched": function() {
+        "test add and delete events dispatched": function () {
 
             var s = new maria.SetModel();
 
@@ -40,7 +40,7 @@
 
             var additions = 0;
             var deletions = 0;
-            s.addEventListener('change', function(evt) {
+            s.addEventListener('change', function (evt) {
                 if (evt.addedTargets && evt.addedTargets.length) {
                     additions++;
                 }
@@ -66,7 +66,7 @@
 
         },
 
-        "test add delete multiple elements in one call": function() {
+        "test add delete multiple elements in one call": function () {
 
             var s = new maria.SetModel();
 
@@ -76,7 +76,7 @@
             var addEvents = 0;
             var deleteEvents = 0;
 
-            s.addEventListener('change', function(evt) {
+            s.addEventListener('change', function (evt) {
                 if (evt.addedTargets && evt.addedTargets.length) {
                     addEvents++;
                 }
@@ -106,7 +106,7 @@
 
         },
 
-        "test automatic bubbling": function() {
+        "test automatic bubbling": function () {
 
             var child = new evento.EventTarget();
             var parent = new maria.SetModel();
@@ -116,15 +116,15 @@
             var resultParent;
             var resultRoot;
 
-            child.addEventListener('foo', function(ev) {
+            child.addEventListener('foo', function (ev) {
                 resultChild = ev;
             });
 
-            parent.addEventListener('foo', function(ev) {
+            parent.addEventListener('foo', function (ev) {
                 resultParent = ev;
             });
 
-            root.addEventListener('foo', function(ev) {
+            root.addEventListener('foo', function (ev) {
                 resultRoot = ev;
             });
 
@@ -157,28 +157,28 @@
 
         },
 
-        "test add does bubble": function() {
+        "test add does bubble": function () {
             var alpha = {};
             var childSet = new maria.SetModel();
             var parentSet = new maria.SetModel();
             var addBubbled = false;
             var afterAddBubbled = true;
             parentSet.add(childSet);
-            parentSet.addEventListener('change', function(ev) {
+            parentSet.addEventListener('change', function (ev) {
                 addBubbled = true;
             });
             childSet.add(alpha);
             assert.same(true, addBubbled, 'the parent set should know an element is added to the child set');
         },
 
-        "test delete does bubble": function() {
+        "test delete does bubble": function () {
             var alpha = {};
             var childSet = new maria.SetModel();
             var parentSet = new maria.SetModel();
             var deleteBubbled = false;
             var afterDeleteBubbled = true;
             parentSet.add(childSet);
-            parentSet.addEventListener('change', function(ev) {
+            parentSet.addEventListener('change', function (ev) {
                 if (ev.deletedTargets && ev.deletedTargets.length) {
                     deleteBubbled = true;
                 }
@@ -188,14 +188,14 @@
             assert.same(true, deleteBubbled, 'the parent set should know an element is deleted from the child set');
         },
 
-        "test delete does bubble when clearing": function() {
+        "test delete does bubble when clearing": function () {
             var alpha = {};
             var childSet = new maria.SetModel();
             var parentSet = new maria.SetModel();
             var deleteBubbled = false;
             var afterDeleteBubbled = true;
             parentSet.add(childSet);
-            parentSet.addEventListener('change', function(ev) {
+            parentSet.addEventListener('change', function (ev) {
                 if (ev.deletedTargets && ev.deletedTargets.length) {
                     deleteBubbled = true;
                 }
@@ -205,7 +205,7 @@
             assert.same(true, deleteBubbled, 'the parent set should know an element is deleted from the child set when clearing the child set');
         },
 
-        "test destroy event on element removes it from the set": function() {
+        "test destroy event on element removes it from the set": function () {
             var element = new evento.EventTarget();
             var set = new maria.SetModel();
             set.add(element);
@@ -216,12 +216,12 @@
             assert.same(false, set.has(element), "the set should not contain the element");
         },
 
-        "test clear dispatches events": function() {
+        "test clear dispatches events": function () {
             var alpha = {};
             var beta = {};
             var s = new maria.SetModel(alpha, beta);
             var deleteEvents = 0;
-            s.addEventListener('change', function(evt) {
+            s.addEventListener('change', function (evt) {
                 if (evt.deletedTargets && evt.deletedTargets.length) {
                     deleteEvents++;
                 }
@@ -230,13 +230,13 @@
             assert.same(1, deleteEvents, "the delete listener should have been called only once");
         },
 
-        "test clear removes listeners from subject elements": function() {
+        "test clear removes listeners from subject elements": function () {
             var element = new evento.EventTarget();
             var set = new maria.SetModel();
             set.add(element);
 
             var calls = 0;
-            set.addEventListener('foo', function(ev) {
+            set.addEventListener('foo', function (ev) {
                 calls++;
             });
             element.dispatchEvent({type: 'foo'});
@@ -247,7 +247,7 @@
 
         },
 
-        "test getDefaultElementConstructor": function() {
+        "test getDefaultElementConstructor": function () {
             var m = new maria.SetModel();
             assert.same(maria.Model, m.getDefaultElementConstructor(), "the default element constructor should be maria.Model");
         },
@@ -255,19 +255,19 @@
         "test toJSON": function () {
             var jerry = new maria.Model();
             maria.borrow(jerry, {
-                idToJSON: function() {
+                idToJSON: function () {
                     return 442;
                 },
-                nameToJSON: function() {
+                nameToJSON: function () {
                     return 'Jerry';
                 }
             });
             var pierce = new maria.Model();
             maria.borrow(pierce, {
-                idToJSON: function() {
+                idToJSON: function () {
                     return 3;
                 },
-                nameToJSON: function() {
+                nameToJSON: function () {
                     return 'Captain Pierce';
                 }
             });
@@ -291,24 +291,24 @@
         "test fromJSON": function () {
             var app = {};
 
-            app.PersonModel = function() {
+            app.PersonModel = function () {
                 maria.Model.apply(this, arguments);
             };
             app.PersonModel.superConstructor = maria.Model;
             app.PersonModel.prototype = maria.create(maria.Model.prototype);
             app.PersonModel.prototype.constructor = app.PersonModel;
             maria.mixinStringAttribute(app.PersonModel.prototype, 'name');
-            app.PersonModel.fromJSON = function(json) {
+            app.PersonModel.fromJSON = function (json) {
                 return maria.Model.fromJSON.call(this, json);
             };
 
-            app.PeopleSetModel = function() {
+            app.PeopleSetModel = function () {
                 maria.SetModel.apply(this, arguments);
             };
             app.PeopleSetModel.superConstructor = maria.SetModel;
             app.PeopleSetModel.prototype = maria.create(maria.SetModel.prototype);
             app.PeopleSetModel.prototype.constructor = app.PeopleSetModel;
-            app.PeopleSetModel.prototype.getDefaultElementConstructor = function() {
+            app.PeopleSetModel.prototype.getDefaultElementConstructor = function () {
                 return app.PersonModel;
             };
 
@@ -329,27 +329,27 @@
         "test fromJSON class method": function () {
             var app = {};
 
-            app.PersonModel = function() {
+            app.PersonModel = function () {
                 maria.Model.apply(this, arguments);
             };
             app.PersonModel.superConstructor = maria.Model;
             app.PersonModel.prototype = maria.create(maria.Model.prototype);
             app.PersonModel.prototype.constructor = app.PersonModel;
             maria.mixinStringAttribute(app.PersonModel.prototype, 'name');
-            app.PersonModel.fromJSON = function(json) {
+            app.PersonModel.fromJSON = function (json) {
                 return maria.Model.fromJSON.call(this, json);
             };
 
-            app.PeopleSetModel = function() {
+            app.PeopleSetModel = function () {
                 maria.SetModel.apply(this, arguments);
             };
             app.PeopleSetModel.superConstructor = maria.SetModel;
             app.PeopleSetModel.prototype = maria.create(maria.SetModel.prototype);
             app.PeopleSetModel.prototype.constructor = app.PeopleSetModel;
-            app.PeopleSetModel.prototype.getDefaultElementConstructor = function() {
+            app.PeopleSetModel.prototype.getDefaultElementConstructor = function () {
                 return app.PersonModel;
             };
-            app.PeopleSetModel.fromJSON = function(json) {
+            app.PeopleSetModel.fromJSON = function (json) {
                 return maria.SetModel.fromJSON.call(this, json);
             };
 

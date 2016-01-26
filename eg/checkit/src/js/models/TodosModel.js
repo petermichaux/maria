@@ -1,29 +1,29 @@
 maria.SetModel.subclass(checkit, 'TodosModel', {
     properties: {
-        isAllDone: function() {
+        isAllDone: function () {
             return (this.size > 0) &&
-                   this.every(function(todo) {
+                   this.every(function (todo) {
                        return todo.isDone();
                    });
         },
-        isAllUndone: function() {
-            return this.every(function(todo) {
+        isAllUndone: function () {
+            return this.every(function (todo) {
                        return !todo.isDone();
                    });
         },
-        markAllDone: function() {
-            this.forEach(function(todo) {
+        markAllDone: function () {
+            this.forEach(function (todo) {
                 todo.setDone(true);
             });
         },
-        markAllUndone: function() {
-            this.forEach(function(todo) {
+        markAllUndone: function () {
+            this.forEach(function (todo) {
                 todo.setDone(false);
             });
         },
-        deleteDone: function() {
+        deleteDone: function () {
             var doneTodos = [];
-            this.forEach(function(todo) {
+            this.forEach(function (todo) {
                 if (todo.isDone()) {
                     doneTodos.push(todo);
                 }

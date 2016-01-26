@@ -1,12 +1,12 @@
-(function() {
+(function () {
 
     buster.testCase('Model Suite', {
 
-        "test Model has superConstructor evento.EventTarget": function() {
+        "test Model has superConstructor evento.EventTarget": function () {
             assert.same(evento.EventTarget, maria.Model.superConstructor);
         },
 
-        "test models have EventTarget interface": function() {
+        "test models have EventTarget interface": function () {
             var m = new maria.Model();
 
             assert.isFunction(m.addEventListener, 'should have addEventListener');
@@ -16,26 +16,26 @@
             assert.isFunction(m.removeParentEventTarget, 'should have removeParentEventTarget');
         },
 
-        "test models dispatch a destroy event when destroy method is called": function() {
+        "test models dispatch a destroy event when destroy method is called": function () {
             var m = new maria.Model();
             var called = false;
-            m.addEventListener('destroy', function() {called = true;});
+            m.addEventListener('destroy', function () {called = true;});
             m.destroy();
             assert.same(true, called);
         },
 
-        "test reset calls only methods with 'reset' prefix": function() {
+        "test reset calls only methods with 'reset' prefix": function () {
             var m = new maria.Model();
             var getACalled = false,
                 resetACalled = false,
                 resetBCalled = false;
-            m.getA = function() {
+            m.getA = function () {
                 getACalled = true;
             };
-            m.resetA = function() {
+            m.resetA = function () {
                 resetACalled = true;
             };
-            m.resetB = function() {
+            m.resetB = function () {
                 resetBCalled = true;
             };
             m.reset();
@@ -44,18 +44,18 @@
             assert.same(true, resetBCalled, 'resetB method should have been called');
         },
 
-        "test toJSON calls only methods with 'ToJSON' suffix": function() {
+        "test toJSON calls only methods with 'ToJSON' suffix": function () {
             var m = new maria.Model();
             var getACalled = false,
                 aToJSONCalled = false,
                 bToJSONCalled = false;
-            m.getA = function() {
+            m.getA = function () {
                 getACalled = true;
             };
-            m.aToJSON = function() {
+            m.aToJSON = function () {
                 aToJSONCalled = true;
             };
-            m.bToJSON = function() {
+            m.bToJSON = function () {
                 bToJSONCalled = true;
             };
             m.toJSON();
@@ -64,12 +64,12 @@
             assert.same(true, bToJSONCalled, 'bToJSON method should have been called');
         },
 
-        "test toJSON produces object suitable to be serialized to JSON": function() {
+        "test toJSON produces object suitable to be serialized to JSON": function () {
             var m = new maria.Model();
-            m.aToJSON = function() {
+            m.aToJSON = function () {
                 return "123";
             };
-            m.bToJSON = function() {
+            m.bToJSON = function () {
                 return 456;
             };
             var obj = m.toJSON();
@@ -77,7 +77,7 @@
             assert.same(obj.b, 456);
         },
 
-        "test fromJSON calls only methods with 'FromJSON' suffix": function() {
+        "test fromJSON calls only methods with 'FromJSON' suffix": function () {
             var m = new maria.Model();
             var getACalled = false,
                 aFromJSONCalled = false,
@@ -85,18 +85,18 @@
                 cFromJSONCalled = false,
                 a,
                 b;
-            m.getA = function() {
+            m.getA = function () {
                 getACalled = true;
             };
-            m.aFromJSON = function(val) {
+            m.aFromJSON = function (val) {
                 aFromJSONCalled = true;
                 a = val;
             };
-            m.bFromJSON = function(val) {
+            m.bFromJSON = function (val) {
                 bFromJSONCalled = true;
                 b = val;
             };
-            m.cFromJSON = function() {
+            m.cFromJSON = function () {
                 bFromJSONCalled = true;
             };
             var obj = m.fromJSON({
@@ -111,10 +111,10 @@
             assert.same(false, cFromJSONCalled, 'cFromJSON method should not have been called');
         },
 
-        "test class-level fromJSON": function() {
+        "test class-level fromJSON": function () {
             var a;
 
-            maria.Model.prototype.aFromJSON = function(val) {
+            maria.Model.prototype.aFromJSON = function (val) {
                 a = val;
             };
 
@@ -127,7 +127,7 @@
             delete maria.Model.prototype.aFromJSON;
         },
 
-        "test maria.mixinAttribute": function() {
+        "test maria.mixinAttribute": function () {
             var m = new maria.Model();
             maria.mixinAttribute(m, 'name', {
                 guard: function (value) {
@@ -145,7 +145,7 @@
             assert.same(m.getName(), '123');
         },
 
-        "test maria.mixinBooleanAttribute": function() {
+        "test maria.mixinBooleanAttribute": function () {
             var m = new maria.Model();
             maria.mixinBooleanAttribute(m, 'agreed');
 
@@ -162,7 +162,7 @@
             assert.same(m.agreedToJSON(), false);
         },
 
-        "test maria.mixinStringAttribute": function() {
+        "test maria.mixinStringAttribute": function () {
             var m = new maria.Model();
             maria.mixinStringAttribute(m, 'color');
 
@@ -171,12 +171,12 @@
             assert.same(m.getColor(), 'red');
             m.setColor('  green  ');
             assert.same(m.getColor(), '  green  ');
-            assert.exception(function() {
+            assert.exception(function () {
                 m.setColor(123);
             });
         },
 
-        "test maria.mixinStringAttribute coerce": function() {
+        "test maria.mixinStringAttribute coerce": function () {
             var m = new maria.Model();
             maria.mixinStringAttribute(m, 'color', {
                 'default': 'red',
@@ -188,7 +188,7 @@
             assert.same(m.getColor(), '123');
         },
 
-        "test maria.mixinStringAttribute trim": function() {
+        "test maria.mixinStringAttribute trim": function () {
             var m = new maria.Model();
             maria.mixinStringAttribute(m, 'color', {
                 'default': 'red',
@@ -200,7 +200,7 @@
             assert.same(m.getColor(), 'blue');
         },
 
-        "test maria.mixinStringAttribute enumeration": function() {
+        "test maria.mixinStringAttribute enumeration": function () {
             var m = new maria.Model();
             maria.mixinStringAttribute(m, 'color', {
                 'default': 'red',
@@ -217,7 +217,7 @@
             });
         },
 
-        "test maria.mixinStringAttribute maxlen": function() {
+        "test maria.mixinStringAttribute maxlen": function () {
             var m = new maria.Model();
             maria.mixinStringAttribute(m, 'color', {
                 'default': 'red',
@@ -232,7 +232,7 @@
             });
         },
 
-        "test maria.mixinStringAttribute minlen": function() {
+        "test maria.mixinStringAttribute minlen": function () {
             var m = new maria.Model();
             maria.mixinStringAttribute(m, 'color', {
                 'default': 'blue',
@@ -247,7 +247,7 @@
             });
         },
 
-        "test maria.mixinStringAttribute blank": function() {
+        "test maria.mixinStringAttribute blank": function () {
             var m = new maria.Model();
             maria.mixinStringAttribute(m, 'color', {
                 'default': 'blue',
@@ -262,7 +262,7 @@
             });
         },
 
-        "test maria.mixinStringAttribute regexp": function() {
+        "test maria.mixinStringAttribute regexp": function () {
             var m = new maria.Model();
             maria.mixinStringAttribute(m, 'color', {
                 'default': 'blue',
@@ -277,19 +277,19 @@
             });
         },
 
-        "test maria.mixinNumberAttribute": function() {
+        "test maria.mixinNumberAttribute": function () {
             var m = new maria.Model();
             maria.mixinNumberAttribute(m, 'height');
 
             assert.same(m.getHeight(), 0);
             m.setHeight(123);
             assert.same(m.getHeight(), 123);
-            assert.exception(function() {
+            assert.exception(function () {
                 m.setHeight('red');
             });
         },
 
-        "test maria.mixinNumberAttribute coerce": function() {
+        "test maria.mixinNumberAttribute coerce": function () {
             var m = new maria.Model();
             maria.mixinNumberAttribute(m, 'height', {
                 'default': 123,
@@ -301,7 +301,7 @@
             assert.same(m.getHeight(), 777);
         },
 
-        "test maria.mixinNumberAttribute round": function() {
+        "test maria.mixinNumberAttribute round": function () {
             var m = new maria.Model();
             maria.mixinNumberAttribute(m, 'height', {
                 'default': 123,
@@ -315,7 +315,7 @@
         },
 
 
-        "test maria.mixinNumberAttribute floor": function() {
+        "test maria.mixinNumberAttribute floor": function () {
             var m = new maria.Model();
             maria.mixinNumberAttribute(m, 'height', {
                 'default': 123,
@@ -329,7 +329,7 @@
         },
 
 
-        "test maria.mixinNumberAttribute ceil": function() {
+        "test maria.mixinNumberAttribute ceil": function () {
             var m = new maria.Model();
             maria.mixinNumberAttribute(m, 'height', {
                 'default': 123,
@@ -342,7 +342,7 @@
             assert.same(m.getHeight(), 445);
         },
 
-        "test maria.mixinNumberAttribute integer": function() {
+        "test maria.mixinNumberAttribute integer": function () {
             var m = new maria.Model();
             maria.mixinNumberAttribute(m, 'height', {
                 'default': 456,
@@ -357,7 +357,7 @@
             });
         },
 
-        "test maria.mixinNumberAttribute enumeration": function() {
+        "test maria.mixinNumberAttribute enumeration": function () {
             var m = new maria.Model();
             maria.mixinNumberAttribute(m, 'height', {
                 'default': 123,
@@ -374,7 +374,7 @@
             });
         },
 
-        "test maria.mixinNumberAttribute min": function() {
+        "test maria.mixinNumberAttribute min": function () {
             var m = new maria.Model();
             maria.mixinNumberAttribute(m, 'height', {
                 'default': 456,
@@ -389,7 +389,7 @@
             });
         },
 
-        "test maria.mixinNumberAttribute max": function() {
+        "test maria.mixinNumberAttribute max": function () {
             var m = new maria.Model();
             maria.mixinNumberAttribute(m, 'height', {
                 'default': 1.3,

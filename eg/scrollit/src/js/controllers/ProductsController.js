@@ -1,6 +1,6 @@
 maria.Controller.subclass(scrollit, 'ProductsController', {
     properties: {
-        onScroll: function() {
+        onScroll: function () {
             if (this.getView().isScrolledToBottom()) {
                 this.getModel().load();
             }

@@ -1,4 +1,4 @@
-(function() {
+(function () {
 
     function padNum(i) {
         return ((i < 10) ? '0' : '') + i;
@@ -10,12 +10,12 @@
 
     maria.ElementView.subclass(timeit, 'DigitalClockView', {
         properties: {
-            buildData: function() {
+            buildData: function () {
                 var time = this.getModel().getTime();
                 this.find('.time').innerHTML =
                     formatTimeString(time.hour, time.minute, time.second);
             },
-            update: function() {
+            update: function () {
                 this.buildData();
             }
         }

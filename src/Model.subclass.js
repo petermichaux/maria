@@ -21,7 +21,7 @@ for maria.Model.
     });
 
 */
-maria.Model.subclass = function(namespace, name, options) {
+maria.Model.subclass = function (namespace, name, options) {
     maria.subclass.call(this, namespace, name, options);
 
     if (options && Object.prototype.hasOwnProperty.call(options, 'attributes')) {
@@ -52,7 +52,7 @@ maria.Model.subclass = function(namespace, name, options) {
     }
 
     if (!Object.prototype.hasOwnProperty(namespace[name], 'fromJSON')) {
-        namespace[name].fromJSON = function(json) {
+        namespace[name].fromJSON = function (json) {
             return this.superConstructor.fromJSON.call(this, json);
         };
     }

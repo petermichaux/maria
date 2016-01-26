@@ -1,4 +1,4 @@
-(function() {
+(function () {
 
     // Some pure functions that help with validation.
 
@@ -25,14 +25,14 @@
             _second: 0,
             _running: false,
             _interval: null,
-            getTime: function() {
+            getTime: function () {
                 return {
                     hour: this._hour,
                     minute: this._minute,
                     second: this._second
                 };
             },
-            setTime: function(h, m, s) {
+            setTime: function (h, m, s) {
                 // Always use very robust checking on values sent to a model.
                 if (!isValidHour(h)) {
                     throw new Error('hour is not valid');
@@ -52,10 +52,10 @@
                     this.dispatchEvent({type: 'change'});
                 }
             },
-            resetTime: function() {
+            resetTime: function () {
                 this.setTime(0, 0, 0);
             },
-            _tick: function() {
+            _tick: function () {
                 var h = this._hour;
                 var m = this._minute;
                 var s = this._second;
@@ -75,17 +75,17 @@
 
                 this.setTime(h, m, s);
             },
-            start: function() {
+            start: function () {
                 if (!this._running) {
                     this._running = true;
                     var thisC = this;
-                    this._interval = setInterval(function() {
+                    this._interval = setInterval(function () {
                         thisC._tick();
                     }, 1000);
                     this.dispatchEvent({type: 'change'});
                 }
             },
-            stop: function(isDone) {
+            stop: function (isDone) {
                 if (this._running) {
                     this._running = false;
                     clearInterval(this._interval);

@@ -14,7 +14,7 @@ Same idea as `Array.prototype.some` in modern JavaScript engines.
 @return {boolean} `true` if `fn` returns `true` for at least one element in `arr`. Otherwise `false`.
 
 */
-maria.some = function(arr, fn) {
+maria.some = function (arr, fn) {
     for (var i = 0, ilen = arr.length; i < ilen; i++) {
         if (fn(arr[i])) {
             return true;

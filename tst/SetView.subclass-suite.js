@@ -1,14 +1,14 @@
-(function() {
+(function () {
 
     buster.testCase('SetView.subclass Suite', {
 
-        "test subclass superConstructor": function() {
+        "test subclass superConstructor": function () {
             var app = {};
             maria.SetView.subclass(app, 'MySetView');
             assert.same(maria.SetView, app.MySetView.superConstructor);
         },
 
-        "test SetView.subclass passes arguments through to ElementView.subclass": function() {
+        "test SetView.subclass passes arguments through to ElementView.subclass": function () {
             var original = maria.ElementView.subclass;
 
             var namespace;
@@ -19,7 +19,7 @@
             // we also test that maria.SetView.subclass uses late binding and
             // finds maria.ElementView.subclass when maria.SetView.subclass is called rather
             // than when it is defined.
-            maria.ElementView.subclass = function(a, b, c) {
+            maria.ElementView.subclass = function (a, b, c) {
                 namespace = a;
                 name = b;
                 options = c;

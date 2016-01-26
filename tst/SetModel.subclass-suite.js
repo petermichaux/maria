@@ -1,14 +1,14 @@
-(function() {
+(function () {
 
     buster.testCase('SetModel.subclass Suite', {
 
-        "test subclass superConstructor": function() {
+        "test subclass superConstructor": function () {
             var app = {};
             maria.SetModel.subclass(app, 'MySetModel');
             assert.same(maria.SetModel, app.MySetModel.superConstructor);
         },
 
-        "test SetModel.subclass passes arguments through to Model.subclass": function() {
+        "test SetModel.subclass passes arguments through to Model.subclass": function () {
             var original = maria.Model.subclass;
 
             var namespace;
@@ -19,7 +19,7 @@
             // we also test that maria.SetModel.subclass uses late binding and
             // finds maria.Model.subclass when maria.SetModel.subclass is called rather
             // than when it is defined.
-            maria.Model.subclass = function(a, b, c) {
+            maria.Model.subclass = function (a, b, c) {
                 namespace = a;
                 name = b;
                 options = c;

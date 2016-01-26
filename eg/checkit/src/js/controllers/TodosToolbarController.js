@@ -1,6 +1,6 @@
 maria.Controller.subclass(checkit, 'TodosToolbarController', {
     properties: {
-        onClickAllCheckbox: function() {
+        onClickAllCheckbox: function () {
             var model = this.getModel();
             if (model.isAllDone()) {
                 model.markAllUndone();
@@ -8,7 +8,7 @@ maria.Controller.subclass(checkit, 'TodosToolbarController', {
                 model.markAllDone();
             }
         },
-        onClickDeleteDone: function() {
+        onClickDeleteDone: function () {
             this.getModel().deleteDone();
         }
     }

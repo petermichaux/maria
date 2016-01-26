@@ -23,7 +23,7 @@ that a set model object is a model object that dispatches "change"
 events when elements are added or deleted from the the set.
 
     var view = {
-        update: function(evt) {
+        update: function (evt) {
             alert(setModel.size + ' element(s) in the set.');
         }
     };
@@ -97,19 +97,19 @@ A set model object has some other handy methods.
 
     setModel.toArray(); // returns [alpha, beta] or [beta, alpha]
 
-    setModel.forEach(function(element) {
+    setModel.forEach(function (element) {
         alert(element.name);
     });
 
-    setModel.every(function(element) {
+    setModel.every(function (element) {
         return element.name.length > 4;
     }); // returns false
 
-    setModel.some(function(element) {
+    setModel.some(function (element) {
         return element.name.length > 4;
     }); // returns true
 
-    setModel.reduce(function(accumulator, element) {
+    setModel.reduce(function (accumulator, element) {
         return accumulator + element.name.length;
     }, 0); // returns 9
 
@@ -124,36 +124,36 @@ example shows how this can be done at a low level for a to-do
 application. See maria.SetModel.subclass for a more compact way
 to accomplish the same.
 
-    checkit.TodosModel = function() {
+    checkit.TodosModel = function () {
         maria.SetModel.apply(this, arguments);
     };
     checkit.TodosModel.superConstructor = maria.SetModel;
     checkit.TodosModel.prototype = maria.create(maria.SetModel.prototype);
     checkit.TodosModel.prototype.constructor = checkit.TodosModel;
-    checkit.TodosModel.prototype.isAllDone = function() {
+    checkit.TodosModel.prototype.isAllDone = function () {
         return (this.size > 0) &&
-               this.every(function(todo) {
+               this.every(function (todo) {
                    return todo.isDone();
                });
     };
-    checkit.TodosModel.prototype.isAllUndone = function() {
-        return this.every(function(todo) {
+    checkit.TodosModel.prototype.isAllUndone = function () {
+        return this.every(function (todo) {
                    return !todo.isDone();
                });
     };
-    checkit.TodosModel.prototype.markAllDone = function() {
-        this.forEach(function(todo) {
+    checkit.TodosModel.prototype.markAllDone = function () {
+        this.forEach(function (todo) {
             todo.setDone(true);
         });
     };
-    checkit.TodosModel.prototype.markAllUndone = function() {
-        this.forEach(function(todo) {
+    checkit.TodosModel.prototype.markAllUndone = function () {
+        this.forEach(function (todo) {
             todo.setDone(false);
         });
     };
-    checkit.TodosModel.prototype.deleteDone = function() {
+    checkit.TodosModel.prototype.deleteDone = function () {
         var doneTodos = [];
-        this.forEach(function(todo) {
+        this.forEach(function (todo) {
             if (todo.isDone()) {
                 doneTodos.push(todo);
             }
@@ -173,7 +173,7 @@ example. This can complement well the flyweight pattern used in a view.
 @extends hormigas.ObjectSet
 
 */
-maria.SetModel = function() {
+maria.SetModel = function () {
     hormigas.ObjectSet.apply(this, arguments);
     maria.Model.call(this);
 };
@@ -211,7 +211,7 @@ are already in the set then this event will not be dispatched.
 @override
 
 */
-maria.SetModel.prototype.add = function() {
+maria.SetModel.prototype.add = function () {
     var added = [];
     for (var i = 0, ilen = arguments.length; i < ilen; i++) {
         var argument = arguments[i];
@@ -254,7 +254,7 @@ were already not in the set then this event will not be dispatched.
 @override
 
 */
-maria.SetModel.prototype['delete'] = function() {
+maria.SetModel.prototype['delete'] = function () {
     var deleted = [];
     for (var i = 0, ilen = arguments.length; i < ilen; i++) {
         var argument = arguments[i];
@@ -287,7 +287,7 @@ event is dispatched on the set model object.
 @return {boolean} True if the set was modified. Otherwise false.
 
 */
-maria.SetModel.prototype.clear = function() {
+maria.SetModel.prototype.clear = function () {
     var deleted = this.toArray();
     var result = hormigas.ObjectSet.prototype.clear.call(this);
     if (result) {
@@ -313,7 +313,7 @@ must be deleted from this set. This handler will do the delete.
 @param {Object} event The event object.
 
 */
-maria.SetModel.prototype.handleEvent = function(evt) {
+maria.SetModel.prototype.handleEvent = function (evt) {
 
     // If it is a destroy event being dispatched on the
     // destroyed element then we want to remove it from
@@ -331,7 +331,7 @@ maria.SetModel.prototype.handleEvent = function(evt) {
 when instantiating objects to be added to this set.
 
 */
-maria.SetModel.prototype.getDefaultElementConstructor = function() {
+maria.SetModel.prototype.getDefaultElementConstructor = function () {
     return maria.Model;
 };
 
@@ -344,7 +344,7 @@ This process calls `toJSON` on each model in the set.
 @return {Array} The array of data objects.
 
 */
-maria.SetModel.prototype.toJSON = function() {
+maria.SetModel.prototype.toJSON = function () {
     var models = this.toArray(),
         json = [],
         i,
@@ -367,7 +367,7 @@ This method does not empty the set before adding new elements to the set.
 @param {Array} json The array of data objects.
 
 */
-maria.SetModel.prototype.fromJSON = function(json) {
+maria.SetModel.prototype.fromJSON = function (json) {
     var constructor = this.getDefaultElementConstructor(),
         elements = [],
         i,
@@ -388,7 +388,7 @@ created using the data object.
 @return {object} The new set model instance.
 
 */
-maria.SetModel.fromJSON = function(json) {
+maria.SetModel.fromJSON = function (json) {
     var model = new this();
     model.fromJSON(json);
     return model;

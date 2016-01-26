@@ -1,8 +1,8 @@
-(function() {
+(function () {
 
     buster.testCase('Trival Suite', {
 
-        "test trivial": function() {
+        "test trivial": function () {
             assert(true);
         }
 

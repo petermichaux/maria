@@ -14,6 +14,6 @@ Same idea as `String.prototype.trim` in modern JavaScript engines.
 @return {string} The trimmed string.
 
 */
-maria.trim = function(str) {
+maria.trim = function (str) {
     return str.replace(/^\s+|\s+$/g, '');
 };

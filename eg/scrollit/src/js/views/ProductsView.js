@@ -3,24 +3,24 @@ maria.SetView.subclass(scrollit, 'ProductsView', {
         'scroll .productsListWrapper': 'onScroll'
     },
     properties: {
-        isScrolledToBottom: function() {
+        isScrolledToBottom: function () {
             var wrapper = this.find('.productsListWrapper');
             var scrollTop = wrapper.scrollTop;
             var scrollHeight = wrapper.scrollHeight;
             var height = wrapper.clientHeight;
             return (scrollHeight - scrollTop) === height;
         },
-        createChildView: function(productModel) {
+        createChildView: function (productModel) {
             return new scrollit.ProductView(productModel);
         },
-        buildData: function() {
+        buildData: function () {
             this.find('.loading').style.display = this.getModel().isLoading() ? '' : 'none';
         },
-        update: function(evt) {
+        update: function (evt) {
             scrollit.ProductsView.superConstructor.prototype.update.call(this, evt);
             this.buildData();
         },
-        getContainerEl: function() {
+        getContainerEl: function () {
             return this.find('.productsList');
         }
     }

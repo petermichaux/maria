@@ -13,7 +13,7 @@ For example, the following view object's "update" method will be called
 when a "change" event is dispatched on the model objects.
 
     var view = {
-        update: function(evt) {
+        update: function (evt) {
             alert('The model changed!');
         }
     };
@@ -22,7 +22,7 @@ when a "change" event is dispatched on the model objects.
 The model can dispatch a "change" event on itself when the model
 changes.
 
-    model.setContent = function(content) {
+    model.setContent = function (content) {
         this._content = content;
         model.dispatchEvent({type: 'change'});
     };
@@ -30,7 +30,7 @@ changes.
 If desired, a model can push additional data to its observers by
 including that data on the event object.
 
-    model.setContent = function(content) {
+    model.setContent = function (content) {
         var previousContent = this._content;
         this._content = content;
         model.dispatchEvent({
@@ -48,7 +48,7 @@ A particularly useful pattern is using maria.Model as the "superclass"
 of your application's model. The following example shows how this
 can be done at a low level for a to-do application.
 
-    checkit.TodoModel = function() {
+    checkit.TodoModel = function () {
         maria.Model.apply(this, arguments);
     };
     checkit.TodoModel.superConstructor = maria.Model;
@@ -56,33 +56,33 @@ can be done at a low level for a to-do application.
     checkit.TodoModel.prototype.constructor = checkit.TodoModel;
     checkit.TodoModel.prototype._content = '';
     checkit.TodoModel.prototype._isDone = false;
-    checkit.TodoModel.prototype.getContent = function() {
+    checkit.TodoModel.prototype.getContent = function () {
         return this._content;
     };
-    checkit.TodoModel.prototype.setContent = function(content) {
+    checkit.TodoModel.prototype.setContent = function (content) {
         content = checkit.trim('' + content);
         if (this._content !== content) {
             this._content = content;
             this.dispatchEvent({type: 'change'});
         }
     };
-    checkit.TodoModel.prototype.isDone = function() {
+    checkit.TodoModel.prototype.isDone = function () {
         return this._isDone;
     };
-    checkit.TodoModel.prototype.setDone = function(isDone) {
+    checkit.TodoModel.prototype.setDone = function (isDone) {
         isDone = !!isDone;
         if (this._isDone !== isDone) {
             this._isDone = isDone;
             this.dispatchEvent({type: 'change'});
         }
     };
-    checkit.TodoModel.prototype.toggleDone = function() {
+    checkit.TodoModel.prototype.toggleDone = function () {
         this.setDone(!this.isDone());
     };
 
 A shorter way to define the TodoModel uses the define attribute methods.
 
-    checkit.TodoModel = function() {
+    checkit.TodoModel = function () {
         maria.Model.apply(this, arguments);
     };
     checkit.TodoModel.superConstructor = maria.Model;
@@ -110,7 +110,7 @@ using "addParentEventTarget" and "removeParentEventTarget".)
 @extends evento.EventTarget
 
 */
-maria.Model = function() {
+maria.Model = function () {
     evento.EventTarget.call(this);
 };
 
@@ -131,7 +131,7 @@ listeners (especially containing `maria.SetModel` objects) that
 this particular model is no longer useful/reliable.
 
 */
-maria.Model.prototype.destroy = function() {
+maria.Model.prototype.destroy = function () {
     this.dispatchEvent({type: 'destroy'});
 };
 
@@ -146,7 +146,7 @@ should be reset to clear all properties in case the JSON data
 does not have enough data for all of the recycled model's attributes.
 
 */
-maria.Model.prototype.reset = function() {
+maria.Model.prototype.reset = function () {
     for (var p in this) {
         if (/^reset.+/.test(p) && (typeof this[p] === 'function')) {
             this[p]();
@@ -162,7 +162,7 @@ the model's data into an object suitable to be serialized as a JSON string.
 @return {object} An object suitable to be serialized to JSON.
 
 */
-maria.Model.prototype.toJSON = function() {
+maria.Model.prototype.toJSON = function () {
     var m,
         p,
         json = {};
@@ -185,7 +185,7 @@ in the data object.
 @param {object} json The data object.
 
 */
-maria.Model.prototype.fromJSON = function(json) {
+maria.Model.prototype.fromJSON = function (json) {
     for (var p in json) {
         if (Object.prototype.hasOwnProperty.call(json, p) &&
                 (typeof this[p + 'FromJSON'] === 'function')) {
@@ -203,7 +203,7 @@ Create a new model instance and set its attributes from the data object.
 @return {object} The new model instance.
 
 */
-maria.Model.fromJSON = function(json) {
+maria.Model.fromJSON = function (json) {
     var model = new this();
     model.fromJSON(json);
     return model;
@@ -275,7 +275,7 @@ it on a single model object.
 @param {object} options The options object. See description for more details.
 
 */
-maria.mixinAttribute = function(obj, name, options) {
+maria.mixinAttribute = function (obj, name, options) {
     options = options || {};
 
     var privateName = '_' + name,
@@ -290,15 +290,15 @@ maria.mixinAttribute = function(obj, name, options) {
 
     obj[privateName] = dflt;
 
-    obj[get] = options.get || function() {
+    obj[get] = options.get || function () {
         return this[privateName];
     };
 
-    obj[guard] = options.guard || function(value) {
+    obj[guard] = options.guard || function (value) {
         return value;
     };
 
-    obj[set] = options.set || function(value) {
+    obj[set] = options.set || function (value) {
         value = this[guard](value);
         if (this[privateName] !== value) {
             this[privateName] = value;
@@ -306,18 +306,18 @@ maria.mixinAttribute = function(obj, name, options) {
         }
     };
 
-    obj[reset] = options.reset || function() {
+    obj[reset] = options.reset || function () {
         if (this[privateName] !== dflt) {
             this[privateName] = dflt;
             this.dispatchEvent({type: 'change'});
         }
     };
 
-    obj[toJSON] = options.toJSON || function() {
+    obj[toJSON] = options.toJSON || function () {
         throw new Error(toJSON + ': Overwrite this method.');
     };
 
-    obj[fromJSON] = options.fromJSON || function(value) {
+    obj[fromJSON] = options.fromJSON || function (value) {
         throw new Error(fromJSON + ': Overwrite this method.');
     };
 };
@@ -343,7 +343,7 @@ an error.
 @param {object} options The options object. See description for more details.
 
 */
-maria.mixinBooleanAttribute = function(obj, name, options) {
+maria.mixinBooleanAttribute = function (obj, name, options) {
     options = options || {};
 
     var capitalizedName = maria.capitalize(name),
@@ -352,7 +352,7 @@ maria.mixinBooleanAttribute = function(obj, name, options) {
 
     options['default'] = Object.prototype.hasOwnProperty.call(options, 'default') ? options['default'] : false;
 
-    options.guard = options.guard || function(value) {
+    options.guard = options.guard || function (value) {
         if (options.coerce === true) {
             value = !!value;
         }
@@ -363,21 +363,21 @@ maria.mixinBooleanAttribute = function(obj, name, options) {
         return value;
     };
 
-    options.toJSON = options.toJSON || function() {
+    options.toJSON = options.toJSON || function () {
         return this[get]();
     };
 
-    options.fromJSON = options.fromJSON || function(value) {
+    options.fromJSON = options.fromJSON || function (value) {
         this[set](value);
     };
 
     maria.mixinAttribute(obj, name, options);
 
-    obj['is' + capitalizedName] = options.is || function() {
+    obj['is' + capitalizedName] = options.is || function () {
         return this[get]();
     };
 
-    obj['toggle' + capitalizedName] = options.toggle || function() {
+    obj['toggle' + capitalizedName] = options.toggle || function () {
         this[set](!this[get]());
     };
 };
@@ -415,7 +415,7 @@ If the `regexp` option is set then the value must match that regexp.
 @param {object} options The options object. See description for more details.
 
 */
-maria.mixinStringAttribute = function(obj, name, options) {
+maria.mixinStringAttribute = function (obj, name, options) {
     options = options || {};
 
     var capitalizedName = maria.capitalize(name),
@@ -425,7 +425,7 @@ maria.mixinStringAttribute = function(obj, name, options) {
 
     options['default'] = Object.prototype.hasOwnProperty.call(options, 'default') ? options['default'] : '';
 
-    options.guard = options.guard || function(value) {
+    options.guard = options.guard || function (value) {
         if (options.coerce === true) {
             value = '' + value;
         }
@@ -438,7 +438,7 @@ maria.mixinStringAttribute = function(obj, name, options) {
         }
 
         if (Object.prototype.hasOwnProperty.call(options, 'enumeration') &&
-                !maria.some(options.enumeration, function(item) {return value === item;})) {
+                !maria.some(options.enumeration, function (item) {return value === item;})) {
             throw new Error(guard + ': Value must be in enumeration. Was "' + value + '".');
         }
 
@@ -464,11 +464,11 @@ maria.mixinStringAttribute = function(obj, name, options) {
         return value;
     };
 
-    options.toJSON = options.toJSON || function() {
+    options.toJSON = options.toJSON || function () {
         return this[get]();
     };
 
-    options.fromJSON = options.fromJSON || function(value) {
+    options.fromJSON = options.fromJSON || function (value) {
         this[set](value);
     };
 
@@ -506,7 +506,7 @@ The `min` and `max` options can set inclusive bounds on the value of the number.
 @param {object} options The options object. See description for more details.
 
 */
-maria.mixinNumberAttribute = function(obj, name, options) {
+maria.mixinNumberAttribute = function (obj, name, options) {
     options = options || {};
 
     var capitalizedName = maria.capitalize(name),
@@ -516,7 +516,7 @@ maria.mixinNumberAttribute = function(obj, name, options) {
 
     options['default'] = Object.prototype.hasOwnProperty.call(options, 'default') ? options['default'] : 0;
 
-    options.guard = options.guard || function(value) {
+    options.guard = options.guard || function (value) {
         if (options.coerce === true) {
             value = +value;
         }
@@ -549,18 +549,18 @@ maria.mixinNumberAttribute = function(obj, name, options) {
         }
 
         if (Object.prototype.hasOwnProperty.call(options, 'enumeration') &&
-                !maria.some(options.enumeration, function(item) {return value === item;})) {
+                !maria.some(options.enumeration, function (item) {return value === item;})) {
             throw new Error(guard + ': Value must be in enumeration. Was "' + value + '".');
         }
 
         return value;
     };
 
-    options.toJSON = options.toJSON || function() {
+    options.toJSON = options.toJSON || function () {
         return this[get]();
     };
 
-    options.fromJSON = options.fromJSON || function(value) {
+    options.fromJSON = options.fromJSON || function (value) {
         this[set](value);
     };
 

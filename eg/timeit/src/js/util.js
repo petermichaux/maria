@@ -1,4 +1,4 @@
-timeit.isCanvasSupported = function(doc) {
+timeit.isCanvasSupported = function (doc) {
     doc = doc || document
     var el = doc.createElement('canvas');
     return (typeof el.getContext === 'function') &&

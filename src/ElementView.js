@@ -34,7 +34,7 @@ fragment of HTML for a single DOM element and its children. By default
 the template is just an empty div element. You can redefine or override
 this to suit your needs.
 
-    maria.ElementView.prototype.getTemplate = function() {
+    maria.ElementView.prototype.getTemplate = function () {
         return '<div>' +
                    '<span class="greeting">hello</span>, ' +
                    '<span class="name">world</span>' +
@@ -48,18 +48,18 @@ by the getUIActions method. This map is empty by default but you can
 redefine or override as necessary and supply the necessary handler
 functions which usually delegate to the controller.
 
-    maria.ElementView.prototype.getUIActions = function() {
+    maria.ElementView.prototype.getUIActions = function () {
         return {
             'mouseover .greeting': 'onMouseoverGreeting',
             'click .name'        : 'onClickName'
         };
     };
 
-    maria.ElementView.prototype.onMouseoverGreeting = function(evt) {
+    maria.ElementView.prototype.onMouseoverGreeting = function (evt) {
         this.getController().onMouseoverGreeting(evt);
     };
 
-    maria.ElementView.prototype.onClickName = function(evt) {
+    maria.ElementView.prototype.onClickName = function (evt) {
         this.getController().onClickName(evt);
     };
 
@@ -85,7 +85,7 @@ root DOM element will be added to the parent element view's root
 DOM element. You can change the element to which they are added by
 redefining or overridding the getContainerEl function.
 
-    maria.ElementView.prototype.getContainerEl = function() {
+    maria.ElementView.prototype.getContainerEl = function () {
         return this.find('.name');
     };
 
@@ -95,19 +95,19 @@ shows how this can be done at a low level for a to-do application. See
 maria.ElementView.subclass for a much more compact way to accomplish
 the same.
 
-    checkit.TodoView = function() {
+    checkit.TodoView = function () {
         maria.ElementView.apply(this, arguments);
     };
     checkit.TodoView.superConstructor = maria.ElementView;
     checkit.TodoView.prototype = maria.create(maria.ElementView.prototype);
     checkit.TodoView.prototype.constructor = checkit.TodoView;
-    checkit.TodoView.prototype.getDefaultControllerConstructor = function() {
+    checkit.TodoView.prototype.getDefaultControllerConstructor = function () {
         return checkit.TodoController;
     };
-    checkit.TodoView.prototype.getTemplate = function() {
+    checkit.TodoView.prototype.getTemplate = function () {
         return checkit.TodoTemplate;
     };
-    checkit.TodoView.prototype.getUIActions = function() {
+    checkit.TodoView.prototype.getUIActions = function () {
         return {
             'click     .check'       : 'onClickCheck'     ,
             'dblclick  .todo-content': 'onDblclickDisplay',
@@ -116,47 +116,47 @@ the same.
             'blur      .todo-input'  : 'onBlurInput'
         };
     };
-    checkit.TodoView.prototype.onClickCheck = function(evt) {
+    checkit.TodoView.prototype.onClickCheck = function (evt) {
         this.getController().onClickCheck(evt);
     };
-    checkit.TodoView.prototype.onDblclickDisplay = function(evt) {
+    checkit.TodoView.prototype.onDblclickDisplay = function (evt) {
         this.getController().onDblclickDisplay(evt);
     };
-    checkit.TodoView.prototype.onKeyupInput = function(evt) {
+    checkit.TodoView.prototype.onKeyupInput = function (evt) {
         this.getController().onKeyupInput(evt);
     };
-    checkit.TodoView.prototype.onKeypressInput = function(evt) {
+    checkit.TodoView.prototype.onKeypressInput = function (evt) {
         this.getController().onKeypressInput(evt);
     };
-    checkit.TodoView.prototype.onBlurInput = function(evt) {
+    checkit.TodoView.prototype.onBlurInput = function (evt) {
         this.getController().onBlurInput(evt);
     };
-    checkit.TodoView.prototype.buildData = function() {
+    checkit.TodoView.prototype.buildData = function () {
         var model = this.getModel();
         var content = model.getContent();
         this.find('.todo-content').innerHTML = checkit.escapeHTML(content);
         this.find('.check').checked = model.isDone();
         aristocrat[model.isDone() ? 'addClass' : 'removeClass'](this.find('.todo'), 'done');
     };
-    checkit.TodoView.prototype.update = function() {
+    checkit.TodoView.prototype.update = function () {
         this.buildData();
     };
-    checkit.TodoView.prototype.showEdit = function() {
+    checkit.TodoView.prototype.showEdit = function () {
         var input = this.find('.todo-input');
         input.value = this.getModel().getContent();
         aristocrat.addClass(this.find('.todo'), 'editing');
         input.select();
     };
-    checkit.TodoView.prototype.showDisplay = function() {
+    checkit.TodoView.prototype.showDisplay = function () {
         aristocrat.removeClass(this.find('.todo'), 'editing');
     };
-    checkit.TodoView.prototype.getInputValue = function() {
+    checkit.TodoView.prototype.getInputValue = function () {
         return this.find('.todo-input').value;
     };
-    checkit.TodoView.prototype.showToolTip = function() {
+    checkit.TodoView.prototype.showToolTip = function () {
         this.find('.ui-tooltip-top').style.display = 'block';
     };
-    checkit.TodoView.prototype.hideToolTip = function() {
+    checkit.TodoView.prototype.hideToolTip = function () {
         this.find('.ui-tooltip-top').style.display = 'none';
     };
 
@@ -171,7 +171,7 @@ the same.
 @extends maria.View
 
 */
-maria.ElementView = function(model, controller, doc) {
+maria.ElementView = function (model, controller, doc) {
     maria.View.call(this, model, controller);
     this.setDocument(doc);
 };
@@ -195,7 +195,7 @@ for example.
 @return {Document} The document object.
 
 */
-maria.ElementView.prototype.getDocument = function() {
+maria.ElementView.prototype.getDocument = function () {
     return this._doc || document;
 };
 
@@ -206,7 +206,7 @@ is the one used to create elements to be added to the page,
 for example.
 
 */
-maria.ElementView.prototype.setDocument = function(doc) {
+maria.ElementView.prototype.setDocument = function (doc) {
     this._doc = doc;
     var childViews = this.childNodes;
     for (var i = 0, ilen = childViews.length; i < ilen; i++) {
@@ -221,7 +221,7 @@ Returns the template for this view used during the build process.
 @return {string} The template HTML string.
 
 */
-maria.ElementView.prototype.getTemplate = function() {
+maria.ElementView.prototype.getTemplate = function () {
     return '<div></div>';
 };
 
@@ -234,7 +234,7 @@ the handler will be called on the controller of the view.
 @return {Object} The UI actions map.
 
 */
-maria.ElementView.prototype.getUIActions = function() {
+maria.ElementView.prototype.getUIActions = function () {
     return {};
 };
 
@@ -251,7 +251,7 @@ is lazy and only done when this method is called.
 @return {Element} The root DOM Element of the view.
 
 */
-maria.ElementView.prototype.build = function() {
+maria.ElementView.prototype.build = function () {
     if (!this._rootEl) {
         this.buildTemplate();
         this.buildUIActions();
@@ -269,7 +269,7 @@ as the root element of this view. All other sibling elements of the
 `DocumentFragment` are discarded.
 
 */
-maria.ElementView.prototype.buildTemplate = function() {
+maria.ElementView.prototype.buildTemplate = function () {
     // parseHTML returns a DocumentFragment. Take its firstChild as the rootEl.
     var fragment = arbutus.parseHTML(this.getTemplate(), this.getDocument());
     /* DEBUG BEGIN */
@@ -280,7 +280,7 @@ maria.ElementView.prototype.buildTemplate = function() {
     this._rootEl = fragment.firstChild;
 };
 
-(function() {
+(function () {
     var actionRegExp = /^(\S+)\s*(.*)$/;
 
 /**
@@ -289,7 +289,7 @@ Attaches event handlers to the root and its descendents as specified
 by the UI actions map returned by `getUIActions`.
 
 */
-    maria.ElementView.prototype.buildUIActions = function() {
+    maria.ElementView.prototype.buildUIActions = function () {
         var uiActions = this.getUIActions();
         for (var key in uiActions) {
             if (Object.prototype.hasOwnProperty.call(uiActions, key)) {
@@ -315,7 +315,7 @@ The intended use of this method is to populate the built root DOM element
 and its descendents with model data.
 
 */
-maria.ElementView.prototype.buildData = function() {
+maria.ElementView.prototype.buildData = function () {
     // to be overridden by concrete ElementView subclasses
 };
 
@@ -326,7 +326,7 @@ been added to the view, then these children also built and appened
 to the element returned by `getContainerEl`.
 
 */
-maria.ElementView.prototype.buildChildViews = function() {
+maria.ElementView.prototype.buildChildViews = function () {
     var childViews = this.childNodes;
     for (var i = 0, ilen = childViews.length; i < ilen; i++) {
         this.getContainerEl().appendChild(childViews[i].build());
@@ -340,7 +340,7 @@ See `buildChildViews` for more details.
 @return {Element} The DOM Element to which child view's should be attached.
 
 */
-maria.ElementView.prototype.getContainerEl = function() {
+maria.ElementView.prototype.getContainerEl = function () {
     return this.build();
 };
 
@@ -354,7 +354,7 @@ parameter is not supplied then the `newChild` is appened as the last child.
 @param {maria.ElementView} oldChild The child to insert before.
 
 */
-maria.ElementView.prototype.insertBefore = function(newChild, oldChild) {
+maria.ElementView.prototype.insertBefore = function (newChild, oldChild) {
     maria.View.prototype.insertBefore.call(this, newChild, oldChild);
     if (this._rootEl) {
         this.getContainerEl().insertBefore(newChild.build(), oldChild ? oldChild.build() : null);
@@ -368,7 +368,7 @@ Remove an existing child view.
 @param {maria.ElementView} oldChild The child to be removed.
 
 */
-maria.ElementView.prototype.removeChild = function(oldChild) {
+maria.ElementView.prototype.removeChild = function (oldChild) {
     maria.View.prototype.removeChild.call(this, oldChild);
     if (this._rootEl) {
         var oldChildRootEl = oldChild.build();
@@ -403,7 +403,7 @@ to use some libray other than Grail.
 @return {Element} The first DOM element matching `selector`.
 
 */
-maria.ElementView.prototype.find = function(selector) {
+maria.ElementView.prototype.find = function (selector) {
     return maria.find(selector, this.build());
 };
 
@@ -419,6 +419,6 @@ See `find` for more details.
 @return {Array} An array of the DOM elements matching `selector`.
 
 */
-maria.ElementView.prototype.findAll = function(selector) {
+maria.ElementView.prototype.findAll = function (selector) {
     return maria.findAll(selector, this.build());
 };

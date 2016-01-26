@@ -6,13 +6,13 @@ maria.ElementView.subclass(checkit, 'TodosInputView', {
         'keypress .content': 'onKeypressInput'
     },
     properties: {
-        getInputValue: function() {
+        getInputValue: function () {
             return this.find('.content').value;
         },
-        clearInput: function() {
+        clearInput: function () {
             this.find('.content').value = '';
         },
-        setPending: function(pending) {
+        setPending: function (pending) {
             aristocrat[pending ? 'addClass' : 'removeClass'](
                 this.find('.TodosInput'), 'TodosInputPending');
         }

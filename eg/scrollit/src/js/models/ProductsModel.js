@@ -14,14 +14,14 @@ maria.SetModel.subclass(scrollit, 'ProductsModel', {
         }
     },
     properties: {
-        load: function() {
+        load: function () {
             if (this.isComplete() || this.isLoading()) {
                 return;
             }
             this.setLoading(true);
             var self = this;
             myth.xhr('GET', '/products.json?offset=' + this.getNextOffset(), {
-                on200: function(xhr) {
+                on200: function (xhr) {
                     var productsJSON = JSON.parse(xhr.responseText);
                     if (productsJSON.length < 1) {
                         self.setComplete(true);

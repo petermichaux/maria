@@ -45,19 +45,19 @@ example shows how this can be done at a low level for a to-do
 application. See maria.Controller.subclass for a more compact way
 to accomplish the same.
 
-    checkit.TodoController = function() {
+    checkit.TodoController = function () {
         maria.Controller.apply(this, arguments);
     };
     checkit.TodoController.superConstructor = maria.Controller;
     checkit.TodoController.prototype = maria.create(maria.Controller.prototype);
     checkit.TodoController.prototype.constructor = checkit.TodoController;
-    checkit.TodoController.prototype.onClickCheck = function() {
+    checkit.TodoController.prototype.onClickCheck = function () {
         this.getModel().toggleDone();
     };
-    checkit.TodoController.prototype.onDblclickDisplay = function() {
+    checkit.TodoController.prototype.onDblclickDisplay = function () {
         this.getView().showEdit();
     };
-    checkit.TodoController.prototype.onKeyupInput = function() {
+    checkit.TodoController.prototype.onKeyupInput = function () {
         var view = this.getView();
         if (checkit.isBlank(view.getInputValue())) {
             view.hideToolTip();
@@ -65,12 +65,12 @@ to accomplish the same.
             view.showToolTip();
         }
     };
-    checkit.TodoController.prototype.onKeypressInput = function(evt) {
+    checkit.TodoController.prototype.onKeypressInput = function (evt) {
         if (evt.keyCode === 13) {
             this.onBlurInput();
         }
     };
-    checkit.TodoController.prototype.onBlurInput = function() {
+    checkit.TodoController.prototype.onBlurInput = function () {
         var view = this.getView();
         var value = view.getInputValue();
         view.hideToolTip();
@@ -83,7 +83,7 @@ to accomplish the same.
 @constructor
 
 */
-maria.Controller = function() {};
+maria.Controller = function () {};
 
 /**
 
@@ -97,7 +97,7 @@ maria.Controller.superConstructor = Object;
 The destroy method.
 
 */
-maria.Controller.prototype.destroy = function() {
+maria.Controller.prototype.destroy = function () {
     this._model = null;
     if (this._view) {
         this._view.setController(null);
@@ -112,7 +112,7 @@ Returns the current model object of the controller.
 @return {maria.Model} The model object.
 
 */
-maria.Controller.prototype.getModel = function() {
+maria.Controller.prototype.getModel = function () {
     return this._model;
 };
 
@@ -126,7 +126,7 @@ at your own risk!**
 @param {maria.Model} model The model object.
 
 */
-maria.Controller.prototype.setModel = function(model) {
+maria.Controller.prototype.setModel = function (model) {
     this._model = model;
 };
 
@@ -137,7 +137,7 @@ Returns the current view object of the controller.
 @return {maria.View} The view object.
 
 */
-maria.Controller.prototype.getView = function() {
+maria.Controller.prototype.getView = function () {
     return this._view;
 };
 
@@ -151,6 +151,6 @@ at your own risk!**
 @param {maria.View} view The view object.
 
 */
-maria.Controller.prototype.setView = function(view) {
+maria.Controller.prototype.setView = function (view) {
     this._view = view;
 };

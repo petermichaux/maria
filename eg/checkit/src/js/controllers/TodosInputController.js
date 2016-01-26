@@ -1,16 +1,16 @@
 maria.Controller.subclass(checkit, 'TodosInputController', {
     properties: {
-        onFocusInput: function() {
+        onFocusInput: function () {
             this.onKeyupInput();
         },
-        onBlurInput: function() {
+        onBlurInput: function () {
             this.getView().setPending(false);
         },
-        onKeyupInput: function() {
+        onKeyupInput: function () {
             var view = this.getView();
             view.setPending(!checkit.isBlank(view.getInputValue()));
         },
-        onKeypressInput: function(evt) {
+        onKeypressInput: function (evt) {
             if (evt.keyCode == 13) {
                 var view = this.getView();
                 var value = view.getInputValue();

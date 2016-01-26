@@ -1,12 +1,12 @@
-(function() {
+(function () {
 
     buster.testCase('View Suite', {
 
-        "test View has superConstructor Node": function() {
+        "test View has superConstructor Node": function () {
             assert.same(maria.Node, maria.View.superConstructor);
         },
 
-        "test calling constructor with parameters sets them in new instance": function() {
+        "test calling constructor with parameters sets them in new instance": function () {
             var model = new maria.Model();
             var controller = new maria.Controller();
             var view = new maria.View(model, controller);
@@ -14,21 +14,21 @@
             assert.same(controller, view.getController(), 'controller should be same');
         },
 
-        "test calling constructor with only model parameter sets it and controller is default": function() {
+        "test calling constructor with only model parameter sets it and controller is default": function () {
             var model = new maria.Model();
             var view = new maria.View(model);
             assert.same(model, view.getModel(), 'model should be same');
             assert.same(maria.Controller, view.getController().constructor, 'controller should be default');
         },
 
-        "test calling constructor with only controller parameter sets it and model is null": function() {
+        "test calling constructor with only controller parameter sets it and model is null": function () {
             var controller = new maria.Controller();
             var view = new maria.View(null, controller);
             assert.same(null, view.getModel(), 'model should be null by default');
             assert.same(controller, view.getController(), 'controller should be same');
         },
 
-        "test default model actions change/update": function() {
+        "test default model actions change/update": function () {
             var view = new maria.View();
             var count = 0;
             var modelActions = view.getModelActions();
@@ -41,10 +41,10 @@
             assert.same('update', modelActions.change);
         },
 
-        "test when model actions are not empty then listeners are added": function() {
+        "test when model actions are not empty then listeners are added": function () {
             var view = new maria.View();
 
-            view.getModelActions = function() {
+            view.getModelActions = function () {
                 return {
                     'squashed': 'onSquashed',
                     'squished': 'onSquished'
@@ -54,7 +54,7 @@
             var args = [];
 
             var originalOn = maria.on;
-            maria.on = function(node, eventType, listener, methodName) {
+            maria.on = function (node, eventType, listener, methodName) {
                 args.push({
                     node: node,
                     eventType: eventType,
@@ -70,7 +70,7 @@
             assert.same(2, args.length, 'maria.on should have been called twice');
 
             // need a predictable order to test
-            args.sort(function(a, b) {
+            args.sort(function (a, b) {
                 return a.methodName > b.methodName ?
                            1 :
                            a.methodName < b.methodName ?
@@ -91,10 +91,10 @@
             maria.on = originalOn;
         },
 
-        "test when model changed unsubscribe from previous model": function() {
+        "test when model changed unsubscribe from previous model": function () {
             var view = new maria.View();
 
-            view.getModelActions = function() {
+            view.getModelActions = function () {
                 return {
                     'squashed': 'onSquashed',
                     'squished': 'onSquished'
@@ -104,7 +104,7 @@
             var args = [];
 
             var originalRemoveEventListener = maria.off;
-            maria.off = function(node, eventType, listener, methodName) {
+            maria.off = function (node, eventType, listener, methodName) {
                 args.push({
                     node: node,
                     eventType: eventType,
@@ -116,7 +116,7 @@
             var model = new maria.Model();
             view.setModel(model);
             // change the model actions to test that the previous model actions are used when removing
-            view.getModelActions = function() {
+            view.getModelActions = function () {
                 return {'alpha': 'onAlpha'};
             };
             // next line will trigger removing of listeners from model.
@@ -125,7 +125,7 @@
             assert.same(2, args.length, 'evento.addEventListener should have been called twice');
 
             // need a predictable order to test
-            args.sort(function(a, b) {
+            args.sort(function (a, b) {
                 return a.methodName > b.methodName ?
                            1 :
                            a.methodName < b.methodName ?
@@ -146,7 +146,7 @@
             maria.off = originalRemoveEventListener;
         },
 
-        "test after destroy the model has no listeners": function() {
+        "test after destroy the model has no listeners": function () {
             var view = new maria.View();
             var model = new maria.Model();
             view.setModel(model);
@@ -155,44 +155,44 @@
             assert.same(0, model._evento_listeners.change.length);
         },
 
-        "test destroy calls destroy on controller": function() {
+        "test destroy calls destroy on controller": function () {
             var controller = new maria.Controller();
             var view = new maria.View();
             view.setController(controller);
             var called = false;
-            controller.destroy = function() {
+            controller.destroy = function () {
                 called = true;
             };
             view.destroy();
             assert.same(true, called);
         },
 
-        "test destroy does not call destroy on ex-controller": function() {
+        "test destroy does not call destroy on ex-controller": function () {
             var controller = new maria.Controller();
             var view = new maria.View();
             view.setController(controller);
             view.setController(null);
             var called = false;
-            controller.destroy = function() {
+            controller.destroy = function () {
                 called = true;
             };
             view.destroy();
             assert.same(false, called);
         },
 
-        "test destroy calls destroy on child views": function() {
+        "test destroy calls destroy on child views": function () {
             var view = new maria.View();
 
             var childView1 = new maria.View();
             var called1 = false;
-            childView1.destroy = function() {
+            childView1.destroy = function () {
                 called1 = true;
             };
             view.appendChild(childView1);
 
             var childView2 = new maria.View();
             var called2 = false;
-            childView2.destroy = function() {
+            childView2.destroy = function () {
                 called2 = true;
             };
             view.appendChild(childView2);
@@ -203,7 +203,7 @@
             assert.same(true, called2);
         },
 
-        "test setting the model also sets the model in the controller": function() {
+        "test setting the model also sets the model in the controller": function () {
             var model = new maria.Model();
             var view = new maria.View();
             assert.same(undefined, view.getController().getModel());
@@ -211,7 +211,7 @@
             assert.same(model, view.getController().getModel());
         },
 
-        "test the view sets itself as the view of the controller": function() {
+        "test the view sets itself as the view of the controller": function () {
             var controller = new maria.Controller();
             var view = new maria.View();
             assert.same(undefined, controller.getView());

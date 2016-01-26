@@ -8,30 +8,30 @@ for maria.SetModel.
 
     maria.SetModel.subclass(checkit, 'TodosModel', {
         properties: {
-            isAllDone: function() {
+            isAllDone: function () {
                 return (this.size > 0) &&
-                       this.every(function(todo) {
+                       this.every(function (todo) {
                            return todo.isDone();
                        });
             },
-            isAllUndone: function() {
-                return this.every(function(todo) {
+            isAllUndone: function () {
+                return this.every(function (todo) {
                            return !todo.isDone();
                        });
             },
-            markAllDone: function() {
-                this.forEach(function(todo) {
+            markAllDone: function () {
+                this.forEach(function (todo) {
                     todo.setDone(true);
                 });
             },
-            markAllUndone: function() {
-                this.forEach(function(todo) {
+            markAllUndone: function () {
+                this.forEach(function (todo) {
                     todo.setDone(false);
                 });
             },
-            deleteDone: function() {
+            deleteDone: function () {
                 var doneTodos = [];
-                this.forEach(function(todo) {
+                this.forEach(function (todo) {
                     if (todo.isDone()) {
                         doneTodos.push(todo);
                     }
@@ -67,7 +67,7 @@ You can get a data object suitable for serializing as a JSON string with
     people.toJSON();
 
 */
-maria.SetModel.subclass = function(namespace, name, options) {
+maria.SetModel.subclass = function (namespace, name, options) {
     options = options || {};
     if (Object.prototype.hasOwnProperty.call(options, 'elementConstructor') ||
         Object.prototype.hasOwnProperty.call(options, 'elementConstructorName')) {
@@ -75,7 +75,7 @@ maria.SetModel.subclass = function(namespace, name, options) {
         var elementConstructorName = options.elementConstructorName;
         var properties = options.properties || (options.properties = {});
         if (!Object.prototype.hasOwnProperty.call(properties, 'getDefaultElementConstructor')) {
-            properties.getDefaultElementConstructor = function() {
+            properties.getDefaultElementConstructor = function () {
                 /* DEBUG BEGIN */
                 if ((!elementConstructor) &&
                     (!Object.prototype.hasOwnProperty.call(namespace, elementConstructorName))) {
@@ -90,7 +90,7 @@ maria.SetModel.subclass = function(namespace, name, options) {
     maria.Model.subclass.call(this, namespace, name, options);
 
     if (!Object.prototype.hasOwnProperty(namespace[name], 'fromJSON')) {
-        namespace[name].fromJSON = function(json) {
+        namespace[name].fromJSON = function (json) {
             return this.superConstructor.fromJSON.call(this, json);
         };
     }

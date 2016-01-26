@@ -8,13 +8,13 @@ the documentation for maria.Controller.
 
     maria.Controller.subclass(checkit, 'TodoController', {
         properties: {
-            onClickCheck: function() {
+            onClickCheck: function () {
                 this.getModel().toggleDone();
             },
-            onDblclickDisplay: function() {
+            onDblclickDisplay: function () {
                 this.getView().showEdit();
             },
-            onKeyupInput: function() {
+            onKeyupInput: function () {
                 var view = this.getView();
                 if (checkit.isBlank(view.getInputValue())) {
                     view.hideToolTip();
@@ -22,12 +22,12 @@ the documentation for maria.Controller.
                     view.showToolTip();
                 }
             },
-            onKeypressInput: function(evt) {
+            onKeypressInput: function (evt) {
                 if (evt.keyCode === 13) {
                     this.onBlurInput();
                 }
             },
-            onBlurInput: function() {
+            onBlurInput: function () {
                 var view = this.getView();
                 var value = view.getInputValue();
                 view.hideToolTip();
@@ -40,6 +40,6 @@ the documentation for maria.Controller.
     });
 
 */
-maria.Controller.subclass = function() {
+maria.Controller.subclass = function () {
     maria.subclass.apply(this, arguments);
 };

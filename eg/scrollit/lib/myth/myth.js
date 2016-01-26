@@ -2,7 +2,7 @@
 
 var myth = myth || {};
 
-(function() {
+(function () {
 
     // build up the artificial data
     function randomXToY(minVal, maxVal) {
@@ -125,10 +125,10 @@ var myth = myth || {};
         };
     }
 
-    myth.xhr = function(method, url, options) {
+    myth.xhr = function (method, url, options) {
         options = options || {};
 
-        setTimeout(function() {
+        setTimeout(function () {
 
             if (method === 'GET' && /^\/products\.json/.test(url)) {
                 var matches = url.match(/offset\=(\d+)/);

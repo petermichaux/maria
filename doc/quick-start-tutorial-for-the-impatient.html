@@ -157,7 +157,7 @@ undefined
 
             <p>We create a fake view object and add it as an observer of the to-do model object.</p>
 
-<pre><code>> var view = {update: function(evt) {console.log('The model changed!');}};
+<pre><code>> var view = {update: function (evt) {console.log('The model changed!');}};
 undefined
 > maria.on(todoModel, 'change', view, 'update');
 undefined</code></pre>
@@ -253,13 +253,13 @@ undefined
         'click .checkbox': 'onClickCheckbox'
     },
     properties: {
-        buildData: function() {
+        buildData: function () {
             var model = this.getModel();
             this.find('.content').innerHTML = checkit.escapeHTML(model.getContent());
             aristocrat[model.isDone() ? 'addClass' : 'removeClass'](
                 this.find('.Todo'), 'TodoDone');
         },
-        update: function() {
+        update: function () {
             this.buildData();
         }
     }
@@ -273,7 +273,7 @@ undefined
 
             <p>The view uses a utility function that we can add to <code>checkit/src/js/util.js</code>.</p>
 
-<pre><code>checkit.escapeHTML = function(str) {
+<pre><code>checkit.escapeHTML = function (str) {
     return str.replace('&amp;', '&amp;amp;').replace('&lt;', '&amp;lt;');
 };</code></pre>
 
@@ -341,7 +341,7 @@ undefined
 
 <pre><code>maria.Controller.subclass(checkit, 'TodoController', {
     properties: {
-        onClickCheckbox: function() {
+        onClickCheckbox: function () {
             this.getModel().toggleDone();
         }
     }
@@ -353,7 +353,7 @@ undefined
 
     <p>We don't want to use the console to add a to-do view to page each time we reload the browser so let&rsquo;s add a <code>checkit/src/js/bootstrap.js</code> file to do that for us. This file will evolve as our application does.</p>
 
-<pre><code>(function() {
+<pre><code>(function () {
     var todoModel = new checkit.TodoModel();
     todoModel.setContent('climb a mountain');
 
@@ -402,30 +402,30 @@ undefined
 
 <pre><code>maria.SetModel.subclass(checkit, 'TodosModel', {
     properties: {
-        isAllDone: function() {
+        isAllDone: function () {
             return (this.size > 0) &amp;&amp;
-                   this.every(function(todo) {
+                   this.every(function (todo) {
                        return todo.isDone();
                    });
         },
-        isAllUndone: function() {
-            return this.every(function(todo) {
+        isAllUndone: function () {
+            return this.every(function (todo) {
                        return !todo.isDone();
                    });
         },
-        markAllDone: function() {
-            this.forEach(function(todo) {
+        markAllDone: function () {
+            this.forEach(function (todo) {
                 todo.setDone(true);
             });
         },
-        markAllUndone: function() {
-            this.forEach(function(todo) {
+        markAllUndone: function () {
+            this.forEach(function (todo) {
                 todo.setDone(false);
             });
         },
-        deleteDone: function() {
+        deleteDone: function () {
             var doneTodos = [];
-            this.forEach(function(todo) {
+            this.forEach(function (todo) {
                 if (todo.isDone()) {
                     doneTodos.push(todo);
                 }
@@ -466,7 +466,7 @@ undefined
 
 <pre><code>> var todosModel = new checkit.TodosModel();
 undefined
-> var view = {update: function(evt) {console.log(evt.addedTargets.map(function(todo) {return todo.getContent();}));}};
+> var view = {update: function (evt) {console.log(evt.addedTargets.map(function (todo) {return todo.getContent();}));}};
 undefined
 > maria.on(todosModel, 'change', view, 'update');
 undefined</code></pre>
@@ -499,8 +499,8 @@ true</code></pre>
 
     <p>When we go out and buy the flowers, we&rsquo;ll mark the corresponding to-do as done. Let&rsquo;s change the view&rsquo;s <code>update</code> method so we can examine what happens to the set when the to-do is marked as done. Remember that the view is observing the set.</p>
 
-<pre><code>> view.update = function(evt) {console.log(evt.target.constructor === checkit.TodoModel, evt.currentTarget.constructor === checkit.TodosModel);};
-function()
+<pre><code>> view.update = function (evt) {console.log(evt.target.constructor === checkit.TodoModel, evt.currentTarget.constructor === checkit.TodosModel);};
+function ()
 > flowers.setDone(true);
 true true
 undefined
@@ -546,7 +546,7 @@ undefined
 
 <pre><code>maria.SetView.subclass(checkit, 'TodosListView', {
     properties: {
-        createChildView: function(todoModel) {
+        createChildView: function (todoModel) {
             return new checkit.TodoView(todoModel);
         }
     }
@@ -554,7 +554,7 @@ undefined
 
     <p>To see a list in the browser, let&rsquo;s update the <code>checkit/src/js/bootstrap.js</code> file to create a set model containing a few to-do items and add a view to the page.</p>
 
-<pre><code>maria.on(window, 'load', function() {
+<pre><code>maria.on(window, 'load', function () {
 
     var todosModel = new checkit.TodosModel();
 
@@ -645,13 +645,13 @@ undefined
         'keypress .content': 'onKeypressInput'
     },
     properties: {
-        getInputValue: function() {
+        getInputValue: function () {
             return this.find('.content').value;
         },
-        clearInput: function() {
+        clearInput: function () {
             this.find('.content').value = '';
         },
-        setPending: function(pending) {
+        setPending: function (pending) {
             aristocrat[pending ? 'addClass' : 'removeClass'](
                 this.find('.TodosInput'), 'TodosInputPending');
         }
@@ -662,17 +662,17 @@ undefined
 
 <pre><code>maria.Controller.subclass(checkit, 'TodosInputController', {
     properties: {
-        onFocusInput: function() {
+        onFocusInput: function () {
             this.onKeyupInput();
         },
-        onBlurInput: function() {
+        onBlurInput: function () {
             this.getView().setPending(false);
         },
-        onKeyupInput: function() {
+        onKeyupInput: function () {
             var view = this.getView();
             view.setPending(!checkit.isBlank(view.getInputValue()));
         },
-        onKeypressInput: function(evt) {
+        onKeypressInput: function (evt) {
             if (evt.keyCode == 13) {
                 var view = this.getView();
                 var value = view.getInputValue();
@@ -689,13 +689,13 @@ undefined
 
     <p>The controller uses another utility so we add that to the <code>checkit/src/js/util.js</code> file.</p>
 
-<pre><code>checkit.isBlank = function(str) {
+<pre><code>checkit.isBlank = function (str) {
     return /^\s*$/.test(str);
 };</code></pre>
 
     <p>Update the <code>checkit/src/js/bootstrap.js</code> so that the to-do set starts empty and the input form is added.</p>
 
-<pre><code>maria.on(window, 'load', function() {
+<pre><code>maria.on(window, 'load', function () {
 
     var model = new checkit.TodosModel();
 
@@ -793,7 +793,7 @@ undefined
         'click .deleteDone' : 'onClickDeleteDone'
     },
     properties: {
-        buildData: function() {
+        buildData: function () {
             var model = this.getModel();
             var checkbox = this.find('.allCheckbox');
             var button = this.find('.deleteDone');
@@ -802,7 +802,7 @@ undefined
                 this.find('.allCheckbox'), 'allCheckboxAllDone');
             button.disabled = model.isAllUndone();
         },
-        update: function() {
+        update: function () {
             this.buildData();
         }
     }
@@ -812,7 +812,7 @@ undefined
 
 <pre><code>maria.Controller.subclass(checkit, 'TodosToolbarController', {
     properties: {
-        onClickAllCheckbox: function() {
+        onClickAllCheckbox: function () {
             var model = this.getModel();
             if (model.isAllDone()) {
                 model.markAllUndone();
@@ -820,7 +820,7 @@ undefined
                 model.markAllDone();
             }
         },
-        onClickDeleteDone: function() {
+        onClickDeleteDone: function () {
             this.getModel().deleteDone();
         }
     }
@@ -828,7 +828,7 @@ undefined
 
     <p>Create a new toolbar view during bootstrapping in <code>checkit/src/js/bootstrap.js</code>.</p>
 
-<pre><code>maria.on(window, 'load', function() {
+<pre><code>maria.on(window, 'load', function () {
 
     var model = new checkit.TodosModel();
 
@@ -897,7 +897,7 @@ undefined
     <p>Create a new view in <code>checkit/src/js/views/TodosAppView.js</code></p>
 
 <pre><code>maria.ElementView.subclass(checkit, 'TodosAppView', {
-    constructor: function(model) {
+    constructor: function (model) {
         checkit.TodosAppView.superConstructor.apply(this, arguments);
         this.appendChild(new checkit.TodosInputView(model));
         this.appendChild(new checkit.TodosToolbarView(model));
@@ -909,7 +909,7 @@ undefined
 
     <p>Update the <code>checkit/src/js/bootstrap.js</code> file to create a single <code>checkit.TodosAppView</code> instead of three separate views for the input, toolbar, and list views.</p>
 
-<pre><code>maria.on(window, 'load', function() {
+<pre><code>maria.on(window, 'load', function () {
 
     var model = new checkit.TodosModel();
 
@@ -966,7 +966,7 @@ undefined
 
         <p>To see the amazing power of the MVC architecture, try the following <code>checkit/src/js/bootstrap.js</code> file.</p>
 
-<pre><code>maria.on(window, 'load', function() {
+<pre><code>maria.on(window, 'load', function () {
 
     var model = new checkit.TodosModel();
 
@@ -990,7 +990,7 @@ undefined
     </div><!-- wrapper -->
 
     <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (function (i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function (){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');

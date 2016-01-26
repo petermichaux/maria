@@ -10,13 +10,13 @@ documentation for maria.SetView.
 
     maria.SetView.subclass(checkit, 'TodosListView', {
         properties: {
-            createChildView: function(todoModel) {
+            createChildView: function (todoModel) {
                 return new checkit.TodoView(todoModel);
             }
         }
     });
 
 */
-maria.SetView.subclass = function() {
+maria.SetView.subclass = function () {
     maria.ElementView.subclass.apply(this, arguments);
 };
