@@ -10,6 +10,9 @@ document.write('<script src="../../../lib/grail/grail.js"></script>');
 document.write('<script src="../../../lib/hormigas/hormigas.js"></script>');
 
 document.write('<script src="../../../src/namespace.js"></script>');
+document.write('<script src="../../../src/capitalize.js"></script>');
+document.write('<script src="../../../src/trim.js"></script>');
+document.write('<script src="../../../src/some.js"></script>');
 document.write('<script src="../../../src/borrow.js"></script>');
 document.write('<script src="../../../src/borrowEvento.js"></script>');
 document.write('<script src="../../../src/borrowHijos.js"></script>');

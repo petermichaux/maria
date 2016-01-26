@@ -245,6 +245,125 @@
             element.dispatchEvent({type: 'foo'});
             assert.same(1, calls, "the element listener from the set should not have been called after clearing the set");
 
+        },
+
+        "test getDefaultElementConstructor": function() {
+            var m = new maria.SetModel();
+            assert.same(maria.Model, m.getDefaultElementConstructor(), "the default element constructor should be maria.Model");
+        },
+
+        "test toJSON": function () {
+            var jerry = new maria.Model();
+            maria.borrow(jerry, {
+                idToJSON: function() {
+                    return 442;
+                },
+                nameToJSON: function() {
+                    return 'Jerry';
+                }
+            });
+            var pierce = new maria.Model();
+            maria.borrow(pierce, {
+                idToJSON: function() {
+                    return 3;
+                },
+                nameToJSON: function() {
+                    return 'Captain Pierce';
+                }
+            });
+            var s = new maria.SetModel(jerry, pierce);
+            var json = s.toJSON();
+            assert.isArray(json);
+            // sets are unordered so sort it before examining contents
+            json.sort(function (a, b) {
+                return (a.id < b.id) ?
+                           -1 :
+                           (a.id > b.id) ?
+                               1:
+                               0;
+            });
+            assert.same(3, json[0].id);
+            assert.same('Captain Pierce', json[0].name);
+            assert.same(442, json[1].id);
+            assert.same('Jerry', json[1].name);
+        },
+
+        "test fromJSON": function () {
+            var app = {};
+            
+            app.PersonModel = function() {
+                maria.Model.apply(this, arguments);
+            };
+            app.PersonModel.superConstructor = maria.Model;
+            app.PersonModel.prototype = maria.create(maria.Model.prototype);
+            app.PersonModel.prototype.constructor = app.PersonModel;
+            maria.mixinStringAttribute(app.PersonModel.prototype, 'name');
+            app.PersonModel.fromJSON = function(json) {
+                return maria.Model.fromJSON.call(this, json);
+            };
+
+            app.PeopleSetModel = function() {
+                maria.SetModel.apply(this, arguments);
+            };
+            app.PeopleSetModel.superConstructor = maria.SetModel;
+            app.PeopleSetModel.prototype = maria.create(maria.SetModel.prototype);
+            app.PeopleSetModel.prototype.constructor = app.PeopleSetModel;
+            app.PeopleSetModel.prototype.getDefaultElementConstructor = function() {
+                return app.PersonModel;
+            };
+            
+            var people = new app.PeopleSetModel();
+            people.fromJSON([{name: 'Sgt Baker'}, {name: 'Mr Krinkle'}]);
+            var result = people.toArray().sort(function (a, b) {
+                return (a.getName() < b.getName()) ?
+                           -1 :
+                           (a.getName() > b.getName()) ?
+                               1:
+                               0;
+            });
+            assert.same(2, result.length);
+            assert.same('Mr Krinkle', result[0].getName());
+            assert.same('Sgt Baker', result[1].getName());
+        },
+
+        "test fromJSON class method": function () {
+            var app = {};
+            
+            app.PersonModel = function() {
+                maria.Model.apply(this, arguments);
+            };
+            app.PersonModel.superConstructor = maria.Model;
+            app.PersonModel.prototype = maria.create(maria.Model.prototype);
+            app.PersonModel.prototype.constructor = app.PersonModel;
+            maria.mixinStringAttribute(app.PersonModel.prototype, 'name');
+            app.PersonModel.fromJSON = function(json) {
+                return maria.Model.fromJSON.call(this, json);
+            };
+
+            app.PeopleSetModel = function() {
+                maria.SetModel.apply(this, arguments);
+            };
+            app.PeopleSetModel.superConstructor = maria.SetModel;
+            app.PeopleSetModel.prototype = maria.create(maria.SetModel.prototype);
+            app.PeopleSetModel.prototype.constructor = app.PeopleSetModel;
+            app.PeopleSetModel.prototype.getDefaultElementConstructor = function() {
+                return app.PersonModel;
+            };
+            app.PeopleSetModel.fromJSON = function(json) {
+                return maria.SetModel.fromJSON.call(this, json);
+            };
+            
+            var people = app.PeopleSetModel.fromJSON([{name: 'Sgt Baker'}, {name: 'Mr Krinkle'}]);
+            var result = people.toArray().sort(function (a, b) {
+                return (a.getName() < b.getName()) ?
+                           -1 :
+                           (a.getName() > b.getName()) ?
+                               1:
+                               0;
+            });
+            assert.same(2, result.length);
+            assert.same('Mr Krinkle', result[0].getName());
+            assert.same('Sgt Baker', result[1].getName());
         }
 
     });

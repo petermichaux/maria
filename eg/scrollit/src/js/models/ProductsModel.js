@@ -1,36 +1,35 @@
 maria.SetModel.subclass(scrollit, 'ProductsModel', {
+    elementConstructorName: 'ProductModel',
+    attributes: {
+        loading: {
+            type: 'boolean'
+        }, 
+        complete: {
+            type: 'boolean'
+        }, 
+        nextOffset: {
+            type: 'number',
+            integer: true,
+            min: 0
+        } 
+    }, 
     properties: {
-        _isLoading: false,
-        _isComplete: false,
-        _nextOffset: 0,
-        isLoading: function() {
-            return this._isLoading;
-        },
-        isComplete: function() {
-            return this._isComplete;
-        },
         load: function() {
-            if (this._isComplete || this._isLoading) {
+            if (this.isComplete() || this.isLoading()) {
                 return;
             }
-            this._isLoading = true;
-            this.dispatchEvent({type: 'change'});
+            this.setLoading(true);
             var self = this;
-            myth.xhr('GET', '/products.json?offset='+this._nextOffset, {
+            myth.xhr('GET', '/products.json?offset=' + this.getNextOffset(), {
                 on200: function(xhr) {
                     var productsJSON = JSON.parse(xhr.responseText);
                     if (productsJSON.length < 1) {
-                        self._isComplete = true;
+                        self.setComplete(true);
                     } else {
-                        var products = [];
-                        for (var i = 0, ilen = productsJSON.length; i < ilen; i++) {
-                            products.push(scrollit.ProductModel.fromJSON(productsJSON[i]));
-                        }
-                        self._nextOffset += products.length;
-                        self.add.apply(self, products);
+                        self.setNextOffset(self.getNextOffset() + productsJSON.length);
+                        self.fromJSON(productsJSON);
                     }
-                    self._isLoading = false;
-                    self.dispatchEvent({type: 'change'});
+                    self.setLoading(false);
                 }
                 // TODO other callbacks
             });

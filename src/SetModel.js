@@ -324,3 +324,72 @@ maria.SetModel.prototype.handleEvent = function(evt) {
     }
 
 };
+
+/**
+
+@return {function} The default constructor function to use
+when instantiating objects to be added to this set.
+
+*/
+maria.SetModel.prototype.getDefaultElementConstructor = function() {
+    return maria.Model;
+};
+
+/**
+
+Create a data array suitable to be serialized to a JSON string.
+
+This process calls `toJSON` on each model in the set.
+
+@return {Array} The array of data objects.
+
+*/
+maria.SetModel.prototype.toJSON = function() {
+    var models = this.toArray(),
+        json = [],
+        i,
+        ilen;
+    for (i = 0, ilen = models.length; i < ilen; i++) {
+        json.push(models[i].toJSON());
+    }
+    return json;
+};
+
+/**
+
+Create a data array suitable to be serialized to a JSON string.
+
+For each element of the data array, this process calls `fromJSON`
+on the constructor returned by `getDefaultElementConstructor`.
+
+This method does not empty the set before adding new elements to the set.
+
+@param {Array} json The array of data objects.
+
+*/
+maria.SetModel.prototype.fromJSON = function(json) {
+    var constructor = this.getDefaultElementConstructor(),
+        elements = [],
+        i,
+        ilen;
+    for (i = 0, ilen = json.length; i < ilen; i++) {
+        elements.push(constructor.fromJSON(json[i]));
+    }
+    this.add.apply(this, elements);
+};
+
+/**
+
+Create a new set model instance and fill it with elements
+created using the data object.
+
+@param {Array} data The array of data objects.
+
+@return {object} The new set model instance.
+
+*/
+maria.SetModel.fromJSON = function(json) {
+    var model = new this();
+    model.fromJSON(json);
+    return model;
+};
