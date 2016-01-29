@@ -119,8 +119,8 @@
 
             m.setContent('Examine event 2');
 
-            assert.same(savedEvent.currentTarget._content, 'Examine event 2');
-            assert.same(savedEvent.currentTarget._evento_listeners.change.length, 2); // Now there are two listeners
+            assert.same(savedEvent2.currentTarget._content, 'Examine event 2');
+            assert.same(savedEvent2.currentTarget._evento_listeners.change.length, 2); // Now there are two listeners
         }
 
     });
