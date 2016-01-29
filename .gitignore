@@ -2,3 +2,5 @@ build
 tmp
 lib/compiler
 lib/jsdoc
+.idea
+*.iml
